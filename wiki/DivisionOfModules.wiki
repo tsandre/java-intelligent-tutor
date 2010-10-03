@@ -2,6 +2,9 @@
 
 =Division of the Project in modules=
 
+[http://domain/page label]
+
+
 ==Query GUI==
 *Module Description:* GUI for letting teacher chooses the topic. This module will be the initial face for the software. The teacher will have to choose from either a list of keywords or will enter a new topic for initiating a tutorial.
 
