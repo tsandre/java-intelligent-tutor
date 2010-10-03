@@ -3,6 +3,8 @@
 
 =Division of the Project in modules=
 
+----
+
 ==Query GUI==
 *Module Description:* GUI for letting teacher chooses the topic. This module will be the initial face for the software. The teacher will have to choose from either a list of keywords or will enter a new topic for initiating a tutorial.
 
@@ -19,6 +21,7 @@
 
 *Other Notes:*
 
+----
 
 ==Code crawler==
 
@@ -38,6 +41,8 @@
 
 *Other Notes:*
 
+----
+
 ==Suggesting words to hide==
 
 *Module Description:* Identifying the words of code to be hidden for tutorial. This decision will be based on the query made by the teacher and the code returned by the code crawler module.
@@ -55,6 +60,8 @@
 • Send the list of words and the respective source code to tutorial generation GUI subsystem.
 
 *Other Notes:*
+
+----
 
 ==GUI to select tutorial==
 
@@ -76,6 +83,8 @@
 
 *Other Notes:*
 
+----
+
 ==Create student interface-CTAT file==
 
 *Module Description:* Converting code to tutorial when all information is available.
@@ -93,6 +102,8 @@ Involved program files:
 
 *Other Notes:*
 
+----
+
 ==Behavior recorder==
 
 *Module Description:* Setting up behavior recorder mechanism.
@@ -109,6 +120,7 @@ Involved program files:
 
 ==Delivering tutorial to students ?==
 
+----
 
 ==Other Topics==
 
