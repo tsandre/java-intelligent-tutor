@@ -110,3 +110,14 @@ Involved program files:
 *Other Notes:*
 
 ==Delivering tutorial to students ?==
+
+
+=Other Topics=
+
+    * Setting up your box?*
+    * Setting up Netbeans for CTAT*
+    * Using GWT with NetBeans IDE*
+    * Presentation on GWT by developer at Sun*
+    * GWT: Getting started Tutorial*
+    * GWT: Making remote procedure Calls*
+    * Maintaining the wiki*
