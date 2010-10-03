@@ -118,6 +118,8 @@ Involved program files:
 
 *Other Notes:*
 
+----
+
 ==Delivering tutorial to students ?==
 
 ----
