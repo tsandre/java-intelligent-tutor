@@ -1,4 +1,4 @@
-#summary Web-based Semi-Automatic Authoring of Intelligent Java Tutor
+#summary Modules in "Web-based Semi-Automatic Authoring of Intelligent Java Tutor" project.
 
 =Division of the Project in modules=
 
