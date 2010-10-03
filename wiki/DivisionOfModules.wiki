@@ -110,10 +110,7 @@ Involved program files:
 ==Delivering tutorial to students ?==
 
 
-
-
-
-=Other Topics=
+==Other Topics==
 
   * *Setting up your box?* 
 
