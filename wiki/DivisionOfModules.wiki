@@ -2,8 +2,6 @@
 
 =Division of the Project in modules=
 
-[http://domain/page label]
-
 
 ==Query GUI==
 *Module Description:* GUI for letting teacher chooses the topic. This module will be the initial face for the software. The teacher will have to choose from either a list of keywords or will enter a new topic for initiating a tutorial.
@@ -114,10 +112,16 @@ Involved program files:
 
 =Other Topics=
 
-    * Setting up your box?*
-    * Setting up Netbeans for CTAT*
-    * Using GWT with NetBeans IDE*
-    * Presentation on GWT by developer at Sun*
-    * GWT: Getting started Tutorial*
-    * GWT: Making remote procedure Calls*
-    * Maintaining the wiki*
+    * Setting up your box? *
+
+    * [http://ctat.pact.cs.cmu.edu/index.php?id=netbeans50 Setting up Netbeans for CTAT] *
+
+    * [http://www.netbeans.com/kb/docs/web/quickstart-webapps-gwt.html Using GWT with NetBeans IDE] *
+
+    * [http://www.javapassion.com/ajax/GWT.pdf Presentation on GWT by developer at Sun] *
+
+    * [http://code.google.com/webtoolkit/doc/latest/tutorial/create.html GWT: Getting started Tutorial] *
+
+    * [http://code.google.com/webtoolkit/doc/latest/tutorial/create.html GWT: Making remote procedure Calls] *
+
+    * [http://code.google.com/p/support/wiki/WikiSyntax Maintaining the wiki] *
