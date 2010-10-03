@@ -1,15 +1,7 @@
 #summary Modules in "Web-based Semi-Automatic Authoring of Intelligent Java Tutor" project.
+#labels QueryGUI,Codecrawler,CTAT
 
 =Division of the Project in modules=
-  * *[http://code.google.com/p/java-intelligent-tutor/wiki/DivisionOfModules#Query GUI Query GUI]*
-
-  * *[http://code.google.com/p/java-intelligent-tutor/wiki/DivisionOfModules#Code crawler Code crawler]*
-
-  * *[http://code.google.com/p/java-intelligent-tutor/wiki/DivisionOfModules#Suggesting words to hide Suggesting words to hide]*
-
-  * *[http://code.google.com/p/java-intelligent-tutor/wiki/DivisionOfModules#Query GUI Query GUI]*
-
-  * *[http://code.google.com/p/java-intelligent-tutor/wiki/DivisionOfModules#Query GUI Query GUI]*
 
 ==Query GUI==
 *Module Description:* GUI for letting teacher chooses the topic. This module will be the initial face for the software. The teacher will have to choose from either a list of keywords or will enter a new topic for initiating a tutorial.
