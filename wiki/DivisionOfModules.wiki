@@ -140,4 +140,6 @@ Involved program files:
 
   * *[http://code.google.com/p/support/wiki/WikiSyntax Maintaining the wiki]* 
 
+  * *[http://agile.csc.ncsu.edu/SEMaterials/tutorials/subclipse Help with SVN plugin for eclipse]*
+
 ----
