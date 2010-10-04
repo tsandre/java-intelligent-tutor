@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import itjava.data.DorminComponent;
 import itjava.data.TutorialTemplate;
-import itjava.data.WordInfo;
 
 public class TutorialStore {
 

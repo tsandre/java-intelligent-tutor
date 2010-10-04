@@ -1,6 +1,5 @@
 package itjava.model;
 
-import itjava.data.WordInfo;
 
 import java.io.File;
 import java.util.ArrayList;

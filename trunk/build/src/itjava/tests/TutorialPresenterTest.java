@@ -6,8 +6,8 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import itjava.data.BlankType;
-import itjava.data.WordInfo;
 import itjava.model.Tutorial;
+import itjava.model.WordInfo;
 import itjava.presenter.TutorialPresenter;
 import org.junit.Before;
 import org.junit.Test;

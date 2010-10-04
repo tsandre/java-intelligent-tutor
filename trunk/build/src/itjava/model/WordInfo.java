@@ -1,4 +1,6 @@
-package itjava.data;
+package itjava.model;
+
+import itjava.data.BlankType;
 
 public class WordInfo {	
 	public String wordToBeBlanked;

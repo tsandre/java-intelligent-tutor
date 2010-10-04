@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import itjava.data.WordInfo;
 import itjava.model.Tutorial;
 import itjava.model.TutorialStore;
+import itjava.model.WordInfo;
 
 public class TutorialPresenter {
 private TutorialStore _tutorialStore;
