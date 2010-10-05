@@ -10,6 +10,7 @@ public class Tutorial {
 	public ArrayList<WordInfo> wordInfoList;
 	public ArrayList<String> linesOfCode;
 	public File tutorialClassFile;
+	public int difficultyLevel;
 	
 	public void AppendCode(String currLineOfCode) {
 		this.tutorialCode += currLineOfCode + "\n";
