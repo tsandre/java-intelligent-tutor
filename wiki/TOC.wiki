@@ -1,13 +1,6 @@
 #summary Project Wikis
 
-  * *[http://code.google.com/p/java-intelligent-tutor/wiki/DivisionOfModules Modules]*
-    * *[QueryGUI]*
-    * *CodeCrawler*
-    * *SuggestingWordsToHide*
-    * *GuiToSelectTutorial*
-    * *[StudentInterfaceCTATFile]*
-    * *BehaviorRecorder*
-    * *DeliveringTutorial*
+  * *[http://code.google.com/p/java-intelligent-tutor/wiki/TableOfContents Modules]*
   * Other Topics  
     * *SettingUpYourBox?*
     * *[http://ctat.pact.cs.cmu.edu/index.php?id=netbeans50 Setting up Netbeans for CTAT]*
