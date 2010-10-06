@@ -1,0 +1,16 @@
+#summary Story board for system that will enable users to enter a query.
+
+*Module Description:* GUI for letting teacher chooses the topic. This module will be the initial face for the software. The teacher will have to choose from either a list of keywords or will enter a new topic for initiating a tutorial.
+
+*Involved files:*
+
+*Input:* Some way to let teachers access this software.
+
+*Output:* Pass the query to the code crawling subsystem.
+
+*Story points:*
+
+  * Initially set up a page that would contain a blank text box and also a hard-coded list of topics to browse through.
+  * In future, this list can be generated according to history of searches or whatever other strategy relevant.
+
+*Other Notes:*
