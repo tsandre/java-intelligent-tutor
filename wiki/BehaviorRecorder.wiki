@@ -1,0 +1,13 @@
+#summary One-sentence summary of this page.
+
+*Module Description:* Setting up behavior recorder mechanism.
+
+*Involved program files:*
+
+*Input:* This module will be called after...
+
+*Output:* It will ...
+
+*Story points:*
+
+*Other Notes:*
