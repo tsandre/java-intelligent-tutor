@@ -1,7 +1,7 @@
 #summary Modules in "Web-based Semi-Automatic Authoring of Intelligent Java Tutor" project.
 #labels Modules,Codecrawler,CTAT,QueryGUI
 
-=Division of the Project in modules=
+=Division of the Project in modules
 
 ----
 
