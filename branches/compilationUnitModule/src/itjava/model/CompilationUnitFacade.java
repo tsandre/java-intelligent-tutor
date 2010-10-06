@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
@@ -16,6 +17,7 @@ public class CompilationUnitFacade {
 	private List<Type> _superTypes;
 	private List<Modifier> _modifiers;
 	private List<VariableDeclaration> _variableDeclarations;
+	private List<MethodDeclaration> _methodDeclarations;
 
 	public CompilationUnitFacade() {
 
@@ -24,7 +26,7 @@ public class CompilationUnitFacade {
 		_superTypes = new ArrayList<Type>();
 		_superInterfaces = new ArrayList<SimpleType>();
 		_importDeclarations = new ArrayList<ImportDeclaration>();
-
+		_methodDeclarations = new ArrayList<MethodDeclaration>();
 	}
 
 	// VariableDeclarations
@@ -108,5 +110,38 @@ public class CompilationUnitFacade {
 	public List<ImportDeclaration> getImportDeclarations() {
 		return _importDeclarations;
 	}
+
+	
+	//MethodDeclarations
+	public void setMethodDeclarations(List<MethodDeclaration> methodDeclarations) {
+		if (methodDeclarations != null) 
+			_methodDeclarations = methodDeclarations;
+	}
+
+	public void addAllMethods(MethodDeclaration[] methods) {
+		if (!methods.equals(null) && methods.length > 0) {
+			for (MethodDeclaration method : methods) {
+				_methodDeclarations.add(method);
+			}
+		}
+	}
+	
+	public void addAllMethods(List<MethodDeclaration> methods) {
+		if (methods != null) {
+			_methodDeclarations.addAll(methods);
+		}
+	}
+	
+	public void addMethodDeclaration(MethodDeclaration methodDeclaration) {
+		if (methodDeclaration != null) {
+			_methodDeclarations.add(methodDeclaration);
+		}
+	}
+	
+	public List<MethodDeclaration> getMethodDeclarations() {
+		return _methodDeclarations;
+	}
+
+	
 
 }

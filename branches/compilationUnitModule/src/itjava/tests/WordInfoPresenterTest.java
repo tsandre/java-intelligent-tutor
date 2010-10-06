@@ -45,8 +45,13 @@ public class WordInfoPresenterTest {
 		ThenFacadeHasOneImportDeclaration();
 		ThenFacadeHasClassModifierAsPublic();
 		ThenFacadeHasSuperTypeAsSocket();
+		ThenFacadeHasMethods();
 	}
 	
+	private void ThenFacadeHasMethods() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodDeclarations().size() > 0);
+	}
+
 	@Test
 	public void MultipleFacadesHaveFollowingDeclarations() {
 		Given2Files();
@@ -54,6 +59,13 @@ public class WordInfoPresenterTest {
 		ThenBothFacadesHaveImportDeclaration();
 		ThenBothFacadesHaveClassModifiersAsPublic();
 		ThenSecondFacadeHasSuperInterfaceType();
+		ThenBothFacadeHasMethods();
+		System.out.print(_wordInfoPresenter.compilationUnitFacadeList.get(2));
+	}
+
+	private void ThenBothFacadeHasMethods() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodDeclarations().size() > 0);
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(1).getMethodDeclarations().size() > 0);
 	}
 
 	private void ThenSecondFacadeHasSuperInterfaceType() {
@@ -96,7 +108,18 @@ public class WordInfoPresenterTest {
 				currLine = bReader.readLine();
 			}
 			resultEntryList.add(fileContent);
-		} catch (Exception e) {
+			
+			bReader = new BufferedReader(new FileReader(
+					"samples/UseThisForTestingFacade_3.java"));
+			currLine = bReader.readLine();
+			fileContent = "";
+			while (currLine != null) {
+				fileContent += currLine;
+				currLine = bReader.readLine();
+			}
+			resultEntryList.add(fileContent);
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
