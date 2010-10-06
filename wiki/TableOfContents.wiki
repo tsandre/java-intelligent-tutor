@@ -9,9 +9,8 @@
     * *[StudentInterfaceCTATFile]*
     * *BehaviorRecorder*
     * *DeliveringTutorial*
-
   * Other Topics  
-    * *Setting up your box?*
+    * *SettingUpYourBox?*
     * *[http://ctat.pact.cs.cmu.edu/index.php?id=netbeans50 Setting up Netbeans for CTAT]*
     * *[http://www.netbeans.com/kb/docs/web/quickstart-webapps-gwt.html Using GWT with NetBeans IDE]* 
     * *[http://www.javapassion.com/ajax/GWT.pdf Presentation on GWT by developer at Sun]* 
