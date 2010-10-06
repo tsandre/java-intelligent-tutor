@@ -1,0 +1,17 @@
+#summary Story board to find useful words in the given code samples.
+
+*Module Description:* Identifying the words of code to be hidden for tutorial. This decision will be based on the query made by the teacher and the code returned by the code crawler module.
+
+*Involved program files:*
+
+*Input:* The code crawler will hand over the list of files (or lines of code) along with the initial query to this module.
+
+*Output:* It will create a list of configuration objects. Each object will consist of tutorial information and the source code. This list will be passed to the teacher for making a final choice.
+
+*Story points:*
+
+  * Based on the query, decide a strategy to blank out words. Apply this strategy to multiple examples to verify sanity of the approach.
+
+  * Send the list of words and the respective source code to tutorial generation GUI subsystem.
+
+*Other Notes:*
