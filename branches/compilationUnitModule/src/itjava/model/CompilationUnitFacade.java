@@ -3,12 +3,12 @@ package itjava.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclaration;
 
 public class CompilationUnitFacade {
@@ -18,6 +18,7 @@ public class CompilationUnitFacade {
 	private List<Modifier> _modifiers;
 	private List<VariableDeclaration> _variableDeclarations;
 	private List<MethodDeclaration> _methodDeclarations;
+	private List<FieldDeclaration> _fieldDeclarations;
 
 	public CompilationUnitFacade() {
 
@@ -27,6 +28,7 @@ public class CompilationUnitFacade {
 		_superInterfaces = new ArrayList<SimpleType>();
 		_importDeclarations = new ArrayList<ImportDeclaration>();
 		_methodDeclarations = new ArrayList<MethodDeclaration>();
+		_fieldDeclarations = new ArrayList<FieldDeclaration>();
 	}
 
 	// VariableDeclarations
@@ -140,6 +142,24 @@ public class CompilationUnitFacade {
 	
 	public List<MethodDeclaration> getMethodDeclarations() {
 		return _methodDeclarations;
+	}
+
+	//FieldDeclarations
+	public void setFieldDeclarations(List<FieldDeclaration> fieldDeclarations) {
+		if (fieldDeclarations != null) 
+			_fieldDeclarations = fieldDeclarations;
+	}
+	
+	public void addAllFields(FieldDeclaration[] fieldDeclarations) {
+		if (fieldDeclarations != null && fieldDeclarations.length > 0) {
+			for (FieldDeclaration field : fieldDeclarations) {
+				_fieldDeclarations.add(field);
+			}
+		}
+	}
+
+	public List<FieldDeclaration> getFieldDeclarations() {
+		return _fieldDeclarations;
 	}
 
 	

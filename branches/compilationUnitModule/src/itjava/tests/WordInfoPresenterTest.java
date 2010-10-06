@@ -3,8 +3,6 @@ package itjava.tests;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,45 +13,23 @@ import itjava.model.WordInfo;
 import itjava.presenter.WordInfoPresenter;
 
 import org.eclipse.jdt.core.dom.SimpleType;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.junit.Before;
 import org.junit.Test;
 
 public class WordInfoPresenterTest {
+	private HashMap<ArrayList<String>, ArrayList<WordInfo>> _codeToWordInfoMap;
+	private WordInfoPresenter _wordInfoPresenter;
 	String query;
 	ArrayList<String> resultEntryList;
-	private WordInfoPresenter _wordInfoPresenter;
-	private HashMap<ArrayList<String>, ArrayList<WordInfo>> _codeToWordInfoMap;
 
 	@Before
-	public void setUp() {
+	public final void setUp() {
 		resultEntryList = new ArrayList<String>();
 		_wordInfoPresenter = new WordInfoPresenter();
 	}
 
 	@Test
-	public void WordInfoPresenterGeneratesNodes() {
-		GivenSingleFile();
-		WhenGetCodeInfoIsCalled();
-		ThenFacadeListHasOneFacade();
-	}
-	
-	@Test
-	public void SingleFacadeHasFollowingDeclarations() {
-		GivenSingleFile();
-		WhenGetCodeInfoIsCalled();
-		ThenFacadeHasOneImportDeclaration();
-		ThenFacadeHasClassModifierAsPublic();
-		ThenFacadeHasSuperTypeAsSocket();
-		ThenFacadeHasMethods();
-	}
-	
-	private void ThenFacadeHasMethods() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodDeclarations().size() > 0);
-	}
-
-	@Test
-	public void MultipleFacadesHaveFollowingDeclarations() {
+	public final void MultipleFacadesHaveFollowingDeclarations() {
 		Given2Files();
 		WhenGetCodeInfoIsCalled();
 		ThenBothFacadesHaveImportDeclaration();
@@ -62,28 +38,22 @@ public class WordInfoPresenterTest {
 		ThenBothFacadeHasMethods();
 		System.out.print(_wordInfoPresenter.compilationUnitFacadeList.get(2));
 	}
-
-	private void ThenBothFacadeHasMethods() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodDeclarations().size() > 0);
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(1).getMethodDeclarations().size() > 0);
+	
+	@Test
+	public final void SingleFacadeHasFollowingDeclarations() {
+		GivenSingleFile();
+		WhenGetCodeInfoIsCalled();
+		ThenFacadeHasOneImportDeclaration();
+		ThenFacadeHasClassModifierAsPublic();
+		ThenFacadeHasSuperTypeAsSocket();
+		ThenFacadeHasMethods();
 	}
-
-	private void ThenSecondFacadeHasSuperInterfaceType() {
-		CompilationUnitFacade secondFacade = _wordInfoPresenter.compilationUnitFacadeList.get(1);
-		List<SimpleType> interfaceList = secondFacade.getSuperInterfaces();
-
-		assertTrue(interfaceList.get(0).toString().equalsIgnoreCase("ISocket"));
-		assertTrue(interfaceList.get(1).toString().equalsIgnoreCase("ITestInterface"));
-	}
-
-	private void ThenBothFacadesHaveClassModifiersAsPublic() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getClassModifiers().get(0).toString().equalsIgnoreCase("public"));
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(1).getClassModifiers().get(0).toString().equalsIgnoreCase("public"));
-	}
-
-	private void ThenBothFacadesHaveImportDeclaration() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getImportDeclarations().size() == 1);
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(1).getImportDeclarations().size() == 2);
+	
+	@Test
+	public final void WordInfoPresenterGeneratesNodes() {
+		GivenSingleFile();
+		WhenGetCodeInfoIsCalled();
+		ThenFacadeListHasOneFacade();
 	}
 
 	private void Given2Files() {
@@ -124,27 +94,6 @@ public class WordInfoPresenterTest {
 		}
 	}
 
-	private void ThenFacadeHasSuperTypeAsSocket() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getSuperTypes().get(0).toString().equalsIgnoreCase("socket"));
-	}
-
-	private void ThenFacadeHasClassModifierAsPublic() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getClassModifiers().get(0).toString().equalsIgnoreCase("public"));
-	}
-
-	private void ThenFacadeHasOneImportDeclaration() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getImportDeclarations().size() == 1);
-	}
-
-	private void ThenFacadeListHasOneFacade() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.size() == 1);
-	}
-
-	private void WhenGetCodeInfoIsCalled() {
-		_codeToWordInfoMap = _wordInfoPresenter.GetCodeToWordInfoMap(query,
-				resultEntryList);
-	}
-
 	private void GivenSingleFile() {
 		try {
 			BufferedReader bReader = new BufferedReader(new FileReader(
@@ -159,5 +108,53 @@ public class WordInfoPresenterTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void ThenBothFacadeHasMethods() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodDeclarations().size() > 0);
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(1).getMethodDeclarations().size() > 0);
+	}
+
+	private void ThenBothFacadesHaveClassModifiersAsPublic() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getClassModifiers().get(0).toString().equalsIgnoreCase("public"));
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(1).getClassModifiers().get(0).toString().equalsIgnoreCase("public"));
+	}
+
+	private void ThenBothFacadesHaveImportDeclaration() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getImportDeclarations().size() == 1);
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(1).getImportDeclarations().size() == 2);
+	}
+
+	private void ThenFacadeHasClassModifierAsPublic() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getClassModifiers().get(0).toString().equalsIgnoreCase("public"));
+	}
+
+	private void ThenFacadeHasMethods() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodDeclarations().size() > 0);
+	}
+
+	private void ThenFacadeHasOneImportDeclaration() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getImportDeclarations().size() == 1);
+	}
+
+	private void ThenFacadeHasSuperTypeAsSocket() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getSuperTypes().get(0).toString().equalsIgnoreCase("socket"));
+	}
+
+	private void ThenFacadeListHasOneFacade() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.size() == 1);
+	}
+
+	private void ThenSecondFacadeHasSuperInterfaceType() {
+		CompilationUnitFacade secondFacade = _wordInfoPresenter.compilationUnitFacadeList.get(1);
+		List<SimpleType> interfaceList = secondFacade.getSuperInterfaces();
+
+		assertTrue(interfaceList.get(0).toString().equalsIgnoreCase("ISocket"));
+		assertTrue(interfaceList.get(1).toString().equalsIgnoreCase("ITestInterface"));
+	}
+
+	private void WhenGetCodeInfoIsCalled() {
+		_codeToWordInfoMap = _wordInfoPresenter.GetCodeToWordInfoMap(query,
+				resultEntryList);
 	}
 }

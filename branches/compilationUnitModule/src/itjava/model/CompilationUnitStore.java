@@ -1,13 +1,9 @@
 package itjava.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
@@ -26,7 +22,7 @@ public class CompilationUnitStore {
 		List<AbstractTypeDeclaration> types = _compilationUnit.types();
 		for (AbstractTypeDeclaration abstractTypeDeclaration : types) {
 			TypeDeclaration currTypeDeclaration = (TypeDeclaration) abstractTypeDeclaration;
-//			currTypeDeclaration.getFields();
+			facade.addAllFields(currTypeDeclaration.getFields());
 			facade.addAllMethods(currTypeDeclaration.getMethods());
 			facade.addAllSuperInterfaces(currTypeDeclaration.superInterfaceTypes());
 			facade.addAllClassModifiers(currTypeDeclaration.modifiers());
@@ -37,8 +33,6 @@ public class CompilationUnitStore {
 				facade.addMethodDeclaration(methodDeclaration);
 				List<Statement> statements = methodDeclaration.getBody().statements();
 				for(Statement statement : statements) {
-					System.out.println(statement.toString());
-//					    Block
 //					    IfStatement
 //					    ForStatement
 //					    EnhancedForStatement
