@@ -1,4 +1,4 @@
-#summary Table Of Contents
+#summary Project Wikis
 #labels Contents
 
   * *[http://code.google.com/p/java-intelligent-tutor/wiki/DivisionOfModules Division Of Modules]*
