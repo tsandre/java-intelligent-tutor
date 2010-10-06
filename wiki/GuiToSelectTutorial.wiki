@@ -1,0 +1,19 @@
+#summary One-sentence summary of this page.
+
+*Module Description:* Display the list of source code along with the respective words suggested to be blanked. The teacher should be able to see the words suggested as blank-able as a list of check boxes. These words must also be easily visible on the actual source code.
+
+*Involved program files:*
+
+*Input:* A list of source code and its respective blank-able words (with all the location information), i.e. the configuration object.
+
+*Output:* Teacher selects one or more of the checkboxes and finalizes the tutorial. She should have an option of rejecting a tutorial. Also she should have an option of creating her own blank-able word from the provided source code if she doesn’t like our suggested words. (In short: o/p will be list of code and list of finalized config objects).
+
+*Story points:*
+
+  * Each of the page should display code and suggestion of words that can be blanked. This list of words should be provided in form of a checkbox list. Each of these words should be easily found on the main source code too. Use color coding or underline or arrow or whatever suits the purpose.
+
+  * Set up a GUI system that will provide multiple such pages. There should be some hint for the teacher to show how many samples (i.e. pages) are available and her progress. She should be able to jump to the end if she wants to select only a few and not reach till the last sample of code.
+
+  * Current plan should be satisfied by these actions. But for future, provide the teacher with a GUI that will let her choose words from the source code.
+
+*Other Notes:*
