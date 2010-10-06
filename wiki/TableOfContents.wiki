@@ -58,8 +58,8 @@
 *Output:* It will create a list of configuration objects. Each object will consist of tutorial information and the source code. This list will be passed to the teacher for making a final choice.
 
 *Story points:*
-  * Understand the working of AST API. Work with sample files to produce AST and save various nodes of a source code in an easily accessible form. Enable addition of new node types for future. <font color=green>DONE</font>
-  * Based on the query OR common nodes, decide a strategy to find words to be blanked. Apply this strategy to multiple examples to verify sanity of the approach.<font color=orange>IN PROGRESS</font>
+  * Understand the working of AST API. Work with sample files to produce AST and save various nodes of a source code in an easily accessible form. Enable addition of new node types for future.
+  * Based on the query OR common nodes, decide a strategy to find words to be blanked. Apply this strategy to multiple examples to verify sanity of the approach.
   * Send the list of words and the respective source code to tutorial generation GUI subsystem.
 
 *Other Notes:*
@@ -98,8 +98,8 @@ Involved program files:
 *Output:* It will create a source code file that can be fed to CTAT for Java, which will eventually open it as a tutorial.
 
 *Story points:*
-  * The static fields of the CTAT-GUI source code file should be sought from a static class or from a text file for enabling changes in future. Identify these static fields and create required architecture.*<font color=green>DONE</font>*
-  * This module will be triggered along with list of config objects, i.e. the list of choices finalized by the teacher.*<font color=green>DONE</font>*
+  * The static fields of the CTAT-GUI source code file should be sought from a static class or from a text file for enabling changes in future. Identify these static fields and create required architecture.
+  * This module will be triggered along with list of config objects, i.e. the list of choices finalized by the teacher.
   * Compile the CTAT readable java file into a class file (bytecode). Assign the path of this file to the Tutorial object so that it can be accessed easily. Find out way to compile and execute java programs from within another java program OR devise architecture to trigger it from outside.
   * Currently, CTAT has libraries that can be configured with Net Beans. So we can easily open up the student interface on providing .class file to netbeans. Figure out a way to do this independent of NetBeans.
 
