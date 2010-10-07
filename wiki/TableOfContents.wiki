@@ -1,7 +1,7 @@
 #summary Modules in "Web-based Semi-Automatic Authoring of Intelligent Java Tutor" project.
 #labels Contents
 
-=Division of the Project in modules=
+=Modules=
 
 ----
 <wiki:toc>
