@@ -77,28 +77,35 @@ public class CompilationUnitStore {
 	public static boolean FindCommonDeclaration(WordInfoPresenter wordInfoPresenter){
 		_facadeList = wordInfoPresenter.compilationUnitFacadeList;
 		ArrayList<String> commonImports = new ArrayList<String> ();
+		boolean commonImportsFound = false;
 		
-		//TODO	Find common imports
-		HashSet<Name> allImports = new HashSet<Name>();
-		HashMap<CompilationUnitFacade, List<String>> compilationUnitToImportDeclarationsMap = null; 
+		//Find common imports
+		HashSet<String> allImports = new HashSet<String>();
+		HashMap<CompilationUnitFacade, List<String>> compilationUnitToImportDeclarationsMap = new HashMap<CompilationUnitFacade, List<String>>(); 
 		for (CompilationUnitFacade currFacade : _facadeList) {
 			for (ImportDeclaration currImport : currFacade.getImportDeclarations()) {
-				allImports.add(currImport.getName());
-				if (allImports.contains(currImport.getName())) {
+				if (allImports.contains(currImport.getName().getFullyQualifiedName())) {
 					commonImports.add(currImport.getName().getFullyQualifiedName());
+					commonImportsFound = true;
 				}
+				allImports.add(currImport.getName().getFullyQualifiedName());
 			}
 		}
 		for (CompilationUnitFacade currFacade : _facadeList) {
 			for (ImportDeclaration currImport : currFacade.getImportDeclarations()) {
 				if (commonImports.contains(currImport.getName().getFullyQualifiedName())) {
-					//TODO	Create List<WordInfo> and add it along with code of current facade to a HashMap
+					List<String> previouslyFoundCommonWords = compilationUnitToImportDeclarationsMap.get(currFacade);
+					if(previouslyFoundCommonWords == null){
+						previouslyFoundCommonWords = new ArrayList<String>();
+					}
+					previouslyFoundCommonWords.add(currImport.getName().getFullyQualifiedName());
+					compilationUnitToImportDeclarationsMap.put(currFacade, previouslyFoundCommonWords);
 				}
 			}
 		}
 		
 		//imports section END
 		
-		return true;
+		return commonImportsFound;
 	}
 }
