@@ -19,6 +19,34 @@ public class CompilationUnitFacade {
 	private List<VariableDeclaration> _variableDeclarations;
 	private List<MethodDeclaration> _methodDeclarations;
 	private List<FieldDeclaration> _fieldDeclarations;
+	private List<String> _linesOfCode;
+
+	public void setLinesOfCode(String linesOfCode) {
+		ArrayList<Character> newLineCandidates = new ArrayList<Character>();
+		newLineCandidates.add('{');
+		newLineCandidates.add('}');
+		newLineCandidates.add(')');
+		newLineCandidates.add(';');
+		
+		// TODO Perform indentation of file
+		_linesOfCode = new ArrayList<String>();
+		
+		char[] charsOfCode = linesOfCode.trim().toCharArray();
+		int length = charsOfCode.length;
+		int cursorPosition = 0;
+		int lastNewLinePosition = -1;
+		while (cursorPosition < length) {
+			if (newLineCandidates.contains(charsOfCode[cursorPosition])) {
+				_linesOfCode.add(linesOfCode.substring(1 + lastNewLinePosition, 1 + cursorPosition));
+				lastNewLinePosition = cursorPosition;
+			}
+			cursorPosition++;
+		}
+	}
+
+	public List<String> getLinesOfCode() {
+		return _linesOfCode;
+	}
 
 	public CompilationUnitFacade() {
 

@@ -30,13 +30,12 @@ public class WordInfoPresenterTest {
 
 	@Test
 	public final void MultipleFacadesHaveFollowingDeclarations() {
-		Given2Files();
+		GivenFiles();
 		WhenGetCodeInfoIsCalled();
 		ThenBothFacadesHaveImportDeclaration();
 		ThenBothFacadesHaveClassModifiersAsPublic();
 		ThenSecondFacadeHasSuperInterfaceType();
 		ThenBothFacadeHasMethods();
-		System.out.print(_wordInfoPresenter.compilationUnitFacadeList.get(2));
 	}
 	
 	@Test
@@ -56,7 +55,7 @@ public class WordInfoPresenterTest {
 		ThenFacadeListHasOneFacade();
 	}
 
-	private void Given2Files() {
+	private void GivenFiles() {
 		BufferedReader bReader;
 		try {
 			bReader = new BufferedReader(new FileReader(

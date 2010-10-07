@@ -16,6 +16,8 @@ public class WordInfoPresenter {
 	private HashMap<ArrayList<String>, ArrayList<WordInfo>> _codeToWordInfoMap;
 	public ArrayList<CompilationUnitFacade> compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
 	private ASTParser _astParser;
+	
+	public boolean hasCommonNodes;
 
 	public WordInfoPresenter() {
 		_astParser = ASTParser.newParser(AST.JLS3);
@@ -28,8 +30,7 @@ public class WordInfoPresenter {
 		for (String currFile : resultEntryList) {
 			_astParser.setSource(currFile.toCharArray());
 			CompilationUnitFacade compilationUnit = CompilationUnitStore
-					.createCompilationUnitFacade((CompilationUnit) _astParser
-							.createAST(null));
+					.createCompilationUnitFacade((CompilationUnit) _astParser.createAST(null), currFile);
 			compilationUnitFacadeList.add(compilationUnit);
 		}
 		FindCommonNodes(compilationUnitFacadeList);
@@ -38,9 +39,8 @@ public class WordInfoPresenter {
 
 	private void FindCommonNodes(
 			ArrayList<CompilationUnitFacade> compilationUnitList) {
-		// TODO Find the common nodes in compilationUnitList and update the
-		// hashMap _codeToWordInfoMap
-
+		
+		hasCommonNodes = CompilationUnitStore.FindCommonDeclaration(this);
 	}
 
 }
