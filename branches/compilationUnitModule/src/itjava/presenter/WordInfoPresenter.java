@@ -6,6 +6,7 @@ import itjava.model.WordInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -18,10 +19,16 @@ public class WordInfoPresenter {
 	private ASTParser _astParser;
 	
 	public boolean hasCommonNodes;
+	
+	public HashMap<CompilationUnitFacade, List<String>> compilationUnitToImportDeclarationsMap;
+	public HashMap<CompilationUnitFacade, List<WordInfo>> compilationUnitToVariableDeclarationsMap;
 
 	public WordInfoPresenter() {
 		_astParser = ASTParser.newParser(AST.JLS3);
 		_astParser.setKind(ASTParser.K_COMPILATION_UNIT);
+		compilationUnitToImportDeclarationsMap = new HashMap<CompilationUnitFacade, List<String>>();
+		compilationUnitToVariableDeclarationsMap = new HashMap<CompilationUnitFacade, List<WordInfo>>();
+		
 	}
 
 	public HashMap<ArrayList<String>, ArrayList<WordInfo>> GetCodeToWordInfoMap(
@@ -29,6 +36,7 @@ public class WordInfoPresenter {
 
 		for (String currFile : resultEntryList) {
 			_astParser.setSource(currFile.toCharArray());
+			_astParser.setStatementsRecovery(true);
 			CompilationUnitFacade compilationUnit = CompilationUnitStore
 					.createCompilationUnitFacade((CompilationUnit) _astParser.createAST(null), currFile);
 			compilationUnitFacadeList.add(compilationUnit);
@@ -37,9 +45,7 @@ public class WordInfoPresenter {
 		return _codeToWordInfoMap;
 	}
 
-	private void FindCommonNodes(
-			ArrayList<CompilationUnitFacade> compilationUnitList) {
-		
+	private void FindCommonNodes(ArrayList<CompilationUnitFacade> compilationUnitList) {
 		hasCommonNodes = CompilationUnitStore.FindCommonDeclaration(this);
 	}
 

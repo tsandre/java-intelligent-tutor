@@ -1,6 +1,5 @@
 package itjava.tests;
 
-
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import itjava.presenter.TutorialPresenter;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TutorialPresenterTest{
+public class TutorialPresenterTest {
 
 	private WordInfo wordInfo;
 	private ArrayList<WordInfo> wordInfoList;
@@ -20,40 +19,42 @@ public class TutorialPresenterTest{
 	private TutorialPresenter tutorialPresenter;
 	private Tutorial tutorial;
 	private String[] _bounds;
-	
+
 	@Before
 	public final void SetUp() {
 		wordInfo = new WordInfo();
-		
-		wordInfoList = new ArrayList<WordInfo> ();
-		
+
+		wordInfoList = new ArrayList<WordInfo>();
+
 		linesOfCode = new ArrayList<String>();
-		
+
 		tutorialPresenter = new TutorialPresenter();
 	}
-	
+
+	//START	Tests
 	@Test
 	public final void GetTutorialReturnsNullOnPassingInvalidParams() {
 		wordInfo.wordToBeBlanked = "new";
 		wordInfo.lineNumber = 2;
 		wordInfo.blankType = BlankType.Text;
-		wordInfo.columnNumber = 10;		
+		wordInfo.columnNumber = 10;
 		wordInfoList.add(wordInfo);
-		
-		tutorial = tutorialPresenter.GetTutorial("SampleGUI", linesOfCode, wordInfoList);
+
+		tutorial = tutorialPresenter.GetTutorial("SampleGUI", linesOfCode,
+				wordInfoList);
 		assertEquals(null, tutorial);
 	}
-	
+
 	@Test
-	public final void GetTutorialReturnsNotNullTutorial () {
+	public final void GetTutorialReturnsNotNullTutorial() {
 		GivenValidWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
 		ThenReturnedTutorialIsNotNull();
 	}
-	
+
 	@Test
-	public final void GetTutorialWithMultipleWordsReturnsNotNullTutorial () {
+	public final void GetTutorialWithMultipleWordsReturnsNotNullTutorial() {
 		GivenValidMultipleWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
@@ -67,7 +68,7 @@ public class TutorialPresenterTest{
 		WhenGetTutorialIsCalled();
 		ThenNumberofParanthesisIsBalanced();
 	}
-	
+
 	@Test
 	public final void MultipleWordsTutorialCodeHasBalancedParanthesis() {
 		GivenValidMultipleWordInfoList();
@@ -75,7 +76,7 @@ public class TutorialPresenterTest{
 		WhenGetTutorialIsCalled();
 		ThenNumberofParanthesisIsBalanced();
 	}
-	
+
 	@Test
 	public final void SplitLabelsAreDeclaredInitiatedAndAdded() {
 		GivenValidLinesOfCode();
@@ -83,7 +84,7 @@ public class TutorialPresenterTest{
 		WhenGetTutorialIsCalled();
 		ThenLabelSyntaxHasPositiveIndices();
 	}
-	
+
 	@Test
 	public final void TextFieldHasPositiveWidthAndHigherXCoord() {
 		GivenValidLinesOfCode();
@@ -100,8 +101,9 @@ public class TutorialPresenterTest{
 		WhenGetTutorialIsCalled();
 		ThenDoneButtonSyntaxHasPositiveIndices();
 		ThenButtonFieldHasProperBounds();
-	}	
-
+	}
+	//END Tests
+	
 	private void GivenValidMultipleWordInfoList() {
 
 		wordInfo.wordToBeBlanked = "out";
@@ -116,17 +118,23 @@ public class TutorialPresenterTest{
 		wordInfo.columnNumber = 7;
 		wordInfoList.add(wordInfo);
 	}
-	
+
 	private void ThenButtonFieldHasProperBounds() {
-		String subStringCode = tutorial.tutorialCode.substring(tutorial.tutorialCode.indexOf("doneButton.setBounds(")+ ("doneButton.setBounds(").length());
-		subStringCode = subStringCode.substring(0, subStringCode.indexOf(')') - 1);
+		String subStringCode = tutorial.tutorialCode
+				.substring(tutorial.tutorialCode
+						.indexOf("doneButton.setBounds(")
+						+ ("doneButton.setBounds(").length());
+		subStringCode = subStringCode.substring(0,
+				subStringCode.indexOf(')') - 1);
 		_bounds = subStringCode.split(",");
 		assertTrue(Integer.parseInt(_bounds[1]) > 20);
 	}
 
 	private void ThenDoneButtonSyntaxHasPositiveIndices() {
-		assertTrue(tutorial.tutorialCode.indexOf("private pact.DorminWidgets.DorminButton doneButton;") > 0);
-		assertTrue(tutorial.tutorialCode.indexOf("doneButton = new pact.DorminWidgets.DorminButton();") > 0);
+		assertTrue(tutorial.tutorialCode
+				.indexOf("private pact.DorminWidgets.DorminButton doneButton;") > 0);
+		assertTrue(tutorial.tutorialCode
+				.indexOf("doneButton = new pact.DorminWidgets.DorminButton();") > 0);
 		assertTrue(tutorial.tutorialCode.indexOf("add(doneButton);") > 0);
 	}
 
@@ -135,27 +143,32 @@ public class TutorialPresenterTest{
 	}
 
 	private void ThenWidthIsPositive() {
-		String subStringCode = tutorial.tutorialCode.substring(tutorial.tutorialCode.indexOf("txtLine3Col7_out.setBounds(")+ ("txtLine3Col7_out.setBounds(").length());
-		subStringCode = subStringCode.substring(0, subStringCode.indexOf(')') - 1);
+		String subStringCode = tutorial.tutorialCode
+				.substring(tutorial.tutorialCode
+						.indexOf("txtLine3Col7_out.setBounds(")
+						+ ("txtLine3Col7_out.setBounds(").length());
+		subStringCode = subStringCode.substring(0,
+				subStringCode.indexOf(')') - 1);
 		_bounds = subStringCode.split(",");
 		assertTrue(Integer.parseInt(_bounds[2]) > 0);
 	}
 
 	private void ThenLabelSyntaxHasPositiveIndices() {
-		assertTrue(tutorial.tutorialCode.indexOf("lblLine3Col7_out = new pact.DorminWidgets.DorminLabel();") > 0);
-		assertTrue(tutorial.tutorialCode.indexOf("private pact.DorminWidgets.DorminLabel lblLine3Col7_out;") > 0);
+		assertTrue(tutorial.tutorialCode
+				.indexOf("lblLine3Col7_out = new pact.DorminWidgets.DorminLabel();") > 0);
+		assertTrue(tutorial.tutorialCode
+				.indexOf("private pact.DorminWidgets.DorminLabel lblLine3Col7_out;") > 0);
 		assertTrue(tutorial.tutorialCode.indexOf("add(lblLine3Col7_out);") > 0);
 	}
 
 	private void ThenNumberofParanthesisIsBalanced() {
 		System.out.println(tutorial.tutorialCode);
-		ArrayList<Character> paranthesisStack = new ArrayList<Character> ();
+		ArrayList<Character> paranthesisStack = new ArrayList<Character>();
 		char[] tutorialCodeArr = tutorial.tutorialCode.toCharArray();
-		for (char currCharacter:tutorialCodeArr) {
-			if(currCharacter == '{') {
+		for (char currCharacter : tutorialCodeArr) {
+			if (currCharacter == '{') {
 				paranthesisStack.add(currCharacter);
-			}
-			else if(currCharacter == '}') {
+			} else if (currCharacter == '}') {
 				paranthesisStack.remove(paranthesisStack.size() - 1);
 			}
 		}
@@ -167,7 +180,8 @@ public class TutorialPresenterTest{
 	}
 
 	private void WhenGetTutorialIsCalled() {
-		tutorial = tutorialPresenter.GetTutorial("SystemClass", linesOfCode, wordInfoList);
+		tutorial = tutorialPresenter.GetTutorial("SystemClass", linesOfCode,
+				wordInfoList);
 	}
 
 	private void GivenValidWordInfoList() {
@@ -175,7 +189,7 @@ public class TutorialPresenterTest{
 		wordInfo.lineNumber = 3;
 		wordInfo.columnNumber = 7;
 		wordInfo.blankType = BlankType.Text;
-		wordInfoList.add(wordInfo);		
+		wordInfoList.add(wordInfo);
 	}
 
 	private void GivenValidLinesOfCode() {
@@ -185,5 +199,5 @@ public class TutorialPresenterTest{
 		linesOfCode.add("}");
 		linesOfCode.add("}");
 	}
-	
+
 }
