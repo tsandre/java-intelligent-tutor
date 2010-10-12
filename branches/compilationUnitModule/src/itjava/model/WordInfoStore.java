@@ -13,7 +13,7 @@ public class WordInfoStore {
 	}
 	
 	public static WordInfo createWordInfo(List<String> linesOfCode, Statement statement) {
-		// TODO	Create WordInfo object from given info
+		System.out.println(statement.getStartPosition());
 		return _wordInfo;
 	}
 }
