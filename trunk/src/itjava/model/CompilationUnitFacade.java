@@ -15,11 +15,14 @@ public class CompilationUnitFacade {
 	private List<FieldDeclaration> _fieldDeclarations;
 	private List<String> _linesOfCode;
 	private List<Statement> _statements;
-	private List<Statement> _expressionStatements;
+	private List<Expression> _expressions;
 	private List<Statement> _variableDeclarationStatements;
 	private List<Statement> _typeDeclarationStatements;
 	private List<Statement> _superConstructorInvocations;
 	private List<Statement> _constructorInvocations;
+	private List<Expression> _initializers;
+	private List<SimpleName> _methodInvocations;
+	private List<SingleVariableDeclaration> _caughtExceptions;
 
 	public void setLinesOfCode(String linesOfCode) {
 		ArrayList<Character> newLineCandidates = new ArrayList<Character>();
@@ -58,11 +61,14 @@ public class CompilationUnitFacade {
 		_importDeclarations = new ArrayList<ImportDeclaration>();
 		_methodDeclarations = new ArrayList<MethodDeclaration>();
 		_fieldDeclarations = new ArrayList<FieldDeclaration>();
-		_expressionStatements = new ArrayList<Statement>();
 		_variableDeclarationStatements = new ArrayList<Statement>();
 		_typeDeclarationStatements = new ArrayList<Statement>();
 		_superConstructorInvocations = new ArrayList<Statement>();
 		_constructorInvocations = new ArrayList<Statement>();
+		_expressions = new ArrayList<Expression>();
+		_initializers = new ArrayList<Expression>();
+		_methodInvocations = new ArrayList<SimpleName>();
+		_caughtExceptions = new ArrayList<SingleVariableDeclaration>();
 	}
 
 	// VariableDeclarations
@@ -194,7 +200,61 @@ public class CompilationUnitFacade {
 	public List<FieldDeclaration> getFieldDeclarations() {
 		return _fieldDeclarations;
 	}
+	
+	//Expressions
+	public void setExpressions(List<Expression> expressions) {
+		if (expressions != null) {
+			_expressions = expressions;
+		}
+	}
 
+	public void addExpression(Expression expression) {
+		if (expression != null) {
+			System.out.println(expression.getNodeType());
+			switch (expression.getNodeType()) {    
+//			Name
+//		    IntegerLiteral (includes decimal, hex, and octal forms; and long)
+//		    FloatingPointLiteral (includes both float and double)
+//		    CharacterLiteral
+//		    NullLiteral
+//		    BooleanLiteral
+//		    StringLiteral
+//		    TypeLiteral
+//		    ThisExpression
+//		    SuperFieldAccess
+//		    FieldAccess
+//		    Assignment
+			case (Expression.ASSIGNMENT) :
+				addInitializer(((Assignment)expression).getRightHandSide());
+				break;
+//		    ParenthesizedExpression
+//		    ClassInstanceCreation
+//		    ArrayCreation
+//		    ArrayInitializer
+//		    MethodInvocation
+			case (Expression.METHOD_INVOCATION) :
+				addMethodInvocation(((MethodInvocation)expression).getName());
+				break;
+//		    SuperMethodInvocation
+//		    ArrayAccess
+//		    InfixExpression
+//		    InstanceofExpression
+//		    ConditionalExpression
+//		    PostfixExpression
+//		    PrefixExpression
+//		    CastExpression
+//		    VariableDeclarationExpression
+			default: 
+				_expressions.add(expression);
+				break;
+			}
+		}
+	}
+	
+	public List<Expression> getExpressions() {
+		return _expressions;
+	}
+	
 	// Statements
 	public void setStatements(List<Statement> statements) {
 		_statements = statements;
@@ -224,6 +284,17 @@ public class CompilationUnitFacade {
 
 				break;
 			// TODO TryStatement
+			case (Statement.TRY_STATEMENT):
+				TryStatement tryStatement = (TryStatement)statement;
+				List<Statement> statements = (tryStatement.getBody().statements());
+				for (Statement childStatement : statements) {
+					addStatement(childStatement);
+				}
+				List<CatchClause> catchClauses = tryStatement.catchClauses();
+				for(CatchClause catchClause : catchClauses) {
+					addCaughtExceptions(catchClause.getException());
+				}
+				break;
 			// TODO SwitchStatement
 			// TODO SynchronizedStatement
 			// TODO ReturnStatement
@@ -234,13 +305,18 @@ public class CompilationUnitFacade {
 			// TODO BreakStatement
 			// TODO ContinueStatement
 			// TODO EmptyStatement
-			case (Statement.EXPRESSION_STATEMENT):
-				_expressionStatements.add((ExpressionStatement)statement);
-				break;
 			// TODO LabeledStatement
 			// TODO AssertStatement
+			case (Statement.EXPRESSION_STATEMENT):
+				addExpression(((ExpressionStatement)statement).getExpression());
+				break;
 			case (Statement.VARIABLE_DECLARATION_STATEMENT):
 				_variableDeclarationStatements.add((VariableDeclarationStatement)statement);
+				List<VariableDeclarationFragment> fragements = ((VariableDeclarationStatement)statement).fragments();
+				for (VariableDeclarationFragment fragment : fragements) {
+					_expressions.add(fragment.getInitializer());
+					
+				}
 				break;
 			case (Statement.TYPE_DECLARATION_STATEMENT):
 				_typeDeclarationStatements.add((TypeDeclarationStatement)statement);
@@ -289,8 +365,6 @@ public class CompilationUnitFacade {
 		// TODO BreakStatement
 		// TODO ContinueStatement
 		// TODO EmptyStatement
-		case (Statement.EXPRESSION_STATEMENT):
-			return _expressionStatements;
 		// TODO LabeledStatement
 		// TODO AssertStatement
 		case (Statement.VARIABLE_DECLARATION_STATEMENT):
@@ -304,5 +378,54 @@ public class CompilationUnitFacade {
 		}
 		return null;
 	}
+
+	//Initializers
+	public void setInitializers(List<Expression> initializers) {
+		_initializers = initializers;
+	}
+	
+	public void addInitializer(Expression initializer) {
+		if(initializer != null) {
+			_initializers.add(initializer);
+		}
+	}
+
+	public List<Expression> getInitializers() {
+		return _initializers;
+	}
+
+	//Method Invocations
+	public void setMethodInvocations(List<SimpleName> methodInvocations) {
+		_methodInvocations = methodInvocations;
+	}
+	
+	public void addMethodInvocation(SimpleName methodInvocation) {
+		if (methodInvocation != null) {
+		_methodInvocations.add(methodInvocation);
+		}
+	}
+
+	public List<SimpleName> getMethodInvocations() {
+		return _methodInvocations;
+	}
+
+	//Caught Exceptions
+	public void setCaughtExceptions(List<SingleVariableDeclaration> caughtExceptions) {
+		if(caughtExceptions != null) {
+		_caughtExceptions = caughtExceptions;
+		}
+	}
+	
+	public void addCaughtExceptions(SingleVariableDeclaration caughtException) {
+		if(caughtException != null) {
+			_caughtExceptions.add(caughtException);
+		}
+	}
+
+	public List<SingleVariableDeclaration> getCaughtExceptions() {
+		return _caughtExceptions;
+	}
+
+	
 
 }

@@ -13,6 +13,7 @@ import itjava.model.ResultCodeStore;
 import itjava.model.WordInfo;
 import itjava.presenter.WordInfoPresenter;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Before;
@@ -84,6 +85,30 @@ public class WordInfoPresenterTest {
 		WhenGetCodeInfoIsCalled();
 		ThenFacadeListHasOneFacade();
 	}
+	
+	@Test
+	public final void GivenFacadesHaveCommonInitializerInFirstFacade() {
+		GivenFiles();
+		WhenGetCodeInfoIsCalled();
+		ThenFacade0HasCommonInitializers();
+	}
+	
+	@Test
+	public final void GivenFacadesHaveCommonMethodInvocationsFacade() {
+		GivenFiles();
+		WhenGetCodeInfoIsCalled();
+		ThenFacade0And1HasCommonMethodInvocations();
+	}
+
+	private void ThenFacade0And1HasCommonMethodInvocations() {
+		assertTrue(_wordInfoPresenter.compilationUnitToMethodInvocationsMap.containsKey(_wordInfoPresenter.compilationUnitFacadeList.get(0)));
+		assertTrue(_wordInfoPresenter.compilationUnitToMethodInvocationsMap.containsKey(_wordInfoPresenter.compilationUnitFacadeList.get(1)));
+		assertTrue(_wordInfoPresenter.compilationUnitToMethodInvocationsMap.get(_wordInfoPresenter.compilationUnitFacadeList.get(0)).get(0).wordToBeBlanked.equals(_wordInfoPresenter.compilationUnitToMethodInvocationsMap.get(_wordInfoPresenter.compilationUnitFacadeList.get(1)).get(0).wordToBeBlanked));
+	}
+
+	private void ThenFacade0HasCommonInitializers() {
+		assertTrue(_wordInfoPresenter.compilationUnitToInitializersMap.get(_wordInfoPresenter.compilationUnitFacadeList.get(0)).size() >= 2);
+	}
 
 	private void GivenFiles() {
 		sourceCodes.add(ResultCodeStore
@@ -151,8 +176,7 @@ public class WordInfoPresenterTest {
 	}
 
 	private void ThenFacadeHasMethods() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0)
-				.getMethodDeclarations().size() > 0);
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getStatements(ASTNode.VARIABLE_DECLARATION_STATEMENT).size() > 0);
 	}
 
 	private void ThenFacadeHasOneImportDeclaration() {
