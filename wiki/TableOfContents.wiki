@@ -134,7 +134,7 @@ Involved program files:
 ----
 
 ==Delivering tutorial to students ?==
-*Status:* <font color=gray>Yet to begin</font>
+*Status:* <font color=orange>In Progress</font>
 
 *Input:* Apache Ant, Java file, compiled class file
 
