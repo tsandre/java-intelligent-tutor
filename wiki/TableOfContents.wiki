@@ -114,7 +114,7 @@ Involved program files:
 
 ----
 
-==Behavior recorder==
+==Behavior Recorder==
 *Status:* <font color=orange>In Progress</font>
 
 *Module Description:* Setting up behavior recorder mechanism
