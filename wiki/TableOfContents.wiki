@@ -127,7 +127,9 @@ Involved program files:
 
 *Story points:*
 
- * Needs to be automated.
+ * BRD file creation process needs to be automated eg. Using a batch file or from within a Java program.
+ * Need to check if the 'lib' folder containing jar files is generic and common for all files hosted in the webserver.
+ * Generate .jnlp file by programming.
 
 *Other Notes:*
 
