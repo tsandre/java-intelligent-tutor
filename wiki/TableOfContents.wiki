@@ -115,17 +115,22 @@ Involved program files:
 ----
 
 ==Behavior recorder==
-*Status:* <font color=gray>Yet to begin</font>
+*Status:* <font color=orange>In Progress</font>
 
-*Module Description:* Setting up behavior recorder mechanism.
+*Module Description:* Setting up behavior recorder mechanism
 
-*Involved program files:*
+*Involved program files:* CTAT, Apache Ant
 
-*Input:* This module will be called after...
+*Input:* This module will be called after the .java file and its corresponding compiled .class file is obtained.
 
-*Output:* It will ...
+*Output:* It will create a behavior recorder file (of extension .brd). This file contains complete information about how the tutor must respond to different inputs given by students for questions asked in the tutorial. The teacher can set different alert messages/hints to appear based on answers given to questions. 
 
 *Story points:*
+ * build.properties file in the CTAT deploy-tutor folder is edited with information regarding webserver to be used.
+ * Apache ant is installed and "ant clean deploy-jars" command is executed to remove all class files, jar files, source backups and copy jar files to their destination folder.
+ * After a set of Signing JAR messages transfer the entire tree of .jar files to the 'lib' folder in the webserver location.
+ * The second interactive Ant target is "ant build-only" which interactively asks for the path of various files needed (java, class and brd file) and builds it.
+ * After build is complete, a jar, jnlp and html file is created. These files are pasted into the webserver host location and is ready for anytime launch using Javawebstart.
 
 *Other Notes:*
 
