@@ -53,7 +53,7 @@
   * CodeSearchPresenter uses LinkStore.CreateLinks to store a String[] of urls returned by search engines. IMPLEMENT CreateLinks(). Basic structure is provided. <font color=blue size = 3>TO BE DONE</font>
   * The array of links is provided to ResultEntryStore.createResultEntryList(). This function should iterate through all the provided links and return an ArrayList < ResultEntry >. <font color=blue size = 3>TO BE DONE</font>
   * Identify initial pool of topics that can be deemed important by a Java tutor and search for topics using . Judge the relevance of the code samples returned for pedagogy. While doing so, note down observations regarding what makes a program fit to be a tutorial. eg. if a program has some standard Java API like Applet, File, etc. then it might serve as a better tutorial than some program that uses a lot of user defined classes.
-  * Based upon the observations devise an algorithm that will select 10 tutorial-fit samples from all the Result Feed Entries. <font color=red size=2>MOST IMP</font>
+  * Based upon the observations devise an algorithm that will select 10 tutorial-fit samples from all the Result Feed Entries.
 
   * Other Notes:*
 
