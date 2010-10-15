@@ -3,7 +3,7 @@ package itjava.model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public class ResultCodeStore {
+public class Convertor {
 
 	public static String FileToString(String fileSource) {
 		String fileContent = "";

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import itjava.model.CompilationUnitFacade;
-import itjava.model.ResultCodeStore;
+import itjava.model.Convertor;
 import itjava.model.WordInfo;
 import itjava.presenter.WordInfoPresenter;
 
@@ -111,21 +111,21 @@ public class WordInfoPresenterTest {
 	}
 
 	private void GivenFiles() {
-		sourceCodes.add(ResultCodeStore
+		sourceCodes.add(Convertor
 				.FileToString("samples/UseThisForTestingFacade_1.java"));
-		sourceCodes.add(ResultCodeStore
+		sourceCodes.add(Convertor
 				.FileToString("samples/UseThisForTestingFacade_2.java"));
-		sourceCodes.add(ResultCodeStore
+		sourceCodes.add(Convertor
 				.FileToString("samples/UseThisForTestingFacade_3.java"));
 	}
 
 	private void GivenInvalidFile() {
-		sourceCodes.add(ResultCodeStore
+		sourceCodes.add(Convertor
 				.FileToString("samples/UseThisForTestingFacade_4.java"));
 	}
 
 	private void GivenSingleFile() {
-		sourceCodes.add(ResultCodeStore
+		sourceCodes.add(Convertor
 				.FileToString("samples/UseThisForTestingFacade_1.java"));
 	}
 
