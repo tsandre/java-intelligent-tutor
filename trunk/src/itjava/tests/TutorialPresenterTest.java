@@ -145,8 +145,8 @@ public class TutorialPresenterTest {
 	private void ThenWidthIsPositive() {
 		String subStringCode = tutorial.tutorialCode
 				.substring(tutorial.tutorialCode
-						.indexOf("txtLine3Col7_out.setBounds(")
-						+ ("txtLine3Col7_out.setBounds(").length());
+						.indexOf("txtLine3Col7.setBounds(")
+						+ ("txtLine3Col7.setBounds(").length());
 		subStringCode = subStringCode.substring(0,
 				subStringCode.indexOf(')') - 1);
 		_bounds = subStringCode.split(",");
@@ -155,10 +155,10 @@ public class TutorialPresenterTest {
 
 	private void ThenLabelSyntaxHasPositiveIndices() {
 		assertTrue(tutorial.tutorialCode
-				.indexOf("lblLine3Col7_out = new pact.DorminWidgets.DorminLabel();") > 0);
+				.indexOf("lblLine3Col7 = new pact.DorminWidgets.DorminLabel();") > 0);
 		assertTrue(tutorial.tutorialCode
-				.indexOf("private pact.DorminWidgets.DorminLabel lblLine3Col7_out;") > 0);
-		assertTrue(tutorial.tutorialCode.indexOf("add(lblLine3Col7_out);") > 0);
+				.indexOf("private pact.DorminWidgets.DorminLabel lblLine3Col7;") > 0);
+		assertTrue(tutorial.tutorialCode.indexOf("add(lblLine3Col7);") > 0);
 	}
 
 	private void ThenNumberofParanthesisIsBalanced() {

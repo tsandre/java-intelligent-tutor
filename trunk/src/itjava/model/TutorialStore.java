@@ -10,6 +10,11 @@ public class TutorialStore {
 
 	public Tutorial tutorial;
 	public ArrayList<String> linesOfCode;
+
+	public void setLinesOfCode(ArrayList<String> linesOfCode) {
+		this.linesOfCode = Convertor.CleanArrayListOfString(linesOfCode);
+	}
+
 	public ArrayList<WordInfo> wordInfoList;
 
 	private ArrayList<String> _variableDeclarations;
@@ -99,13 +104,11 @@ public class TutorialStore {
 				DorminComponent dorminLabel = new DorminComponent();
 				width = restOfLine.length() * 8;
 				String lblName = "lblLine" + indexOfLinesOfCode
-				+ "Col" + currWordInfo.columnNumber + "_"
-				+ currWordInfo.wordToBeBlanked.trim();
+				+ "Col" + currWordInfo.columnNumber;
 				dorminLabel.Label(restOfLine, lblName, x + (8 * beginIndex) , y, height, width);
 				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
 				
-				String nameOfTextField = "txtLine" + indexOfLinesOfCode + "Col" + currWordInfo.columnNumber +
-						"_" + currWordInfo.wordToBeBlanked.trim();
+				String nameOfTextField = "txtLine" + indexOfLinesOfCode + "Col" + currWordInfo.columnNumber;
 				DorminComponent dorminText = new DorminComponent();
 				width = currWordInfo.wordLength() * 8;
 				dorminText.TextField(nameOfTextField, x + (8 * currWordInfo.columnNumber), y, height, width);
@@ -142,8 +145,7 @@ public class TutorialStore {
 			for (WordInfo wordInfo : wordInfoList) {
 
 				String variableName = "Line" + wordInfo.lineNumber
-						+ "Col" + wordInfo.columnNumber + "_"
-						+ wordInfo.wordToBeBlanked.trim();
+						+ "Col" + wordInfo.columnNumber;
 				
 				switch (wordInfo.blankType) {
 				case Text:

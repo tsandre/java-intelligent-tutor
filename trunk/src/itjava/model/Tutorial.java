@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Tutorial {
 	public String tutorialName;
-	public String tutorialCode;
+	public String tutorialCode = "";
 	public ArrayList<WordInfo> wordInfoList;
 	public ArrayList<String> linesOfCode;
 	public File tutorialClassFile;

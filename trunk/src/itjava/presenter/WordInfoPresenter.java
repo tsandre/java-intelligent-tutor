@@ -18,21 +18,27 @@ import org.eclipse.jdt.core.dom.Statement;
 public class WordInfoPresenter {
 
 	private HashMap<ArrayList<String>, ArrayList<WordInfo>> _codeToWordInfoMap;
+	
+	public HashMap<ArrayList<String>, ArrayList<WordInfo>> getCodeToWordInfoMap() {
+		return ( _codeToWordInfoMap == null ) ? (new HashMap<ArrayList<String>, ArrayList<WordInfo>>()) : _codeToWordInfoMap;
+	}
+	
+	public void setCodeToWordInfoMap(
+			HashMap<ArrayList<String>, ArrayList<WordInfo>> codeToWordInfoMap) {
+		_codeToWordInfoMap = codeToWordInfoMap;
+	}
+
 	public ArrayList<CompilationUnitFacade> compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
 	private ASTParser _astParser;
 	
 	public boolean hasCommonNodes;
 	
-	public HashMap<CompilationUnitFacade, List<WordInfo>> compilationUnitToImportDeclarationsMap;
-	public HashMap<CompilationUnitFacade, List<WordInfo>> compilationUnitToVariableDeclarationsMap;
-	public HashMap<CompilationUnitFacade, List<WordInfo>> compilationUnitToInitializersMap;
-	public HashMap<CompilationUnitFacade, List<WordInfo>> compilationUnitToMethodInvocationsMap;
+	public HashMap<CompilationUnitFacade, ArrayList<WordInfo>> totalHashMap;
+
 
 	public WordInfoPresenter() {
-		compilationUnitToImportDeclarationsMap = new HashMap<CompilationUnitFacade, List<WordInfo>>();
-		compilationUnitToVariableDeclarationsMap = new HashMap<CompilationUnitFacade, List<WordInfo>>();
-		compilationUnitToInitializersMap = new HashMap<CompilationUnitFacade, List<WordInfo>>();
-		compilationUnitToMethodInvocationsMap = new HashMap<CompilationUnitFacade, List<WordInfo>>();
+		totalHashMap = new HashMap<CompilationUnitFacade, ArrayList<WordInfo>>();
+
 	}
 
 	private static ASTParser InitParser(int kind, char[] source) {

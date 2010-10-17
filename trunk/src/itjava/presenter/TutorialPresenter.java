@@ -16,7 +16,7 @@ private TutorialStore _tutorialStore;
 	}
 
 	public Tutorial GetTutorial(String tutorialName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList) {
-		_tutorialStore.linesOfCode = exampleCode;
+		_tutorialStore.setLinesOfCode(exampleCode);
 		_tutorialStore.wordInfoList = ArrangeWordsAccordingToLineNumber(wordInfoList);
 		
 		return _tutorialStore.GenerateTutorial(tutorialName);

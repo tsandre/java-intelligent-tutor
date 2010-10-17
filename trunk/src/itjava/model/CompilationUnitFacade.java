@@ -13,7 +13,7 @@ public class CompilationUnitFacade {
 	private List<VariableDeclaration> _variableDeclarations;
 	private List<MethodDeclaration> _methodDeclarations;
 	private List<FieldDeclaration> _fieldDeclarations;
-	private List<String> _linesOfCode;
+	private ArrayList<String> _linesOfCode;
 	private List<Statement> _statements;
 	private List<Expression> _expressions;
 	private List<Statement> _variableDeclarationStatements;
@@ -25,30 +25,10 @@ public class CompilationUnitFacade {
 	private List<SingleVariableDeclaration> _caughtExceptions;
 
 	public void setLinesOfCode(String linesOfCode) {
-		ArrayList<Character> newLineCandidates = new ArrayList<Character>();
-		newLineCandidates.add('{');
-		newLineCandidates.add('}');
-		newLineCandidates.add(')');
-		newLineCandidates.add(';');
-
-		// TODO Perform indentation of source code
-		_linesOfCode = new ArrayList<String>();
-
-		char[] charsOfCode = linesOfCode.trim().toCharArray();
-		int length = charsOfCode.length;
-		int cursorPosition = 0;
-		int lastNewLinePosition = -1;
-		while (cursorPosition < length) {
-			if (newLineCandidates.contains(charsOfCode[cursorPosition])) {
-				_linesOfCode.add(linesOfCode.substring(1 + lastNewLinePosition,
-						1 + cursorPosition));
-				lastNewLinePosition = cursorPosition;
-			}
-			cursorPosition++;
-		}
+		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
 	}
 
-	public List<String> getLinesOfCode() {
+	public ArrayList<String> getLinesOfCode() {
 		return _linesOfCode;
 	}
 
@@ -210,7 +190,6 @@ public class CompilationUnitFacade {
 
 	public void addExpression(Expression expression) {
 		if (expression != null) {
-			System.out.println(expression.getNodeType());
 			switch (expression.getNodeType()) {    
 //			Name
 //		    IntegerLiteral (includes decimal, hex, and octal forms; and long)
