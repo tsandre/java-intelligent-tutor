@@ -1,0 +1,24 @@
+#summary Various references used for the research.
+
+= References =
+
+==Obstacles in learning API==
+_[http://doi.ieeecomputersociety.org/10.1109/MS.2009.193 What Makes APIs Hard to Learn? Answers from Developers]_
+
+50/74 people face problems related to resources for learning API
+Out of these :
+*40% do not find adequate examples*
+28% problems with documentation
+*18% No reference on how to use the API to accomplish a specific task*
+
+Notes about examples: 
+  * Examples help understand purpose of library, usage protocol and usage context.
+  * 3 types of code examples:
+    # *Snippets:* Few lines of code intended to demonstrate how to access the API. *Inadequacy*:  Cannot help in putting things together.
+    # *Tutorials:* multiple code segments forming a more or less complete application
+    # *Applications:* code segments from complex applications that can be downloaded from open source repositories. 
+  * *Users progressively move* from _snippets_ to _applications_ to support their needs. 
+  * People need examples for: 
+    # learning best practices
+    # design of code that uses the API
+    # rationale about API's design
