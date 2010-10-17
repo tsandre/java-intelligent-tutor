@@ -41,7 +41,7 @@ public class TutorialPresenterTest {
 		wordInfoList.add(wordInfo);
 
 		tutorial = tutorialPresenter.GetTutorial("SampleGUI", linesOfCode,
-				wordInfoList);
+				wordInfoList, "blank source");
 		assertEquals(null, tutorial);
 	}
 
@@ -181,7 +181,7 @@ public class TutorialPresenterTest {
 
 	private void WhenGetTutorialIsCalled() {
 		tutorial = tutorialPresenter.GetTutorial("SystemClass", linesOfCode,
-				wordInfoList);
+				wordInfoList, "blank source");
 	}
 
 	private void GivenValidWordInfoList() {

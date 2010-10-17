@@ -34,7 +34,7 @@ public class TutorialStore {
 		_buttonVariables = new ArrayList<String>();
 	}
 	
-	public Tutorial GenerateTutorial(String tutorialName) {
+	public Tutorial GenerateTutorial(String tutorialName, String sourceUrl) {
 		this.tutorial = new Tutorial();
 		if (this.linesOfCode == null || this.linesOfCode.size() == 0) {
 			System.err.println("Input param for GenerateTutorial are NULL");
@@ -45,6 +45,7 @@ public class TutorialStore {
 		CreateInitComponentsFunction();
 
 		tutorial.tutorialName = tutorialName;
+		tutorial.sourceUrl = sourceUrl;
 		tutorial.AddComment("Tutor created automatically by TutorialStore");
 
 		tutorial.AppendCode(TutorialTemplate.packageDeclaration);

@@ -15,11 +15,11 @@ private TutorialStore _tutorialStore;
 		_tutorialStore = new TutorialStore();
 	}
 
-	public Tutorial GetTutorial(String tutorialName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList) {
+	public Tutorial GetTutorial(String tutorialName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList, String sourceUrl) {
 		_tutorialStore.setLinesOfCode(exampleCode);
 		_tutorialStore.wordInfoList = ArrangeWordsAccordingToLineNumber(wordInfoList);
 		
-		return _tutorialStore.GenerateTutorial(tutorialName);
+		return _tutorialStore.GenerateTutorial(tutorialName, sourceUrl);
 	}
 
 	private ArrayList<WordInfo> ArrangeWordsAccordingToLineNumber(

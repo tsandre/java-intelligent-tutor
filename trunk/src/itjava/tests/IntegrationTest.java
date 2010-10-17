@@ -52,7 +52,7 @@ public class IntegrationTest {
 				.entrySet()) {
 			tutorialPresenter = new TutorialPresenter();
 			Tutorial tutorial = tutorialPresenter.GetTutorial(
-					"SampleGUI" + (i), entrySet.getKey(), entrySet.getValue());
+					"SampleGUI" + (i), entrySet.getKey(), entrySet.getValue(), "sourceUrl");
 			tutorialList.add(tutorial);
 		}
 
