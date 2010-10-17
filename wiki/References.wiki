@@ -1,6 +1,22 @@
 #summary Various references used for the research.
+= Notes while using different APIs used in the project =
+  * Programmer Bob "thinks" he might need a certain object from the API. He knows that kind of object exists because he searched for similar phrases and found that such a thing exists in form of a class in the API. 
+  * *Spiral path (or trap) of API documentation: *For example, Bob wants to find all the lines of code in a program wherein a method on an object was invoked. He assumes, to achieve this, I need to iterate through all the statements of the source code using the API, i.e. Eclipse jdt API. He searches for "how to parse statements using eclipse jdt" and finds that there is a class called _"Statement"_ in the API. On creating an object of class _"Statement"_ he find a multitude of options provided by the class. Then he searched "how to get the type of Statement in eclipse jdt". He found that there are various types of _"ASTNode"_ objects that represent various types of statements like _"ExpressionStatement, "VariableDeclarationStatement"_ ..etc.. But there was no hint to methods. After reading the names and one line description of all the types of statements, he decided that calling methods might be a part of "ExpressionStatement". Now this class was a concrete class unlike the earlier 2 which were only _abstract_ classes. Even _"ExpressionStatement"_ did not refer to anything related to calling a method. The only useful property of the class seemed to be _"getExpression()"_ which returned _"Expression"_. On reading the description carefully he noted that _"ExpressionStatement"_ class is used only to convert an _"Expression"_ to a _"Statement"_. So he went ahead and looked into details of _"Expression"_. This class again was an abstract class, but the description was succinct in noting the several _types_ of _"Expression"_. And finally he found _"MethodInvocation"_ as a type of _"Expression"_. So now he can deduce the path of searching a method call from a given statements. 
+_Statement_ --> (*.getNodeType()*) --> _ExpressionStatement_ --> (*.getExpression()*) --> _Expression_ --> (*.getNodeType()*) --> _MethodInvocation_ 
 
-= References =
+  * * Simpler path of following an example : *Even after all the research he knew how to convert a type _Statement_ into a _MethodInvocation_. But the basic question was how to obtain the _Statement_ s from actual source code. How to parse the actual thing? On searching he found another bunch of classes like _"ASTParser"_. Unlike most classes, to create an _ASTParser_  he had to call a static method _"ASTParser.newParser()"_ with a some parameter, instead of calling a constructor. On searching again about how to create parser in eclipse jdt he was referred to an example which passed in _AST.JLS3_. Without thinking he passed the same too. The example also mentioned other common settings required to set a new _"ASTParser"_. The example mentioned setting _KIND_ of the parser by _setKind_ . Since Bob had earlier discovered a class called _Statement_ he chose the option _K_STATEMENT_ for _setKind_. 
+
+The example : 
+_
+ ASTParser parser = ASTParser.newParser(AST.JLS3);  <br/>
+ parser.setKind(ASTParser.K_COMPILATION_UNIT); <br/>
+ parser.setSource(unit); // set source <br/>
+ parser.setResolveBindings(true); // we need bindings later on <br/>
+ return (CompilationUnit) parser.createAST(null); // parse  <br/>
+_
+
+Although this example did not explain the exact way to get _Statement_ s it at least led to a path much easier to follow than the earlier case wherein Bob was travelling in a spiral path.
+= Other References =
 
 ==Obstacles in learning API==
 _[http://doi.ieeecomputersociety.org/10.1109/MS.2009.193 What Makes APIs Hard to Learn? Answers from Developers]_
