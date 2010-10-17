@@ -114,11 +114,11 @@ Involved program files:
 *Output:* It will create a source code file that can be fed to CTAT for Java, which will eventually open it as a tutorial.
 
 *Involved program files:*
-/build/src/itjava/model/Tutorial.java
-/build/src/itjava/model/TutorialStore.java
-/build/src/itjava/model/WordInfo.java
-/build/src/itjava/presenter/TutorialPresenter.java
-/build/src/itjava/tests/TutorialPresenterTest.java
+  * /build/src/itjava/model/Tutorial.java
+  * /build/src/itjava/model/TutorialStore.java
+  * /build/src/itjava/model/WordInfo.java
+  * /build/src/itjava/presenter/TutorialPresenter.java
+  * /build/src/itjava/tests/TutorialPresenterTest.java
 
 *Story points:*
   * The static fields of the CTAT-GUI source code file should be sought from a static class or from a text file for enabling changes in future. Identify these static fields and create required architecture. <font color=green size=3> DONE </font>
