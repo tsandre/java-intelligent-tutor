@@ -38,3 +38,8 @@ Notes about examples:
     # learning best practices
     # design of code that uses the API
     # rationale about API's design
+
+==Problems in Teaching Java==
+_[http://jtf.acm.org/rationale/rationale.pdf The ACM Java Task Force Rationale]_
+  * Although the language itself is simple to teach, the large number of APIs provided results in conceptual overload for students and teachers alike. With newer releases of Java, this problem is unlikely to be resolved due to newer additions of APIs.
+  * 
