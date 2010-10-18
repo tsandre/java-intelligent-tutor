@@ -10,3 +10,4 @@
     * *[http://code.google.com/webtoolkit/doc/latest/tutorial/create.html GWT: Making remote procedure Calls]* 
     * *[http://code.google.com/p/support/wiki/WikiSyntax Maintaining the wiki]* 
     * *[http://agile.csc.ncsu.edu/SEMaterials/tutorials/subclipse Help with SVN plugin for eclipse]*
+  * *[References Notes]*
