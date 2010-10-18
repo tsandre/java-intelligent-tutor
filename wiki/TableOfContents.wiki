@@ -149,7 +149,10 @@ Involved program files:
 
 *Story points:*
 
- * BRD file creation process needs to be automated eg. Using a batch file or from within a Java program. <font color=blue size = 3>TO BE DONE</font>
+ * BRD file creation process needs to be automated eg. Using a batch file or from within a Java program. As a first step, identify the bits and pieces of information that constitutes the .brd file. Make a list of nodes in the .brd file that represent the blank fields, messages, error words, error messages AND redundant code that can be replicated for all the .brd files. <font color=blue size = 3>TO BE DONE</font>
+  * Given a _HashMap<*WordInfo*, ArrayList<*ErrorObject*>>_, write a java program that will fill in the nodes of the *.brd* file that stand for the blank nodes. See the details of _WordInfo_ from the package *itjava.model.WordInfo*. From the observations in point 1, create a concrete class _ErrorObject_ (or whatever name is suitable) that will denote the incorrect answers entered by the teacher and respective error message. <font color=blue size = 3>TO BE DONE</font>
+  * Tweak the java program to be more modular and easier to extend for future additions. <font color=gray size = 1>Not a priority</font>
+
 
 
 *Other Notes:*
