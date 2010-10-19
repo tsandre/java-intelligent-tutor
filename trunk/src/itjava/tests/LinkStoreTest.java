@@ -10,7 +10,7 @@ public class LinkStoreTest {
 	private String _query;
 	private HashSet<String> _setOfLinks;
 	
-	@Test
+	@Testt
 	public void ResultsReturnedByLinkStoreAreValidURLs() {
 		GivenSearchQuery();
 		WhenLinkStoreIsExecuted();
