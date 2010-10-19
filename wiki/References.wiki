@@ -42,4 +42,5 @@ Notes about examples:
 ==Problems in Teaching Java==
 _[http://jtf.acm.org/rationale/rationale.pdf The ACM Java Task Force Rationale]_
   * Although the language itself is simple to teach, the large number of APIs provided results in conceptual overload for students and teachers alike. With newer releases of Java, this problem is unlikely to be resolved due to newer additions of APIs.
-  * 
+  * The ACM task force decided a subset of APIs that are fit for Introductory class to programming by choosing a few APIs that would support different pedagogical strategies.
+  * Other findings in the paper concentrate more on specific language or API issues, for eg. static, Wrapper, complexity of Graphics model and GUI. 
