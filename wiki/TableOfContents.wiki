@@ -61,7 +61,7 @@
 
 ==Suggesting words to hide==
 
-*Status:* <font color=orange>In Progress</font>
+*Status:* <font color=green size=3>DONE</font>
 
 *Module Description:* Identifying the words of code to be hidden for tutorial. This decision will be based on the query made by the teacher and the code returned by the code crawler module.
 
@@ -74,13 +74,14 @@
 *Story points:*
   * Understand the working of AST API. Work with sample files to produce AST and save various nodes of a source code in an easily accessible form. Enable addition of new node types for future. <font color=green size=3> DONE </font>
   * Based on the query OR common nodes, decide a strategy to find words to be blanked. Apply this strategy to multiple examples to verify sanity of the approach. Currently finding common nodes in :
-    * Import declarations
-    * Method invocations
-    * Variable declaration
-    * Variable initialization
+    * Import declarations 
+    * Method invocations (example : socket.*close*();)
+    * Variable declaration ( *ServerSocket* ss;)
+    * Class instance creation ( ss = _new_ *ServerSocket*(0); )
+    * Property Assignment ( len = intArr.*length*; )
  <font color=green size=3> DONE </font>
   * Send the list of words and the respective source code to tutorial generation GUI subsystem. Verify whether the integration of these 2 modules work. <font color=green size=3> DONE </font>
-  * Maintain and improvise on the list mentioned in point 2 above. <font color=blue size = 3>TO BE DONE</font>
+
 
 *Other Notes:*
 
