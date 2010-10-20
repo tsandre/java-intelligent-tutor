@@ -61,7 +61,7 @@
 
 ==Suggesting words to hide==
 
-*Status:* <font color=green size=3>DONE</font>
+*Status:* <font color=green size=3> DONE </font>
 
 *Module Description:* Identifying the words of code to be hidden for tutorial. This decision will be based on the query made by the teacher and the code returned by the code crawler module.
 
@@ -79,7 +79,8 @@
     * Variable declaration ( *ServerSocket* ss;)
     * Class instance creation ( ss = _new_ *ServerSocket*(0); )
     * Property Assignment ( len = intArr.*length*; )
- <font color=green size=3> DONE </font>
+<font color=green size=3> DONE </font>
+
   * Send the list of words and the respective source code to tutorial generation GUI subsystem. Verify whether the integration of these 2 modules work. <font color=green size=3> DONE </font>
 
 
