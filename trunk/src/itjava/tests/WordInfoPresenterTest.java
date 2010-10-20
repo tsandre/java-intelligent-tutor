@@ -99,6 +99,21 @@ public class WordInfoPresenterTest {
 		WhenGetCodeInfoIsCalled();
 		ThenFacade0And1HasCommonMethodInvocations();
 	}
+	
+	@Test
+	public final void DoWhileExpressionTest() {
+		GivenFile("samples/UseThisForTestingFacade_5.java");
+		WhenGetCodeInfoIsCalled();
+		ThenStatementsInDoLoopAreNoted();
+	}
+
+	private void ThenStatementsInDoLoopAreNoted() {
+		_wordInfoPresenter.compilationUnitFacadeList.get(0).getVariableDeclarations();
+	}
+
+	private void GivenFile(String fileName) {
+		sourceCodes.add(Convertor.FileToString(fileName));
+	}
 
 	private void ThenFacade0And1HasCommonMethodInvocations() {
 		assertTrue(_wordInfoPresenter.totalHashMap.containsKey(_wordInfoPresenter.compilationUnitFacadeList.get(0)));

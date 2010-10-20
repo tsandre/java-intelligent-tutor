@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 public class WordInfoStore {
@@ -57,11 +58,11 @@ public class WordInfoStore {
 	}
 	
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			Expression initializer) {
+			Type classInstanceType) {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
-		wordInfoStore._wordInfo.wordToBeBlanked = initializer.toString();
-		System.out.println("Initializer pos: " + initializer.getStartPosition());
-		wordInfoStore.createWordInfo(initializer);
+		wordInfoStore._wordInfo.wordToBeBlanked = classInstanceType.toString();
+		System.out.println("Class Instance pos: " + classInstanceType.getStartPosition());
+		wordInfoStore.createWordInfo(classInstanceType);
 		return wordInfoStore._wordInfo;
 	}
 	

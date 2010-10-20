@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
@@ -79,7 +80,7 @@ public class CompilationUnitStore {
 		HashMap<ArrayList<String>, ArrayList<WordInfo>> codeToWordInfoMap = wordInfoPresenter.getCodeToWordInfoMap();
 		HashSet<String> commonImports = new HashSet<String> ();
 		HashSet<String> commonVariableDeclarationStatements = new HashSet<String> ();
-		HashSet<String> commonInitializers = new HashSet<String>();
+		HashSet<String> commonClassInstances = new HashSet<String>();
 		HashSet<String> commonMethodInvocations = new HashSet<String>();
 		
 		boolean commonFound = false;
@@ -138,31 +139,31 @@ public class CompilationUnitStore {
 		
 		// Variable decl END
 		
-		//Find common Initializers
-		HashSet<String> allInitializers = new HashSet<String>();
+		//Find class instance creations
+		HashSet<String> allClassInstances = new HashSet<String>();
 		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (Expression currInitializer : currFacade.getInitializers()) {
-				if (allInitializers.contains(currInitializer.toString())) {
-					commonInitializers.add(currInitializer.toString());
+			for (Type currClassInstance : currFacade.getClassInstances()) {
+				if (allClassInstances.contains(currClassInstance.toString())) {
+					commonClassInstances.add(currClassInstance.toString());
 					commonFound = true;
 				}
-				allInitializers.add(currInitializer.toString());
+				allClassInstances.add(currClassInstance.toString());
 			}
 		}
 		
 		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (Expression currInitializer : currFacade.getInitializers()) {
-				if (commonInitializers.contains(currInitializer.toString())) {
-					ArrayList<WordInfo> previouslyFoundCommonInitializerWords = totalHashMap.get(currFacade);
-					if(previouslyFoundCommonInitializerWords == null){
-						previouslyFoundCommonInitializerWords = new ArrayList<WordInfo>();
+			for (Type currClassInstance : currFacade.getClassInstances()) {
+				if (commonClassInstances.contains(currClassInstance.toString())) {
+					ArrayList<WordInfo> previouslyFoundCommonClassInstanceWords = totalHashMap.get(currFacade);
+					if(previouslyFoundCommonClassInstanceWords == null){
+						previouslyFoundCommonClassInstanceWords = new ArrayList<WordInfo>();
 					}
-					previouslyFoundCommonInitializerWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(),currInitializer));
-					totalHashMap.put(currFacade, previouslyFoundCommonInitializerWords);
+					previouslyFoundCommonClassInstanceWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(),currClassInstance));
+					totalHashMap.put(currFacade, previouslyFoundCommonClassInstanceWords);
 				}
 			}
 		}
-		//Initializers END
+		//class instance creations END
 		
 		//Find common method invocations
 		HashSet<String> allMethodInvocations = new HashSet<String>();
@@ -191,11 +192,6 @@ public class CompilationUnitStore {
 		}
 		//Method Invocation END
 		
-		
-/*		totalHashMap.putAll(compilationUnitToMethodInvocationsMap);
-		totalHashMap.putAll(compilationUnitToInitializersMap);
-		totalHashMap.putAll(compilationUnitToVariableDeclarationsMap);
-		totalHashMap.putAll(compilationUnitToImportDeclarationsMap);*/
 		
 		for (Entry<CompilationUnitFacade, ArrayList<WordInfo>> entrySet :  totalHashMap.entrySet()) {
 			codeToWordInfoMap.put(entrySet.getKey().getLinesOfCode(), entrySet.getValue());

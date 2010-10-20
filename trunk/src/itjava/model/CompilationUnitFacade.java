@@ -20,9 +20,10 @@ public class CompilationUnitFacade {
 	private List<Statement> _typeDeclarationStatements;
 	private List<Statement> _superConstructorInvocations;
 	private List<Statement> _constructorInvocations;
-	private List<Expression> _initializers;
+	private List<Expression> _assignments;
 	private List<SimpleName> _methodInvocations;
 	private List<SingleVariableDeclaration> _caughtExceptions;
+	private List<Type> _classInstances;
 
 	public void setLinesOfCode(String linesOfCode) {
 		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
@@ -46,9 +47,10 @@ public class CompilationUnitFacade {
 		_superConstructorInvocations = new ArrayList<Statement>();
 		_constructorInvocations = new ArrayList<Statement>();
 		_expressions = new ArrayList<Expression>();
-		_initializers = new ArrayList<Expression>();
+		_assignments = new ArrayList<Expression>();
 		_methodInvocations = new ArrayList<SimpleName>();
 		_caughtExceptions = new ArrayList<SingleVariableDeclaration>();
+		setClassInstances(new ArrayList<Type>());
 	}
 
 	// VariableDeclarations
@@ -204,10 +206,14 @@ public class CompilationUnitFacade {
 //		    FieldAccess
 //		    Assignment
 			case (Expression.ASSIGNMENT) :
-				addInitializer(((Assignment)expression).getRightHandSide());
+				addExpression(((Assignment)expression).getRightHandSide());
 				break;
 //		    ParenthesizedExpression
 //		    ClassInstanceCreation
+			case (Expression.CLASS_INSTANCE_CREATION):
+				ClassInstanceCreation classInstanceCreation = (ClassInstanceCreation) expression;
+				addClassInstances(classInstanceCreation.getType());
+				break;
 //		    ArrayCreation
 //		    ArrayInitializer
 //		    MethodInvocation
@@ -217,6 +223,9 @@ public class CompilationUnitFacade {
 //		    SuperMethodInvocation
 //		    ArrayAccess
 //		    InfixExpression
+			case (Expression.INFIX_EXPRESSION) :
+				//expression like: (a==b) :Do nothing
+				break;
 //		    InstanceofExpression
 //		    ConditionalExpression
 //		    PostfixExpression
@@ -242,13 +251,22 @@ public class CompilationUnitFacade {
 	public void addStatement(Statement statement) {
 		if (statement != null) {
 			switch (statement.getNodeType()) {
-			// TODO IfStatement
-			case (Statement.IF_STATEMENT):
-
+			case (Statement.BLOCK):
+				List<Statement> blockStatements = ((Block)statement).statements();
+				for(Statement childStatement : blockStatements) {
+					addStatement(childStatement);
+				}
 				break;
-			// TODO ForStatement
-			case (Statement.FOR_STATEMENT):
 
+			case (Statement.IF_STATEMENT):
+				IfStatement ifStatement = (IfStatement)statement;
+				addStatement(ifStatement.getThenStatement());
+				addStatement(ifStatement.getElseStatement());
+				addExpression(ifStatement.getExpression());
+				break;
+
+			case (Statement.FOR_STATEMENT):
+				
 				break;
 			// TODO EnhancedForStatement
 			case (Statement.ENHANCED_FOR_STATEMENT):
@@ -260,13 +278,15 @@ public class CompilationUnitFacade {
 				break;
 			// TODO DoStatement
 			case (Statement.DO_STATEMENT):
-
+				DoStatement doStatement = (DoStatement)statement;
+				addStatement(doStatement.getBody());
+				addExpression(doStatement.getExpression());
 				break;
 			// TODO TryStatement
 			case (Statement.TRY_STATEMENT):
 				TryStatement tryStatement = (TryStatement)statement;
-				List<Statement> statements = (tryStatement.getBody().statements());
-				for (Statement childStatement : statements) {
+				List<Statement> tryStatementBlock = tryStatement.getBody().statements();
+				for (Statement childStatement : tryStatementBlock) {
 					addStatement(childStatement);
 				}
 				List<CatchClause> catchClauses = tryStatement.catchClauses();
@@ -281,9 +301,17 @@ public class CompilationUnitFacade {
 
 				break;
 			// TODO ThrowStatement
+			case (Statement.THROW_STATEMENT):
+				ThrowStatement throwStatement = (ThrowStatement) statement;
+				addExpression(throwStatement.getExpression());
+				break;
 			// TODO BreakStatement
 			// TODO ContinueStatement
-			// TODO EmptyStatement
+
+			case (Statement.EMPTY_STATEMENT):
+				//DO nothing here
+				break;
+			
 			// TODO LabeledStatement
 			// TODO AssertStatement
 			case (Statement.EXPRESSION_STATEMENT):
@@ -358,19 +386,19 @@ public class CompilationUnitFacade {
 		return null;
 	}
 
-	//Initializers
-	public void setInitializers(List<Expression> initializers) {
-		_initializers = initializers;
+	//Assignments
+	public void setAssignments(List<Expression> assignments) {
+		_assignments = assignments;
 	}
 	
-	public void addInitializer(Expression initializer) {
-		if(initializer != null) {
-			_initializers.add(initializer);
+	public void addAssignment(Expression assignment) {
+		if(assignment != null) {
+			_assignments.add(assignment);
 		}
 	}
 
-	public List<Expression> getInitializers() {
-		return _initializers;
+	public List<Expression> getAssignments() {
+		return _assignments;
 	}
 
 	//Method Invocations
@@ -403,6 +431,23 @@ public class CompilationUnitFacade {
 
 	public List<SingleVariableDeclaration> getCaughtExceptions() {
 		return _caughtExceptions;
+	}
+
+	//Class Instance creations
+	public void setClassInstances(List<Type> classInstances) {
+		if(classInstances != null) {
+			_classInstances = classInstances;
+		}
+	}
+	
+	public void addClassInstances(Type classInstance) {
+		if (classInstance != null) {
+			_classInstances.add(classInstance);
+		}
+	}
+
+	public List<Type> getClassInstances() {
+		return _classInstances;
 	}
 
 	
