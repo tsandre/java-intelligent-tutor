@@ -55,7 +55,7 @@ public class TutorialStore {
 		tutorial.AppendCode(TutorialTemplate.importDeclaration);
 		tutorial.AppendCode(TutorialTemplate.classDeclaration(tutorialName));
 		tutorial.AppendCode(TutorialTemplate.mainFunctionDeclaration(tutorialName));
-		tutorial.AppendCode(_initComponentFunctionDeclaration); //Generated in CreateXYZ() above
+		tutorial.AppendCode(_initComponentFunctionDeclaration); //Generated in CreateInitComp..() above
 		for (String variableDeclaration : _variableDeclarations) {
 			tutorial.AppendCode(variableDeclaration);
 		}
