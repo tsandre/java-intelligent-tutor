@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Name;
@@ -122,6 +123,14 @@ public class CompilationUnitStore {
 				}
 				allVariableDeclarations.add(((VariableDeclarationStatement)currVariableDeclarationStatement).getType().toString());
 			}
+			for (FieldDeclaration currFieldDeclaration : currFacade.getFieldDeclarations()) {
+				if (allVariableDeclarations.contains(((FieldDeclaration)currFieldDeclaration).getType().toString())) {
+					commonVariableDeclarationStatements.add(((FieldDeclaration)currFieldDeclaration).getType().toString());
+					commonFound = true;
+				}
+				allVariableDeclarations.add(((FieldDeclaration)currFieldDeclaration).getType().toString());
+			}
+			
 		}
 		
 		for (CompilationUnitFacade currFacade : _facadeList) {
@@ -132,6 +141,16 @@ public class CompilationUnitStore {
 						previouslyFoundCommonVariableDeclarationStatementWords = new ArrayList<WordInfo>();
 					}
 					previouslyFoundCommonVariableDeclarationStatementWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(),currVariableDeclarationStatement));
+					totalHashMap.put(currFacade, previouslyFoundCommonVariableDeclarationStatementWords);
+				}
+			}
+			for (FieldDeclaration currFieldDeclaration : currFacade.getFieldDeclarations()) {
+				if (commonVariableDeclarationStatements.contains(((FieldDeclaration)currFieldDeclaration).getType().toString())) {
+					ArrayList<WordInfo> previouslyFoundCommonVariableDeclarationStatementWords = totalHashMap.get(currFacade);
+					if(previouslyFoundCommonVariableDeclarationStatementWords == null){
+						previouslyFoundCommonVariableDeclarationStatementWords = new ArrayList<WordInfo>();
+					}
+					previouslyFoundCommonVariableDeclarationStatementWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(),currFieldDeclaration));
 					totalHashMap.put(currFacade, previouslyFoundCommonVariableDeclarationStatementWords);
 				}
 			}

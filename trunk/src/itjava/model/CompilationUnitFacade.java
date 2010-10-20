@@ -173,8 +173,12 @@ public class CompilationUnitFacade {
 
 	public void addAllFields(FieldDeclaration[] fieldDeclarations) {
 		if (fieldDeclarations != null && fieldDeclarations.length > 0) {
-			for (FieldDeclaration field : fieldDeclarations) {
-				_fieldDeclarations.add(field);
+			for (FieldDeclaration fieldDeclaration : fieldDeclarations) {
+				_fieldDeclarations.add(fieldDeclaration);
+				List<VariableDeclarationFragment> fragements = fieldDeclaration.fragments();
+				for (VariableDeclarationFragment fragment : fragements) {
+					_expressions.add(fragment.getInitializer());
+				}
 			}
 		}
 	}
@@ -322,7 +326,6 @@ public class CompilationUnitFacade {
 				List<VariableDeclarationFragment> fragements = ((VariableDeclarationStatement)statement).fragments();
 				for (VariableDeclarationFragment fragment : fragements) {
 					_expressions.add(fragment.getInitializer());
-					
 				}
 				break;
 			case (Statement.TYPE_DECLARATION_STATEMENT):

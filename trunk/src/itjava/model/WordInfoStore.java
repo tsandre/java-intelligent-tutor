@@ -2,10 +2,12 @@ package itjava.model;
 
 import itjava.data.BlankType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
@@ -30,6 +32,8 @@ public class WordInfoStore {
 				System.out.println("Current line: " + currLine);
 				System.out.println("Substring: " + currLine.substring(currLine.trim().indexOf(_wordInfo.wordToBeBlanked)));
 				System.out.println("Index of word: " + currLine.indexOf(_wordInfo.wordToBeBlanked));
+				//TODO Bug: when the wordToBeBlanked was "close", for the function .close();
+				//It was found that in line closeable.close(), the first 4 letters of closeable were blanked out since that was the indexOf("close").
 				_wordInfo.lineNumber = lineNumber + 1;
 				_wordInfo.blankType = BlankType.Text;
 				_wordInfo.columnNumber = currLine.trim().indexOf(_wordInfo.wordToBeBlanked);
@@ -45,7 +49,6 @@ public class WordInfoStore {
 		System.out.println("VariableDeclaration pos: " + statement.getStartPosition());
 		wordInfoStore.createWordInfo(statement);
 		return wordInfoStore._wordInfo;
-		
 	}
 
 	public static WordInfo createWordInfo(List<String> linesOfCode,
@@ -72,6 +75,15 @@ public class WordInfoStore {
 		wordInfoStore._wordInfo.wordToBeBlanked = methodInvocation.getFullyQualifiedName();
 		System.out.println("Initializer pos: " + methodInvocation.getStartPosition());
 		wordInfoStore.createWordInfo(methodInvocation);
+		return wordInfoStore._wordInfo;
+	}
+
+	public static WordInfo createWordInfo(ArrayList<String> linesOfCode,
+			FieldDeclaration fieldDeclaration) {
+		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
+		wordInfoStore._wordInfo.wordToBeBlanked = ((FieldDeclaration)fieldDeclaration).getType().toString();
+		System.out.println("Field Declaration pos: " + fieldDeclaration.getStartPosition());
+		wordInfoStore.createWordInfo(fieldDeclaration);
 		return wordInfoStore._wordInfo;
 	}
 }
