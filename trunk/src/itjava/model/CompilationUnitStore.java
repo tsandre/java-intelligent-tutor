@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
@@ -66,9 +67,6 @@ public class CompilationUnitStore {
 		_facade = new CompilationUnitFacade();
 		_facade.setLinesOfCode(sourceCode);
 
-		//	TODO	Is it possible to convert VariableDeclaration, FieldDeclaration &
-		// 		VariableDeclarationStatement into one Type for facade
-		
 		_statements = block.statements();
 		for (Statement statement : _statements) {
 			_facade.addStatement(statement);
@@ -83,6 +81,7 @@ public class CompilationUnitStore {
 		HashSet<String> commonVariableDeclarationStatements = new HashSet<String> ();
 		HashSet<String> commonClassInstances = new HashSet<String>();
 		HashSet<String> commonMethodInvocations = new HashSet<String>();
+		HashSet<String> commonPropertyAssignments = new HashSet<String>();
 		
 		boolean commonFound = false;
 		HashMap<CompilationUnitFacade, ArrayList<WordInfo>> totalHashMap = wordInfoPresenter.totalHashMap;
@@ -170,6 +169,7 @@ public class CompilationUnitStore {
 			}
 		}
 		
+		
 		for (CompilationUnitFacade currFacade : _facadeList) {
 			for (Type currClassInstance : currFacade.getClassInstances()) {
 				if (commonClassInstances.contains(currClassInstance.toString())) {
@@ -188,7 +188,6 @@ public class CompilationUnitStore {
 		HashSet<String> allMethodInvocations = new HashSet<String>();
 		for (CompilationUnitFacade currFacade : _facadeList) {
 			for (SimpleName currMethodInvocation : currFacade.getMethodInvocations()) {
-				System.out.println("Method.parent" + currMethodInvocation.getParent().toString());
 				if (allMethodInvocations.contains(currMethodInvocation.toString())) {
 					commonMethodInvocations.add(currMethodInvocation.toString());
 					commonFound = true;
@@ -210,6 +209,32 @@ public class CompilationUnitStore {
 			}
 		}
 		//Method Invocation END
+		
+		//Find common qualified Names
+		HashSet<String> allPropertyAssignments = new HashSet<String>();
+		for (CompilationUnitFacade currFacade : _facadeList) {
+			for (QualifiedName currPropertyAssignment : currFacade.getQualifiedNames()) {
+				if (allPropertyAssignments.contains(currPropertyAssignment.getName().toString())) {
+					commonPropertyAssignments.add(currPropertyAssignment.getName().toString());
+					commonFound = true;
+				}
+				allPropertyAssignments.add(currPropertyAssignment.getName().toString());
+			}
+		}
+		
+		for (CompilationUnitFacade currFacade : _facadeList) {
+			for (QualifiedName currPropertyAssignment : currFacade.getQualifiedNames()) {
+				if (commonPropertyAssignments.contains(currPropertyAssignment.toString())) {
+					ArrayList<WordInfo> previouslyFoundCommonPropertyAssignmentWords = totalHashMap.get(currFacade);
+					if(previouslyFoundCommonPropertyAssignmentWords == null){
+						previouslyFoundCommonPropertyAssignmentWords = new ArrayList<WordInfo>();
+					}
+					previouslyFoundCommonPropertyAssignmentWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(), currPropertyAssignment));
+					totalHashMap.put(currFacade, previouslyFoundCommonPropertyAssignmentWords);
+				}
+			}
+		}
+		//qualified Names END
 		
 		
 		for (Entry<CompilationUnitFacade, ArrayList<WordInfo>> entrySet :  totalHashMap.entrySet()) {

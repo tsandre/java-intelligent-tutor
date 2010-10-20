@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
@@ -84,6 +85,15 @@ public class WordInfoStore {
 		wordInfoStore._wordInfo.wordToBeBlanked = ((FieldDeclaration)fieldDeclaration).getType().toString();
 		System.out.println("Field Declaration pos: " + fieldDeclaration.getStartPosition());
 		wordInfoStore.createWordInfo(fieldDeclaration);
+		return wordInfoStore._wordInfo;
+	}
+
+	public static WordInfo createWordInfo(ArrayList<String> linesOfCode,
+			QualifiedName currPropertyAssignment) {
+		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
+		wordInfoStore._wordInfo.wordToBeBlanked = currPropertyAssignment.getName().toString();
+		System.out.println("Initializer pos: " + currPropertyAssignment.getStartPosition());
+		wordInfoStore.createWordInfo(currPropertyAssignment);
 		return wordInfoStore._wordInfo;
 	}
 }

@@ -106,9 +106,21 @@ public class WordInfoPresenterTest {
 		WhenGetCodeInfoIsCalled();
 		ThenStatementsInDoLoopAreNoted();
 	}
+	
+	@Test
+	public final void SwitchCaseTest() {
+		GivenFile("samples/UseThisForTestingFacade_6.java");
+		WhenGetCodeInfoIsCalled();
+		ThenStatementsInSwitchCasesAreNoted();
+	}
+	
+
+	private void ThenStatementsInSwitchCasesAreNoted() {
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodInvocations().size() == 11);
+	}
 
 	private void ThenStatementsInDoLoopAreNoted() {
-		_wordInfoPresenter.compilationUnitFacadeList.get(0).getVariableDeclarations();
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodInvocations().size() == 1);
 	}
 
 	private void GivenFile(String fileName) {

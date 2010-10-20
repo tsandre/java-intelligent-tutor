@@ -1,5 +1,8 @@
 package itjava.model;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -57,8 +60,21 @@ public class TutorialStore {
 			tutorial.AppendCode(variableDeclaration);
 		}
 		tutorial.AppendCode(TutorialTemplate.endClassDeclaration);
-
+		SaveTutorialFile();
 		return this.tutorial;
+	}
+
+	private void SaveTutorialFile() {
+		tutorial.path = "C:/Program Files/Cognitive Tutor Authoring Tools/Projects/generated/SampleGUI0.java" + tutorial.tutorialName + ".java";
+		BufferedWriter writer;
+		try {
+			writer = new BufferedWriter(new FileWriter(tutorial.path));
+			writer.write(tutorial.tutorialCode);
+			writer.close();
+		} catch (IOException e) {
+			System.err.println("Error saving tutorial file..");
+			e.printStackTrace();
+		}
 	}
 
 	private void CreateInitComponentsFunction() {

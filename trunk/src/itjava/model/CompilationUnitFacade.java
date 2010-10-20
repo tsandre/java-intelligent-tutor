@@ -24,6 +24,7 @@ public class CompilationUnitFacade {
 	private List<SimpleName> _methodInvocations;
 	private List<SingleVariableDeclaration> _caughtExceptions;
 	private List<Type> _classInstances;
+	private List<QualifiedName> _qualifiedNames;
 
 	public void setLinesOfCode(String linesOfCode) {
 		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
@@ -50,7 +51,8 @@ public class CompilationUnitFacade {
 		_assignments = new ArrayList<Expression>();
 		_methodInvocations = new ArrayList<SimpleName>();
 		_caughtExceptions = new ArrayList<SingleVariableDeclaration>();
-		setClassInstances(new ArrayList<Type>());
+		_classInstances = new ArrayList<Type>();
+		setQualifiedNames(new ArrayList<QualifiedName>());
 	}
 
 	// VariableDeclarations
@@ -198,6 +200,10 @@ public class CompilationUnitFacade {
 		if (expression != null) {
 			switch (expression.getNodeType()) {    
 //			Name
+			case (Expression.QUALIFIED_NAME) :
+				addQualifiedName((QualifiedName)expression);
+				break;
+				
 //		    IntegerLiteral (includes decimal, hex, and octal forms; and long)
 //		    FloatingPointLiteral (includes both float and double)
 //		    CharacterLiteral
@@ -208,10 +214,12 @@ public class CompilationUnitFacade {
 //		    ThisExpression
 //		    SuperFieldAccess
 //		    FieldAccess
+				
 //		    Assignment
 			case (Expression.ASSIGNMENT) :
 				addExpression(((Assignment)expression).getRightHandSide());
 				break;
+				
 //		    ParenthesizedExpression
 //		    ClassInstanceCreation
 			case (Expression.CLASS_INSTANCE_CREATION):
@@ -222,7 +230,12 @@ public class CompilationUnitFacade {
 //		    ArrayInitializer
 //		    MethodInvocation
 			case (Expression.METHOD_INVOCATION) :
-				addMethodInvocation(((MethodInvocation)expression).getName());
+				MethodInvocation methodInvocation = (MethodInvocation) expression;
+				addMethodInvocation(methodInvocation.getName());
+				for(Expression argument : (List<Expression>)methodInvocation.arguments()) {
+					addExpression(argument);
+				}
+				
 				break;
 //		    SuperMethodInvocation
 //		    ArrayAccess
@@ -270,23 +283,35 @@ public class CompilationUnitFacade {
 				break;
 
 			case (Statement.FOR_STATEMENT):
+				ForStatement forStatement = (ForStatement) statement;
+				addStatement(forStatement.getBody());
+				for(Expression initExpression : (List<Expression>)forStatement.initializers()) {
+					addExpression(initExpression);
+				}
+				for(Expression updateExpression : (List<Expression>) forStatement.updaters()) {
+					addExpression(updateExpression);
+				}
+				break;
 				
-				break;
-			// TODO EnhancedForStatement
 			case (Statement.ENHANCED_FOR_STATEMENT):
-
+				EnhancedForStatement enhancedForStatement = (EnhancedForStatement) statement;
+				addStatement(enhancedForStatement.getBody());
+				addExpression(enhancedForStatement.getExpression());
+				//TODO : FormalParameter i.e in statement "for(int a : b)" the part "int a"
 				break;
-			// TODO WhileStatement
+				
 			case (Statement.WHILE_STATEMENT):
-
+				WhileStatement whileStatement = (WhileStatement) statement;
+				addStatement(whileStatement.getBody());
+				addExpression(whileStatement.getExpression());
 				break;
-			// TODO DoStatement
+
 			case (Statement.DO_STATEMENT):
 				DoStatement doStatement = (DoStatement)statement;
 				addStatement(doStatement.getBody());
 				addExpression(doStatement.getExpression());
 				break;
-			// TODO TryStatement
+
 			case (Statement.TRY_STATEMENT):
 				TryStatement tryStatement = (TryStatement)statement;
 				List<Statement> tryStatementBlock = tryStatement.getBody().statements();
@@ -298,17 +323,26 @@ public class CompilationUnitFacade {
 					addCaughtExceptions(catchClause.getException());
 				}
 				break;
-			// TODO SwitchStatement
-			// TODO SynchronizedStatement
-			// TODO ReturnStatement
-			case (Statement.RETURN_STATEMENT):
-
+				
+			case (Statement.SWITCH_STATEMENT):
+				SwitchStatement switchStatement = (SwitchStatement) statement;
+				addExpression(switchStatement.getExpression());
+				for (Statement switchCase : (List<Statement>)switchStatement.statements()) {
+					addStatement(switchCase);
+				}
 				break;
-			// TODO ThrowStatement
+			// TODO SynchronizedStatement
+				
+			case (Statement.RETURN_STATEMENT):
+				ReturnStatement returnStatement = (ReturnStatement) statement;
+				addExpression(returnStatement.getExpression());
+				break;
+				
 			case (Statement.THROW_STATEMENT):
 				ThrowStatement throwStatement = (ThrowStatement) statement;
 				addExpression(throwStatement.getExpression());
 				break;
+				
 			// TODO BreakStatement
 			// TODO ContinueStatement
 
@@ -451,6 +485,23 @@ public class CompilationUnitFacade {
 
 	public List<Type> getClassInstances() {
 		return _classInstances;
+	}
+
+	//Qualified Names : properties of objects/classes in use
+	public void setQualifiedNames(List<QualifiedName> qualifiedNames) {
+		if (qualifiedNames != null) {
+			_qualifiedNames = qualifiedNames;
+		}
+	}
+	
+	public void addQualifiedName(QualifiedName qualifiedName) {
+		if(qualifiedName != null) {
+			_qualifiedNames.add(qualifiedName);
+		}
+	}
+
+	public List<QualifiedName> getQualifiedNames() {
+		return _qualifiedNames;
 	}
 
 	

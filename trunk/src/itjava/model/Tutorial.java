@@ -12,6 +12,7 @@ public class Tutorial {
 	public File tutorialClassFile;
 	public int difficultyLevel;
 	public String sourceUrl = "";
+	public String path = "";
 	
 	public void AppendCode(String currLineOfCode) {
 		this.tutorialCode += currLineOfCode + "\n";
