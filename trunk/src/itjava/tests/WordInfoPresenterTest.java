@@ -116,7 +116,7 @@ public class WordInfoPresenterTest {
 	
 
 	private void ThenStatementsInSwitchCasesAreNoted() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodInvocations().size() == 11);
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodInvocations().size() == 10);
 	}
 
 	private void ThenStatementsInDoLoopAreNoted() {

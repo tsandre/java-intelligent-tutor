@@ -1,5 +1,6 @@
 package itjava.model;
 
+import itjava.data.TFVector;
 import itjava.presenter.WordInfoPresenter;
 
 import java.util.ArrayList;
@@ -72,6 +73,16 @@ public class CompilationUnitStore {
 			_facade.addStatement(statement);
 		}
 		return _facade;
+	}
+	
+	public void FindSimilarCompilationUnits(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
+		Repository repository = RepositoryStore.UpdateRepository(compilationUnitFacadeList);
+		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
+			facade.setTFVector(repository);
+		}
+		//TODO ArrayList<TFIDFVector> tfidfVectorList = foreach (facade){TFIDFStore.createTFIDFVector(facade)}
+
+		//TODO HashMap<CompilationUnitFacade, ArrayList<WordInfo>> tutorialReadyMap = FindCosineSimilar(tfidfVectorList, 10);
 	}
 
 	public static boolean FindCommonDeclaration(WordInfoPresenter wordInfoPresenter){
@@ -210,7 +221,10 @@ public class CompilationUnitStore {
 		}
 		//Method Invocation END
 		
-		//Find common qualified Names
+		/*
+		 * Find common qualified Names : eg. char arr[] abc; abc.length;
+		 * Here length is the one you are looking for.
+		*/
 		HashSet<String> allPropertyAssignments = new HashSet<String>();
 		for (CompilationUnitFacade currFacade : _facadeList) {
 			for (QualifiedName currPropertyAssignment : currFacade.getQualifiedNames()) {

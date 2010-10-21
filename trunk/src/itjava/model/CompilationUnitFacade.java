@@ -1,6 +1,10 @@
 package itjava.model;
 
+import itjava.data.NodeToCompare;
+import itjava.data.TFVector;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
@@ -26,6 +30,8 @@ public class CompilationUnitFacade {
 	private List<Type> _classInstances;
 	private List<QualifiedName> _qualifiedNames;
 
+	private TFVector _tfVector;
+	
 	public void setLinesOfCode(String linesOfCode) {
 		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
 	}
@@ -52,7 +58,7 @@ public class CompilationUnitFacade {
 		_methodInvocations = new ArrayList<SimpleName>();
 		_caughtExceptions = new ArrayList<SingleVariableDeclaration>();
 		_classInstances = new ArrayList<Type>();
-		setQualifiedNames(new ArrayList<QualifiedName>());
+		_qualifiedNames = new ArrayList<QualifiedName>();
 	}
 
 	// VariableDeclarations
@@ -503,7 +509,20 @@ public class CompilationUnitFacade {
 	public List<QualifiedName> getQualifiedNames() {
 		return _qualifiedNames;
 	}
-
 	
+	//Term frequency settings
+	
+	/**
+	 * For setting a TFVector, pass a {@link Repository} object that contains all the required
+	 * dictionary terms of each type (eg. importTerms, methodInvocationTerms)
+	 * @param repository
+	 */
+	public void setTFVector(Repository repository) {
+		_tfVector = TFStore.GetTF(this, repository);
+	}
+
+	public TFVector getTFVector() {
+		return _tfVector;
+	}
 
 }
