@@ -1,18 +1,57 @@
 package itjava.tests;
 
-import java.net.URL;
+//import java.net.URL;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 
-import com.google.gdata.client.codesearch.CodeSearchService;
-import com.google.gdata.data.codesearch.CodeSearchEntry;
-import com.google.gdata.data.codesearch.CodeSearchFeed;
+import itjava.presenter.*;
+import itjava.model.*;
+
+//import com.google.gdata.client.codesearch.CodeSearchService;
+//import com.google.gdata.data.codesearch.CodeSearchEntry;
+//import com.google.gdata.data.codesearch.CodeSearchFeed;
 
 public class CodeSearchTest {
 
 	@Test
 	public void CodeSearchReturnsEntries() {
 		try {
+			CodeSearchPresenter newCodePresenter = new CodeSearchPresenter("Scanner%20Java%20example");
+			//ArrayList<String> currLinks = new ArrayList<String>();
+			//String[] myLinks = newCodePresenter.ShowLinks();
+			//for(int i=0;i<myLinks.length;i++){
+			//	currLinks.add(myLinks[i]);
+			//	System.out.println(myLinks[i]);
+			//}
+			//ResultEntryStore myEntryStore = new ResultEntryStore(currLinks);
+			//ArrayList<ResultEntry> myResults = new ArrayList<ResultEntry>();
+			//myResults = myEntryStore.getResults();
+			ArrayList<ResultEntry> entries = newCodePresenter.SearchNext();
+			for(int i=0;i<entries.size();i++){
+				System.out.println("///////////////" + i + "///////////////////\n");
+				System.out.println(entries.get(i).text);
+			}
+			
+			ArrayList<ResultEntry> entries2 = newCodePresenter.SearchNext();
+			for(int i=0;i<entries2.size();i++){
+				System.out.println("///////////////" + i + "-" + 2 + "///////////////////\n");
+				System.out.println(entries2.get(i).text);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		/*try {
+			
 			CodeSearchService codeSearchService = new CodeSearchService(
 					"exampleCo-exampleApp-1");
 
@@ -37,7 +76,7 @@ public class CodeSearchTest {
 				System.out.println("\tPackage: ");
 				System.out.println("\t\t Name:" + entry.getPackage().getName());
 				System.out.println("\t\t URI:" + entry.getPackage().getUri());
-				/*entry.getPackage().generate(xmlWriter,
+				entry.getPackage().generate(xmlWriter,
 						codesearchService.getExtensionProfile());
 				System.out.println("XML: ");
 				writer.flush();
@@ -57,12 +96,12 @@ public class CodeSearchTest {
 					System.out.println("XML: ");
 					writer.flush();
 					System.out.println("");
-				}*/
+				}
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+*/
 	}
 }
