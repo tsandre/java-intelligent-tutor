@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.Statement;
 public class WordInfoPresenter {
 
 	private HashMap<ArrayList<String>, ArrayList<WordInfo>> _codeToWordInfoMap;
+	public CompilationUnitStore compilationUnitStore;
 	
 	public HashMap<ArrayList<String>, ArrayList<WordInfo>> getCodeToWordInfoMap() {
 		return ( _codeToWordInfoMap == null ) ? (new HashMap<ArrayList<String>, ArrayList<WordInfo>>()) : _codeToWordInfoMap;
@@ -38,7 +39,7 @@ public class WordInfoPresenter {
 
 	public WordInfoPresenter() {
 		totalHashMap = new HashMap<CompilationUnitFacade, ArrayList<WordInfo>>();
-
+		compilationUnitStore = new CompilationUnitStore();
 	}
 
 	private static ASTParser InitParser(int kind, char[] source) {
@@ -58,7 +59,7 @@ public class WordInfoPresenter {
 				_astParser = InitParser(ASTParser.K_COMPILATION_UNIT, currFile.toCharArray());
 				CompilationUnit cUnit = (CompilationUnit)_astParser.createAST(null);
 				if (cUnit.toString() != null && cUnit.toString().length() > 0) {
-					CompilationUnitFacade compilationUnitFacade = CompilationUnitStore
+					CompilationUnitFacade compilationUnitFacade = compilationUnitStore
 							.createCompilationUnitFacade(cUnit, currFile);
 					compilationUnitFacadeList.add(compilationUnitFacade);
 					break;
@@ -67,7 +68,7 @@ public class WordInfoPresenter {
 				Block block = (Block)_astParser.createAST(null);
 				if (block.toString() != null
 						&& block.toString().length() > 0) {
-					CompilationUnitFacade compilationUnitFacade = CompilationUnitStore
+					CompilationUnitFacade compilationUnitFacade = compilationUnitStore
 							.createCompilationUnitFacade(block, currFile);
 					compilationUnitFacadeList.add(compilationUnitFacade);
 					break;
@@ -75,12 +76,13 @@ public class WordInfoPresenter {
 			}
 			while (false);
 		}
-		FindCommonNodes(compilationUnitFacadeList);
+		FindCommonNodes();
+		compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList);
 		return _codeToWordInfoMap;
 	}
 
-	private void FindCommonNodes(ArrayList<CompilationUnitFacade> compilationUnitList) {
-		hasCommonNodes = CompilationUnitStore.FindCommonDeclaration(this);
+	private void FindCommonNodes() {
+		hasCommonNodes = compilationUnitStore.FindCommonDeclaration(this);
 	}
 
 }

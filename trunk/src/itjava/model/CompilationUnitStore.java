@@ -32,8 +32,9 @@ public class CompilationUnitStore {
 	
 	private static CompilationUnitFacade _facade;
 	private static List<CompilationUnitFacade> _facadeList;
+	public Repository repository;
 	
-	public static CompilationUnitFacade createCompilationUnitFacade(
+	public CompilationUnitFacade createCompilationUnitFacade(
 			CompilationUnit compilationUnit, String sourceCode) {
 				
 		_facade = new CompilationUnitFacade();
@@ -64,7 +65,7 @@ public class CompilationUnitStore {
 		return _facade;
 	}
 	
-	public static CompilationUnitFacade createCompilationUnitFacade(Block block, String sourceCode) {
+	public CompilationUnitFacade createCompilationUnitFacade(Block block, String sourceCode) {
 		_facade = new CompilationUnitFacade();
 		_facade.setLinesOfCode(sourceCode);
 
@@ -76,16 +77,17 @@ public class CompilationUnitStore {
 	}
 	
 	public void FindSimilarCompilationUnits(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
-		Repository repository = RepositoryStore.UpdateRepository(compilationUnitFacadeList);
+		repository = RepositoryStore.UpdateRepository(compilationUnitFacadeList);
 		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
 			facade.setTFVector(repository);
+			System.out.println("Class Instances: " + facade.getTFVector().classInstancesTF);
+			System.out.println("Method Invocations: " + facade.getTFVector().methodInvoationsTF);
+			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);
 		}
-		//TODO ArrayList<TFIDFVector> tfidfVectorList = foreach (facade){TFIDFStore.createTFIDFVector(facade)}
-
 		//TODO HashMap<CompilationUnitFacade, ArrayList<WordInfo>> tutorialReadyMap = FindCosineSimilar(tfidfVectorList, 10);
 	}
 
-	public static boolean FindCommonDeclaration(WordInfoPresenter wordInfoPresenter){
+	public boolean FindCommonDeclaration(WordInfoPresenter wordInfoPresenter){
 		_facadeList = wordInfoPresenter.compilationUnitFacadeList;
 		HashMap<ArrayList<String>, ArrayList<WordInfo>> codeToWordInfoMap = wordInfoPresenter.getCodeToWordInfoMap();
 		HashSet<String> commonImports = new HashSet<String> ();

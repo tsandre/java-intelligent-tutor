@@ -10,6 +10,7 @@ import java.util.List;
 
 import itjava.model.CompilationUnitFacade;
 import itjava.model.Convertor;
+import itjava.model.Repository;
 import itjava.model.WordInfo;
 import itjava.presenter.WordInfoPresenter;
 
@@ -114,6 +115,35 @@ public class WordInfoPresenterTest {
 		ThenStatementsInSwitchCasesAreNoted();
 	}
 	
+	@Test
+	public final void RepositoryCreationTest() {
+		GivenFiles();
+		WhenGetCodeInfoIsCalled();
+		ThenRepositoryHasOneOccurrenceOfExistingTerms();
+	}
+	
+
+	private void ThenRepositoryHasOneOccurrenceOfExistingTerms() {
+		Repository testRepository = _wordInfoPresenter.compilationUnitStore.repository;
+		for (int value : testRepository.classInstanceTerms.values()) {
+			assertTrue(value <= 3);
+		}
+		for (int value : testRepository.importTerms.values()) {
+			assertTrue(value <= 3);
+		}
+		for (int value : testRepository.methodInvocationTerms.values()) {
+			assertTrue(value <= 3);
+		}
+		for (int value : testRepository.propertyAssignmentTerms.values()) {
+			assertTrue(value <= 3);
+		}
+		for (int value : testRepository.superTypeTerms.values()) {
+			assertTrue(value <= 3);
+		}
+		for (int value : testRepository.variableDeclarationTerms.values()) {
+			assertTrue(value <= 3);
+		}
+	}
 
 	private void ThenStatementsInSwitchCasesAreNoted() {
 		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodInvocations().size() == 10);

@@ -4,7 +4,7 @@
 package itjava.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * @author Aniket
@@ -13,19 +13,21 @@ import java.util.HashMap;
 public class Repository {
 	public ArrayList<CompilationUnitFacade> allDocuments;
 	
-	public HashMap<String, Integer> importTerms;
-	public HashMap<String, Integer> superTypeTerms;
-	public HashMap<String, Integer> variableDeclarationTerms;
-	public HashMap<String, Integer> classInstanceTerms;
-	public HashMap<String, Integer> methodInvocationTerms;
-	public HashMap<String, Integer> propertyAssignmentTerms;
+	public TreeMap<String, Integer> importTerms;
+	public TreeMap<String, Integer> superTypeTerms;
+	public TreeMap<String, Integer> variableDeclarationTerms;
+	public TreeMap<String, Integer> classInstanceTerms;
+	public TreeMap<String, Integer> methodInvocationTerms;
+	public TreeMap<String, Integer> propertyAssignmentTerms;
 	
 	public Repository() {
-		importTerms = new HashMap<String, Integer>();
-		superTypeTerms = new HashMap<String, Integer>();
-		variableDeclarationTerms = new HashMap<String, Integer>();
-		classInstanceTerms = new HashMap<String, Integer>();
-		methodInvocationTerms = new HashMap<String, Integer>();
-		propertyAssignmentTerms = new HashMap<String, Integer>();
+		allDocuments = new ArrayList<CompilationUnitFacade>();
+		
+		importTerms = new TreeMap<String, Integer>();
+		superTypeTerms = new TreeMap<String, Integer>();
+		variableDeclarationTerms = new TreeMap<String, Integer>();
+		classInstanceTerms = new TreeMap<String, Integer>();
+		methodInvocationTerms = new TreeMap<String, Integer>();
+		propertyAssignmentTerms = new TreeMap<String, Integer>();
 	}
 }

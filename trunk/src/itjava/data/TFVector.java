@@ -3,26 +3,26 @@
  */
 package itjava.data;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * @author Aniket
  *
  */
 public class TFVector {
-	public HashMap<String, Float> importDeclarationsTF;
-	public HashMap<String, Float> superTypeTF;
-	public HashMap<String, Float> variableDeclarationsTF;
-	public HashMap<String, Float> classInstancesTF;
-	public HashMap<String, Float> methodInvoationsTF;
-	public HashMap<String, Float> propertyAssignmentsTF;
+	public TreeMap<String, TFIDF> importDeclarationsTF;
+	public TreeMap<String, TFIDF> superTypeTF;
+	public TreeMap<String, TFIDF> variableDeclarationsTF;
+	public TreeMap<String, TFIDF> classInstancesTF;
+	public TreeMap<String, TFIDF> methodInvoationsTF;
+	public TreeMap<String, TFIDF> propertyAssignmentsTF;
 	
 	public TFVector() {
-		importDeclarationsTF = new HashMap<String, Float>();
-		superTypeTF = new HashMap<String, Float>();
-		variableDeclarationsTF = new HashMap<String, Float>();
-		classInstancesTF = new HashMap<String, Float>();
-		methodInvoationsTF = new HashMap<String, Float>();
-		propertyAssignmentsTF = new HashMap<String, Float>();
+		importDeclarationsTF = new TreeMap<String, TFIDF>();
+		superTypeTF = new TreeMap<String, TFIDF>();
+		variableDeclarationsTF = new TreeMap<String, TFIDF>();
+		classInstancesTF = new TreeMap<String, TFIDF>();
+		methodInvoationsTF = new TreeMap<String, TFIDF>();
+		propertyAssignmentsTF = new TreeMap<String, TFIDF>();
 	}
 }

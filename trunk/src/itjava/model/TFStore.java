@@ -3,7 +3,8 @@
  */
 package itjava.model;
 
-import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ImportDeclaration;
@@ -13,6 +14,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import itjava.data.NodeToCompare;
+import itjava.data.TFIDF;
 import itjava.data.TFVector;
 
 /**
@@ -21,8 +23,10 @@ import itjava.data.TFVector;
  */
 public class TFStore {
 	static TFVector _tfVector;
+	static Repository _repository;
 
-	public static TFVector GetTF(CompilationUnitFacade facade) {
+	public static TFVector GetTF(CompilationUnitFacade facade, Repository repository) {
+		_repository = repository;
 		if (facade.getTFVector() == null) {
 			_tfVector = new TFVector();
 		}
@@ -44,13 +48,17 @@ public class TFStore {
 	 * @param CompilationUnitFacade facade
 	 * @param NodeToCompare typeOfNode
 	 */
-	private static HashMap<String, Float> GetTF(CompilationUnitFacade facade, NodeToCompare nodeToCompare) {
-		HashMap<String, Float> tfMap = new HashMap<String, Float>();
+	private static TreeMap<String,TFIDF> GetTF(CompilationUnitFacade facade, NodeToCompare nodeToCompare) {
+		TreeMap<String, TFIDF> tfMap = new TreeMap<String, TFIDF>();
 		switch (nodeToCompare) {
 		case ImportDeclaration :
+			for(String keyTerm: _repository.importTerms.keySet()) {
+				tfMap.put(keyTerm, new TFIDF(0,0,0,0));
+			}
 			List<ImportDeclaration> importDeclarations = facade.getImportDeclarations();
 			for (ImportDeclaration importDeclaration : importDeclarations) {
-				tfMap.put(importDeclaration.getName().getFullyQualifiedName(), (float) (1/importDeclarations.size()));
+				String importTerm = importDeclaration.getName().getFullyQualifiedName();
+				tfMap.put(importTerm, new TFIDF(1, importDeclarations.size(), _repository.importTerms.get(importTerm), _repository.allDocuments.size()));
 			}
 			break;
 			
@@ -59,31 +67,40 @@ public class TFStore {
 			break;
 			
 		case VariableDeclaration : 
+			for(String keyTerm: _repository.variableDeclarationTerms.keySet()) {
+				tfMap.put(keyTerm, new TFIDF(0,0,0,0));
+			}
 			List<Statement> statements = facade.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT);
 			float totalVariableDeclarations = statements.size();
 			for (Statement statement : statements) {
 				VariableDeclarationStatement variableDeclarationStatement = (VariableDeclarationStatement) statement;
 				String variableType = variableDeclarationStatement.getType().toString();
-				float variableCount = 1 + ((tfMap.get(variableType) == null) ? 0 : 1);
-				tfMap.put(variableType, variableCount/totalVariableDeclarations);
+				float variableCount = 1 + ((tfMap.get(variableType) == null) ? 0 : tfMap.get(variableType).GetNumOfOccurrences());
+				tfMap.put(variableType, new TFIDF(variableCount, totalVariableDeclarations, _repository.variableDeclarationTerms.get(variableType), _repository.allDocuments.size()));
 			}
 			break;
 			
 		case ClassInstanceCreator : 
+			for(String keyTerm: _repository.classInstanceTerms.keySet()) {
+				tfMap.put(keyTerm, new TFIDF(0,0,0,0));
+			}
 			List<Type> classInstances = facade.getClassInstances();
 			float totalClassInstances = classInstances.size();
 			for (Type classInstance: classInstances) {
-				float variableCount = 1 + ((tfMap.get(classInstance.toString()) == null) ? 0 : 1);
-				tfMap.put(classInstance.toString(), variableCount/totalClassInstances);
+				float variableCount = 1 + ((tfMap.get(classInstance.toString()) == null) ? 0 : tfMap.get(classInstance.toString()).GetNumOfOccurrences());
+				tfMap.put(classInstance.toString(), new TFIDF(variableCount, totalClassInstances, _repository.classInstanceTerms.get(classInstance.toString()), _repository.allDocuments.size()));
 			}
 			break;
 			
 		case MethodInvocation : 
+			for(String keyTerm: _repository.methodInvocationTerms.keySet()) {
+				tfMap.put(keyTerm, new TFIDF(0,0,0,0));
+			}
 			List<SimpleName> methodInvocations = facade.getMethodInvocations();
 			float totalMethodInvocations = methodInvocations.size();
 			for (SimpleName methodInvocation : methodInvocations) {
-				float variableCount = 1 + ((tfMap.get(methodInvocation.toString()) == null) ? 0 : 1);
-				tfMap.put(methodInvocation.toString(), variableCount/totalMethodInvocations);
+				float variableCount = 1 + ((tfMap.get(methodInvocation.toString()) == null) ? 0 : tfMap.get(methodInvocation.toString()).GetNumOfOccurrences());
+				tfMap.put(methodInvocation.toString(), new TFIDF(variableCount, totalMethodInvocations, _repository.methodInvocationTerms.get(methodInvocation.toString()), _repository.allDocuments.size()));
 			}
 			break;
 			
@@ -93,4 +110,5 @@ public class TFStore {
 		}
 		return tfMap;
 	}
+
 }
