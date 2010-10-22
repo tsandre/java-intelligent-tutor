@@ -2,6 +2,7 @@ package itjava.model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 
 public class Convertor {
@@ -21,6 +22,23 @@ public class Convertor {
 			e.printStackTrace();
 		}
 		return fileContent;
+	}
+	
+	public static String FormatCode(String rawCode) {
+		String formattedCode = "";
+		try {
+			BufferedReader bReader = new BufferedReader(new StringReader(rawCode));
+			String currLine = bReader.readLine();
+			while (currLine != null) {
+				if (!currLine.trim().startsWith("//")) {
+					formattedCode += currLine;
+				}
+				currLine = bReader.readLine();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return formattedCode;
 	}
 	
 	public static ArrayList<String> StringToArrayListOfStrings(String linesOfCode) {
@@ -47,7 +65,7 @@ public class Convertor {
 		return _linesOfCode;
 	}
 
-	public static ArrayList<String> CleanArrayListOfString(
+	public static ArrayList<String> TrimArrayListOfString(
 			ArrayList<String> linesOfCode) {
 		ArrayList<String> _linesOfCode = new ArrayList<String>();
 		for (String line : linesOfCode) {

@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
@@ -35,10 +36,11 @@ public class LinkStore {
 	private static ArrayList<String> YahooSearch() {
 		ArrayList<String> yahooSearchResults = new ArrayList<String>();
 		// TODO Populate googleSearchResults with url strings
-		String request = "http://boss.yahooapis.com/ysearch/web/v1/"
-				+ _query
-				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf&format=xml&count=50";
 		try {
+			String request = "http://boss.yahooapis.com/ysearch/web/v1/"
+				+ URLEncoder.encode(_query, "UTF-8")
+				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf&format=xml&count=50";
+		
 			URL url = new URL(request);
 			System.out.println("Host : " + url.getHost());
 			url.openConnection();

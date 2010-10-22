@@ -31,6 +31,7 @@ public class CompilationUnitFacade {
 	private List<QualifiedName> _qualifiedNames;
 
 	private TFVector _tfVector;
+	private String _url;
 	
 	public void setLinesOfCode(String linesOfCode) {
 		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
@@ -523,6 +524,14 @@ public class CompilationUnitFacade {
 
 	public TFVector getTFVector() {
 		return _tfVector;
+	}
+
+	public void setUrl(String url) {
+		_url = url;
+	}
+	
+	public String getUrl() {
+		return _url;
 	}
 
 }

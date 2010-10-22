@@ -2,6 +2,7 @@ package itjava.presenter;
 
 import itjava.model.CompilationUnitFacade;
 import itjava.model.CompilationUnitStore;
+import itjava.model.ResultEntry;
 import itjava.model.WordInfo;
 
 import java.util.ArrayList;
@@ -50,39 +51,39 @@ public class WordInfoPresenter {
 		return astParser;
 	}
 	
-	public HashMap<ArrayList<String>, ArrayList<WordInfo>> GetCodeToWordInfoMap(
-			String query, ArrayList<String> resultEntryList) {
+	public HashMap<ArrayList<String>, ArrayList<WordInfo>> GenerateWordInfoMap(
+			String query, ArrayList<ResultEntry> resultEntryList) {
 
-		for (String currFile : resultEntryList) {
+		for (ResultEntry resultEntry : resultEntryList) {
 			
 			do {
-				_astParser = InitParser(ASTParser.K_COMPILATION_UNIT, currFile.toCharArray());
+				_astParser = InitParser(ASTParser.K_COMPILATION_UNIT, resultEntry.text.toCharArray());
 				CompilationUnit cUnit = (CompilationUnit)_astParser.createAST(null);
 				if (cUnit.toString() != null && cUnit.toString().length() > 0) {
 					CompilationUnitFacade compilationUnitFacade = compilationUnitStore
-							.createCompilationUnitFacade(cUnit, currFile);
+							.createCompilationUnitFacade(cUnit, resultEntry.text);
+					compilationUnitFacade.setUrl(resultEntry.url);
 					compilationUnitFacadeList.add(compilationUnitFacade);
 					break;
 				}
-				_astParser = InitParser(ASTParser.K_STATEMENTS, currFile.toCharArray());
+				_astParser = InitParser(ASTParser.K_STATEMENTS, resultEntry.text.toCharArray());
 				Block block = (Block)_astParser.createAST(null);
-				if (block.toString() != null
-						&& block.toString().length() > 0) {
+				if (block != null
+						&& block.toString().trim().length() > 0
+						&& block.statements().size() > 1) {
 					CompilationUnitFacade compilationUnitFacade = compilationUnitStore
-							.createCompilationUnitFacade(block, currFile);
+							.createCompilationUnitFacade(block, resultEntry.text);
+					compilationUnitFacade.setUrl(resultEntry.url);
 					compilationUnitFacadeList.add(compilationUnitFacade);
 					break;
 				}
 			}
 			while (false);
 		}
-		FindCommonNodes();
+
+		hasCommonNodes = compilationUnitStore.FindCommonDeclaration(this);
 		compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList);
 		return _codeToWordInfoMap;
-	}
-
-	private void FindCommonNodes() {
-		hasCommonNodes = compilationUnitStore.FindCommonDeclaration(this);
 	}
 
 }

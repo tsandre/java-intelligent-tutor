@@ -80,9 +80,12 @@ public class CompilationUnitStore {
 		repository = RepositoryStore.UpdateRepository(compilationUnitFacadeList);
 		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
 			facade.setTFVector(repository);
+			System.out.println("Source Example: " + facade.getUrl());
+			System.out.println(facade.getLinesOfCode());
 			System.out.println("Class Instances: " + facade.getTFVector().classInstancesTF);
 			System.out.println("Method Invocations: " + facade.getTFVector().methodInvoationsTF);
 			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);
+			System.out.println("---------------");
 		}
 		//TODO HashMap<CompilationUnitFacade, ArrayList<WordInfo>> tutorialReadyMap = FindCosineSimilar(tfidfVectorList, 10);
 	}

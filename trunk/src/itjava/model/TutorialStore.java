@@ -15,7 +15,7 @@ public class TutorialStore {
 	public ArrayList<String> linesOfCode;
 
 	public void setLinesOfCode(ArrayList<String> linesOfCode) {
-		this.linesOfCode = Convertor.CleanArrayListOfString(linesOfCode);
+		this.linesOfCode = Convertor.TrimArrayListOfString(linesOfCode);
 	}
 
 	public ArrayList<WordInfo> wordInfoList;
@@ -64,8 +64,9 @@ public class TutorialStore {
 		return this.tutorial;
 	}
 
+	
 	private void SaveTutorialFile() {
-		tutorial.path = "C:/Program Files/Cognitive Tutor Authoring Tools/Projects/generated/SampleGUI0.java" + tutorial.tutorialName + ".java";
+		tutorial.path = "generated/" + tutorial.tutorialName + ".java";
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(tutorial.path));

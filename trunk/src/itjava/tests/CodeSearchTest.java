@@ -25,7 +25,7 @@ public class CodeSearchTest {
 	@Test
 	public void CodeSearchReturnsEntries() {
 		try {
-			CodeSearchPresenter newCodePresenter = new CodeSearchPresenter("Scanner%20Java%20example");
+			CodeSearchPresenter newCodePresenter = new CodeSearchPresenter("Scanner Java example");
 			//ArrayList<String> currLinks = new ArrayList<String>();
 			//String[] myLinks = newCodePresenter.ShowLinks();
 			//for(int i=0;i<myLinks.length;i++){

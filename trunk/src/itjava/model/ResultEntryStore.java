@@ -40,11 +40,11 @@ public class ResultEntryStore {
 				}
 				Document doc = Jsoup.parse(finalContents);
 				Elements eles = doc.getElementsByTag("pre");
-				ResultEntry newEntry = new ResultEntry(eles.text(), _setOfLinks.get(i), eles.size());
+				ResultEntry newEntry = new ResultEntry(Convertor.FormatCode(eles.text()), _setOfLinks.get(i), eles.size());
 				_resultEntries.add(newEntry);
 	
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.err.println(e.toString() + " thorwn by following URL : " + _setOfLinks.get(i));
 			}
 		}
 		

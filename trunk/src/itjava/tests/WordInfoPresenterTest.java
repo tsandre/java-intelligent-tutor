@@ -11,6 +11,7 @@ import java.util.List;
 import itjava.model.CompilationUnitFacade;
 import itjava.model.Convertor;
 import itjava.model.Repository;
+import itjava.model.ResultEntry;
 import itjava.model.WordInfo;
 import itjava.presenter.WordInfoPresenter;
 
@@ -24,11 +25,11 @@ public class WordInfoPresenterTest {
 	private HashMap<ArrayList<String>, ArrayList<WordInfo>> _codeToWordInfoMap;
 	private WordInfoPresenter _wordInfoPresenter;
 	String query;
-	ArrayList<String> sourceCodes;
+	ArrayList<ResultEntry> sourceCodes;
 
 	@Before
 	public final void setUp() {
-		sourceCodes = new ArrayList<String>();
+		sourceCodes = new ArrayList<ResultEntry>();
 		_wordInfoPresenter = new WordInfoPresenter();
 	}
 
@@ -154,7 +155,7 @@ public class WordInfoPresenterTest {
 	}
 
 	private void GivenFile(String fileName) {
-		sourceCodes.add(Convertor.FileToString(fileName));
+		sourceCodes.add(new ResultEntry(Convertor.FileToString(fileName), "url", 0));
 	}
 
 	private void ThenFacade0And1HasCommonMethodInvocations() {
@@ -171,22 +172,17 @@ public class WordInfoPresenterTest {
 	}
 
 	private void GivenFiles() {
-		sourceCodes.add(Convertor
-				.FileToString("samples/UseThisForTestingFacade_1.java"));
-		sourceCodes.add(Convertor
-				.FileToString("samples/UseThisForTestingFacade_2.java"));
-		sourceCodes.add(Convertor
-				.FileToString("samples/UseThisForTestingFacade_3.java"));
+		sourceCodes.add(new ResultEntry(Convertor.FileToString("samples/UseThisForTestingFacade_1.java"), "url", 0));
+		sourceCodes.add(new ResultEntry(Convertor.FileToString("samples/UseThisForTestingFacade_2.java"), "url", 0));
+		sourceCodes.add(new ResultEntry(Convertor.FileToString("samples/UseThisForTestingFacade_3.java"), "url", 0));
 	}
 
 	private void GivenInvalidFile() {
-		sourceCodes.add(Convertor
-				.FileToString("samples/UseThisForTestingFacade_4.java"));
+		GivenFile("samples/UseThisForTestingFacade_4.java");
 	}
 
 	private void GivenSingleFile() {
-		sourceCodes.add(Convertor
-				.FileToString("samples/UseThisForTestingFacade_1.java"));
+		GivenFile("samples/UseThisForTestingFacade_1.java");
 	}
 
 	private void Then2FacadesHaveCommonSocketVariables() {
@@ -266,7 +262,7 @@ public class WordInfoPresenterTest {
 	}
 
 	private void WhenGetCodeInfoIsCalled() {
-		_codeToWordInfoMap = _wordInfoPresenter.GetCodeToWordInfoMap(query,
+		_codeToWordInfoMap = _wordInfoPresenter.GenerateWordInfoMap(query,
 				sourceCodes);
 	}
 }
