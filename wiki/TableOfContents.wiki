@@ -75,7 +75,7 @@
 
 *Story points:*
   * Understand the working of AST API. Work with sample files to produce AST and save various nodes of a source code in an easily accessible form. Enable addition of new node types for future. <font color=green size=3> DONE </font>
-  * Based on the query OR common nodes, decide a strategy to find words to be blanked. Apply this strategy to multiple examples to verify sanity of the approach. Currently finding common nodes in :
+  * Based on the query OR common nodes, decide a strategy (TermFrequencyInverseDocumentFrequency) to find words to be blanked. Apply this strategy to multiple examples to verify sanity of the approach. Currently finding common nodes in :
     * Import declarations 
     * Method invocations (example : socket.*close*();)
     * Variable declaration ( *ServerSocket* ss;)
