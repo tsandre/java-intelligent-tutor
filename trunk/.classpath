@@ -29,5 +29,6 @@
 	<classpathentry kind="lib" path="jar/CTAT/jess.jar"/>
 	<classpathentry kind="lib" path="jar/CTAT/runcc.jar"/>
 	<classpathentry kind="lib" path="jar/MySql/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry kind="lib" path="jar/sqllite/sqlitejdbc-v056.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
