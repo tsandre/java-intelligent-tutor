@@ -126,7 +126,7 @@ public class CompilationUnitStore {
 				}
 			}	
 		}
-		ArrayList<CompilationUnitFacade> tutorialReadyList = matrix.GetTopSimilar(10);
+		HashSet<CompilationUnitFacade> tutorialReadyList = matrix.GetTopSimilar(10);
 		
 		//TODO HashMap<CompilationUnitFacade, ArrayList<WordInfo>> tutorialReadyMap = FindCosineSimilar(tfidfVectorList, 10);
 	}
