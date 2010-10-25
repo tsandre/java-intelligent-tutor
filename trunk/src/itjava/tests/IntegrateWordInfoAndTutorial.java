@@ -53,7 +53,8 @@ public class IntegrateWordInfoAndTutorial {
 				.entrySet()) {
 			tutorialPresenter = new TutorialPresenter();
 			Tutorial tutorial = tutorialPresenter.GetTutorial(
-					"SampleGUI" + (i), entrySet.getKey(), entrySet.getValue(), "sourceUrl");
+					"SampleGUI" + (i), entrySet.getKey(), entrySet.getValue(),
+					"sourceUrl");
 			tutorialList.add(tutorial);
 			i++;
 		}
@@ -61,9 +62,19 @@ public class IntegrateWordInfoAndTutorial {
 	}
 
 	private void GivenFiles() {
-		sourceCodes.add(new ResultEntry(Convertor.FileToString("samples/UseThisForTestingFacade_1.java"), "url", 0));
-		sourceCodes.add(new ResultEntry(Convertor.FileToString("samples/UseThisForTestingFacade_2.java"), "url", 0));
-		sourceCodes.add(new ResultEntry(Convertor.FileToString("samples/UseThisForTestingFacade_3.java"), "url", 0));
+		try {
+			sourceCodes.add(new ResultEntry(Convertor
+					.FileToString("samples/UseThisForTestingFacade_1.java"),
+					"url", 0));
+			sourceCodes.add(new ResultEntry(Convertor
+					.FileToString("samples/UseThisForTestingFacade_2.java"),
+					"url", 0));
+			sourceCodes.add(new ResultEntry(Convertor
+					.FileToString("samples/UseThisForTestingFacade_3.java"),
+					"url", 0));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void WhenWordInfoIsGenerated() {

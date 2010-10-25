@@ -41,6 +41,18 @@ public class TFStore {
 		_tfVector.propertyAssignmentsTF = GetTF(facade, NodeToCompare.PropertyAssignment);
 		return _tfVector;
 	}
+	
+	public static float DotProduct(TFVector a, TFVector b) {
+		float finalDotProduct = 0;
+		
+		return finalDotProduct ;
+	}
+	
+	public static float MagnitudeProduct(TFVector a, TFVector b) {
+		float finalMagProduct = 0;
+		
+		return finalMagProduct;
+	}
 
 	/**
 	 * Returns term-frequency map for a specified typeOfNode.
@@ -110,5 +122,5 @@ public class TFStore {
 		}
 		return tfMap;
 	}
-
+	
 }

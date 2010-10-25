@@ -87,45 +87,45 @@ public class WordInfoPresenterTest {
 		WhenGetCodeInfoIsCalled();
 		ThenFacadeListHasOneFacade();
 	}
-	
+
 	@Test
 	public final void GivenFacadesHaveCommonInitializerInFirstFacade() {
 		GivenFiles();
 		WhenGetCodeInfoIsCalled();
 		ThenFacade0HasCommonInitializers();
 	}
-	
+
 	@Test
 	public final void GivenFacadesHaveCommonMethodInvocationsFacade() {
 		GivenFiles();
 		WhenGetCodeInfoIsCalled();
 		ThenFacade0And1HasCommonMethodInvocations();
 	}
-	
+
 	@Test
 	public final void DoWhileExpressionTest() {
 		GivenFile("samples/UseThisForTestingFacade_5.java");
 		WhenGetCodeInfoIsCalled();
 		ThenStatementsInDoLoopAreNoted();
 	}
-	
+
 	@Test
 	public final void SwitchCaseTest() {
 		GivenFile("samples/UseThisForTestingFacade_6.java");
 		WhenGetCodeInfoIsCalled();
 		ThenStatementsInSwitchCasesAreNoted();
 	}
-	
+
 	@Test
 	public final void RepositoryCreationTest() {
 		GivenFiles();
 		WhenGetCodeInfoIsCalled();
 		ThenRepositoryHasOneOccurrenceOfExistingTerms();
 	}
-	
 
 	private void ThenRepositoryHasOneOccurrenceOfExistingTerms() {
-		Repository testRepository = _wordInfoPresenter.compilationUnitStore.repository;
+		Repository testRepository = _wordInfoPresenter
+				.getRepository();
 		for (int value : testRepository.classInstanceTerms.values()) {
 			assertTrue(value <= 3);
 		}
@@ -147,34 +147,58 @@ public class WordInfoPresenterTest {
 	}
 
 	private void ThenStatementsInSwitchCasesAreNoted() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodInvocations().size() == 10);
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0)
+				.getMethodInvocations().size() == 10);
 	}
 
 	private void ThenStatementsInDoLoopAreNoted() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getMethodInvocations().size() == 1);
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0)
+				.getMethodInvocations().size() == 1);
 	}
 
 	private void GivenFile(String fileName) {
-		sourceCodes.add(new ResultEntry(Convertor.FileToString(fileName), "url", 0));
+		try {
+			sourceCodes.add(new ResultEntry(Convertor.FileToString(fileName),
+					"url", 0));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void ThenFacade0And1HasCommonMethodInvocations() {
-		assertTrue(_wordInfoPresenter.totalHashMap.containsKey(_wordInfoPresenter.compilationUnitFacadeList.get(0)));
-		assertTrue(_wordInfoPresenter.totalHashMap.containsKey(_wordInfoPresenter.compilationUnitFacadeList.get(1)));
-		
-		// TODO Need to be changed to find method common method declaration and then compare 
-		//assertTrue(_wordInfoPresenter.totalHashMap.get(_wordInfoPresenter.compilationUnitFacadeList.get(0)).get(0).wordToBeBlanked.equals(_wordInfoPresenter.totalHashMap.get(_wordInfoPresenter.compilationUnitFacadeList.get(1)).get(0).wordToBeBlanked));
+//		assertTrue(_wordInfoPresenter.totalHashMap
+//				.containsKey(_wordInfoPresenter.compilationUnitFacadeList
+//						.get(0)));
+//		assertTrue(_wordInfoPresenter.totalHashMap
+//				.containsKey(_wordInfoPresenter.compilationUnitFacadeList
+//						.get(1)));
+
+		// TODO Need to be changed to find method common method declaration and
+		// then compare
+		// assertTrue(_wordInfoPresenter.totalHashMap.get(_wordInfoPresenter.compilationUnitFacadeList.get(0)).get(0).wordToBeBlanked.equals(_wordInfoPresenter.totalHashMap.get(_wordInfoPresenter.compilationUnitFacadeList.get(1)).get(0).wordToBeBlanked));
 	}
 
 	private void ThenFacade0HasCommonInitializers() {
-		// TODO Need to be changed to find method common Initializer declaration and then compare 
-		//assertTrue(_wordInfoPresenter.compilationUnitToInitializersMap.get(_wordInfoPresenter.compilationUnitFacadeList.get(0)).size() >= 2);
+		// TODO Need to be changed to find method common Initializer declaration
+		// and then compare
+		// assertTrue(_wordInfoPresenter.compilationUnitToInitializersMap.get(_wordInfoPresenter.compilationUnitFacadeList.get(0)).size()
+		// >= 2);
 	}
 
 	private void GivenFiles() {
-		sourceCodes.add(new ResultEntry(Convertor.FileToString("samples/UseThisForTestingFacade_1.java"), "url", 0));
-		sourceCodes.add(new ResultEntry(Convertor.FileToString("samples/UseThisForTestingFacade_2.java"), "url", 0));
-		sourceCodes.add(new ResultEntry(Convertor.FileToString("samples/UseThisForTestingFacade_3.java"), "url", 0));
+		try {
+			sourceCodes.add(new ResultEntry(Convertor
+					.FileToString("samples/UseThisForTestingFacade_1.java"),
+					"url", 0));
+			sourceCodes.add(new ResultEntry(Convertor
+					.FileToString("samples/UseThisForTestingFacade_2.java"),
+					"url", 0));
+			sourceCodes.add(new ResultEntry(Convertor
+					.FileToString("samples/UseThisForTestingFacade_3.java"),
+					"url", 0));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void GivenInvalidFile() {
@@ -186,9 +210,12 @@ public class WordInfoPresenterTest {
 	}
 
 	private void Then2FacadesHaveCommonSocketVariables() {
-		// TODO Need to be changed to find method common variable declaration and then compare 
-		/*assertTrue(_wordInfoPresenter.compilationUnitToVariableDeclarationsMap
-				.size() > 1);*/
+		// TODO Need to be changed to find method common variable declaration
+		// and then compare
+		/*
+		 * assertTrue(_wordInfoPresenter.compilationUnitToVariableDeclarationsMap
+		 * .size() > 1);
+		 */
 	}
 
 	private void Then2FacadesHaveVariables() {
@@ -222,9 +249,12 @@ public class WordInfoPresenterTest {
 	}
 
 	private void ThenFacadeFindsCommonImportDeclarations() {
-		// TODO Need to be changed to find method common Import declaration and then compare 
-		/*assertTrue(_wordInfoPresenter.compilationUnitToImportDeclarationsMap
-				.size() > 1);*/
+		// TODO Need to be changed to find method common Import declaration and
+		// then compare
+		/*
+		 * assertTrue(_wordInfoPresenter.compilationUnitToImportDeclarationsMap
+		 * .size() > 1);
+		 */
 	}
 
 	private void ThenFacadeHasClassModifierAsPublic() {
@@ -234,7 +264,8 @@ public class WordInfoPresenterTest {
 	}
 
 	private void ThenFacadeHasMethods() {
-		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0).getStatements(ASTNode.VARIABLE_DECLARATION_STATEMENT).size() > 0);
+		assertTrue(_wordInfoPresenter.compilationUnitFacadeList.get(0)
+				.getStatements(ASTNode.VARIABLE_DECLARATION_STATEMENT).size() > 0);
 	}
 
 	private void ThenFacadeHasOneImportDeclaration() {

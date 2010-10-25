@@ -7,6 +7,9 @@ import itjava.model.LinkStore;
 import itjava.model.ResultEntry;
 import itjava.model.ResultEntryStore;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +20,7 @@ public class CodeSearchPresenter {
 	private String _query;
 	private String[] _cacheLinks;
 	private int _startPosition = 0;
-	private int _endPosition = 4;
+	private int _endPosition = 19;
 	
 	public CodeSearchPresenter(String query) {
 		_query = query;
@@ -29,14 +32,17 @@ public class CodeSearchPresenter {
 	}
 	
 	public ArrayList<ResultEntry> SearchNext() {
-		ArrayList<String> currLinks = new ArrayList<String>();
+		ArrayList<URL> currLinks = new ArrayList<URL>();
 		for(int index = _startPosition; index <= _endPosition; index++) {
-			currLinks.add(_cacheLinks[index]);
+			try {
+				currLinks.add(new URL(_cacheLinks[index]));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
 		}
 		_startPosition = _endPosition + 1;
-		_endPosition = _endPosition + 5;
-		ResultEntryStore myStore = new ResultEntryStore(currLinks);
-		return myStore.createResultEntryList();
+		_endPosition = _endPosition + 20;
+		return ResultEntryStore.createResultEntryList(currLinks);
 	}
 	
 	

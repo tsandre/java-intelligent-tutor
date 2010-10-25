@@ -33,6 +33,9 @@ public class CompilationUnitFacade {
 	private TFVector _tfVector;
 	private String _url;
 	
+	public String toString() {
+		return getLinesOfCode().toString();
+	}
 	public void setLinesOfCode(String linesOfCode) {
 		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
 	}

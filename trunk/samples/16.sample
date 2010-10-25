@@ -1,0 +1,23 @@
+import java.sql.*;
+
+import java.sql.*;
+
+import java.util.*;
+
+public class Connect {
+
+  public static void main(  String argv[]){
+
+    Connection con=null;
+
+  }
+
+}
+
+public class Select {
+
+  public static void main(  String argv[]){
+
+  }
+
+}

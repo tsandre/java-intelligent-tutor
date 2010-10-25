@@ -1,15 +1,15 @@
 package itjava.model;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 
 public class Convertor {
 
-	public static String FileToString(String fileSource) {
+	public static String FileToString(String fileSource) throws Exception {
 		String fileContent = "";
-		try {
 			BufferedReader bReader = new BufferedReader(new FileReader(fileSource));
 			String currLine = bReader.readLine();
 			while (currLine != null) {
@@ -17,10 +17,9 @@ public class Convertor {
 					fileContent += currLine;
 				}
 				currLine = bReader.readLine();
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			bReader.close();
 		return fileContent;
 	}
 	
@@ -30,11 +29,14 @@ public class Convertor {
 			BufferedReader bReader = new BufferedReader(new StringReader(rawCode));
 			String currLine = bReader.readLine();
 			while (currLine != null) {
-				if (!currLine.trim().startsWith("//")) {
-					formattedCode += currLine;
+				if (currLine.trim().length() > 0) {
+					if (!currLine.trim().startsWith("//")) {
+						formattedCode += currLine + "\n";
+					}
 				}
 				currLine = bReader.readLine();
 			}
+			bReader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

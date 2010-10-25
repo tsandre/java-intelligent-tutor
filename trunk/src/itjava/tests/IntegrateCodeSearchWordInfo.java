@@ -32,7 +32,7 @@ public class IntegrateCodeSearchWordInfo {
 	public void IntegrateCodeSearchWordInfoTest() {
 		GivenQuery();
 		WhenWordInfoIsGeneratedFromCodeSearchResults();
-		WhenTutorialIsGenerated();
+	//	WhenTutorialIsGenerated();
 	}
 	
 	private void GivenQuery() {
