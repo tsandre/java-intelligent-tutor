@@ -3,6 +3,7 @@
  */
 package itjava.model;
 
+import java.util.regex.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -46,11 +47,22 @@ public class ResultEntryStore {
 				while ((inputLine = reader.readLine()) != null) {
 					finalContents += "\n" + inputLine.replaceAll("<code", "<pre").replaceAll("code>", "pre>");
 				}
+				
 				Document doc = Jsoup.parse(finalContents);
 				Elements eles = doc.getElementsByTag("pre");
-				if(eles.hasText()){
-				ResultEntry newEntry = new ResultEntry(Convertor.FormatCode(eles.text()), _setOfLinks.get(i).toString(), eles.size());
-				_resultEntries.add(newEntry);
+				ResultEntry newEntry;
+				for(int j=0;j<eles.size();j++){
+					if(eles.get(j).text().length()>=30){ 
+						Pattern pattern = Pattern.compile("/\\*.*\\*/", Pattern.DOTALL);
+					    Matcher matcher = pattern.matcher(eles.get(j).text());
+					    Pattern pattern2 = Pattern.compile("//.*");
+					    Matcher matcher2 = pattern2.matcher(matcher.replaceAll(""));
+					    Pattern pattern3 = Pattern.compile("[0-9]+: *");
+					    Matcher matcher3 = pattern3.matcher(matcher2.replaceAll(""));
+						newEntry = new ResultEntry(Convertor.FormatString(matcher3.replaceAll("")), _setOfLinks.get(i), matcher3.replaceAll("").length());
+						_resultEntries.add(newEntry);
+					}
+				}
 				}
 	
 			} catch (Exception e) {
