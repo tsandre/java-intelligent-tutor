@@ -59,10 +59,9 @@ public class ResultEntryStore {
 					    Matcher matcher2 = pattern2.matcher(matcher.replaceAll(""));
 					    Pattern pattern3 = Pattern.compile("[0-9]+: *");
 					    Matcher matcher3 = pattern3.matcher(matcher2.replaceAll(""));
-						newEntry = new ResultEntry(Convertor.FormatString(matcher3.replaceAll("")), _setOfLinks.get(i), matcher3.replaceAll("").length());
+						newEntry = new ResultEntry(Convertor.FormatCode(matcher3.replaceAll("")), _setOfLinks.get(i).toString(), matcher3.replaceAll("").length());
 						_resultEntries.add(newEntry);
 					}
-				}
 				}
 	
 			} catch (Exception e) {
