@@ -16,10 +16,6 @@ import org.junit.Test;
 import itjava.presenter.*;
 import itjava.model.*;
 
-//import com.google.gdata.client.codesearch.CodeSearchService;
-//import com.google.gdata.data.codesearch.CodeSearchEntry;
-//import com.google.gdata.data.codesearch.CodeSearchFeed;
-
 public class CodeSearchTest {
 
 	@Test
