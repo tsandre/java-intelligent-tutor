@@ -181,8 +181,8 @@ public class RepositoryStore {
 			ResultSet rs = sqlStatement.executeQuery("select * from " + termType + ";");
 			while (rs.next()) {
 				allTuples.put(rs.getString("term"), rs.getInt("numOccurrences"));
-				rs.close();
 			}
+				rs.close();
 		} catch (Exception s) {
 			s.printStackTrace();
 		}

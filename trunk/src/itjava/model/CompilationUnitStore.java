@@ -135,10 +135,10 @@ public class CompilationUnitStore {
 			facade.setTFVector(repository);
 			System.out.println("Source Example: " + facade.getUrl());
 			System.out.println(facade.getLinesOfCode());
-//			System.out.println("Import Declarations: " + facade.getTFVector().importDeclarationsTF);
-			/*System.out.println("Class Instances: " + facade.getTFVector().classInstancesTF);
+			System.out.println("Import Declarations: " + facade.getTFVector().importDeclarationsTF);
+			System.out.println("Class Instances: " + facade.getTFVector().classInstancesTF);
 			System.out.println("Method Invocations: " + facade.getTFVector().methodInvoationsTF);
-			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);*/
+			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);
 			System.out.println("---------------");
 		}
 		Matrix matrix = new Matrix(compilationUnitFacadeList);

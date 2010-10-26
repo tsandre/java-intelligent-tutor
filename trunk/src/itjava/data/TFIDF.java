@@ -21,10 +21,9 @@ public class TFIDF {
 	}
 	
 	public Float Value(){
-		float tf = numOfOccurrences.floatValue() / totalTermsInDocument.floatValue();
-		/*float idf = (float) Math.log(totalDocuments.floatValue() / numOfDocumentsWithTerm.floatValue());
-		return (tf * idf);*/
-		return tf;
+		float tf = numOfOccurrences.floatValue() / (Float.MIN_VALUE + totalTermsInDocument.floatValue());
+		float idf = (float) Math.log10(totalDocuments.floatValue() / (Float.MIN_VALUE + numOfDocumentsWithTerm.floatValue()));
+		return (tf * idf);
 	}
 	
 	public int GetNumOfOccurrences() {
@@ -32,12 +31,12 @@ public class TFIDF {
 	}
 	
 	public String toString() {
-//		return this.Value().toString();
-		return "numOfOccurrences : " + this.numOfOccurrences.intValue() + "\n"
-			+ "totalTermsInDocument : " + this.totalTermsInDocument.intValue() + "\n"
-			+ "numOfDocumentsWithTerm : " + this.numOfDocumentsWithTerm.intValue() + "\n"
-			+ "totalDocuments : " + this.totalDocuments.intValue() + "\n"
-			+ "TFIDF : " + this.Value();
+		return this.Value().toString();
+//		return "numOfOccurrences : " + this.numOfOccurrences.intValue() + "\n"
+//			+ "totalTermsInDocument : " + this.totalTermsInDocument.intValue() + "\n"
+//			+ "numOfDocumentsWithTerm : " + this.numOfDocumentsWithTerm.intValue() + "\n"
+//			+ "totalDocuments : " + this.totalDocuments.intValue() + "\n"
+//			+ "TFIDF : " + this.Value();
 			
 	}
 	

@@ -21,6 +21,9 @@ public class Matrix {
 	private float[][] similarity;
 	private float UNTOUCHED = -999;
 	private float ERROR = -666;
+	private float[][] classInstanceSimilarity;
+	private float[][] methodInvocationSimilarity;
+	private float[][] variableDeclarationSimilarity;
 	
 	public Matrix(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
 		facadeList = compilationUnitFacadeList;
@@ -29,6 +32,10 @@ public class Matrix {
 			java.util.Arrays.fill(similarity[i], UNTOUCHED);
 		}
 		importSimilarity = similarity.clone();
+		classInstanceSimilarity = similarity.clone();
+		methodInvocationSimilarity = similarity.clone();
+		variableDeclarationSimilarity = similarity.clone();
+		
 		sortedSimilarity = new ArrayList<Matrix.Similarity>();
 	}
 
@@ -40,30 +47,43 @@ public class Matrix {
 	public void setValues(CompilationUnitFacade x, CompilationUnitFacade y) {
 		int indexOfX = facadeList.indexOf(x);
 		int indexOfY = facadeList.indexOf(y);
-		float importVal = ERROR;
+		float importVal = ERROR, classInstanceVal= ERROR, methodVal= ERROR, variableDecVal = ERROR;
 		try {
 			importVal = CalculateSimilarity(x.getTFVector().importDeclarationsTF.values().toArray(new TFIDF[0]), y.getTFVector().importDeclarationsTF.values().toArray(new TFIDF[0]));
+			classInstanceVal = CalculateSimilarity(x.getTFVector().classInstancesTF.values().toArray(new TFIDF[0]), y.getTFVector().classInstancesTF.values().toArray(new TFIDF[0]));
+			methodVal = CalculateSimilarity(x.getTFVector().methodInvoationsTF.values().toArray(new TFIDF[0]), y.getTFVector().methodInvoationsTF.values().toArray(new TFIDF[0]));
+			variableDecVal = CalculateSimilarity(x.getTFVector().variableDeclarationsTF.values().toArray(new TFIDF[0]), y.getTFVector().variableDeclarationsTF.values().toArray(new TFIDF[0]));
 		}
 		catch (Exception e) {
 			System.err.println("X : " + indexOfX + "\nY: " + indexOfY);
 		}
 		importSimilarity[indexOfX][indexOfY] = importVal;
 		importSimilarity[indexOfY][indexOfX] = importVal;
-		sortedSimilarity.add(new Similarity(importVal, indexOfX, indexOfY));
+		classInstanceSimilarity[indexOfX][indexOfY] = classInstanceVal;
+		classInstanceSimilarity[indexOfY][indexOfX] = classInstanceVal;
+		methodInvocationSimilarity[indexOfX][indexOfY] = methodVal;
+		methodInvocationSimilarity[indexOfY][indexOfX] = methodVal;
+		variableDeclarationSimilarity[indexOfX][indexOfY] = variableDecVal;
+		variableDeclarationSimilarity[indexOfY][indexOfX] = variableDecVal;
 		
-		similarity[indexOfX][indexOfY] = importVal;
-		similarity[indexOfY][indexOfX] = importVal;
+		similarity[indexOfX][indexOfY] = importVal + classInstanceVal + methodVal + variableDecVal;
+		similarity[indexOfY][indexOfX] = importVal + classInstanceVal + methodVal + variableDecVal;
+		
+		sortedSimilarity.add(new Similarity((importVal + classInstanceVal + methodVal + variableDecVal), indexOfX, indexOfY));
 		
 	}
 
 	public HashSet<CompilationUnitFacade> GetTopSimilar(int numOfSimilarUnits) {
 		HashSet<CompilationUnitFacade> topSimilar = new HashSet<CompilationUnitFacade>();
 		Collections.sort(sortedSimilarity, new SimilarityComparator());
+		Collections.reverse(sortedSimilarity);
 		Iterator<Similarity> it = sortedSimilarity.iterator();
 		while (topSimilar.size() <= numOfSimilarUnits) {
 			Similarity currSimilarity = it.next();
-			topSimilar.add(facadeList.get(currSimilarity.x));
-			topSimilar.add(facadeList.get(currSimilarity.y));
+			if ( currSimilarity.x != currSimilarity.y) {
+				topSimilar.add(facadeList.get(currSimilarity.x));
+				topSimilar.add(facadeList.get(currSimilarity.y));
+			}
 		}
 		return topSimilar;
 	}
@@ -89,7 +109,7 @@ public class Matrix {
 			magB += b[j].Value() * b[j].Value();
 		}
 		magProduct = (float) ((Math.sqrt(magA)) * (Math.sqrt(magB)));
-		return dotProduct / magProduct;
+		return dotProduct / (magProduct + Float.MIN_VALUE);
 	}
 	
 	
