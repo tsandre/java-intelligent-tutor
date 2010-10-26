@@ -130,7 +130,7 @@ public class CompilationUnitStore {
 		return _facade;
 	}
 	
-	public void FindSimilarCompilationUnits(ArrayList<CompilationUnitFacade> compilationUnitFacadeList, Repository repository) {
+	public HashSet<CompilationUnitFacade> FindSimilarCompilationUnits(ArrayList<CompilationUnitFacade> compilationUnitFacadeList, Repository repository) {
 		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
 			facade.setTFVector(repository);
 			System.out.println("Source Example: " + facade.getUrl());
@@ -150,7 +150,7 @@ public class CompilationUnitStore {
 			}	
 		}
 		HashSet<CompilationUnitFacade> tutorialReadyList = matrix.GetTopSimilar(10);
-		
+		return tutorialReadyList;
 		//TODO HashMap<CompilationUnitFacade, ArrayList<WordInfo>> tutorialReadyMap = FindCosineSimilar(tfidfVectorList, 10);
 	}
 

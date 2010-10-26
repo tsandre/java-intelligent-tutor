@@ -37,15 +37,13 @@ public class IntegrateCodeSearchWordInfo {
 	
 	private void GivenQuery() {
 		_codeToWordInfoMap = new HashMap<ArrayList<String>, ArrayList<WordInfo>>();
-		_query = "Connect MySQL database java example";
+		_query = "HashMap java example";
 		_codeSearchPresenter = new CodeSearchPresenter(_query);
 		_wordInfoPresenter = new WordInfoPresenter();
 	}
 	
 	private void WhenWordInfoIsGeneratedFromCodeSearchResults() {
-		while (_codeToWordInfoMap.size() <= 10) {
-			_codeToWordInfoMap.putAll(_wordInfoPresenter.GenerateWordInfoMap(_query, _codeSearchPresenter.SearchNext()));
-		}
+		_codeToWordInfoMap.putAll(_wordInfoPresenter.GenerateWordInfoMap(_query, _codeSearchPresenter.SearchNext()));
 	}
 	
 	private void WhenTutorialIsGenerated() {

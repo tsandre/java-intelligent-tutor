@@ -50,10 +50,11 @@ public class WordInfoPresenter {
 	public HashMap<ArrayList<String>, ArrayList<WordInfo>> GenerateWordInfoMap(
 			String query, ArrayList<ResultEntry> resultEntryList) {
 		compilationUnitFacadeList = compilationUnitStore.createCompilationUnitFacadeList(query, resultEntryList);
-		_codeToWordInfoMap = compilationUnitStore.FindCommonDeclaration(compilationUnitFacadeList);
+//		_codeToWordInfoMap = compilationUnitStore.FindCommonDeclaration(compilationUnitFacadeList);
 
 		_repository = RepositoryStore.UpdateRepository(compilationUnitFacadeList);
 		compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, _repository);
+		
 		return _codeToWordInfoMap;
 	}
 
