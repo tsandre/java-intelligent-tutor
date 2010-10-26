@@ -16,32 +16,44 @@ import java.util.Iterator;
  */
 public class Matrix {
 	private ArrayList<CompilationUnitFacade> facadeList;
-	private float[] importSimilarity;
+	private float[][] importSimilarity;
 	private ArrayList<Similarity> sortedSimilarity;
-	private float[] similarity;
+	private float[][] similarity;
 	private float UNTOUCHED = -999;
+	private float ERROR = -666;
 	
 	public Matrix(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
 		facadeList = compilationUnitFacadeList;
-		for (int i = 0; i < (facadeList.size() * facadeList.size()); i++) {
-			similarity[i] = UNTOUCHED;
+		similarity = new float[facadeList.size()] [facadeList.size()];
+		for (int i = 0; i < compilationUnitFacadeList.size(); i++) {
+			java.util.Arrays.fill(similarity[i], UNTOUCHED);
 		}
 		importSimilarity = similarity.clone();
 		sortedSimilarity = new ArrayList<Matrix.Similarity>();
 	}
 
 	public boolean contains(CompilationUnitFacade y, CompilationUnitFacade x) {
-		return (similarity[x.getTFVector().importDeclarationsTF.size()*facadeList.indexOf(x) + facadeList.indexOf(y)] != UNTOUCHED || 
-				similarity[x.getTFVector().importDeclarationsTF.size()*facadeList.indexOf(y) + facadeList.indexOf(x)] != UNTOUCHED);
+		return (similarity[facadeList.indexOf(x)][facadeList.indexOf(y)] != UNTOUCHED || 
+				similarity[facadeList.indexOf(y)][facadeList.indexOf(x)] != UNTOUCHED);
 	}
 
 	public void setValues(CompilationUnitFacade x, CompilationUnitFacade y) {
 		int indexOfX = facadeList.indexOf(x);
 		int indexOfY = facadeList.indexOf(y);
-		float importVal = CalculateSimilarity(x.getTFVector().importDeclarationsTF.values().toArray(new TFIDF[0]), y.getTFVector().importDeclarationsTF.values().toArray(new TFIDF[0]));
-		importSimilarity[x.getTFVector().importDeclarationsTF.size()*indexOfX + indexOfY] = importVal;
-		importSimilarity[x.getTFVector().importDeclarationsTF.size()*indexOfY + indexOfX] = importVal;
+		float importVal = ERROR;
+		try {
+			importVal = CalculateSimilarity(x.getTFVector().importDeclarationsTF.values().toArray(new TFIDF[0]), y.getTFVector().importDeclarationsTF.values().toArray(new TFIDF[0]));
+		}
+		catch (Exception e) {
+			System.err.println("X : " + indexOfX + "\nY: " + indexOfY);
+		}
+		importSimilarity[indexOfX][indexOfY] = importVal;
+		importSimilarity[indexOfY][indexOfX] = importVal;
 		sortedSimilarity.add(new Similarity(importVal, indexOfX, indexOfY));
+		
+		similarity[indexOfX][indexOfY] = importVal;
+		similarity[indexOfY][indexOfX] = importVal;
+		
 	}
 
 	public HashSet<CompilationUnitFacade> GetTopSimilar(int numOfSimilarUnits) {
@@ -56,11 +68,19 @@ public class Matrix {
 		return topSimilar;
 	}
 	
-	private float CalculateSimilarity(TFIDF[] a, TFIDF[] b) {
+	private float CalculateSimilarity(TFIDF[] a, TFIDF[] b) throws Exception{
 		float dotProduct = 0;
 		float magProduct;
 		for (int i = 0; i < a.length; i ++) {
-			dotProduct += a[i].Value()*b[i].Value();
+			try {
+				dotProduct += a[i].Value()*b[i].Value();
+			}
+			catch (Exception e) {
+				System.err.println("A : " + a[i].Value());
+				System.err.println("B : " + b[i].Value());
+				e.printStackTrace();
+				dotProduct += a[i].Value()*b[i].Value();
+			}
 		}
 		float magA = 0;
 		float magB = 0;
@@ -71,6 +91,7 @@ public class Matrix {
 		magProduct = (float) ((Math.sqrt(magA)) * (Math.sqrt(magB)));
 		return dotProduct / magProduct;
 	}
+	
 	
 	static class SimilarityComparator implements Comparator<Similarity> {
 
@@ -88,7 +109,7 @@ public class Matrix {
 		
 		public boolean equals(Similarity B) {
 			boolean flag = true;
-			if (this.similarity != B.similarity || this.x != B.x || this.y != y) {
+			if (this.similarity != B.similarity || this.x != B.x || this.y != B.y) {
 				flag = false;
 			}
 			return flag;
@@ -97,6 +118,9 @@ public class Matrix {
 			this.similarity = s;
 			this.x = X;
 			this.y = Y;
+		}
+		public String toString() {
+			return similarity + ":" + x + "/" + y;
 		}
 	}
 

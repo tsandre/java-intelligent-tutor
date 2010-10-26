@@ -43,12 +43,13 @@ public class Convertor {
 		return formattedCode;
 	}
 	
-	public static ArrayList<String> StringToArrayListOfStrings(String linesOfCode) {
+	public static ArrayList<String> StringToArrayListOfStrings(String linesOfCode) throws Exception {
+		if (!linesOfCode.contains(";")) throw new Exception("Invalid source file");
 		ArrayList<Character> newLineCandidates = new ArrayList<Character>();
 		newLineCandidates.add('{');
 		newLineCandidates.add('}');
 		newLineCandidates.add(';');
-
+		
 		// TODO Perform indentation of source code
 		ArrayList<String> _linesOfCode = new ArrayList<String>();
 

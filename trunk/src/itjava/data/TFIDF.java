@@ -32,7 +32,13 @@ public class TFIDF {
 	}
 	
 	public String toString() {
-		return this.Value().toString();
+//		return this.Value().toString();
+		return "numOfOccurrences : " + this.numOfOccurrences.intValue() + "\n"
+			+ "totalTermsInDocument : " + this.totalTermsInDocument.intValue() + "\n"
+			+ "numOfDocumentsWithTerm : " + this.numOfDocumentsWithTerm.intValue() + "\n"
+			+ "totalDocuments : " + this.totalDocuments.intValue() + "\n"
+			+ "TFIDF : " + this.Value();
+			
 	}
 	
 }

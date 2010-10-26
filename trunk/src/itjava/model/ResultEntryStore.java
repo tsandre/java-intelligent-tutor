@@ -41,6 +41,7 @@ public class ResultEntryStore {
 			try {
 				URL url = _setOfLinks.get(i);
 				url.openConnection();
+				int urlPadding = 0; //Padding is used to uniquely identify each piece of code in spite of same url.
 				BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
 				String inputLine;
 				String finalContents = "";
@@ -59,7 +60,7 @@ public class ResultEntryStore {
 					    Matcher matcher2 = pattern2.matcher(matcher.replaceAll(""));
 					    Pattern pattern3 = Pattern.compile("[0-9]+: *");
 					    Matcher matcher3 = pattern3.matcher(matcher2.replaceAll(""));
-						newEntry = new ResultEntry(Convertor.FormatCode(matcher3.replaceAll("")), _setOfLinks.get(i).toString(), matcher3.replaceAll("").length());
+						newEntry = new ResultEntry(Convertor.FormatCode(matcher3.replaceAll("")), (urlPadding++ +_setOfLinks.get(i).toString()), matcher3.replaceAll("").length());
 						_resultEntries.add(newEntry);
 					}
 				}

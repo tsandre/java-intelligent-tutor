@@ -3,6 +3,8 @@
  */
 package itjava.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.List;
@@ -62,16 +64,22 @@ public class TFStore {
 	 */
 	private static TreeMap<String,TFIDF> GetTF(CompilationUnitFacade facade, NodeToCompare nodeToCompare) {
 		TreeMap<String, TFIDF> tfMap = new TreeMap<String, TFIDF>();
+		int totDocs = _repository.allDocuments.size();
 		switch (nodeToCompare) {
 		case ImportDeclaration :
-			for(String keyTerm: _repository.importTerms.keySet()) {
-				tfMap.put(keyTerm, new TFIDF(0,0,0,0));
-			}
 			List<ImportDeclaration> importDeclarations = facade.getImportDeclarations();
-			for (ImportDeclaration importDeclaration : importDeclarations) {
-				String importTerm = importDeclaration.getName().getFullyQualifiedName();
-				tfMap.put(importTerm, new TFIDF(1, importDeclarations.size(), _repository.importTerms.get(importTerm), _repository.allDocuments.size()));
+			ArrayList<String> importTerms = new ArrayList<String>();
+			for (ImportDeclaration importDeclaration : facade.getImportDeclarations()) {
+				importTerms.add(importDeclaration.getName().getFullyQualifiedName());
 			}
+			Collections.sort(importTerms);
+			int totTermsInDoc = importDeclarations.size();
+			for(Entry<String, Integer> entry: _repository.importTerms.entrySet()) {
+				String term = entry.getKey();
+				int numOfOccurrences = (importTerms.contains(term)) ? (importTerms.lastIndexOf(term) - importTerms.indexOf(term) + 1): 0;
+				tfMap.put(entry.getKey(), new TFIDF(numOfOccurrences, totTermsInDoc,totDocs,entry.getValue()));
+			}
+			
 			break;
 			
 		case SuperType :

@@ -36,7 +36,7 @@ public class CompilationUnitFacade {
 	public String toString() {
 		return getLinesOfCode().toString();
 	}
-	public void setLinesOfCode(String linesOfCode) {
+	public void setLinesOfCode(String linesOfCode) throws Exception {
 		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
 	}
 

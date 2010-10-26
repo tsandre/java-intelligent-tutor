@@ -13,7 +13,6 @@ import java.util.TreeMap;
 public class Repository {
 	public ArrayList<CompilationUnitFacade> allDocuments;
 	public ArrayList<String> allUrls;
-	
 	public TreeMap<String, Integer> importTerms;
 	public TreeMap<String, Integer> superTypeTerms;
 	public TreeMap<String, Integer> variableDeclarationTerms;
@@ -35,6 +34,7 @@ public class Repository {
 	public boolean Contains(String url) {
 		return allUrls.contains(url);
 	}
+
 	
 	
 }

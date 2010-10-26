@@ -151,8 +151,8 @@ public class RepositoryStore {
 					e.printStackTrace();
 				}
 			}
-			ArrayList<ResultEntry> facadeList = ResultEntryStore.createResultEntryList(fileContentsToUrlMap);
-			repository.allDocuments = cuStore.createCompilationUnitFacadeList(null, facadeList);
+			ArrayList<ResultEntry> resultEntryList = ResultEntryStore.createResultEntryList(fileContentsToUrlMap);
+			repository.allDocuments = cuStore.createCompilationUnitFacadeList(null, resultEntryList);
 			repository.allUrls = allUrls;
 		}
 		catch (Exception e) {

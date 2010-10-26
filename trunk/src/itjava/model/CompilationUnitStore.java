@@ -39,15 +39,23 @@ public class CompilationUnitStore {
 			String query, ArrayList<ResultEntry> resultEntryList) {
 		ArrayList<CompilationUnitFacade> compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
 		for (ResultEntry resultEntry : resultEntryList) {
-			
+			if (resultEntry.text.trim().equals("")) {
+				continue;
+			}
 			do {
 				_astParser = InitParser(ASTParser.K_COMPILATION_UNIT, resultEntry.text.toCharArray());
 				CompilationUnit cUnit = (CompilationUnit)_astParser.createAST(null);
 				if (cUnit.toString() != null && cUnit.toString().length() > 0 && cUnit.types().size() > 0) {
+					try {
 					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(cUnit, cUnit.toString());
 //					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(cUnit, resultEntry.text);
 					compilationUnitFacade.setUrl(resultEntry.url);
 					compilationUnitFacadeList.add(compilationUnitFacade);
+					}
+					catch(Exception e) {
+						System.err.println("Problem creating valid facade..");
+						e.printStackTrace();
+					}
 					break;
 				}
 				_astParser = InitParser(ASTParser.K_STATEMENTS, resultEntry.text.toCharArray());
@@ -55,9 +63,15 @@ public class CompilationUnitStore {
 				if (block != null
 						&& block.toString().trim().length() > 0
 						&& block.statements().size() > 1) {
+					try {
 					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(block, resultEntry.text);
 					compilationUnitFacade.setUrl(resultEntry.url);
 					compilationUnitFacadeList.add(compilationUnitFacade);
+					}
+					catch (Exception e) {
+						System.err.println("Problem creating valid facade..");
+						e.printStackTrace();
+					}
 					break;
 				}
 			}
@@ -67,10 +81,11 @@ public class CompilationUnitStore {
 	}
 	
 	private CompilationUnitFacade createCompilationUnitFacade(
-			CompilationUnit compilationUnit, String sourceCode) {
+			CompilationUnit compilationUnit, String sourceCode) throws Exception {
 				
 		_facade = new CompilationUnitFacade();
 		_facade.setLinesOfCode(sourceCode);
+
 
 		//	TODO	Is it possible to convert VariableDeclaration, FieldDeclaration &
 		// 		VariableDeclarationStatement into one Type for facade
@@ -87,17 +102,24 @@ public class CompilationUnitStore {
 			_facade.addAllSuperInterfaces(currTypeDeclaration.superInterfaceTypes());
 			
 			for (MethodDeclaration methodDeclaration : currTypeDeclaration.getMethods()) {
-				Block block = methodDeclaration.getBody();
-				List<Statement> statements = block.statements();
-				for (Statement statement : statements) {
-					_facade.addStatement(statement);
+				Block block;
+				try {
+					block = methodDeclaration.getBody();
+					List<Statement> statements = block.statements();
+					for (Statement statement : statements) {
+						_facade.addStatement(statement);
+					}
+				}
+				catch (Exception e) {
+					System.err.println("Error fetching block/statement from : " + methodDeclaration.toString());
+					e.printStackTrace();
 				}
 			}
 		}
 		return _facade;
 	}
 	
-	private CompilationUnitFacade createCompilationUnitFacade(Block block, String sourceCode) {
+	private CompilationUnitFacade createCompilationUnitFacade(Block block, String sourceCode) throws Exception {
 		_facade = new CompilationUnitFacade();
 		_facade.setLinesOfCode(sourceCode);
 
@@ -113,9 +135,10 @@ public class CompilationUnitStore {
 			facade.setTFVector(repository);
 			System.out.println("Source Example: " + facade.getUrl());
 			System.out.println(facade.getLinesOfCode());
-			System.out.println("Class Instances: " + facade.getTFVector().classInstancesTF);
+//			System.out.println("Import Declarations: " + facade.getTFVector().importDeclarationsTF);
+			/*System.out.println("Class Instances: " + facade.getTFVector().classInstancesTF);
 			System.out.println("Method Invocations: " + facade.getTFVector().methodInvoationsTF);
-			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);
+			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);*/
 			System.out.println("---------------");
 		}
 		Matrix matrix = new Matrix(compilationUnitFacadeList);
