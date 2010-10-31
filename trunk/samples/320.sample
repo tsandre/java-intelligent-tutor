@@ -1,0 +1,73 @@
+public class WaitNotifyAllExample {
+
+  public static void main(  String[] args){
+
+    try {
+
+      Object o=new Object();
+
+      Thread thread1=new Thread(new MyOwnRunnable("A",o));
+
+      Thread thread2=new Thread(new MyOwnRunnable("B",o));
+
+      Thread thread3=new Thread(new MyOwnRunnable("C",o));
+
+synchronized (o) {
+
+        thread1.start();
+
+        o.wait();
+
+        thread2.start();
+
+        o.wait();
+
+        thread3.start();
+
+      }
+
+    }
+
+ catch (    InterruptedException e) {
+
+      e.printStackTrace();
+
+    }
+
+  }
+
+}
+
+class MyOwnRunnable implements Runnable {
+
+  private String threadName;
+
+  private Object o;
+
+  public MyOwnRunnable(  String name,  Object o){
+
+    threadName=name;
+
+    this.o=o;
+
+  }
+
+  public void run(){
+
+synchronized (o) {
+
+      for (int i=0;
+ i < 1000;
+ i++) {
+
+        System.out.println("Thread " + threadName + " Count : "+ i);
+
+      }
+
+      o.notifyAll();
+
+    }
+
+  }
+
+}

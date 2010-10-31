@@ -1,0 +1,17 @@
+   import java.util.HashM
+ap;
+   ...
+   assertEquals("Incorrect number of attributes " + jobs[0].attrs, 1,
+   jobs[0].attrs.keySet().size(
+));
+   assertEquals("Incorrect zone", "boot", jobs[0].attrs.get("zone"
+));
+   ...
+   assertEquals("Incorrect number of attributes", 2,
+  jobs[1].attrs.keySet().size(
+));
+  assertEquals("Incorrect zone", "boot", jobs[1].attrs.get("zone"
+));
+  ...
+  assertEquals("Incorrect number of attributes", 1,
+  jobs[2].attrs.keySet().size(

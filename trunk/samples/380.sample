@@ -1,0 +1,20 @@
+import java.util.ArrayList;
+
+   import java.util.HashMap;
+
+   ...
+   private HashMap map;
+
+   private ArrayList names;
+
+   ...
+   {
+
+  map = new HashMap();
+
+  names = new ArrayList();
+
+  ...
+  {
+
+  map = (HashMap) map.clone();

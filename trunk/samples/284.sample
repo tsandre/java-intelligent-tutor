@@ -1,0 +1,13 @@
+new DatagramPacket(data, data.length, addr, myPort );
+
+   DatagramSocket ds = new DatagramSocket(  );
+
+   ...
+   ds.send( pack );
+
+   ds.close(  );
+
+   }
+ catch ( IOException e ) {
+
+   }

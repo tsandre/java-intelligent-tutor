@@ -1,0 +1,16 @@
+DatagramChannel channel= DatagramChannel.open();
+
+   DatagramSocket socket=channel.socket();
+
+   SocketAddress localAddr=new InetSocketAddress(7000);
+
+   ...
+   SocketAddress remoteAddr=new InetSocketAddress(InetAddress.getByName("localhost"),8000);
+
+   socket.bind(localAddr);
+
+   while(true){
+
+   ByteBuffer buffer=ByteBuffer.allocate(1024);
+
+   buffer.clear();

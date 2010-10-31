@@ -1,0 +1,85 @@
+public class Test {
+
+  private static String URL;
+
+  public static void main(  String[] args) throws Exception {
+
+    new Thread(new Repeater()).start();
+
+    new Thread(new Repeater()).start();
+
+    new Thread(new Repeater()).start();
+
+  }
+
+  static Connection getNewConnection() throws SQLException, ClassNotFoundException {
+
+    Class.forName("com.mysql.jdbc.Driver");
+
+    return DriverManager.getConnection(URL,"root","");
+
+  }
+
+  static void executeSimpleTransaction(  Connection c,  int conn,  int trans){
+
+    try {
+
+      c.setAutoCommit(false);
+
+      Statement s=c.createStatement();
+
+      s.executeQuery("SELECT SLEEP(1) ");
+
+      c.commit();
+
+    }
+
+ catch (    SQLException e) {
+
+      e.printStackTrace();
+
+    }
+
+  }
+
+public static class Repeater implements Runnable {
+
+    public void run(){
+
+      for (int i=0;
+ i < 100;
+ i++) {
+
+        try {
+
+          Connection c=getNewConnection();
+
+          for (int j=0;
+ j < 10;
+ j++) {
+
+            executeSimpleTransaction(c,i,j);
+
+            Thread.sleep(Math.round(100 * Math.random()));
+
+          }
+
+          c.close();
+
+          Thread.sleep(100);
+
+        }
+
+ catch (        Exception e) {
+
+          e.printStackTrace();
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

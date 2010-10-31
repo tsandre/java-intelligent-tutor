@@ -1,0 +1,12 @@
+import javax.jms.TopicConnectionFactory;
+
+   import java.util.HashMap;
+
+   ...
+   public QueueConnectionFactory getQueueConnectionFactory(HashMap properties)
+   throws Exception {
+
+   ...
+   properties = (HashMap) properties.clone();
+
+  properties.put(CONNECTION_FACTORY_CLASS, QCF_CLASS);

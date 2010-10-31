@@ -1,0 +1,22 @@
+import java.util.Collection;
+
+   import java.util.HashMap;
+
+   import java.util.Map;
+
+   ...
+   CompositeMap map = new CompositeMap();
+
+   map.addComposited(new HashMap());
+
+   map.setMutator(new CompositeMap.MapMutator() {
+
+   ...
+   private Map buildOne() {
+
+  HashMap map = new HashMap();
+
+  map.put("1", "one");
+
+  ...
+  three.remove("5");

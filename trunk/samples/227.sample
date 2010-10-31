@@ -1,0 +1,7 @@
+   ucast_sock=new DatagramSocket(0, bind_add
+r);
+   ucast_sock.setReceiveBufferSize(max_receiver_buffer_siz
+e);
+   ucast_sock.setSendBufferSize(max_send_buffer_siz
+e);
+   mcast_sock=new MulticastSocket(mcast_por

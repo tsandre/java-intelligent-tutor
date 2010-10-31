@@ -1,0 +1,13 @@
+public class Main extends JFrame {
+
+  public Main(){
+
+    initComponents();
+
+  }
+
+  private void initComponents(){
+
+  }
+
+}

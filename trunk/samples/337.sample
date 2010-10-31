@@ -1,0 +1,29 @@
+public class Client {
+
+  public Client(){
+
+    Thread t=new Thread(){
+
+      public void run(){
+
+      }
+
+    }
+
+;
+
+    t.start();
+
+    new MyThread().start();
+
+  }
+
+class MyThread extends Thread {
+
+    public void run(){
+
+    }
+
+  }
+
+}

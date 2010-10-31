@@ -1,0 +1,16 @@
+InetAddress host = InetAddress.getByName(hostname);
+
+   DatagramSocket ds = new DatagramSocket();
+
+   ds.connect(host, port);
+
+   ...
+   ds.setSoTimeout(15000);
+
+   ds.setReceiveBufferSize(32768);
+
+   ds.setSendBufferSize(32768);
+
+   System.out.println(ds.getReceiveBufferSize());
+
+   System.out.println(ds.getSendBufferSize());

@@ -1,0 +1,17 @@
+   private GraphicsDevice devi
+ce;
+   ...
+   public DisplayMode[] getCompatibleDisplayModes(
+) {
+   return device.getDisplayModes
+();
+ 
+  }
+   ...
+ 
+  {
+  DisplayMode goodModes[] = device.getDisplayModes
+();
+  for (int i =
+ 0; i < modes.leng
+th; i++

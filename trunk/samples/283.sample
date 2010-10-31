@@ -1,0 +1,10 @@
+   DatagramSocket socket = new DatagramSocket
+();
+   ...
+   DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 444
+5);
+   socket.send(packe
+t);
+   packet = new DatagramPacket(buf, buf.lengt
+h);
+   socket.receive(packe

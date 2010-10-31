@@ -1,0 +1,30 @@
+operation save (curves:Polyline *) {
+        var s = "";
+        for (all in curves) {
+            for (one in all) {
+                var c = "/y ";
+                for (p in one.points) {
+                    if (c.equals ("/y")) {
+                        c = ", x ";
+			}
+ else {
+                        c = "/y ";
+			}
+                    s = " {
+s}
+ {
+c}
+ {
+p}
+ ";
+		}
+                s = " {
+s}
+;
+ ";
+		}
+	}
+       var properties=new Properties ();
+        properties.setProperty ("curves", s);
+        properties.store (new FileOutputStream (propertiesFileName(), "FxMemo");
+}

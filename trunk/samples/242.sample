@@ -1,0 +1,12 @@
+   private DatagramSocket 
+ds;
+   private DatagramPacket outgoi
+ng;
+   ...
+   this.bufferSize = bufferSi
+ze;
+   ds = new DatagramSocket(
+0);
+   ds.setSoTimeout(timeou
+t);
+ 

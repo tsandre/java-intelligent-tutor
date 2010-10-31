@@ -1,0 +1,11 @@
+   import java.util.HashM
+ap;
+   ...
+   private HashMap idInUse = new HashMap
+();
+   ...
+   public void releaseId(int id
+) {
+  idInUse.remove("" + i
+d);
+

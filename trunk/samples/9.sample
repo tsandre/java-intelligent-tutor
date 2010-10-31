@@ -1,0 +1,11 @@
+String selectQuery = "Select * from MyTable";
+
+ResultSet results = stat.executeQuery(selectQuery);
+
+while (results.next())
+{
+
+	System.out.println("first name: " +
+		results.getString("firstname"));
+
+}

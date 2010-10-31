@@ -1,0 +1,11 @@
+public void startTest() {
+
+   GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().
+   getDefaultScreenDevice();
+
+   ...
+   System.out.println("full screen support is " + 
+   gd.isFullScreenSupported());
+                    
+   System.out.println("getFullScreenWindow returns " +
+   gd.getFullScreenWindow());

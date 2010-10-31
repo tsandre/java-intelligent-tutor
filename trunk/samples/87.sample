@@ -1,0 +1,18 @@
+public void move ()
+{
+
+   if (x < 0)
+       xdir = 1;
+
+   else
+   if (x > pfWidth ()-32)
+       xdir = -1;
+
+   if (y < -90)
+       ydir = 1;
+
+   else
+   if (y > pfHeight ()-32)
+       ydir = -1;
+
+}

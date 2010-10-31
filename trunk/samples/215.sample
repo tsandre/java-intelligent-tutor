@@ -1,0 +1,39 @@
+import java.applet.*;
+
+import java.io.*;
+
+import java.util.*;
+
+import java.net.*;
+
+import java.awt.*;
+
+public class chat_applet extends Applet implements Runnable {
+
+  DataInputStream In;
+
+  public void init(){
+
+  }
+
+  public boolean handleEvent(  Event _E){
+
+  }
+
+  void sendMessage(  String nMess){
+
+  }
+
+  void readLine(  DataInputStream In){
+
+  }
+
+  Socket connectToServer(  int _PortID){
+
+  }
+
+  void run(){
+
+  }
+
+}

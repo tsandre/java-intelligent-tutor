@@ -1,0 +1,16 @@
+import java.net.InetAddress;
+
+   import java.net.DatagramSocket;
+
+   import java.util.Arrays;
+
+   ...
+   protected BroadcastMessageHandler(String ipaddress, int port) throws Exception {
+
+   this(ipaddress, port, new DatagramSocket(port, InetAddress.getByName(ipaddress)), false);
+
+   ...
+   sock.setBroadcast(true);
+
+  ...
+  protected BroadcastMessageHandler(String ipaddress, int port, DatagramSocket sock) throws Exception {

@@ -1,0 +1,22 @@
+import java.net.DatagramPacket;
+
+   import java.net.DatagramSocket;
+
+   import java.net.InetAddress;
+
+   ...
+   private static final Log log = LogFactory.getLog(UdpTransportChannel.class);
+
+   protected DatagramSocket socket;
+
+   protected int port;
+
+   ...
+  public UdpTransportChannel(WireFormat wireFormat, DatagramSocket socket) throws JMSException {
+
+  this(wireFormat);
+
+  ...
+  socket.setSoTimeout(SO_TIMEOUT);
+
+  while (!socket.isClosed()) {

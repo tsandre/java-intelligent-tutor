@@ -1,0 +1,22 @@
+int tryport = 45054;
+
+   ServerSocket server;
+
+   for(;
+;
+++tryport) {
+
+   ...
+   try {
+
+   server = new ServerSocket(tryport);
+
+   break;
+
+   ...
+   }
+;
+
+  server.setSoTimeout(1000);
+
+  Socket rsocket = null;

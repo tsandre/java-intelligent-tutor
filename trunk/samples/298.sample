@@ -1,0 +1,20 @@
+import java.net.DatagramPacket;
+
+   import java.net.DatagramSocket;
+
+   import java.net.InetAddress;
+
+   ...
+   MulticastSocket  mcast_sock=null;
+
+   DatagramSocket   ucast_sock=null;
+
+   IpAddress        local_addr=null;
+
+   ...
+  ucast_sock=new DatagramSocket(0, bind_addr);
+
+  ucast_sock.setReceiveBufferSize(max_receiver_buffer_size);
+
+  ...
+  ucast_sock.setSendBufferSize(max_send_buffer_size);

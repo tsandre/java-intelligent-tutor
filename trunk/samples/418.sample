@@ -1,0 +1,13 @@
+   import java.util.HashM
+ap;
+   import java.util.Iterat
+or;
+   ...
+   private HashMap elements = new HashMap
+();
+   ...
+   public Iterator getElements(
+) {
+  return elements.values().iterator
+();
+

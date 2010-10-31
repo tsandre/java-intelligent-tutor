@@ -1,0 +1,43 @@
+import java.util.HashMap;
+
+import java.util.Iterator;
+
+import java.util.Map;
+
+import java.util.Set;
+
+public class HashMapExample {
+
+  public static void main(  String[] args){
+
+    HashMap<Object,String> hm=new HashMap<Object,String>();
+
+    hm.put(new Integer(2),"Two");
+
+    hm.put(new Integer(1),"One");
+
+    hm.put(new Integer(3),"Three");
+
+    hm.put(new Integer(4),"Four");
+
+    Set s=hm.entrySet();
+
+    Iterator it=s.iterator();
+
+    while (it.hasNext()) {
+
+      Map.Entry m=(Map.Entry)it.next();
+
+      int key=(Integer)m.getKey();
+
+      String value=(String)m.getValue();
+
+      System.out.println("Key :" + key);
+
+      System.out.println("value :" + value);
+
+    }
+
+  }
+
+}

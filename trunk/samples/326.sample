@@ -1,0 +1,21 @@
+class Connection implements Runnable {
+
+  DataOutputStream out;
+
+  DataInputStream in;
+
+  Socket sock;
+
+  public void run(){
+
+{
+
+      in.readUTF();
+
+      out.writeUTF("Hello");
+
+    }
+
+  }
+
+}

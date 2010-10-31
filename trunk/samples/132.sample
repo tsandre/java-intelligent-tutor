@@ -1,0 +1,15 @@
+import java.net.InetAddress;
+
+   import java.net.ServerSocket;
+
+   import java.net.Socket;
+
+   ...
+   else {
+
+   ServerSocket srv_sock=new ServerSocket(remote_port, 10, this.local_addr);
+
+   ...
+   System.out.println("-- waiting for " + num + " messages on " + srv_sock.getLocalSocketAddress());
+
+   Socket client_sock=srv_sock.accept();

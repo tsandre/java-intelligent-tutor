@@ -1,0 +1,8 @@
+protected static final String PING_MARKER = "";
+
+...
+if (sql.charAt(0) == '/') {
+
+if (sql.startsWith(PING_MARKER)) {
+
+doPingInstead();

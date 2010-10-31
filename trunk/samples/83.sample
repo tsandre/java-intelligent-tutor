@@ -1,0 +1,39 @@
+import jgame.*;
+
+public class Game extends JGEngine {
+
+  final static int NTILESX=1;
+
+  final static int NTILESY=1;
+
+  final static int TILEW=800;
+
+  final static int TILEH=600;
+
+  public Game(){
+
+    initEngineApplet(NTILESX,NTILESY,TILEW,TILEH,null,null,null);
+
+  }
+
+  public Game(  int width,  int height){
+
+    initEngine(NTILESX,NTILESY,TILEW,TILEH,null,null,null,width,height);
+
+  }
+
+  public void initGame(){
+
+    defineGraphics("game.tbl");
+
+    setBGImage("background");
+
+  }
+
+  public static void main(  String[] args){
+
+    new Game(800,600);
+
+  }
+
+}

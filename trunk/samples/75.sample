@@ -1,0 +1,22 @@
+import java.awt.GraphicsEnvironment;
+
+   import java.awt.GraphicsDevice;
+
+   import java.awt.Window;
+
+   ...
+   private boolean popup_showing = false;
+
+   private GraphicsDevice gs = null;
+
+   ...
+   startShow();
+
+  gs.setFullScreenWindow(win);
+
+  win.validate();
+
+  ...
+  {
+
+  gs.setFullScreenWindow(null);

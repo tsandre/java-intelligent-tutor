@@ -1,0 +1,17 @@
+import java.net.InetSocketAddress;
+
+   import java.net.ServerSocket;
+
+   import java.net.Socket;
+
+   ...
+   private final ServerSocket ss;
+
+   private final String hostA;
+
+   ...
+   ss = new NIOServerSocket();
+
+  ss.setReuseAddress(true);
+
+  ss.bind(new InetSocketAddress(0));

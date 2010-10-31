@@ -1,0 +1,12 @@
+   static HashMap oStat
+es;
+   ...
+   stat
+ic{
+   oStates = new HashMap
+();
+   ...
+   oStates.put(""+IStates.iACTIVITY_CLOSED                      ,"jawflow.activity.closed
+");
+  ...
+  oStates.put(""+IStates.iACTIVITY_CLOSED_ABORTED              ,"jawflow.activity.closed.aborted

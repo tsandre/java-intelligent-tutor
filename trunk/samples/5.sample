@@ -1,0 +1,5 @@
+int idVal = rs.getInt (1);
+
+   String nameVal = rs.getString (2);
+
+   String catVal = rs.getString (3);

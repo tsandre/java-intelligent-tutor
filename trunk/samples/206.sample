@@ -1,0 +1,14 @@
+Socket clientSocket = null;
+
+    try {
+
+        clientSocket = serverSocket.accept();
+
+    }
+ catch (IOException e) {
+
+        System.out.println("Accept failed: 1234");
+
+        System.exit(-1);
+
+    }

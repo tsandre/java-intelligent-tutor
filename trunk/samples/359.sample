@@ -1,0 +1,16 @@
+public Map makeEmptyMap() {
+
+   return UnmodifiableOrderedMap.decorate(ListOrderedMap.decorate(new HashMap()));
+
+   }
+
+   ...
+   public Map makeFullMap() {
+
+   OrderedMap m = ListOrderedMap.decorate(new HashMap());
+
+   addSampleMappings(m);
+
+   return UnmodifiableOrderedMap.decorate(m);
+
+   }

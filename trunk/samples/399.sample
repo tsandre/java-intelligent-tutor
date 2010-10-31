@@ -1,0 +1,20 @@
+package diva.util;
+
+   import java.util.HashMap;
+
+   import java.util.Iterator;
+
+   ...
+   HashMap _mapping;
+
+   ...
+   if(_mapping == null) {
+
+  _mapping = new HashMap();
+
+  }
+
+  ...
+  public Iterator propertyNames(){
+
+  return _mapping.keySet().iterator();

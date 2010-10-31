@@ -1,0 +1,3 @@
+   DatagramSocket dSocket = new DatagramSocket
+();
+   dSocket.send( packet

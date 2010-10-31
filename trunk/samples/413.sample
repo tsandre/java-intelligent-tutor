@@ -1,0 +1,19 @@
+import java.util.ArrayList;
+
+   import java.util.HashMap;
+
+   import java.util.Iterator;
+
+   ...
+   private HashMap pendingMessages = new HashMap();
+
+   private Schedulable schedulable;
+
+   ...
+   deltaT + "ms (Pending Messages=" +
+  pendingMessages.size()+")" );
+
+  else if (deltaT >= infoTime)
+  ...
+  deltaT + "ms (Pending Messages=" +
+  pendingMessages.size()+")" );

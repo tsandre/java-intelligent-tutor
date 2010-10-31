@@ -1,0 +1,7 @@
+   socket = new DatagramSocket(1111,InetAddress.getLocalHost()
+ );
+   socket.setReceiveBufferSize(102
+4);
+   socket.setSendBufferSize(102
+4);
+   socket.setSoTimeout(200

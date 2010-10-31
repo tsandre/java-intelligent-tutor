@@ -1,0 +1,16 @@
+protected Vector aliasFields(ObjectExpression node, Vector fields) {
+
+   Vector result = new Vector(fields.size());
+
+   ...
+   return null;
+
+   }
+ else if(aliasTables.size() == 1) {
+
+   return aliasTable.getQualifiedName();
+
+   ...
+  if(aliasTables.size() == 1) {
+
+  aliasTable = (DatabaseTable)aliasTables.iterator().next();

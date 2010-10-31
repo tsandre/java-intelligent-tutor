@@ -1,0 +1,19 @@
+   import java.net.ServerSock
+et;
+   import java.net.Sock
+et;
+   ...
+   ServerSocket ss = nu
+ll;
+   ...
+   int port = ((HostPortEpid) epid).getPortNumber
+();
+  ss = new ServerSocket(por
+t);
+
+  } catch (Exception e
+) {
+  ...
+  tr
+y {
+  t = ss.getSoTimeout

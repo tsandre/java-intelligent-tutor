@@ -1,0 +1,19 @@
+import java.util.HashMap;
+
+import java.util.Iterator;
+
+public class EclHandlerConfig {
+
+  HashMap map=new HashMap();
+
+  public EclHandlerConfig(  Element configElement){
+
+  }
+
+  public Iterator getHandlerNames(){
+
+    return map.keySet().iterator();
+
+  }
+
+}

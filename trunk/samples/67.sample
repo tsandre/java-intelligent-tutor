@@ -1,0 +1,14 @@
+.getLocalGraphicsEnvironment();
+
+   private static final GraphicsDevice[] gDevices = gEnvironment
+   .getScreenDevices();
+
+   ...
+   private GraphicsDevice gDevice;
+
+   private GraphicsConfiguration gConfiguration;
+
+   ...
+   return gDevice.isFullScreenSupported();
+
+  }

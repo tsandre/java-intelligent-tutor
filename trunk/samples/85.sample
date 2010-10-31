@@ -1,0 +1,35 @@
+public void initGame ()
+{
+
+   defineGraphics ("examples/chain_reaction.tbl");
+
+   setFrameRate (40, 4);
+
+   setGameState ("Title");
+
+   setCursor (new Cursor (Cursor.CROSSHAIR_CURSOR));
+
+}
+
+public void doFrameTitle ()
+{
+
+   if (getMouseButton (1))
+   {
+
+       clearMouseButton (1);
+
+       setGameState ("InGame");
+
+   }
+
+}
+
+public void paintFrameTitle ()
+{
+
+   drawImageString ("CHAIN REACTION", 100, 130, -1, "font_map", 32, 0);
+
+   drawImageString ("MOUSE BUTTON TO START", 0, 270, -1,"font_map", 32, -2);
+
+}

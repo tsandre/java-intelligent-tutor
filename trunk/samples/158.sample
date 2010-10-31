@@ -1,0 +1,17 @@
+private static Logger log = Logger.getLogger(JPPFServer.class);
+
+   protected ServerSocket server = null;
+
+   protected boolean stop = false;
+
+   ...
+   {
+
+   server = new ServerSocket();
+
+   InetSocketAddress addr = new InetSocketAddress(port);
+
+   ...
+   server.setReceiveBufferSize(SocketWrapper.SOCKET_RECEIVE_BUFFER_SIZE);
+
+  server.bind(addr);

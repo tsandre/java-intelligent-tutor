@@ -1,0 +1,5 @@
+ALTER TABLE City ENGINE=InnoDB;
+
+ALTER TABLE Country ENGINE=InnoDB;
+
+ALTER TABLE CountryLanguage ENGINE=InnoDB;

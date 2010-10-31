@@ -1,0 +1,31 @@
+public class ThreadExample extends Thread {
+
+  private String threadName;
+
+  public ThreadExample(  String name){
+
+    threadName=name;
+
+  }
+
+  public void run(){
+
+    for (int i=0;
+ i < 1000;
+ i++) {
+
+      System.out.println("Thread " + threadName + " : "+ i);
+
+    }
+
+  }
+
+  public static void main(  String args[]){
+
+    Thread thread=new ThreadExample("A");
+
+    thread.start();
+
+  }
+
+}

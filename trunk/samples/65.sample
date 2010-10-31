@@ -1,0 +1,18 @@
+.getLocalGraphicsEnvironment();
+
+   private static final GraphicsDevice[] gDevices = gEnvironment
+   .getScreenDevices();
+
+   ...
+   private GraphicsDevice gDevice;
+
+   private GraphicsConfiguration gConfiguration;
+
+   ...
+   if (gDevice.isDisplayChangeSupported())
+  setDisplayMode(oldDisplayMode);
+
+  ...
+  return;
+
+  else if (!gDevice.isDisplayChangeSupported() || dm == null) {

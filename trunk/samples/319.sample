@@ -1,0 +1,49 @@
+public class JoinExample {
+
+  public static void main(  String[] args){
+
+    Thread th1=new MyOwnThread("A");
+
+    Thread th2=new MyOwnThread("B");
+
+    try {
+
+      th1.start();
+
+      th1.join();
+
+      th2.start();
+
+    }
+
+ catch (    InterruptedException e) {
+
+    }
+
+  }
+
+}
+
+class MyOwnThread extends Thread {
+
+  private String threadName;
+
+  public MyOwnThread(  String name){
+
+    threadName=name;
+
+  }
+
+  public void run(){
+
+    for (int i=0;
+ i < 1000;
+ i++) {
+
+      System.out.println("Thread " + threadName + " : "+ i);
+
+    }
+
+  }
+
+}

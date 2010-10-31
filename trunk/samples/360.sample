@@ -1,0 +1,7 @@
+list.add(new ConvertedSourcePair(Boolean.FALSE, new ArrayList()));
+            
+   list.add(new ConvertedSourcePair(Boolean.FALSE, new HashMap()));
+
+   }
+
+   public void addNumberConversions(List list) {

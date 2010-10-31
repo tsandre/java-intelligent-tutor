@@ -1,0 +1,14 @@
+   import java.util.HashM
+ap;
+   ...
+   private HashMap m
+ap;
+   ...
+  public MapAdapter(HashMap map
+) {
+  this.map = m
+ap;
+  ...
+  public boolean containsKey(Object key
+) {
+  return map != null && map.containsKey(ke

@@ -1,0 +1,20 @@
+   DatagramSocket  sock=nu
+ll;
+   ...
+   tr
+y {
+   sock=new DatagramSocket(rcv_port, bind_add
+r);
+   bre
+ak;
+   ...
+   sb.append(sock.getLocalAddress().getHostAddress()).append(":").append(sock.getLocalPort(
+));
+  sb.append(", receive buffer size=").append(sock.getReceiveBufferSize(
+));
+  sb.append(", send buffer size=").append(sock.getSendBufferSize(
+));
+  ...
+  sb.append(", send buffer size=").append(mcast_sock.getSendBufferSize(
+));
+  sb.append(", receive buffer size=").append(mcast_sock.getReceiveBufferSize(

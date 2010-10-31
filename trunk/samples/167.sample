@@ -1,0 +1,14 @@
+ServerConnListener scl;
+
+   ServerSocket s;
+
+   ...
+   try {
+
+   s = new ServerSocket(port);
+
+   }
+
+   catch (IOException e) {
+
+   Util.assert_nonjava(false, "error opening port "+port);

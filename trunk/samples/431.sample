@@ -1,0 +1,19 @@
+import java.util.ArrayList;
+
+   import java.util.HashMap;
+
+   import java.util.Iterator;
+
+   ...
+   private final CacheStat stat;
+
+   private final HashMap cache_;
+
+   private final ArrayList        holders;
+
+   ...
+   int initialSize, long maximumSize, boolean useByteCount) {
+
+  cache_ = new HashMap(initialSize, (float) 0.95);
+
+  this.maximumSize = maximumSize;

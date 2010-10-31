@@ -1,0 +1,19 @@
+import java.net.InetSocketAddress;
+
+   import java.net.ServerSocket;
+
+   import java.net.Socket;
+
+   ...
+   private static final Log log = LogFactory.getLog(TcpTransportServer.class);
+
+   protected ServerSocket serverSocket;
+
+   protected int backlog = 5000;
+
+   ...
+   public InetSocketAddress getSocketAddress() {
+
+  return (InetSocketAddress)serverSocket.getLocalSocketAddress();
+
+  }

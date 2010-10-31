@@ -1,0 +1,5 @@
+public interface Ex3Dao {
+
+  Integer createCity(  String name,  String countryCode,  String district,  Integer population);
+
+}

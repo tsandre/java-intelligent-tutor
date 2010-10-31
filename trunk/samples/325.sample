@@ -1,0 +1,31 @@
+public class UseSomeThread {
+
+  public static void main(  String args[]){
+
+    ThisThread prog=new ThisThread();
+
+    prog.start();
+
+    while (true) {
+
+      System.out.println("Main Thread");
+
+    }
+
+  }
+
+}
+
+class ThisThread extends Thread {
+
+  public void run(){
+
+    while (true) {
+
+      System.out.println("This Thread");
+
+    }
+
+  }
+
+}

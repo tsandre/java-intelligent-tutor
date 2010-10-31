@@ -1,0 +1,12 @@
+   private GraphicsDevice devi
+ce;
+   ...
+   tr
+y {
+   device.setDisplayMode(displayMod
+e);
+ 
+  }
+   catch (IllegalArgumentException ex
+) {
+ 

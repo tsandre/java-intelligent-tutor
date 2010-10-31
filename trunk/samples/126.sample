@@ -1,0 +1,21 @@
+import java.io.IOException;
+
+   import java.net.ServerSocket;
+
+   import java.net.Socket;
+
+   ...
+   {
+
+   private ServerSocket socket;
+
+   private volatile boolean close;
+
+   ...
+  Daemon(ServerSocket socket)
+  {
+
+  ...
+  {
+
+  return socket.getInetAddress().getHostAddress() + ":" + socket.getLocalPort();

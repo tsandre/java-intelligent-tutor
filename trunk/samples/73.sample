@@ -1,0 +1,12 @@
+   private GraphicsDevice devi
+ce;
+   ...
+   device.setFullScreenWindow(windo
+w);
+   if (displayMode != null &&
+   ...
+ 
+  }
+  device.setFullScreenWindow(nul
+l);
+

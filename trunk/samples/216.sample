@@ -1,0 +1,3 @@
+DatagramSocket s = new DatagramSocket(null);
+
+		s.bind(new InetSocketAddress(8888));

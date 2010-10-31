@@ -1,0 +1,10 @@
+DatagramPacket serverPacket;
+
+   DatagramSocket serverSocket;
+
+   ...
+   try {
+
+   serverSocket = new DatagramSocket();
+
+   serverHost = InetAddress.getByName(serverName);

@@ -1,0 +1,22 @@
+import java.io.IOException;
+
+   import java.net.ServerSocket;
+
+   import eu.ist.Atelier.util.xml.*;
+
+   ...
+   int port = params.getPort();
+
+   server = new ServerSocket(port);
+
+   }
+
+   ...
+   public String toString() {
+
+  return server.toString();
+
+  }
+
+  ...
+  ServerSocket server = null;

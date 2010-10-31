@@ -1,0 +1,16 @@
+import java.net.InetSocketAddress;
+
+   import java.net.ServerSocket;
+
+   import java.net.Socket;
+
+   ...
+   ServerSocket ss = new NIOServerSocket();
+
+   ...
+   ss.setSoTimeout(1000);
+
+   ss.bind(new InetSocketAddress("localhost", 0));
+
+  ...
+  ServerSocket listening = new TLSServerSocketFactory().createServerSocket();

@@ -1,0 +1,9 @@
+this.bind_addr=InetAddress.getByName(bind_addr);
+
+   srv_sock=new ServerSocket(7500, 50, this.bind_addr);
+
+   while(true) {
+
+   System.out.println("-- waiting for clients to connect");
+
+   Socket sock=srv_sock.accept();

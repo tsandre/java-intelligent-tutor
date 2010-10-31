@@ -1,0 +1,17 @@
+class Game extends JGEngine {
+
+class Alien extends JGObject {
+
+    final static int COLID=1;
+
+    Alien(    double x,    double y,    double xdir){
+
+      super("alien",true,x,y,COLID,"alien");
+
+      setDirSpeed((xdir < 0.5) ? -1 : 1,1,1.0,1.0);
+
+    }
+
+  }
+
+}

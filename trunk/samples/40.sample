@@ -1,0 +1,6 @@
+onMousePressed: operation (e: CanvasMouseEvent) {
+                    me.curve = Polyline {
+                        points: [e.x, e.y]                        stroke: new Color (1,0,0,1)                        strokeLineCap: ROUND                        strokeWidth: 5			}
+;
+                    insert me.curve as last into me.curves;
+}

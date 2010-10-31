@@ -1,0 +1,8 @@
+   ServerSocket ss = new ServerSocket(por
+t);
+   ...
+   Socket s = ss.accept
+();
+   ServerThread st = new ServerThread(
+s);
+   st.start

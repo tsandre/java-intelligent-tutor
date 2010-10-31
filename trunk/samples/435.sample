@@ -1,0 +1,23 @@
+import java.util.Collection;
+
+   import java.util.HashMap;
+
+   import java.util.Iterator;
+
+   ...
+   assertEquals("size must reflect number of mappings added.",
+   keys.length, m.size());
+
+   }
+
+   ...
+   public Map makeConfirmedMap() {
+
+  return new HashMap();
+
+  }
+
+  ...
+  public Map.Entry cloneMapEntry(Map.Entry entry) {
+
+  HashMap map = new HashMap();

@@ -1,0 +1,18 @@
+public void startTest() {
+
+   GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().
+   getDefaultScreenDevice();
+
+   ...
+   System.out.println("Calling setFullScreen with frame");
+
+   gd.setFullScreenWindow(this);
+
+   while (!clicked) {
+
+   ...
+   System.out.println("Calling setFullScreen with null");
+
+  gd.setFullScreenWindow(null);
+
+  }

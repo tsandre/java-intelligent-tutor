@@ -1,0 +1,19 @@
+PrintWriter out = new PrintWriter(
+                          clientSocket.getOutputStream(), true);
+
+    BufferedReader in = new BufferedReader(
+                        new InputStreamReader(
+                            clientSocket.getInputStream()));
+
+    String inputLine, outputLine;
+
+    while ((inputLine = in.readLine()) != null) {
+	
+        outputLine = "Server: " + inputline;
+
+        out.println(outputLine);
+
+        if outputLine.equals("bye"))
+            break;
+
+    }

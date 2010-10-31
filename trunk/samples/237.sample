@@ -1,0 +1,11 @@
+{
+
+   DatagramSocket server = new DatagramSocket( i );
+
+   ...
+   server.close();
+
+   }
+
+   catch ( SocketException e )
+   {

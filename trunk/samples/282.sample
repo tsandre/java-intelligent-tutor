@@ -1,0 +1,10 @@
+   DatagramSocket ds = new DatagramSocket
+(); 
+   ...
+   ds.send(d
+p);
+ 
+  }
+   catch(Exception e
+) {
+   e.printStackTrace

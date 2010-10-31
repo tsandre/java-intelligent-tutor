@@ -1,0 +1,15 @@
+   import java.util.HashM
+ap;
+   import java.util.Iterat
+or;
+   ...
+ 
+  {
+   private HashMap m_map = new HashMap
+();
+   ...
+ 
+  {
+  return m_map.values().iterator
+();
+

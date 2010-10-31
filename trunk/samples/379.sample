@@ -1,0 +1,16 @@
+   import java.util.HashM
+ap;
+   import java.util.LinkedLi
+st;
+   ...
+   private LinkedList m_list = new LinkedList
+();
+   private HashMap    m_map  = new HashMap
+();
+   ...
+   public void clear(
+) {
+  m_list.clear
+();
+  ...
+  m_map.clear

@@ -1,0 +1,11 @@
+   private GraphicsDevice devi
+ce;
+   ...
+   device.setFullScreenWindow(fram
+e);
+   ...
+ 
+  }
+  device.setFullScreenWindow(nul
+l);
+

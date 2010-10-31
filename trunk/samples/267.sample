@@ -1,0 +1,16 @@
+   DatagramSocket endpoi
+nt;
+   ...
+   if (name.substring(name.indexOf(':') + 1).length() == 0
+) {
+   endpoint = new DatagramSocket(por
+t);
+ 
+  } els
+e { 
+   ...
+   int receiveLen = endpoint.getReceiveBufferSize
+();
+  int sendLen = endpoint.getSendBufferSize
+();
+  public int getNominalLength() throws IOExceptio

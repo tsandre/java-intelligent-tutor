@@ -1,0 +1,10 @@
+   private GraphicsDevice devi
+ce;
+   ...
+   if (displayMode != null &&
+   device.isDisplayChangeSupported())
+ 
+  {
+   tr
+y {
+   device.setDisplayMode(displayMod

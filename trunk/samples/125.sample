@@ -1,0 +1,16 @@
+   ServerSocket listenSock
+et;
+   String       remoteHo
+st;
+   ...
+   tr
+y {
+   this.listenSocket = new ServerSocket(localPort, LISTEN_QUEUE_SIZE,
+   InetAddress.getByName(localHost
+));
+   ...
+   public String getListenHost(
+) {
+  return listenSocket.getInetAddress().getHostAddress
+();
+

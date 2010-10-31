@@ -1,0 +1,17 @@
+public class LinesBase {
+
+  HashMap lines;
+
+  public LinesBase(){
+
+    lines=new HashMap();
+
+  }
+
+  public void reset(){
+
+    lines.clear();
+
+  }
+
+}

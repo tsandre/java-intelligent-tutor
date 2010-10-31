@@ -1,0 +1,19 @@
+import java.awt.GraphicsConfiguration;
+
+   import java.awt.GraphicsDevice;
+
+   import java.awt.GraphicsEnvironment;
+
+   ...
+   private static Insets getScreenInsets (GraphicsDevice device)
+   {
+
+   ...
+   return Toolkit.getDefaultToolkit().getScreenInsets(device.getDefaultConfiguration());
+
+  }
+
+  ...
+  {
+
+  GraphicsDevice device = getCurrentDevice(w);

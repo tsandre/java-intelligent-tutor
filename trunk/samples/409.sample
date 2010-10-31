@@ -1,0 +1,16 @@
+   protected HashMap gam
+es;
+   ...
+   players = new Hashtable
+();
+   games = new HashMap
+();
+ 
+  }
+   ...
+  players.remove(pi
+d);
+  ...
+  p2.setGameId(g.getGameId(
+));
+  games.remove("" + g.getGameId(

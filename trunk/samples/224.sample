@@ -1,0 +1,14 @@
+else
+   _socket = new DatagramSocket(_listenPort, _bindAddress);
+
+   _sender = new UDPSender(_context, _socket, "UDPSend on " + _listenPort);
+
+   ...
+   else
+   _socket = new DatagramSocket(_listenPort, _bindAddress);
+
+   _sender.updateListeningPort(_socket, newPort);
+
+   _receiver.updateListeningPort(_socket, newPort);
+
+   _listenPort = newPort;

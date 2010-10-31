@@ -1,0 +1,18 @@
+import java.net.BindException;
+
+   import java.net.ServerSocket;
+
+   import java.net.Socket;
+
+   ...
+   new HashMap<DaapConnectionNIO, DaapController>();
+
+   private ServerSocket serverSocket;
+
+   ...
+   try {
+
+  serverSocket.bind(bindAddr, backlog);
+
+  }
+ catch (SocketException err) {

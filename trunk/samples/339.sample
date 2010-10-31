@@ -1,0 +1,10 @@
+Thread t = new Thread(new Runnable() {
+   
+   public void run() {
+
+   }
+
+}
+);
+
+t.start();

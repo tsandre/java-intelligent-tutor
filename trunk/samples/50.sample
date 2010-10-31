@@ -1,0 +1,15 @@
+import java.awt.GraphicsConfiguration;
+
+import java.awt.GraphicsDevice;
+
+import java.awt.GraphicsEnvironment;
+
+public class PaintUtils {
+
+  private static GraphicsConfiguration configuration=GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+
+  GraphicsDevice screenDevice=environment.getDefaultScreenDevice();
+
+  GraphicsConfiguration configuration;
+
+}

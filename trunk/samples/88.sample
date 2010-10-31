@@ -1,0 +1,10 @@
+public void hit (JGObject obj)
+{
+
+   new JGObject ("explo", true, x, y, 0, "explo", 0, 0, 32);
+
+   remove ();
+
+   obj.remove ();
+
+}

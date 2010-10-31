@@ -1,0 +1,24 @@
+import java.net.DatagramPacket;
+
+   import java.net.DatagramSocket;
+
+   import java.net.InetAddress;
+
+   ...
+   _LOG.debug("Attempt: create socket");
+
+   _socket = new DatagramSocket();
+
+   _LOG.debug("Success: create socket");
+
+   ...
+   {
+
+  _socket.disconnect();
+
+  }
+
+  ...
+  {
+
+  _socket.disconnect();

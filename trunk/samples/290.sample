@@ -1,0 +1,12 @@
+   DatagramSocket    sock
+et;
+   ...
+   socket = new DatagramSocket( port
+ );
+   ...
+  socket = new DatagramSocket(addres
+s);
+
+  }
+  ...
+  socket.setReuseAddress(tru

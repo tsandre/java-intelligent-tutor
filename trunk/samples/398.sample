@@ -1,0 +1,14 @@
+{
+
+   private HashMap books=new HashMap();
+
+   public BookService()
+   ...
+   {
+
+   return books.keySet().iterator();
+
+   }
+
+   public int getPrice(String id)
+   {

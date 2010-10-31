@@ -1,0 +1,21 @@
+trigger on FSFrame.tick [oldTick] =nextTick {
+    var numberFormat=NumberFormat.getInstance ();
+    for (i in [oldTick.. nextTick-1]) {
+       var one=lastSession [i];
+        if (one.trim () .length ()> 0) {
+            var tcurve = Polyline {
+                stroke: new Color (1,0,0,1)                strokeLineCap: ROUND                strokeWidth: 5		}
+;
+            var xyArray=one.split (",");
+            for (xy in xyArray) {
+                if (xy.trim () .length ()> 0) {
+                    var points=xy.split ("/");
+                    var x=numberFormat.parse (points [0] .substring (1));
+                    var y=numberFormat.parse (points [1] .substring (1));
+                    insert [x, y] as last into tcurve.points;
+			}
+		}
+            insert tcurve as last into curves;
+		}
+	}
+}

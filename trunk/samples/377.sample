@@ -1,0 +1,17 @@
+public class AgentsBase {
+
+  HashMap agents;
+
+  public AgentsBase(){
+
+    agents=new HashMap();
+
+  }
+
+  public void reset(){
+
+    agents.clear();
+
+  }
+
+}

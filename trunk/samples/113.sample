@@ -1,0 +1,14 @@
+import java.net.InetSocketAddress;
+
+   import java.net.ServerSocket;
+
+   ...
+   i.hasNext();
+) {
+
+   ServerSocket socket = (ServerSocket) i.next();
+
+   ...
+   socket.setSoTimeout(info.timeout);
+
+  socket.bind(info.endpoint, info.backlog);

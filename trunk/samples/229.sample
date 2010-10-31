@@ -1,0 +1,7 @@
+InetSocketAddress addr = new InetSocketAddress(host, port);
+
+   DatagramSocket socket = new DatagramSocket(5000);
+
+   Random random = new Random();
+
+   while(true) {

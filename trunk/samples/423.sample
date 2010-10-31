@@ -1,0 +1,13 @@
+   private static HashMap      s_links = new HashMap
+();
+   static
+   ...
+ 
+  {
+   return s_links.size() !=
+ 0;
+   ...
+ 
+  {
+  Worker (String urlString, HashMap links)
+

@@ -1,0 +1,6 @@
+String updateStatement =
+	"Update MyTable set SomeColumn=192 where OtherColumn=12";
+
+int updateSuccess = stat.executeUpdate(updateStatement);
+
+System.out.println("success? "+updateSuccess);

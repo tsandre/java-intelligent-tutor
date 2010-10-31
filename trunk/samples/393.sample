@@ -1,0 +1,14 @@
+   import java.util.HashM
+ap;
+   ...
+   HashMap hints = nu
+ll;
+   ...
+   protected  HashMap getHints(
+) {
+   return hin
+ts;
+  ...
+  public Object getHint( String hint 
+) {
+  return hints != null ? hints.get( hint ) : nu

@@ -1,0 +1,18 @@
+synchronized public void getReadLock() {
+
+      while(writingInProgress | (writersWaiting >=maxWritersWaiting) ) {
+
+        try {
+
+         wait();
+
+        }
+
+        catch (InterruptedException ie) {
+ }
+
+      }
+ 
+      readers ++ ;
+
+  }

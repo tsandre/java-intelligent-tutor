@@ -1,0 +1,15 @@
+   private HashMap m_map = new HashMap(30
+0);
+   ...
+   public void clear(
+) {
+   m_map = new HashMap(30
+0);
+ 
+  }
+   ...
+   public Iterator keys(
+) {
+  return m_map.keySet().iterator
+();
+

@@ -1,0 +1,15 @@
+import java.awt.GraphicsConfiguration;
+
+   import java.awt.GraphicsDevice;
+
+   import java.awt.GraphicsEnvironment;
+
+   ...
+   GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+   GraphicsDevice gd = ge.getDefaultScreenDevice();
+
+   ...
+   return gd.getDefaultConfiguration();
+
+   }

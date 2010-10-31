@@ -1,0 +1,12 @@
+assertTrue(CollectionUtils.isEmpty((Map)null));
+
+   assertTrue(CollectionUtils.isEmpty(new HashMap()));
+
+   assertTrue(CollectionUtils.isEmpty(new HashSet()));
+
+   ...
+   Map map = new HashMap();
+
+   map.put("foo", "bar");
+
+   assertFalse(CollectionUtils.isEmpty(map));

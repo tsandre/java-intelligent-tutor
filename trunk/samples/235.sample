@@ -1,0 +1,12 @@
+ByteBuffer buffer=ByteBuffer.allocate(size);
+
+   DatagramSocket socket=channel.socket();
+
+   SocketAddress localAddr=new InetSocketAddress(8000);
+
+   ...
+   socket.bind(localAddr);
+
+   while(true){
+
+   System.out.println("???????????");

@@ -1,0 +1,15 @@
+import java.io.Serializable;
+
+   import java.util.HashMap;
+
+   import java.util.Iterator;
+
+   ...
+   private HashMap properties = new HashMap();
+
+   ...
+   public Iterator listProperties() {
+
+  return properties.keySet().iterator();
+
+  }

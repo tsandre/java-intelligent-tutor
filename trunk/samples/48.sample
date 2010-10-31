@@ -1,0 +1,18 @@
+import java.awt.GraphicsConfiguration;
+
+   import java.awt.GraphicsDevice;
+
+   import java.awt.GraphicsEnvironment;
+
+   ...
+   {
+
+   GraphicsDevice device = env.getDefaultScreenDevice();
+
+   ...
+   return device.getConfigurations();
+
+   }
+
+  ...
+  GraphicsDevice[] devices = env.getScreenDevices();

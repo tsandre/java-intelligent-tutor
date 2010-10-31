@@ -1,0 +1,16 @@
+import java.util.Map;
+
+   import java.util.HashMap;
+
+   import java.util.Iterator;
+
+   ...
+   {
+
+   private HashMap flies = new HashMap(10);
+
+   ...
+  for ( Iterator it = flies.entrySet().iterator() ;
+ it.hasNext() ;
+  )
+  {

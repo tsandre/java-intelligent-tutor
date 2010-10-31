@@ -1,0 +1,18 @@
+   protected ServerSocket server_sock
+et;
+   protected Socket client_sock
+et;
+   ...
+   if (client_socket != null)
+   return client_socket.getInetAddress().getHostName().getBytes
+();
+   else
+   ...
+   if (client_socket != null)
+  return client_socket.getInetAddress().getHostAddress().getBytes
+();
+  else
+  ...
+  public byte[] local_addr(
+) {
+  return server_socket.getInetAddress().getHostAddress().getBytes

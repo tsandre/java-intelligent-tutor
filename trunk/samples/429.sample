@@ -1,0 +1,22 @@
+public int getNumConnections() {
+
+   return conns.size();
+
+   }
+
+   ...
+   Map.Entry entry;
+
+   HashMap copy;
+
+   ...
+   synchronized(conns) {
+
+  copy=new HashMap(conns);
+
+  }
+
+  ...
+  ret.append("local_addr=" + local_addr).append("\n");
+
+  ret.append("connections (" + copy.size() + "):\n");

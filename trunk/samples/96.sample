@@ -1,0 +1,9 @@
+InetSocketAddress isa = new InetSocketAddress( _host, _port );
+
+   _ss = new ServerSocket();
+
+   _ss.bind( isa );
+
+   setReady();
+
+   }

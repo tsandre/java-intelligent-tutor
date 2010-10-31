@@ -1,0 +1,13 @@
+class MyRunnable extends SomeClass implements Runnable {
+
+  public void run(){
+
+  }
+
+}
+
+public class Client {
+
+  Thread t=new Thread(new MyRunnable());
+
+}

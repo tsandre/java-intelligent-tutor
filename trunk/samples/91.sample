@@ -1,0 +1,18 @@
+GraphicsDevice graphicsDevice = ...
+    DisplayMode originalDisplayMode = graphicsDevice.getDisplayMode();
+
+    DisplayMode newDisplayMode = ...
+    try {
+
+      if (graphicsDevice.isDisplayChangeSupported()) {
+
+        graphicsDevice.setDisplayMode(newDisplayMode);
+
+      }
+
+    }
+ finally {
+
+      graphicsDevice.setDisplayMode(originalDisplayMode);
+
+    }

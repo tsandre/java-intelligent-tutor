@@ -1,0 +1,2 @@
+namedFunctionCallDeclaration.setFunctionCallInternDeclaration(
+   (IFunctionCallInternDeclaration)_prototypeFunctionCallInternDecl.copy(new HashMap()));

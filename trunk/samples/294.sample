@@ -1,0 +1,12 @@
+   mc_sock.setReuseAddress(tru
+e);
+   ...
+   t
+ry{
+   final DatagramSocket control_socket = new DatagramSocket( null
+ );
+   ...
+   control_socket.setReuseAddress( true
+ );
+  ...
+  mc_sock.setReuseAddress(tru

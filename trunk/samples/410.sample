@@ -1,0 +1,13 @@
+   public HashMap getPKUASProperties(
+) {
+   ...
+   HashMap map = new HashMap
+();
+   Properties m_asProperties = loadPropFromFile(ConfigConstants.PKUASPROPERTIE
+S);
+   ...
+   + JNDINam
+e);
+   map.remove("JNDIName
+");
+ 

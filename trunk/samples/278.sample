@@ -1,0 +1,17 @@
+   DatagramSocket sock
+et;
+   private boolean stopped = fal
+se;
+   ...
+   public EchoOutputThread() throws SocketExceptio
+n {
+   this.socket = new DatagramSocket
+();
+ 
+  }
+   ...
+   tr
+y {
+  socket.receive(d
+p);
+  String s = new String(dp.getData(), dp.getLength(

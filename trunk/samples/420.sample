@@ -1,0 +1,15 @@
+import java.util.HashMap;
+
+import java.util.Iterator;
+
+public class ServletDefinitionListImpl implements ServletDefinitionList {
+
+  private HashMap definitions=new HashMap();
+
+  public Iterator iterator(){
+
+    return definitions.values().iterator();
+
+  }
+
+}
