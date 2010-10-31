@@ -3,6 +3,7 @@
  */
 package itjava.model;
 
+import itjava.data.NodeToCompare;
 import itjava.data.TFIDF;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,14 +17,17 @@ import java.util.Iterator;
  */
 public class Matrix {
 	private ArrayList<CompilationUnitFacade> facadeList;
-	private float[][] importSimilarity;
 	private ArrayList<Similarity> sortedSimilarity;
 	private float[][] similarity;
 	private float UNTOUCHED = -999;
 	private float ERROR = -666;
+
+	private float[][] importSimilarity;
 	private float[][] classInstanceSimilarity;
 	private float[][] methodInvocationSimilarity;
 	private float[][] variableDeclarationSimilarity;
+	
+	private int weights[] = {1, 2, 2, 1, 1, 1};
 	
 	public Matrix(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
 		facadeList = compilationUnitFacadeList;
@@ -66,10 +70,11 @@ public class Matrix {
 		variableDeclarationSimilarity[indexOfX][indexOfY] = variableDecVal;
 		variableDeclarationSimilarity[indexOfY][indexOfX] = variableDecVal;
 		
-		similarity[indexOfX][indexOfY] = importVal + classInstanceVal + methodVal + variableDecVal;
-		similarity[indexOfY][indexOfX] = importVal + classInstanceVal + methodVal + variableDecVal;
+		float similarityVal = importVal * weights[0] + classInstanceVal * weights[1] + methodVal * weights[2] + variableDecVal * weights[3];
+		similarity[indexOfX][indexOfY] = similarityVal;
+		similarity[indexOfY][indexOfX] = similarityVal;
 		
-		sortedSimilarity.add(new Similarity((importVal + classInstanceVal + methodVal + variableDecVal), indexOfX, indexOfY));
+		sortedSimilarity.add(new Similarity((similarityVal), indexOfX, indexOfY));
 		
 	}
 

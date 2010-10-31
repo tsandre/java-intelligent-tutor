@@ -37,7 +37,7 @@ public class IntegrateCodeSearchWordInfo {
 	
 	private void GivenQuery() {
 		_codeToWordInfoMap = new HashMap<ArrayList<String>, ArrayList<WordInfo>>();
-		_query = "HashMap java example";
+		_query = "FileReader java example";
 		_codeSearchPresenter = new CodeSearchPresenter(_query);
 		_wordInfoPresenter = new WordInfoPresenter();
 	}
