@@ -98,20 +98,20 @@ public class Matrix {
 		float magProduct;
 		for (int i = 0; i < a.length; i ++) {
 			try {
-				dotProduct += a[i].Value()*b[i].Value();
+				dotProduct += a[i].getValue()*b[i].getValue();
 			}
 			catch (Exception e) {
-				System.err.println("A : " + a[i].Value());
-				System.err.println("B : " + b[i].Value());
+				System.err.println("A : " + a[i].getValue());
+				System.err.println("B : " + b[i].getValue());
 				e.printStackTrace();
-				dotProduct += a[i].Value()*b[i].Value();
+				dotProduct += a[i].getValue()*b[i].getValue();
 			}
 		}
 		float magA = 0;
 		float magB = 0;
 		for (int j = 0; j < a.length; j++){
-			magA += a[j].Value() * a[j].Value();
-			magB += b[j].Value() * b[j].Value();
+			magA += a[j].getValue() * a[j].getValue();
+			magB += b[j].getValue() * b[j].getValue();
 		}
 		magProduct = (float) ((Math.sqrt(magA)) * (Math.sqrt(magB)));
 		return dotProduct / (magProduct + Float.MIN_VALUE);

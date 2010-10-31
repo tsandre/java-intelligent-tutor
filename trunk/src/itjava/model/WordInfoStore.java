@@ -47,7 +47,6 @@ public class WordInfoStore {
 	public static WordInfo createWordInfo(List<String> linesOfCode, Statement statement) {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = ((VariableDeclarationStatement)statement).getType().toString();
-		//System.out.println("VariableDeclaration pos: " + statement.getStartPosition());
 		wordInfoStore.createWordInfo(statement);
 		return wordInfoStore._wordInfo;
 	}
@@ -56,7 +55,6 @@ public class WordInfoStore {
 			ImportDeclaration importDeclaration) {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = importDeclaration.getName().getFullyQualifiedName();
-		//System.out.println("ImportDeclaration pos: " + importDeclaration.getStartPosition());
 		wordInfoStore.createWordInfo(importDeclaration);
 		return wordInfoStore._wordInfo;
 	}
@@ -65,7 +63,6 @@ public class WordInfoStore {
 			Type classInstanceType) {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = classInstanceType.toString();
-		//System.out.println("Class Instance pos: " + classInstanceType.getStartPosition());
 		wordInfoStore.createWordInfo(classInstanceType);
 		return wordInfoStore._wordInfo;
 	}
@@ -74,7 +71,6 @@ public class WordInfoStore {
 			SimpleName methodInvocation) {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = methodInvocation.getFullyQualifiedName();
-		//System.out.println("Initializer pos: " + methodInvocation.getStartPosition());
 		wordInfoStore.createWordInfo(methodInvocation);
 		return wordInfoStore._wordInfo;
 	}
@@ -83,7 +79,6 @@ public class WordInfoStore {
 			FieldDeclaration fieldDeclaration) {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = ((FieldDeclaration)fieldDeclaration).getType().toString();
-		//System.out.println("Field Declaration pos: " + fieldDeclaration.getStartPosition());
 		wordInfoStore.createWordInfo(fieldDeclaration);
 		return wordInfoStore._wordInfo;
 	}
@@ -92,7 +87,6 @@ public class WordInfoStore {
 			QualifiedName currPropertyAssignment) {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = currPropertyAssignment.getName().toString();
-		//System.out.println("Initializer pos: " + currPropertyAssignment.getStartPosition());
 		wordInfoStore.createWordInfo(currPropertyAssignment);
 		return wordInfoStore._wordInfo;
 	}

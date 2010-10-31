@@ -7,7 +7,7 @@ package itjava.data;
  * @author Aniket
  *
  */
-public class TFIDF {
+public class TFIDF implements Comparable<TFIDF>{
 	private  Number numOfOccurrences;
 	private Number totalTermsInDocument;
 	private Number totalDocuments;
@@ -20,24 +20,29 @@ public class TFIDF {
 		numOfDocumentsWithTerm = docsWithTerms;
 	}
 	
-	public Float Value(){
+	public Float getValue(){
 		float tf = numOfOccurrences.floatValue() / (Float.MIN_VALUE + totalTermsInDocument.floatValue());
 		float idf = (float) Math.log10(totalDocuments.floatValue() / (Float.MIN_VALUE + numOfDocumentsWithTerm.floatValue()));
 		return (tf * idf);
 	}
 	
-	public int GetNumOfOccurrences() {
+	public int getNumOfOccurrences() {
 		return this.numOfOccurrences.intValue();
 	}
 	
 	public String toString() {
-		return this.Value().toString();
+		return this.getValue().toString();
 //		return "numOfOccurrences : " + this.numOfOccurrences.intValue() + "\n"
 //			+ "totalTermsInDocument : " + this.totalTermsInDocument.intValue() + "\n"
 //			+ "numOfDocumentsWithTerm : " + this.numOfDocumentsWithTerm.intValue() + "\n"
 //			+ "totalDocuments : " + this.totalDocuments.intValue() + "\n"
 //			+ "TFIDF : " + this.Value();
 			
+	}
+	
+	@Override
+	public int compareTo(TFIDF o) {
+		return (int) (o.getValue() - this.getValue());
 	}
 	
 }
