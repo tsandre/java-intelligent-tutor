@@ -20,7 +20,7 @@ public class CodeSearchPresenter {
 	private String _query;
 	private String[] _cacheLinks;
 	private int _startPosition = 0;
-	private int _endPosition = 19;
+	private int _endPosition = 9;
 	
 	public CodeSearchPresenter(String query) {
 		_query = query;
@@ -41,7 +41,7 @@ public class CodeSearchPresenter {
 			}
 		}
 		_startPosition = _endPosition + 1;
-		_endPosition = _endPosition + 20;
+		_endPosition = _endPosition + 10;
 		return ResultEntryStore.createResultEntryList(currLinks);
 	}
 	
