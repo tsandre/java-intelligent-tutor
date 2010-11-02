@@ -40,7 +40,8 @@ public class ResultEntryStore {
 		for(int i=0;i<_setOfLinks.size();i++){
 			try {
 				URL url = _setOfLinks.get(i);
-				url.openConnection();
+				URLConnection urlconn = url.openConnection();
+				urlconn.setReadTimeout(5000);
 				int urlPadding = 0; //Padding is used to uniquely identify each piece of code in spite of same url.
 				BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
 				String inputLine;
@@ -56,12 +57,16 @@ public class ResultEntryStore {
 					if(eles.get(j).text().length()>=30){ 
 						Pattern pattern = Pattern.compile("/\\*.*\\*/", Pattern.DOTALL);
 					    Matcher matcher = pattern.matcher(eles.get(j).text());
-					    Pattern pattern2 = Pattern.compile("//.*");
+					    Pattern pattern2 = Pattern.compile("^ *//.*");
 					    Matcher matcher2 = pattern2.matcher(matcher.replaceAll(""));
 					    Pattern pattern3 = Pattern.compile("[0-9]+: *");
 					    Matcher matcher3 = pattern3.matcher(matcher2.replaceAll(""));
-						newEntry = new ResultEntry(Convertor.FormatCode(matcher3.replaceAll("")), (urlPadding++ +_setOfLinks.get(i).toString()), matcher3.replaceAll("").length());
-						_resultEntries.add(newEntry);
+					    int NumOpenBraces = matcher3.replaceAll("").replaceAll("[^{]","").length();
+					    int NumClosedBraces = matcher3.replaceAll("").replaceAll("[^}]","").length();
+					    if(NumOpenBraces != 0 && NumOpenBraces == NumClosedBraces){
+							newEntry = new ResultEntry(Convertor.FormatCode(matcher3.replaceAll("")), (urlPadding++ +_setOfLinks.get(i).toString()), matcher3.replaceAll("").length());
+							_resultEntries.add(newEntry);
+					    }
 					}
 				}
 	
