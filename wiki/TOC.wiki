@@ -1,6 +1,6 @@
 #summary Project Wikis
 
-  * *[http://code.google.com/p/java-intelligent-tutor/wiki/TableOfContents Home]*
+  * *[TableOfContents Home]*
   * Other Topics  
     * *SettingUpYourBox?*
     * *[http://ctat.pact.cs.cmu.edu/index.php?id=netbeans50 Setting up Netbeans for CTAT]*
