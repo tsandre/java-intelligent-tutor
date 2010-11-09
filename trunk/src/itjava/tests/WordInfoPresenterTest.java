@@ -293,7 +293,8 @@ public class WordInfoPresenterTest {
 	}
 
 	private void WhenGetCodeInfoIsCalled() {
-		_codeToWordInfoMap = _wordInfoPresenter.GenerateWordInfoMap(query,
+		_wordInfoPresenter.AccessRepository(query,
 				sourceCodes);
+		_codeToWordInfoMap = _wordInfoPresenter.GenerateWordInfoMap();
 	}
 }

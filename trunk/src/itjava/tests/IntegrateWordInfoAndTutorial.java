@@ -78,8 +78,9 @@ public class IntegrateWordInfoAndTutorial {
 	}
 
 	private void WhenWordInfoIsGenerated() {
-		_codeToWordInfoMap = _wordInfoPresenter.GenerateWordInfoMap(query,
+		_wordInfoPresenter.AccessRepository(query,
 				sourceCodes);
+		_codeToWordInfoMap = _wordInfoPresenter.GenerateWordInfoMap();
 	}
 
 	private void ThenNumberofParanthesisIsBalanced() {

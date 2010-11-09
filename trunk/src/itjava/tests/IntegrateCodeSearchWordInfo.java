@@ -31,29 +31,43 @@ public class IntegrateCodeSearchWordInfo {
 	@Test
 	public void IntegrateCodeSearchWordInfoTest() {
 		GivenQuery();
+		WhenRepositoryIsGenerated();
 		WhenWordInfoIsGeneratedFromCodeSearchResults();
-	//	WhenTutorialIsGenerated();
+		WhenTutorialIsGenerated();
 	}
 	
+	private void WhenRepositoryIsGenerated() {
+		_wordInfoPresenter.AccessRepository(_query, _codeSearchPresenter.SearchNext());
+	}
+
 	private void GivenQuery() {
 		_codeToWordInfoMap = new HashMap<ArrayList<String>, ArrayList<WordInfo>>();
-		_query = "FileReader java example";
+		_query = "Connect to sqlite in java";
 		_codeSearchPresenter = new CodeSearchPresenter(_query);
 		_wordInfoPresenter = new WordInfoPresenter();
 	}
 	
 	private void WhenWordInfoIsGeneratedFromCodeSearchResults() {
-		_codeToWordInfoMap.putAll(_wordInfoPresenter.GenerateWordInfoMap(_query, _codeSearchPresenter.SearchNext()));
+		_codeToWordInfoMap.putAll(_wordInfoPresenter.GenerateWordInfoMap());
 	}
 	
 	private void WhenTutorialIsGenerated() {
-		int i = 0;
-		for (Entry<ArrayList<String>, ArrayList<WordInfo>> entrySet : _codeToWordInfoMap
-				.entrySet()) {
+		int i = 0; 
+		Tutorial tutorial = null;
+		tutorialList = new ArrayList<Tutorial>();
+		for (Entry<ArrayList<String>, ArrayList<WordInfo>> entrySet : _codeToWordInfoMap.entrySet()) {
 			_tutorialPresenter = new TutorialPresenter();
-			Tutorial tutorial = _tutorialPresenter.GetTutorial(
-					"SampleGUI" + (i), entrySet.getKey(), entrySet.getValue(), "sourceUrl");
-			tutorialList.add(tutorial);
+			try {
+				tutorial = _tutorialPresenter
+						.GetTutorial("SampleGUI" + (i), entrySet.getKey(), entrySet.getValue(), "sourceUrl");
+				System.out.println(tutorial.tutorialCode);
+				System.out.println("----------------------------------");
+				tutorialList.add(tutorial);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				System.err.println("Error creating tutorial GUI");
+			}
 			i++;
 		}
 
