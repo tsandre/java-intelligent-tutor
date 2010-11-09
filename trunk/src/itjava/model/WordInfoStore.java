@@ -24,15 +24,12 @@ public class WordInfoStore {
 		_wordInfo = new WordInfo();
 	}
 
-	private void createWordInfo(ASTNode node) {
+	private void createWordInfo(ASTNode node) throws Exception {
 		int index = 0;
 		int lineNumber = 0;
 		for (String currLine : _linesOfCode) {
 			index += currLine.length();
 			if (index > node.getStartPosition()) {
-				//System.out.println("Current line: " + currLine);
-				//System.out.println("Substring: " + currLine.substring(currLine.trim().indexOf(_wordInfo.wordToBeBlanked)));
-				//System.out.println("Index of word: " + currLine.indexOf(_wordInfo.wordToBeBlanked));
 				//TODO Bug: when the wordToBeBlanked was "close", for the function .close();
 				//It was found that in line closeable.close(), the first 4 letters of closeable were blanked out since that was the indexOf("close").
 				_wordInfo.lineNumber = lineNumber + 1;
@@ -42,9 +39,12 @@ public class WordInfoStore {
 			}
 			lineNumber++;
 		}
+		if (_wordInfo.columnNumber == -1 || _wordInfo.lineNumber == -1) {
+			throw new Exception("Word: " + _wordInfo.wordToBeBlanked + " not accessible");
+		}
 	}
 	
-	public static WordInfo createWordInfo(List<String> linesOfCode, Statement statement) {
+	public static WordInfo createWordInfo(List<String> linesOfCode, Statement statement) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = ((VariableDeclarationStatement)statement).getType().toString();
 		wordInfoStore.createWordInfo(statement);
@@ -52,7 +52,7 @@ public class WordInfoStore {
 	}
 
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			ImportDeclaration importDeclaration) {
+			ImportDeclaration importDeclaration) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = importDeclaration.getName().getFullyQualifiedName();
 		wordInfoStore.createWordInfo(importDeclaration);
@@ -60,7 +60,7 @@ public class WordInfoStore {
 	}
 	
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			Type classInstanceType) {
+			Type classInstanceType) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = classInstanceType.toString();
 		wordInfoStore.createWordInfo(classInstanceType);
@@ -68,7 +68,7 @@ public class WordInfoStore {
 	}
 	
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			SimpleName methodInvocation) {
+			SimpleName methodInvocation) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = methodInvocation.getFullyQualifiedName();
 		wordInfoStore.createWordInfo(methodInvocation);
@@ -76,7 +76,7 @@ public class WordInfoStore {
 	}
 
 	public static WordInfo createWordInfo(ArrayList<String> linesOfCode,
-			FieldDeclaration fieldDeclaration) {
+			FieldDeclaration fieldDeclaration) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = ((FieldDeclaration)fieldDeclaration).getType().toString();
 		wordInfoStore.createWordInfo(fieldDeclaration);
@@ -84,7 +84,7 @@ public class WordInfoStore {
 	}
 
 	public static WordInfo createWordInfo(ArrayList<String> linesOfCode,
-			QualifiedName currPropertyAssignment) {
+			QualifiedName currPropertyAssignment) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = currPropertyAssignment.getName().toString();
 		wordInfoStore.createWordInfo(currPropertyAssignment);

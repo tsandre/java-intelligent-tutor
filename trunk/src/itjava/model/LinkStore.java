@@ -35,11 +35,10 @@ public class LinkStore {
 
 	private static ArrayList<String> YahooSearch() {
 		ArrayList<String> yahooSearchResults = new ArrayList<String>();
-		// TODO Populate googleSearchResults with url strings
 		try {
 			String request = "http://boss.yahooapis.com/ysearch/web/v1/"
 				+ URLEncoder.encode(_query, "UTF-8")
-				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf&format=xml&count=20";
+				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf&format=xml&count=50&type=-msoffice,-pdf";
 		
 			URL url = new URL(request);
 			System.out.println("Host : " + url.getHost());
@@ -57,7 +56,6 @@ public class LinkStore {
 				yahooSearchResults.add(ele.text());	
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return yahooSearchResults;

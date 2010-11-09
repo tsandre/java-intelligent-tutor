@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import itjava.data.DorminComponent;
-import itjava.data.TutorialTemplate;
 
 public class TutorialStore {
 
@@ -43,7 +42,7 @@ public class TutorialStore {
 			System.err.println("Input param for GenerateTutorial are NULL");
 			return null;
 		}
-
+		tutorial.linesOfCode = this.linesOfCode;
 		CreateVariableDeclarations();
 		CreateInitComponentsFunction();
 
@@ -146,12 +145,18 @@ public class TutorialStore {
 		DorminComponent doneButton = new DorminComponent();
 		doneButton.Button("Done", "doneButton", 20, y + 20, 20, 60);
 		_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(doneButton);
+		
+		DorminComponent hintButton = new DorminComponent();
+		hintButton.Button("Hint", "hintButton", 90, y + 20, 20, 60);
+		_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(hintButton);
 	}
 
 	private void CreateVariableDeclarations() {
 		_variableDeclarations.add(TutorialTemplate.ctatOptionsDeclaration("cTAT_Options1"));
 		_variableDeclarations.add(TutorialTemplate.buttonDeclaration("doneButton"));
+		_variableDeclarations.add(TutorialTemplate.buttonDeclaration("hintButton"));
 		this._buttonVariables.add("doneButton");
+		this._buttonVariables.add("hintButton");
 		
 		for (int indexOfLinesOfCode = 1; indexOfLinesOfCode <= linesOfCode.size(); indexOfLinesOfCode++) {
 			String labelName = "lblLine" + indexOfLinesOfCode;

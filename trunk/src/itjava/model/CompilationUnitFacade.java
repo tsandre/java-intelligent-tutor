@@ -1,7 +1,6 @@
 package itjava.model;
 
 import itjava.data.NodeToCompare;
-import itjava.data.TFVector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +29,7 @@ public class CompilationUnitFacade {
 	private List<Type> _classInstances;
 	private List<QualifiedName> _qualifiedNames;
 
-	private TFVector _tfVector;
+	private TFIDFVector _tfVector;
 	private String _url;
 	
 	public String toString() {
@@ -517,15 +516,15 @@ public class CompilationUnitFacade {
 	//Term frequency settings
 	
 	/**
-	 * For setting a TFVector, pass a {@link Repository} object that contains all the required
+	 * For setting a TFIDFVector, pass a {@link Repository} object that contains all the required
 	 * dictionary terms of each type (eg. importTerms, methodInvocationTerms)
 	 * @param repository
 	 */
 	public void setTFVector(Repository repository) {
-		_tfVector = TFStore.GetTF(this, repository);
+		_tfVector = TFIDFStore.GetTF(this, repository);
 	}
 
-	public TFVector getTFVector() {
+	public TFIDFVector getTFVector() {
 		return _tfVector;
 	}
 

@@ -3,6 +3,7 @@ package itjava.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -31,8 +32,13 @@ public class CompilationUnitStore {
 	public ArrayList<CompilationUnitFacade> createCompilationUnitFacadeList(
 			String query, ArrayList<ResultEntry> resultEntryList) {
 		ArrayList<CompilationUnitFacade> compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
+		int badCode = 0;
+		int rejectedByCU = 0;
+		int rejectedByBlock = 0;
 		for (ResultEntry resultEntry : resultEntryList) {
-			if (resultEntry.text.trim().equals("")) {
+			if (resultEntry.text.trim().equals("") || !resultEntry.text.contains(";")) {
+				System.err.println("bad code : \n" + resultEntry.text + "\n--------");
+				badCode++;
 				continue;
 			}
 			do {
@@ -51,13 +57,16 @@ public class CompilationUnitStore {
 					}
 					break;
 				}
+//				System.err.println("Rejected program : " + resultEntry.text);
+				rejectedByCU++;
 				_astParser = InitParser(ASTParser.K_STATEMENTS, resultEntry.text.toCharArray());
 				Block block = (Block)_astParser.createAST(null);
 				if (block != null
 						&& block.toString().trim().length() > 0
 						&& block.statements().size() > 1) {
 					try {
-					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(block, resultEntry.text);
+//					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(block, resultEntry.text);
+					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(block, block.toString());
 					compilationUnitFacade.setUrl(resultEntry.url);
 					compilationUnitFacadeList.add(compilationUnitFacade);
 					}
@@ -67,9 +76,15 @@ public class CompilationUnitStore {
 					}
 					break;
 				}
+				rejectedByBlock++;
 			}
 			while (false);
 		}
+		System.err.println("Total result entries : " + resultEntryList.size());
+		System.err.println("Bad Code : " + badCode);
+		System.err.println("Rejected by CU : " + rejectedByCU);
+		System.err.println("Rejected by Block : " + rejectedByBlock);
+		System.err.println("Total facades : " + compilationUnitFacadeList.size());
 		return compilationUnitFacadeList;
 	}
 	
@@ -95,9 +110,8 @@ public class CompilationUnitStore {
 			_facade.addAllSuperInterfaces(currTypeDeclaration.superInterfaceTypes());
 			
 			for (MethodDeclaration methodDeclaration : currTypeDeclaration.getMethods()) {
-				Block block;
 				try {
-					block = methodDeclaration.getBody();
+					Block block = methodDeclaration.getBody();
 					List<Statement> statements = block.statements();
 					for (Statement statement : statements) {
 						_facade.addStatement(statement);
@@ -105,7 +119,7 @@ public class CompilationUnitStore {
 				}
 				catch (Exception e) {
 					System.err.println("Error fetching block/statement from : " + methodDeclaration.toString());
-					e.printStackTrace();
+					System.err.println(methodDeclaration.getParent().toString());
 				}
 			}
 		}
@@ -123,7 +137,7 @@ public class CompilationUnitStore {
 		return _facade;
 	}
 	
-	public HashSet<CompilationUnitFacade> FindSimilarCompilationUnits(ArrayList<CompilationUnitFacade> compilationUnitFacadeList, Repository repository) {
+	public LinkedHashSet<CompilationUnitFacade> FindSimilarCompilationUnits(ArrayList<CompilationUnitFacade> compilationUnitFacadeList, Repository repository, int numOfResults) {
 		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
 			facade.setTFVector(repository);
 			System.out.println("Source Example: " + facade.getUrl());
@@ -142,12 +156,11 @@ public class CompilationUnitStore {
 				}
 			}	
 		}
-		HashSet<CompilationUnitFacade> tutorialReadyList = matrix.GetTopSimilar(10);
+		LinkedHashSet<CompilationUnitFacade> tutorialReadyList = matrix.GetTopSimilar(numOfResults);
 		return tutorialReadyList;
-		//TODO HashMap<CompilationUnitFacade, ArrayList<WordInfo>> tutorialReadyMap = FindCosineSimilar(tfidfVectorList, 10);
 	}
 
-	public HashMap<ArrayList<String>,ArrayList<WordInfo>> FindCommonDeclaration(ArrayList<CompilationUnitFacade> compilationUnitFacadeList){
+	/*public HashMap<ArrayList<String>,ArrayList<WordInfo>> FindCommonDeclaration(ArrayList<CompilationUnitFacade> compilationUnitFacadeList){
 		_facadeList = compilationUnitFacadeList;
 		HashMap<ArrayList<String>, ArrayList<WordInfo>> codeToWordInfoMap = new HashMap<ArrayList<String>, ArrayList<WordInfo>>();
 		HashSet<String> commonImports = new HashSet<String> ();
@@ -283,10 +296,10 @@ public class CompilationUnitStore {
 		}
 		//Method Invocation END
 		
-		/*
+		
 		 * Find common qualified Names : eg. char arr[] abc; abc.length;
 		 * Here length is the one you are looking for.
-		*/
+		
 		HashSet<String> allPropertyAssignments = new HashSet<String>();
 		for (CompilationUnitFacade currFacade : _facadeList) {
 			for (QualifiedName currPropertyAssignment : currFacade.getQualifiedNames()) {
@@ -318,12 +331,11 @@ public class CompilationUnitStore {
 		}
 		
 		return codeToWordInfoMap;
-	}
+	}*/
 
 	private static ASTParser InitParser(int kind, char[] source) {
 		ASTParser astParser = ASTParser.newParser(AST.JLS3);
 		astParser.setSource(source);
-		astParser.setStatementsRecovery(true);
 		astParser.setKind(kind);
 		return astParser;
 	}

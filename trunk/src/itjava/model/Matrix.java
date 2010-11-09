@@ -4,12 +4,12 @@
 package itjava.model;
 
 import itjava.data.NodeToCompare;
-import itjava.data.TFIDF;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 /**
  * @author Aniket
@@ -26,8 +26,6 @@ public class Matrix {
 	private float[][] classInstanceSimilarity;
 	private float[][] methodInvocationSimilarity;
 	private float[][] variableDeclarationSimilarity;
-	
-	private int weights[] = {1, 2, 2, 1, 1, 1};
 	
 	public Matrix(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
 		facadeList = compilationUnitFacadeList;
@@ -70,7 +68,7 @@ public class Matrix {
 		variableDeclarationSimilarity[indexOfX][indexOfY] = variableDecVal;
 		variableDeclarationSimilarity[indexOfY][indexOfX] = variableDecVal;
 		
-		float similarityVal = importVal * weights[0] + classInstanceVal * weights[1] + methodVal * weights[2] + variableDecVal * weights[3];
+		float similarityVal = importVal * 1 + classInstanceVal * 2 + methodVal * 3 + variableDecVal * 1;
 		similarity[indexOfX][indexOfY] = similarityVal;
 		similarity[indexOfY][indexOfX] = similarityVal;
 		
@@ -78,13 +76,16 @@ public class Matrix {
 		
 	}
 
-	public HashSet<CompilationUnitFacade> GetTopSimilar(int numOfSimilarUnits) {
-		HashSet<CompilationUnitFacade> topSimilar = new HashSet<CompilationUnitFacade>();
+	public LinkedHashSet<CompilationUnitFacade> GetTopSimilar(int numOfSimilarUnits) {
+		LinkedHashSet<CompilationUnitFacade> topSimilar = new LinkedHashSet<CompilationUnitFacade>();
 		Collections.sort(sortedSimilarity, new SimilarityComparator());
 		Collections.reverse(sortedSimilarity);
 		Iterator<Similarity> it = sortedSimilarity.iterator();
 		while (topSimilar.size() <= numOfSimilarUnits) {
 			Similarity currSimilarity = it.next();
+			if (currSimilarity.similarity == (float) 0) {
+				break;
+			}
 			if ( currSimilarity.x != currSimilarity.y) {
 				topSimilar.add(facadeList.get(currSimilarity.x));
 				topSimilar.add(facadeList.get(currSimilarity.y));
