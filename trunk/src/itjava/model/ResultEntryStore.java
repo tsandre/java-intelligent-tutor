@@ -40,10 +40,12 @@ public class ResultEntryStore {
 		for(int i=0;i<_setOfLinks.size();i++){
 			try {
 				URL url = _setOfLinks.get(i);
-				URLConnection urlconn = url.openConnection();
-				urlconn.setReadTimeout(5000);
+				System.out.println("Scraping : " + url.toString());
+				URLConnection urlConn = url.openConnection();
+				urlConn.setConnectTimeout(10000);
+				urlConn.setReadTimeout(10000);
 				int urlPadding = 0; //Padding is used to uniquely identify each piece of code in spite of same url.
-				BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+				BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 				String inputLine;
 				String finalContents = "";
 				while ((inputLine = reader.readLine()) != null) {
@@ -71,7 +73,7 @@ public class ResultEntryStore {
 				}
 	
 			} catch (Exception e) {
-				System.err.println(e.toString() + " thorwn by following URL : " + _setOfLinks.get(i));
+				System.err.println(e.toString() + " thrown by following URL : " + _setOfLinks.get(i));
 			}
 		}
 		
