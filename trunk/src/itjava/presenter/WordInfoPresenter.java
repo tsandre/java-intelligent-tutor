@@ -1,18 +1,19 @@
 package itjava.presenter;
 
 import itjava.data.NodeToCompare;
-import itjava.data.TFVector;
 import itjava.model.CompilationUnitFacade;
 import itjava.model.CompilationUnitStore;
 import itjava.model.Repository;
 import itjava.model.RepositoryStore;
 import itjava.model.ResultEntry;
+import itjava.model.TFIDFVector;
 import itjava.model.WordInfo;
 import itjava.model.WordInfoStore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.AST;
@@ -54,40 +55,61 @@ public class WordInfoPresenter {
 		compilationUnitStore = new CompilationUnitStore();
 	}
 
-	public HashMap<ArrayList<String>, ArrayList<WordInfo>> GenerateWordInfoMap(
-			String query, ArrayList<ResultEntry> resultEntryList) {
+	public HashMap<ArrayList<String>, ArrayList<WordInfo>> GenerateWordInfoMap() {
 		_codeToWordInfoMap = new HashMap<ArrayList<String>, ArrayList<WordInfo>>();
 
-		compilationUnitFacadeList = compilationUnitStore.createCompilationUnitFacadeList(query, resultEntryList);
-		_repository = RepositoryStore.UpdateRepository(compilationUnitFacadeList);
-		
-		HashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, _repository);
+		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 10);
 		for (CompilationUnitFacade facade : similarFacades) {
 			ArrayList<WordInfo> wordInfoList = new ArrayList<WordInfo>();
 			
 			ArrayList<String> topImports = facade.getTFVector().getSortedTerms(NodeToCompare.ImportDeclaration, 1);
 			for (ImportDeclaration importDeclaration : facade.getImportDeclarations()) {
 				if(topImports.contains(importDeclaration.getName().getFullyQualifiedName())) {
-					wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), importDeclaration));
+					try {
+						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), importDeclaration));
+					}
+					catch (Exception e) {
+						System.err.println(e.getMessage() + "; Facade URL : " + facade.getUrl());
+						continue;
+					}
 				}
 			}
 			
 			ArrayList<String> topMethods = facade.getTFVector().getSortedTerms(NodeToCompare.MethodInvocation, 2);
 			for (SimpleName methodInvocation : facade.getMethodInvocations()) {
 				if (topMethods.contains(methodInvocation.getFullyQualifiedName())) {
-					wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), methodInvocation));
+					try {
+						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), methodInvocation));
+					}
+					catch (Exception e) {
+						System.err.println(e.getMessage() + "; Facade URL : " + facade.getUrl());
+						continue;
+					}
 				}
 			}
 			
 			ArrayList<String> topClassInstances = facade.getTFVector().getSortedTerms(NodeToCompare.ClassInstanceCreator, 2);
 			for (Type classInstance : facade.getClassInstances()) {
 				if (topClassInstances.contains(classInstance.toString())) {
-					wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), classInstance));
+					try {
+						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), classInstance));
+					}
+					catch (Exception e) {
+						System.err.println(e.getMessage() + "; Facade URL : " + facade.getUrl());
+						continue;
+					}
 				}
 			}
-			_codeToWordInfoMap.put(facade.getLinesOfCode(), wordInfoList);
+			if (wordInfoList.size() > 0) {
+				_codeToWordInfoMap.put(facade.getLinesOfCode(), wordInfoList);
+			}
 		}
 		return _codeToWordInfoMap;
+	}
+
+	public void AccessRepository(String query, ArrayList<ResultEntry> resultEntryList) {
+		this.compilationUnitFacadeList = compilationUnitStore.createCompilationUnitFacadeList(query, resultEntryList);
+		this.setRepository(RepositoryStore.UpdateRepository(compilationUnitFacadeList));
 	}
 
 }
