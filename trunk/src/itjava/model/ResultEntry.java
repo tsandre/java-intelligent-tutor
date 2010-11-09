@@ -19,4 +19,8 @@ public class ResultEntry extends HashMap<String, String> {
 		url = inUrl;
 		length = inLength;
 	}
+	
+	public String toString() {
+		return "URL : " + this.url + "\n" + this.text + "\n";
+	}
 }
