@@ -1,0 +1,6 @@
+public class Dispatcher extends HttpServlet {
+public void doGet( HttpServletRequest req, HttpServletResponse res){
+RequestDispatcher dispatcher=request.getRequestDispatcher("/template.jsp");
+if (dispatcher != null) dispatcher.forward(request,response);
+}
+}

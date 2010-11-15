@@ -1,0 +1,9 @@
+{
+FileOutputStream fos=new FileOutputStream("myProps.ext");
+try {
+p.store(fos,"MY PROPERTIES FILE FOR THIS PROJECT");
+fos.close();
+}
+catch ( Exception e) {
+}
+}
