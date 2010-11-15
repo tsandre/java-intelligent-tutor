@@ -1,3 +1,0 @@
-CREATE TABLE employeedetails (EMPNAME varchar(20));
- 
-INSERT INTO employeedetails (EMPNAME) VALUES ('EMPNAME1');

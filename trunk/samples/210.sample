@@ -1,5 +1,0 @@
-out.close();
-
-    in.close();
-
-    mySocket.close();

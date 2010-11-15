@@ -1,6 +1,0 @@
-kkSocket = new Socket("taranis", 4444);
-
-out = new PrintWriter(kkSocket.getOutputStream(), true);
-
-in = new BufferedReader(new InputStreamReader(
-                            kkSocket.getInputStream()));

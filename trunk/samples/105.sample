@@ -1,9 +1,0 @@
-int port = Integer.parseInt( args[0] );
-
-   ServerSocket server = new ServerSocket( port );
-
-   ...
-   Socket client = server.accept();
-
-   BufferedReader in = new BufferedReader( 
-   new InputStreamReader( client.getInputStream() ) );

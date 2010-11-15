@@ -1,7 +1,0 @@
-SearchPath path;
-
-   public Map classMap = new HashMap(128, 0.75f);
-
-   public ClassManager() {
-
-   path = null;

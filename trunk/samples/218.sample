@@ -1,3 +1,0 @@
-   DatagramSocket ds = new DatagramSocket
-(); 
-   byte buffer[] = args[2].getBytes

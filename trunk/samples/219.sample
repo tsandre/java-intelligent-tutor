@@ -1,9 +1,0 @@
-byte[] time;
-
-   datagramSocket = new DatagramSocket(8000);
-
-   System.out.println("UDP server active on port 8000");
-
-   while (true) {
-
-   inDataPacket = new DatagramPacket(msg, msg.length);

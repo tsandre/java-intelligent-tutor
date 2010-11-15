@@ -1,7 +1,0 @@
-this.bufferSize = bufferSize;
-
-   ds = new DatagramSocket(0);
-
-   ds.setSoTimeout(timeout);
-
-   }

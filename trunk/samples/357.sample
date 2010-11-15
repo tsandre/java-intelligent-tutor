@@ -1,9 +1,0 @@
-List list = new ArrayList();
-
-   list.add(new ConvertedSourcePair(HashMap.class, new HashMap()));
-
-   list.add(new ConvertedSourcePair(null, null));
-
-   list.add(new ConvertedSourcePair(ObjectToClassConverterTestCase.class, this));
-
-   list.add(new ConvertedSourcePair(String.class, ""));

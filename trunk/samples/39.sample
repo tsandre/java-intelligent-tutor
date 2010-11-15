@@ -1,3 +1,0 @@
-onMouseDragged: operation (e: CanvasMouseEvent) {
-                    insert [e.x, e.y] as last into me.curve.points;
-}

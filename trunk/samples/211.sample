@@ -1,3 +1,0 @@
-Socket TestClient;
-
-TestClient = new Socket("10.10.10.1", 4242);

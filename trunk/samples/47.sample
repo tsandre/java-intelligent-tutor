@@ -1,7 +1,0 @@
-public int getType() {
-
-   return GraphicsDevice.TYPE_PRINTER;
-
-   }
-
-   }

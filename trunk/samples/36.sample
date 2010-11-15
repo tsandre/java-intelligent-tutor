@@ -1,3 +1,0 @@
-Ex3Dao dao = (Ex3Dao) ctx.getBean("dao");
-
-Integer id = dao.createCity(name,  countryCode, district, pop);

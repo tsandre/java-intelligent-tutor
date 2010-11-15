@@ -1,8 +1,0 @@
-xmlsock.addEventListener(DataEvent.DATA, onData);
- 
-private function onData(event:DataEvent):void 
-{
- 
-    trace("[" + event.type + "] " + event.data);
- 
-}

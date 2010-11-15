@@ -1,3 +1,0 @@
-var xmlsock:XMLSocket = new XMLSocket();
- 
-xmlsock.connect("127.0.0.1", 8080);

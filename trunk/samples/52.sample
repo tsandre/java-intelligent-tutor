@@ -1,8 +1,0 @@
-   private GraphicsDevice devi
-ce;
-   ...
-   public DisplayMode getCurrentDisplayMode(
-) {
-   return device.getDisplayMode
-();
- 

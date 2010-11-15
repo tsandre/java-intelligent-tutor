@@ -1,5 +1,0 @@
-this.setUndecorated(true);
-
-this.setVisible(true);
-
-GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);

@@ -1,9 +1,0 @@
-public class GenKPCommand extends JSTKCommandAdapter {
-
-  private static HashMap defaults=new HashMap();
-
-static {
-
-  }
-
-}

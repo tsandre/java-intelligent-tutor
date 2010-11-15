@@ -1,5 +1,0 @@
-results.close();
-
-stat.close();
-
-myConnection.close();

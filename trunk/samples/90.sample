@@ -1,8 +1,0 @@
-GraphicsEnvironment graphicsEnvironment =
-      GraphicsEnvironment.getLocalGraphicsEnvironment();
-
-    GraphicsDevice graphicsDevice =
-      graphicsEnvironment.getDefaultScreenDevice();
-
-    DisplayMode displayModes[] =
-      graphicsDevice.getDisplayModes();

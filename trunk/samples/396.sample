@@ -1,9 +1,0 @@
-public class GenSRCommand extends JSTKCommandAdapter {
-
-  private static HashMap defaults=new HashMap();
-
-static {
-
-  }
-
-}

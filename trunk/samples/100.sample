@@ -1,7 +1,0 @@
-jbInit();
-
-   serverSocket = new ServerSocket(Port,Count);
-
-   pack();
-
-   show();

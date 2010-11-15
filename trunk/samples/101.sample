@@ -1,8 +1,0 @@
-   listenSocket = new ServerSocket(SERVER_PORT, MAX_CLIENT
-S);
- 
-  } catch (IOException e
-) {
-   System.err.println("ERROR: unable to listen on port "+SERVER_PORT+": "+
-e);
-   System.exit(

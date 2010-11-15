@@ -1,6 +1,0 @@
-   DatagramSocket dSocket = new DatagramSocket
-();
-   ...
-   dSocket.send( packet
- );
-   System.out.println( "Weg is' es"

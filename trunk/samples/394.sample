@@ -1,9 +1,0 @@
-public class ExportCACertCommand extends JSTKCommandAdapter {
-
-  private static HashMap defaults=new HashMap();
-
-static {
-
-  }
-
-}

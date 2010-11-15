@@ -1,4 +1,0 @@
-String s = "My first UDP Packet"
-byte[] b = s.getBytes();
-
-DatagramPacket dp = new DatagramPacket(b, b.length);

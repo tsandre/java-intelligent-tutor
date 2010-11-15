@@ -1,2 +1,0 @@
-c:\> serialver java.util.Date
-java.util.Date:  static final long serialVersionUID = 7523967970034938905L;

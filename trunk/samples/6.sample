@@ -1,4 +1,0 @@
-String nameVal = rs.getString ("name");
-
-   if (rs.wasNull ())
-       nameVal = "(no name available)";

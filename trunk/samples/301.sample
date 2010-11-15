@@ -1,6 +1,0 @@
-   DatagramSocket socket = new DatagramSocket
-();
-   ...
-   socket.setSoTimeout(100
-0);
-   byte[] buffer = new byte[51
