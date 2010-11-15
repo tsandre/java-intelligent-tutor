@@ -1,0 +1,7 @@
+public class SomeServlet extends HttpServlet {
+public void doGet( HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+RequestDispatcher rd=getServletContext().getRequestDispatcher("pathToNextServlet");
+rd.forward(req,res);
+rd.include(req,res);
+}
+}

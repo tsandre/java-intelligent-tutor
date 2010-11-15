@@ -1,0 +1,4 @@
+{
+StreamTokenizer tzer=new StreamTokenizer(new FileReader("someFile.txt"));
+int typeRead=tzer.nextToken();
+}
