@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import itjava.data.DorminComponent;
+import itjava.data.LocalMachine;
 
 public class TutorialStore {
 
@@ -68,7 +69,7 @@ public class TutorialStore {
 		tutorial.path = "generated/" + tutorial.tutorialName + ".java";
 		BufferedWriter writer;
 		try {
-			writer = new BufferedWriter(new FileWriter(tutorial.path));
+			writer = new BufferedWriter(new FileWriter(LocalMachine.home + tutorial.path));
 			writer.write(tutorial.tutorialCode);
 			writer.close();
 		} catch (IOException e) {

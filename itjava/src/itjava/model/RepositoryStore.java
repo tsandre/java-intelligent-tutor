@@ -3,6 +3,7 @@
  */
 package itjava.model;
 
+import itjava.data.LocalMachine;
 import itjava.data.NodeToCompare;
 
 import java.io.FileWriter;
@@ -105,7 +106,7 @@ public class RepositoryStore {
 		/*Writing the actual file to disk*/
 		FileWriter writer = null;
 		try{ 
-			writer = new FileWriter("E:\\web\\itjava\\samples\\" + fileName + ".sample");
+			writer = new FileWriter(LocalMachine.home + "samples/" + fileName + ".sample");
 			for (String line : facade.getLinesOfCode()) {
 				writer.append(line + "\n");
 			}
@@ -225,7 +226,7 @@ public class RepositoryStore {
 			java.sql.Statement sqlStatement = _conn.createStatement();
 			ResultSet rs = sqlStatement.executeQuery("select * from Documents;");
 			while (rs.next()) {
-				allTuples.put("samples\\" + rs.getInt("fileName") + ".sample",
+				allTuples.put(LocalMachine.home + "samples/" + rs.getInt("fileName") + ".sample",
 						rs.getString("url"));
 			}
 			rs.close();
@@ -349,6 +350,6 @@ public class RepositoryStore {
 
 	private static void GetConnection() throws Exception {
 			Class.forName("org.sqlite.JDBC");
-			_conn = DriverManager.getConnection("jdbc:sqlite:E:\\web\\itjava\\samples\\itjava.db");
+			_conn = DriverManager.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
 	}
 }
