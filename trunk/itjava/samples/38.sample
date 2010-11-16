@@ -1,0 +1,15 @@
+import java.io.*;
+import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+import javax.xml.parsers.*;
+import yaxa.xml.*;
+import yaxa.xml.events.*;
+public class ChessboardYAXAPrinter {
+private SAXParser parser;
+public class ChessboardHandlerextends {
+{
+}
+public void ChessboardHandler(){
+}
+}
+}
