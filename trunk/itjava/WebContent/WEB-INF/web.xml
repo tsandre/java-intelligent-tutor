@@ -9,14 +9,28 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <servlet-name>CodeSearchServlet</servlet-name>
     <servlet-class>itjava.view.CodeSearchServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>CodeSearchServlet</servlet-name>
     <url-pattern>/CodeSearchServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TutorialSelectionServlet</servlet-name>
+    <servlet-class>itjava.view.TutorialSelectionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TutorialSelectionServlet</servlet-name>
+    <url-pattern>/TutorialSelectionServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>TutorialSelectionServlet</servlet-name>
+    <servlet-class>itjava.view.TutorialSelectionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TutorialSelectionServlet</servlet-name>
+    <url-pattern>/TutorialSelectionServlet</url-pattern>
   </servlet-mapping>
 </web-app>
