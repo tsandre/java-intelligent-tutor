@@ -1,0 +1,9 @@
+{
+String record=null;
+try {
+while ((record=br.readLine()) != null) {
+}
+}
+catch ( IOException e) {
+}
+}

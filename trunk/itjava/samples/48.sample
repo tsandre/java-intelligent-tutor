@@ -1,0 +1,46 @@
+public class Tempverter {
+{
+}
+private Label lblResult;
+private TextBox txtDegrees;
+public Tempverter(){
+this.Text="Tempverter";
+this.ClientSize=new Size(WIDTH,HEIGHT);
+this.FormBorderStyle=FormBorderStyle.FixedDialog;
+this.MaximizeBox=false;
+this.Controls.Add(CreateGUI());
+}
+Panel CreateGUI(){
+Panel pnl=new Panel();
+pnl.Size=new Size(WIDTH,HEIGHT);
+Label lblDegrees=new Label();
+lblDegrees.Text="Enter degrees";
+lblDegrees.Location=new Point(ANCHORX,ANCHORY);
+lblDegrees.Size=new Size(lblDegrees.PreferredWidth,lblDegrees.PreferredHeight);
+pnl.Controls.Add(lblDegrees);
+txtDegrees=new TextBox();
+txtDegrees.Location=new Point(ANCHORX + lblDegrees.Width + SPACER1,lblDegrees.Location.Y - lblDegrees.Height / 5);
+txtDegrees.Size=new Size(90,20);
+pnl.Controls.Add(txtDegrees);
+lblResult=new Label();
+lblResult.Location=new Point(ANCHORX,lblDegrees.Location.Y + lblDegrees.Height * 2);
+lblResult.Size=new Size(lblDegrees.Width + SPACER1 + txtDegrees.Width,lblDegrees.Height);
+lblResult.BackColor=Color.AntiqueWhite;
+pnl.Controls.Add(lblResult);
+Button btnToC=new Button();
+btnToC.Text="To Celsius";
+btnToC.Location=new Point(ANCHORX,lblResult.Location.Y + lblResult.Height * 2);
+btnToC.Size=btnToC.PreferredSize;
+btnToC.Click+=new EventHandler(btnToC_Click);
+pnl.Controls.Add(btnToC);
+Button btnToF=new Button();
+btnToF.Text="To Fahrenheit";
+btnToF.Location=new Point(ANCHORX + btnToC.Width + SPACER2,btnToC.Location.Y);
+btnToF.Size=btnToF.PreferredSize;
+btnToF.Click+=new EventHandler(btnToF_Click);
+pnl.Controls.Add(btnToF);
+return pnl;
+}
+public void btnToC_Click( object ob, EventArgs e){
+}
+}
