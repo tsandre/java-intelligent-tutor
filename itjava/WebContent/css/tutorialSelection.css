@@ -1,0 +1,70 @@
+@CHARSET "ISO-8859-1";
+body {
+	font-family: segoe ui, verdana;
+}
+
+#divMain {
+	margin:0 auto;
+}
+
+div {
+	border:1px solid gray;
+}
+
+div .step {
+	border: none;
+	width: 60px;
+	height: 25px;
+	font-size: 1em;
+	background-color: #d4e692;
+}
+
+div .active {
+	width: 120px;
+	height: 50px;
+	font-size: 2em;
+	background-color: #46c02d;
+}
+
+#divCode {
+	font-family: monospace;
+	font-size: 1em;
+	line-height: 1.5em;
+}
+
+.lineNumber {
+	background-color: #e0e9f2;
+	font-size: 12px;
+}
+
+#divCodeNumber {
+	text-align: center;
+}
+
+.odd {
+	background-color: #F5FCE9;
+}
+
+.even {
+	background-color: #EDF7EA;
+}
+
+table .active {
+	font-weight: bold;
+	font-size: 1.2em;
+	background-color: #dbf3fd;
+}
+
+table .passive {
+	background-color: #EDF7EA;
+}
+
+#divRating {
+	text-align: center;
+	width: 600px;
+}
+
+#divApproveSample {
+	text-align: center;
+	width: 600px;
+}
