@@ -30,7 +30,6 @@ public class CodeSearchServlet extends HttpServlet {
      */
     public CodeSearchServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
