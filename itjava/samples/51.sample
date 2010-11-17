@@ -1,0 +1,33 @@
+package saxbean;
+import java.io.*;
+import java.util.*;
+import org.xml.sax.*;
+import org.xml.sax.helpers.DefaultHandler;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.parsers.SAXParser;
+public class MySAXParserBean {
+private String text;
+private Vector vector=new Vector();
+private MyElement current=null;
+public MySAXParserBean(){
+}
+public Vector parse( String filename){
+}
+void startElement( String uri, String name, String qName, Attributes atts){
+current=new MyElement(uri,name,qName,atts);
+vector.addElement(current);
+text=new String();
+}
+public void endElement( String uri, String name, String qName){
+if (current != null && text != null) {
+current.setValue(text.trim());
+}
+current=null;
+}
+public void characters( char ch[], int start, int length){
+if (current != null && text != null) {
+String value=new String(ch,start,length);
+text+=value;
+}
+}
+}
