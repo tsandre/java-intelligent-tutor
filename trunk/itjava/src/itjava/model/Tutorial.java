@@ -13,6 +13,8 @@ public class Tutorial {
 	public int difficultyLevel;
 	public String sourceUrl = "";
 	public String path = "";
+	private ArrayList<EdgeData> _edgeDataList;
+	private ArrayList<LabelData> _labelDataList;
 
 	public Tutorial() {
 		
@@ -30,6 +32,22 @@ public class Tutorial {
 	
 	public void AddComment(String currComment) {
 		this.tutorialCode += "\n// " + currComment + "\n"; 
+	}
+
+	public void setLabelDataList(ArrayList<LabelData> labelDataList) {
+		_labelDataList = labelDataList;
+	}
+
+	public ArrayList<LabelData> getLabelDataList() {
+		return _labelDataList;
+	}
+
+	public void setEdgeDataList(ArrayList<EdgeData> edgeDataList) {
+		_edgeDataList = edgeDataList;
+	}
+
+	public ArrayList<EdgeData> getEdgeDataList() {
+		return _edgeDataList;
 	}
 
 }
