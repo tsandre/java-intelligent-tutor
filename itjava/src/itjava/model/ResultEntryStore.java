@@ -3,18 +3,10 @@
  */
 package itjava.model;
 
-import java.util.regex.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 /**
  * @author Aniket, Matt
@@ -23,6 +15,8 @@ import org.jsoup.select.Elements;
 public class ResultEntryStore {
 	private static ArrayList<URL> _setOfLinks;
 	private static ArrayList<ResultEntry> _resultEntries;
+	private static int _totalTasks;
+
 	
 	public static ArrayList<ResultEntry> createResultEntryList(HashMap<String, String> fileContentsToUrlMap) {
 		_resultEntries = new ArrayList<ResultEntry>();
@@ -33,52 +27,53 @@ public class ResultEntryStore {
 		return _resultEntries;
 	}
 	
+	
+	
 	public static ArrayList<ResultEntry> createResultEntryList(ArrayList<URL> setOfLinks) {
 		_setOfLinks = setOfLinks;
 		_resultEntries = new ArrayList<ResultEntry>();
-		
-		for(int i=0;i<_setOfLinks.size();i++){
-			try {
+		ArrayList<Thread> mythreads = new ArrayList<Thread>();
+		_totalTasks = 0;
+		//ThreadPool pool = new ThreadPool(_setOfLinks.size());
+		//try {
+			_totalTasks = _setOfLinks.size();
+			for(int i=0;i<_setOfLinks.size();i++){
 				URL url = _setOfLinks.get(i);
-				System.out.println("Scraping : " + url.toString());
-				URLConnection urlConn = url.openConnection();
-				urlConn.setConnectTimeout(10000);
-				urlConn.setReadTimeout(10000);
-				int urlPadding = 0; //Padding is used to uniquely identify each piece of code in spite of same url.
-				BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-				String inputLine;
-				String finalContents = "";
-				while ((inputLine = reader.readLine()) != null) {
-					finalContents += "\n" + inputLine.replaceAll("<code", "<pre").replaceAll("code>", "pre>");
-				}
-				
-				Document doc = Jsoup.parse(finalContents);
-				Elements eles = doc.getElementsByTag("pre");
-				ResultEntry newEntry;
-				for(int j=0;j<eles.size();j++){
-					if(eles.get(j).text().length()>=30){ 
-						Pattern pattern = Pattern.compile("/\\*.*\\*/", Pattern.DOTALL);
-					    Matcher matcher = pattern.matcher(eles.get(j).text());
-					    Pattern pattern2 = Pattern.compile("^ *//.*");
-					    Matcher matcher2 = pattern2.matcher(matcher.replaceAll(""));
-					    Pattern pattern3 = Pattern.compile("[0-9]+: *");
-					    Matcher matcher3 = pattern3.matcher(matcher2.replaceAll(""));
-					    int NumOpenBraces = matcher3.replaceAll("").replaceAll("[^{]","").length();
-					    int NumClosedBraces = matcher3.replaceAll("").replaceAll("[^}]","").length();
-					    if(NumOpenBraces != 0 && NumOpenBraces == NumClosedBraces){
-							newEntry = new ResultEntry(Convertor.FormatCode(matcher3.replaceAll("")), (urlPadding++ +_setOfLinks.get(i).toString()), matcher3.replaceAll("").length());
-							_resultEntries.add(newEntry);
-					    }
-					}
-				}
-	
-			} catch (Exception e) {
-				System.err.println(e.toString() + " thrown by following URL : " + _setOfLinks.get(i));
+				System.out.println(url);
+				SearchThread task = new SearchThread(url);
+				ResultSetter setter = new ResultSetter() {  
+					public void setResult(ArrayList<ResultEntry> result) {  
+						for(int j=0; j<result.size(); j++){
+							_resultEntries.add(result.get(j));  
+						}
+						_totalTasks = _totalTasks-1;
+						System.out.println("Total Tasks: " + _totalTasks);
+					}  
+				};
+				task.setResultSetter(setter);
+				Thread worker = new Thread(task);
+				//pool.execute(task);
+				worker.start();
+				mythreads.add(worker);
 			}
+		//} catch (InterruptedException ix) {
+			//ix.printStackTrace();
+	    //}
+			
+		for (int i=0; i < mythreads.size(); i++) {
+			try {
+				mythreads.get(i).join();
+	        }catch (InterruptedException e) {
+		            System.out.print("Join interrupted\n");
+	        }
 		}
 		
+
+
+		
 		return _resultEntries;
-	}
+		
+	} 
 	
 	public ArrayList<ResultEntry> getResults(){
 		return _resultEntries;
