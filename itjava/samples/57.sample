@@ -1,0 +1,12 @@
+{
+Connection conn=null;
+SQLite.Database db=null;
+try {
+Class.forName("SQLite.JDBCDriver").newInstance();
+conn=DriverManager.getConnection("jdbc:sqlite:/blabla");
+java.lang.reflect.Method m=conn.getClass().getMethod("getSQLiteDatabase",null);
+db=(SQLite.Database)m.invoke(conn,null);
+}
+catch ( Exception e) {
+}
+}
