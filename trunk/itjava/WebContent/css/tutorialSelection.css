@@ -68,3 +68,9 @@ table .passive {
 	text-align: center;
 	width: 600px;
 }
+
+.error {
+	display:none;
+	color: red;
+	font-size: 0.8em;
+}
