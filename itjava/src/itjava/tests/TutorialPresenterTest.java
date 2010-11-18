@@ -1,13 +1,18 @@
 package itjava.tests;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import itjava.data.BlankType;
+import itjava.data.LocalMachine;
+import itjava.model.BRDStore;
 import itjava.model.Tutorial;
 import itjava.model.WordInfo;
 import itjava.presenter.TutorialPresenter;
+
+import java.io.*;
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,11 +44,11 @@ public class TutorialPresenterTest {
 		wordInfo.blankType = BlankType.Text;
 		wordInfo.columnNumber = 10;
 		wordInfoList.add(wordInfo);
-
 		tutorial = tutorialPresenter.GetTutorial("SampleGUI", linesOfCode,
 				wordInfoList, "blank source");
 		assertEquals(null, tutorial);
 	}
+	
 
 	@Test
 	public final void GetTutorialReturnsNotNullTutorial() {
@@ -75,6 +80,133 @@ public class TutorialPresenterTest {
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
 		ThenNumberofParanthesisIsBalanced();
+	}
+
+	@Test
+	public final void AllDataListArePopulated() {
+		GivenValidMultipleWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		ThenEdgeDataListIsPopulated();
+		ThenLabelDataListIsPopulated();
+	}
+	
+	@Test
+	public final void BRDIsGenerated() {
+		GivenValidMultipleWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		WhenBRDStoreIsCalled();
+		ThenBrdFilesAreStored();
+	}
+	
+	@Test
+	public final void DeliverableIsGenerated() {
+		GivenValidMultipleWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		WhenBRDStoreIsCalled();
+		WhenDeployBatchScriptIsCalled();
+		WhenGeneratedFilesAreRenamed();
+		WhenDeliveryBatchScriptIsCalled();
+		ThenAllDeliverablesArePresentInDeliveryFolder();
+	}
+	
+	private void WhenDeliveryBatchScriptIsCalled() {
+		// TODO Auto-generated method stub
+		try
+		{
+		System.out.println("Running the batch script for Copying files to Delivery Folder");
+		String command = "cmd /C start C:/Project/myworkspace/itjava/automate/autoCopyDeliveryFiles.bat";
+		Runtime rt = Runtime.getRuntime();
+		rt.exec(command);
+		//rt.exec("cmd /c start /MIN ...");
+		System.out.println("Finished running the autoCopyDeliveryFiles batch script");
+		}
+		catch(Exception e) {
+		System.out.println("Error creating the FileInfo panel: " +e);
+		e.printStackTrace();
+		}
+	}
+
+	private void WhenDeployBatchScriptIsCalled() {
+		// TODO Auto-generated method stub
+		try
+		{
+		System.out.println("Running the batch script for Building Webserver Files");
+		String command = "cmd /C start C:/Project/myworkspace/itjava/automate/autoBuild.bat";
+		Runtime rt = Runtime.getRuntime();
+		rt.exec(command);
+		System.out.println("Finished running the autoBuild batch script");
+		}
+		catch(Exception e) {
+		System.out.println("Error creating the FileInfo panel: " +e);
+		e.printStackTrace();
+		}
+	}
+
+	private void ThenAllDeliverablesArePresentInDeliveryFolder() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void WhenGeneratedFilesAreRenamed() {
+		// TODO Auto-generated method stub
+		String NewName = tutorial.tutorialName;
+		String tempLocation= "C:/Users/Vasanth K/AppData/Local/VirtualStore/Program Files (x86)/Cognitive Tutor Authoring Tools/deploy-tutor/temp/";
+		String HtmlToRename = tempLocation+"java.html";
+		String RenamedHTML = tempLocation+NewName+".html";
+		String JarToRename = tempLocation+"java.jar";
+		String RenamedJAR = tempLocation+NewName+".jar";
+		String JnlpToRename = tempLocation+"java.jnlp";
+		String RenamedJNLP = tempLocation+NewName+".jnlp";
+		File NewJAR = new File(RenamedJAR);
+		File NewJNLP = new File(RenamedJNLP);
+		File NewHTML = new File(RenamedHTML);
+		File JARfile = new File(JarToRename);
+		File JNLPfile = new File(JnlpToRename);
+		File Htmlfile = new File(HtmlToRename);
+		JARfile.renameTo(NewJAR);
+		JNLPfile.renameTo(NewJNLP);
+		Htmlfile.renameTo(NewHTML);
+	}
+
+
+	private void WhenBRDStoreIsCalled() {
+		BRDStore.GenerateBRD(tutorial);
+	}
+
+	private void ThenBrdFilesAreStored() {
+		//TODO Write a function that will test if .brd files are saved in the directory generated
+		// check if the file has name tutorial.tutorialName
+
+		String fileToCheck = LocalMachine.home+"generated/"+tutorial.tutorialName+".brd";
+		File f = new File(fileToCheck);
+		assertTrue(f.exists());
+
+	}
+	
+/*	public int CheckIfBRDExists(){
+		int exists;
+		String fileToCheck = "generated/"+tutorial.tutorialName+".brd";
+		File f = new File(fileToCheck);
+		  if(f.exists()){
+			exists =  1;
+			return exists;
+		  }
+		  else{
+			exists =  0;
+			return exists;
+		  }
+	}
+*/
+	private void ThenLabelDataListIsPopulated() {
+		System.out.println(this.tutorial.getLabelDataList());
+		assertTrue(this.tutorial.getLabelDataList().size() > 0);
+	}
+
+	private void ThenEdgeDataListIsPopulated() {
+		assertTrue(this.tutorial.getEdgeDataList().size() > 0);
 	}
 
 	@Test
@@ -180,7 +312,7 @@ public class TutorialPresenterTest {
 	}
 
 	private void WhenGetTutorialIsCalled() {
-		tutorial = tutorialPresenter.GetTutorial("SystemClass", linesOfCode,
+		tutorial = tutorialPresenter.GetTutorial("System", linesOfCode,
 				wordInfoList, "blank source");
 	}
 
