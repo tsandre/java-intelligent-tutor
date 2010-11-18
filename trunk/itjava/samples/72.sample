@@ -1,0 +1,13 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+public class ReadTextFile {
+public void readTextFile(){
+}
+public static void main( String[] args){
+ReadFile app=new ReadFile();
+app.readTextFile();
+}
+}

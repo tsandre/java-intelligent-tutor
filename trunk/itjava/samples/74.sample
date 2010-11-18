@@ -1,0 +1,7 @@
+{
+ObjectOutput objectOutput=new ObjectOutputStream(new FileOutputStream(new File(directoryName,".vobas")));
+for ( FileDetail fileDetail : fileDetails.values()) {
+objectOutput.writeObject(fileDetail);
+}
+objectOutput.close();
+}

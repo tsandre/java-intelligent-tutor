@@ -1,0 +1,33 @@
+import net.rim.device.api.ui.*;
+import net.rim.device.api.ui.component.*;
+import net.rim.device.api.ui.container.*;
+import net.rim.device.api.database.*;
+import net.rim.device.api.io.*;
+public class FirstSQLiteApp extends UiApplication {
+public FirstSQLiteApp(){
+pushScreen(new InnerClassScreen());
+}
+public static void main( String[] args){
+FirstSQLiteApp firstSQLiteApp=new FirstSQLiteApp();
+firstSQLiteApp.enterEventDispatcher();
+}
+class InnerClassScreen extends MainScreen {
+public Database sqliteDB;
+public InnerClassScreen(){
+LabelField title=new LabelField("Create DB Application",LabelField.ELLIPSIS | LabelField.USE_ALL_WIDTH);
+setTitle(title);
+add(new RichTextField("Initializing db create process..."));
+try {
+URI uri=URI.create("file:///SDCard/Databases/database1.db");
+sqliteDB=DatabaseFactory.create(uri);
+add(new RichTextField("Status: Database was successfully created."));
+}
+catch ( Exception e) {
+System.out.println(e.getMessage());
+add(new RichTextField("Status: Database was not created."));
+add(new RichTextField(e.getMessage()));
+e.printStackTrace();
+}
+}
+}
+}
