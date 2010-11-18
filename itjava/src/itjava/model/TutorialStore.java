@@ -28,6 +28,10 @@ public class TutorialStore {
 	private ArrayList<String> _buttonVariables;
 	private ArrayList<String> _comboVariables;
 	
+
+	private ArrayList<LabelData> labelDataList;
+	private ArrayList<EdgeData> edgeDataList;
+	
 	public TutorialStore() {
 		_variableDeclarations = new ArrayList<String>();
 		_initComponentFunctionDeclaration = new String();
@@ -35,6 +39,9 @@ public class TutorialStore {
 		_textVariables = new ArrayList<String>();
 		_comboVariables = new ArrayList<String>();
 		_buttonVariables = new ArrayList<String>();
+		
+		labelDataList = new ArrayList<LabelData>();
+		edgeDataList = new ArrayList<EdgeData>();
 	}
 	
 	public Tutorial GenerateTutorial(String tutorialName, String sourceUrl) {
@@ -61,6 +68,8 @@ public class TutorialStore {
 		}
 		tutorial.AppendCode(TutorialTemplate.endClassDeclaration);
 		SaveTutorialFile();
+		tutorial.setEdgeDataList(edgeDataList);
+		tutorial.setLabelDataList(labelDataList);
 		return this.tutorial;
 	}
 
@@ -126,38 +135,54 @@ public class TutorialStore {
 				dorminLabel.Label(restOfLine, lblName, x + (8 * beginIndex) , y, height, width);
 				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
 				
+				
+				// TODO :Label added to List<LabelData>
+				labelDataList.add(new LabelData(lblName, restOfLine));
+				
+				
 				String nameOfTextField = "txtLine" + indexOfLinesOfCode + "Col" + currWordInfo.columnNumber;
 				DorminComponent dorminText = new DorminComponent();
 				width = currWordInfo.wordLength() * 8;
 				dorminText.TextField(nameOfTextField, x + (8 * currWordInfo.columnNumber), y, height, width);
-				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminText);
 				
+				
+				//TODO : Add text box to List<EdgeData> here..
+				edgeDataList.add(new EdgeData(currWordInfo.wordToBeBlanked,nameOfTextField));
+			
+				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminText);
 				firstPartOfLineOfCode = lineOfCode.substring(0, currWordInfo.columnNumber);
 			}
 			
 			DorminComponent dorminLabel = new DorminComponent();
 			dorminLabel.Label(firstPartOfLineOfCode, "lblLine" + indexOfLinesOfCode, x, y, height, firstPartOfLineOfCode.length() * 8);
+			//TODO
+			labelDataList.add(new LabelData("lblLine" + indexOfLinesOfCode, firstPartOfLineOfCode));
+			
 			_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
 			
 			y += height;
 			indexOfLinesOfCode++;
 		}
 
+		DorminComponent hintButton = new DorminComponent();
+		hintButton.Button("Help", "hint", 90, y + 20, 20, 60);
 		DorminComponent doneButton = new DorminComponent();
 		doneButton.Button("Done", "doneButton", 20, y + 20, 20, 60);
-		_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(doneButton);
+	
+		//TODO : add button to List<EdgeData>
 		
-		DorminComponent hintButton = new DorminComponent();
-		hintButton.Button("Hint", "hintButton", 90, y + 20, 20, 60);
+		//edgeDataList.add(new EdgeData("Help","hint"));
+		labelDataList.add(new LabelData("hint","Help"));
+		labelDataList.add(new LabelData("doneButton","Done"));
+		edgeDataList.add(new EdgeData("Done","doneButton"));
 		_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(hintButton);
+		_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(doneButton);
 	}
 
 	private void CreateVariableDeclarations() {
 		_variableDeclarations.add(TutorialTemplate.ctatOptionsDeclaration("cTAT_Options1"));
 		_variableDeclarations.add(TutorialTemplate.buttonDeclaration("doneButton"));
-		_variableDeclarations.add(TutorialTemplate.buttonDeclaration("hintButton"));
 		this._buttonVariables.add("doneButton");
-		this._buttonVariables.add("hintButton");
 		
 		for (int indexOfLinesOfCode = 1; indexOfLinesOfCode <= linesOfCode.size(); indexOfLinesOfCode++) {
 			String labelName = "lblLine" + indexOfLinesOfCode;
@@ -192,3 +217,4 @@ public class TutorialStore {
 	}
 
 }
+
