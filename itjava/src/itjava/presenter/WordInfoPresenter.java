@@ -24,6 +24,8 @@ public class WordInfoPresenter {
 	public ArrayList<CompilationUnitFacade> compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
 	public boolean hasCommonNodes;
 	private Repository _repository;
+	private String _tutorialName;
+	private String _readableName;
 	
 	/**
 	 * Getter method for {@link Repository} repository
@@ -101,7 +103,7 @@ public class WordInfoPresenter {
 				}
 			}
 			if (wordInfoList.size() > 0) {
-				tutorialList.add(new Tutorial(wordInfoList, facade.getLinesOfCode(), facade.getUrl()));
+				tutorialList.add(new Tutorial(_tutorialName, _readableName, wordInfoList, facade.getLinesOfCode(), facade.getUrl()));
 			}
 		}
 		return tutorialList;
@@ -110,12 +112,15 @@ public class WordInfoPresenter {
 	/**
 	 * Sets the {@link Repository} parameter of this object. 
 	 * Calls {@link RepositoryStore} for this purpose.
-	 * @param query : Although not of any use, this parameter represents the parameter that was searched for initially.
+	 * @param query : Sets the tutorialName.
 	 * @param resultEntryList : {@link ArrayList}<{@link ResultEntry}> 
 	 */
 	public void AccessRepository(String query, ArrayList<ResultEntry> resultEntryList) {
 		this.compilationUnitFacadeList = compilationUnitStore.createCompilationUnitFacadeList(query, resultEntryList);
 		this.setRepository(RepositoryStore.UpdateRepository(compilationUnitFacadeList));
+		_tutorialName = query.hashCode() + "" + System.currentTimeMillis();
+		_readableName = query;
+		
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import itjava.model.Convertor;
 import itjava.model.Tutorial;
 import itjava.model.TutorialStore;
 import itjava.model.WordInfo;
@@ -16,10 +17,16 @@ private TutorialStore _tutorialStore;
 	}
 
 	public Tutorial GetTutorial(String tutorialName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList, String sourceUrl) {
-		_tutorialStore.setLinesOfCode(exampleCode);
-		_tutorialStore.wordInfoList = ArrangeWordsAccordingToLineNumber(wordInfoList);
-		
-		return _tutorialStore.GenerateTutorial(tutorialName, sourceUrl);
+		Tutorial tutorial = new Tutorial(tutorialName.hashCode() + "" + System.currentTimeMillis(), tutorialName, ArrangeWordsAccordingToLineNumber(wordInfoList), Convertor.TrimArrayListOfString(exampleCode), sourceUrl);
+		return _tutorialStore.GenerateTutorial(tutorial);
+	}
+	
+	public ArrayList<Tutorial> GetFinalTutorialList(ArrayList<Tutorial> approvedTutorialList) {
+		ArrayList<Tutorial> finalTutorialList = new ArrayList<Tutorial>();
+		for (Tutorial approvedTutorial : approvedTutorialList) {
+			finalTutorialList.add(_tutorialStore.GenerateTutorial(approvedTutorial));
+		}
+		return finalTutorialList;
 	}
 
 	private ArrayList<WordInfo> ArrangeWordsAccordingToLineNumber(
