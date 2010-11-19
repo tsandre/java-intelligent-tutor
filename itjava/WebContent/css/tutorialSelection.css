@@ -1,14 +1,16 @@
 @CHARSET "ISO-8859-1";
 body {
 	font-family: segoe ui, verdana;
+	margin: 5px;
+}
+
+div {
+	border: 0px solid gray;
+	margin: 2px;
 }
 
 #divMain {
 	margin:0 auto;
-}
-
-div {
-	border:1px solid gray;
 }
 
 div .step {
@@ -30,6 +32,7 @@ div .active {
 	font-family: monospace;
 	font-size: 1em;
 	line-height: 1.5em;
+	clear: left;
 }
 
 .lineNumber {
@@ -39,6 +42,10 @@ div .active {
 
 #divCodeNumber {
 	text-align: center;
+}
+
+#divWordInfo {
+	width:420px;
 }
 
 .odd {
@@ -52,7 +59,7 @@ div .active {
 table .active {
 	font-weight: bold;
 	font-size: 1.2em;
-	background-color: #dbf3fd;
+	background-color: #D4E692;
 }
 
 table .passive {
@@ -61,16 +68,21 @@ table .passive {
 
 #divRating {
 	text-align: center;
-	width: 600px;
+	width: 250px;
 }
 
 #divApproveSample {
 	text-align: center;
-	width: 600px;
+	width: 300px;
 }
 
 .error {
 	display:none;
 	color: red;
 	font-size: 0.8em;
+}
+
+.stepBox {
+	position: relative;
+	float: left;
 }
