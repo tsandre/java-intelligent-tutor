@@ -152,7 +152,7 @@ public class TutorialPresenterTest {
 
 	private void WhenGeneratedFilesAreRenamed() {
 		// TODO Auto-generated method stub
-		String NewName = tutorial.tutorialName;
+		String NewName = tutorial.getTutorialName();
 		String tempLocation= "C:/Users/Vasanth K/AppData/Local/VirtualStore/Program Files (x86)/Cognitive Tutor Authoring Tools/deploy-tutor/temp/";
 		String HtmlToRename = tempLocation+"java.html";
 		String RenamedHTML = tempLocation+NewName+".html";
@@ -180,7 +180,7 @@ public class TutorialPresenterTest {
 		//TODO Write a function that will test if .brd files are saved in the directory generated
 		// check if the file has name tutorial.tutorialName
 
-		String fileToCheck = LocalMachine.home+"generated/"+tutorial.tutorialName+".brd";
+		String fileToCheck = LocalMachine.home+"generated/"+tutorial.getTutorialName()+".brd";
 		File f = new File(fileToCheck);
 		assertTrue(f.exists());
 

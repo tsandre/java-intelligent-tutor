@@ -24,9 +24,9 @@ import org.junit.Test;
  * 
  */
 public class IntegrateWordInfoAndTutorial {
-	private HashMap<ArrayList<String>, ArrayList<WordInfo>> _codeToWordInfoMap;
+	ArrayList<Tutorial> initTutorialList;
 	private WordInfoPresenter _wordInfoPresenter;
-	String query;
+	String query = "SampleGUI";
 	ArrayList<ResultEntry> sourceCodes;
 	ArrayList<Tutorial> tutorialList;
 	TutorialPresenter tutorialPresenter;
@@ -49,11 +49,10 @@ public class IntegrateWordInfoAndTutorial {
 
 	private void WhenTutorialIsGenerated() {
 		int i = 0;
-		for (Entry<ArrayList<String>, ArrayList<WordInfo>> entrySet : _codeToWordInfoMap
-				.entrySet()) {
+		for (Tutorial initialTutorial : initTutorialList) {
 			tutorialPresenter = new TutorialPresenter();
 			Tutorial tutorial = tutorialPresenter.GetTutorial(
-					"SampleGUI" + (i), entrySet.getKey(), entrySet.getValue(),
+					initialTutorial.getTutorialName(), initialTutorial.getLinesOfCode(), initialTutorial.getWordInfoList(),
 					"sourceUrl");
 			tutorialList.add(tutorial);
 			i++;
@@ -80,7 +79,7 @@ public class IntegrateWordInfoAndTutorial {
 	private void WhenWordInfoIsGenerated() {
 		_wordInfoPresenter.AccessRepository(query,
 				sourceCodes);
-		_codeToWordInfoMap = _wordInfoPresenter.GenerateWordInfoMap();
+		initTutorialList = _wordInfoPresenter.GenerateWordInfoMap();
 	}
 
 	private void ThenNumberofParanthesisIsBalanced() {

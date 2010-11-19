@@ -42,7 +42,7 @@ public class IntegrateCodeSearchWordInfo {
 	}
 
 	private void GivenQuery() {
-		_query = "Connect to sqlite in java";
+		_query = "ProcessBuilder java example";
 		_codeSearchPresenter = new CodeSearchPresenter(_query);
 		_wordInfoPresenter = new WordInfoPresenter();
 	}
