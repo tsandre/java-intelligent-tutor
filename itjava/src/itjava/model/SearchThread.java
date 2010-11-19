@@ -54,8 +54,9 @@ public class SearchThread implements Runnable {
 				    Matcher matcher3 = pattern3.matcher(matcher2.replaceAll(""));
 				    int NumOpenBraces = matcher3.replaceAll("").replaceAll("[^{]","").length();
 				    int NumClosedBraces = matcher3.replaceAll("").replaceAll("[^}]","").length();
-				    if(NumOpenBraces != 0 && NumOpenBraces == NumClosedBraces){
-						newEntry = new ResultEntry(Convertor.FormatCode(matcher3.replaceAll("")), (urlPadding + _url.toString()), matcher3.replaceAll("").length());
+				    String finalString = matcher3.replaceAll("").replace("\u00A0", " ");
+				    if(NumOpenBraces == NumClosedBraces){
+						newEntry = new ResultEntry(Convertor.FormatCode(finalString), (urlPadding + _url.toString()), finalString.length());
 						resultEntries.add(newEntry);
 				    }
 				}

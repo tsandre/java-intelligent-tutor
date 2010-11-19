@@ -368,7 +368,7 @@ public class CompilationUnitFacade {
 				_variableDeclarationStatements.add((VariableDeclarationStatement)statement);
 				List<VariableDeclarationFragment> fragements = ((VariableDeclarationStatement)statement).fragments();
 				for (VariableDeclarationFragment fragment : fragements) {
-					_expressions.add(fragment.getInitializer());
+					addExpression(fragment.getInitializer());
 				}
 				break;
 			case (Statement.TYPE_DECLARATION_STATEMENT):
