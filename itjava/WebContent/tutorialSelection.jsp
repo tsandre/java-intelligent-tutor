@@ -100,6 +100,7 @@ for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 	out.println("</tr></td>");
 }
 %>
+<tr><td></td><td><% out.println(currentTutorial.sourceUrl); %></td></tr>
 </tbody>
 </table>
 </div>
