@@ -12,6 +12,7 @@ import itjava.model.CompilationUnitFacade;
 import itjava.model.Convertor;
 import itjava.model.Repository;
 import itjava.model.ResultEntry;
+import itjava.model.Tutorial;
 import itjava.model.WordInfo;
 import itjava.presenter.WordInfoPresenter;
 
@@ -22,10 +23,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class WordInfoPresenterTest {
-	private HashMap<ArrayList<String>, ArrayList<WordInfo>> _codeToWordInfoMap;
 	private WordInfoPresenter _wordInfoPresenter;
-	String query;
+	String query = "SampleGUI";
 	ArrayList<ResultEntry> sourceCodes;
+	private ArrayList<Tutorial> _initTutorialList;
 
 	@Before
 	public final void setUp() {
@@ -295,6 +296,6 @@ public class WordInfoPresenterTest {
 	private void WhenGetCodeInfoIsCalled() {
 		_wordInfoPresenter.AccessRepository(query,
 				sourceCodes);
-		_codeToWordInfoMap = _wordInfoPresenter.GenerateWordInfoMap();
+		_initTutorialList = _wordInfoPresenter.GenerateWordInfoMap();
 	}
 }
