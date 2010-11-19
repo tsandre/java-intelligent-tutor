@@ -11,14 +11,10 @@ import itjava.data.LocalMachine;
 
 public class TutorialStore {
 
-	public Tutorial tutorial;
-	public ArrayList<String> linesOfCode;
+	private Tutorial _tutorial;
+	public ArrayList<String> _linesOfCode;
 
-	public void setLinesOfCode(ArrayList<String> linesOfCode) {
-		this.linesOfCode = Convertor.TrimArrayListOfString(linesOfCode);
-	}
-
-	public ArrayList<WordInfo> wordInfoList;
+	private ArrayList<WordInfo> _wordInfoList;
 
 	private ArrayList<String> _variableDeclarations;
 	private String _initComponentFunctionDeclaration;
@@ -44,42 +40,41 @@ public class TutorialStore {
 		edgeDataList = new ArrayList<EdgeData>();
 	}
 	
-	public Tutorial GenerateTutorial(String tutorialName, String sourceUrl) {
-		this.tutorial = new Tutorial();
-		if (this.linesOfCode == null || this.linesOfCode.size() == 0) {
+	public Tutorial GenerateTutorial(Tutorial tutorial) {
+		if (tutorial.getLinesOfCode() == null || tutorial.getLinesOfCode().size() == 0) {
 			System.err.println("Input param for GenerateTutorial are NULL");
 			return null;
 		}
-		tutorial.linesOfCode = this.linesOfCode;
+		_tutorial = tutorial;
+		_linesOfCode = tutorial.getLinesOfCode();
+		_wordInfoList = tutorial.getWordInfoList();
 		CreateVariableDeclarations();
 		CreateInitComponentsFunction();
 
-		tutorial.tutorialName = tutorialName;
-		tutorial.sourceUrl = sourceUrl;
-		tutorial.AddComment("Tutor created automatically by TutorialStore");
+		_tutorial.AddComment("Tutor created automatically by TutorialStore");
 
-		tutorial.AppendCode(TutorialTemplate.packageDeclaration);
-		tutorial.AppendCode(TutorialTemplate.importDeclaration);
-		tutorial.AppendCode(TutorialTemplate.classDeclaration(tutorialName));
-		tutorial.AppendCode(TutorialTemplate.mainFunctionDeclaration(tutorialName));
-		tutorial.AppendCode(_initComponentFunctionDeclaration); //Generated in CreateInitComp..() above
+		_tutorial.AppendCode(TutorialTemplate.packageDeclaration);
+		_tutorial.AppendCode(TutorialTemplate.importDeclaration);
+		_tutorial.AppendCode(TutorialTemplate.classDeclaration(_tutorial.getTutorialName()));
+		_tutorial.AppendCode(TutorialTemplate.mainFunctionDeclaration(_tutorial.getTutorialName()));
+		_tutorial.AppendCode(_initComponentFunctionDeclaration); //Generated in CreateInitComp..() above
 		for (String variableDeclaration : _variableDeclarations) {
-			tutorial.AppendCode(variableDeclaration);
+			_tutorial.AppendCode(variableDeclaration);
 		}
-		tutorial.AppendCode(TutorialTemplate.endClassDeclaration);
+		_tutorial.AppendCode(TutorialTemplate.endClassDeclaration);
 		SaveTutorialFile();
-		tutorial.setEdgeDataList(edgeDataList);
-		tutorial.setLabelDataList(labelDataList);
-		return this.tutorial;
+		_tutorial.setEdgeDataList(edgeDataList);
+		_tutorial.setLabelDataList(labelDataList);
+		return _tutorial;
 	}
 
 	
 	private void SaveTutorialFile() {
-		tutorial.path = "generated/" + tutorial.tutorialName + ".java";
+		_tutorial.setPath("generated/" + _tutorial.getTutorialName() + ".java");
 		BufferedWriter writer;
 		try {
-			writer = new BufferedWriter(new FileWriter(LocalMachine.home + tutorial.path));
-			writer.write(tutorial.tutorialCode);
+			writer = new BufferedWriter(new FileWriter(LocalMachine.home + _tutorial.getPath()));
+			writer.write(_tutorial.tutorialCode);
 			writer.close();
 		} catch (IOException e) {
 			System.err.println("Error saving tutorial file..");
@@ -112,13 +107,13 @@ public class TutorialStore {
 	private void AddComponentsToPanel() {
 		
 		ArrayList<Integer> lineNumbersForBlankedWords = new ArrayList<Integer>();
-		for(WordInfo currWordInfo: wordInfoList) {
+		for(WordInfo currWordInfo: _wordInfoList) {
 			lineNumbersForBlankedWords.add(currWordInfo.lineNumber);
 		}
 		int indexOfLinesOfCode = 1;
 		int x = 0, y = 10, height = 25, width;
-		Iterator<WordInfo> wordInfoIterator = wordInfoList.iterator();
-		for (String lineOfCode:linesOfCode) {
+		Iterator<WordInfo> wordInfoIterator = _wordInfoList.iterator();
+		for (String lineOfCode:_linesOfCode) {
 			String firstPartOfLineOfCode = lineOfCode;
 			if(lineNumbersForBlankedWords.contains(indexOfLinesOfCode)) {
 				WordInfo currWordInfo = wordInfoIterator.next();
@@ -184,14 +179,14 @@ public class TutorialStore {
 		_variableDeclarations.add(TutorialTemplate.buttonDeclaration("doneButton"));
 		this._buttonVariables.add("doneButton");
 		
-		for (int indexOfLinesOfCode = 1; indexOfLinesOfCode <= linesOfCode.size(); indexOfLinesOfCode++) {
+		for (int indexOfLinesOfCode = 1; indexOfLinesOfCode <= _linesOfCode.size(); indexOfLinesOfCode++) {
 			String labelName = "lblLine" + indexOfLinesOfCode;
 			this._labelVariables.add(labelName);
 			this._variableDeclarations.add(TutorialTemplate.labelDeclaration(labelName));
 		}
 		
-		if (wordInfoList != null || wordInfoList.size() != 0) {
-			for (WordInfo wordInfo : wordInfoList) {
+		if (_wordInfoList != null || _wordInfoList.size() != 0) {
+			for (WordInfo wordInfo : _wordInfoList) {
 
 				String variableName = "Line" + wordInfo.lineNumber
 						+ "Col" + wordInfo.columnNumber;

@@ -68,7 +68,7 @@ public class Matrix {
 		variableDeclarationSimilarity[indexOfX][indexOfY] = variableDecVal;
 		variableDeclarationSimilarity[indexOfY][indexOfX] = variableDecVal;
 		
-		float similarityVal = importVal * 1 + classInstanceVal * 2 + methodVal * 3 + variableDecVal * 1;
+		float similarityVal = importVal * 1 + classInstanceVal * 3 + methodVal * 2 + variableDecVal * 1;
 		similarity[indexOfX][indexOfY] = similarityVal;
 		similarity[indexOfY][indexOfX] = similarityVal;
 		
