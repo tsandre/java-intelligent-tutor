@@ -64,7 +64,7 @@ public class BRDStore {
     		codeContent[i] = labelDataList.get(i)._labelName;
     		dorminName[i] = labelDataList.get(i)._labelValue;
     	}
-    	nodeText[0]=tutorial.tutorialName;
+    	nodeText[0]=tutorial.getTutorialName();
     	for(int j=1; j <= edgeDataList.size(); j++ )
     	{
     		nodeText[j]="state"+j;
@@ -110,7 +110,7 @@ public class BRDStore {
 //    int[] destID = new int[] {2,3,4,5,6};
     	
       try {        
-        OutputStream fout= new FileOutputStream(LocalMachine.home+"generated/"+tutorial.tutorialName+".brd");
+        OutputStream fout= new FileOutputStream(LocalMachine.home+"generated/"+tutorial.getTutorialName()+".brd");
     	//OutputStream fout= new FileOutputStream("generated/mainprog.brd");
         OutputStream bout= new BufferedOutputStream(fout);
         OutputStreamWriter out = new OutputStreamWriter(bout, "8859_1");
