@@ -56,13 +56,13 @@ public class TutorialSelectionServlet extends HttpServlet {
 				Tutorial currentTutorial = tutorialList.get(currentIndex);
 				ArrayList<WordInfo> approvedWordInfoList = new ArrayList<WordInfo>();
 				int wordInfoIndex = 0;
-				for (WordInfo wordInfo : currentTutorial.wordInfoList) {
+				for (WordInfo wordInfo : currentTutorial.getWordInfoList()) {
 					if(selectedWordInfoIndices.contains(Integer.toString(wordInfoIndex))) {
 						approvedWordInfoList.add(wordInfo);
 					}
 					wordInfoIndex++;
 				}
-				currentTutorial.wordInfoList = approvedWordInfoList;
+				currentTutorial.setWordInfoList(approvedWordInfoList);
 				currentTutorial.difficultyLevel = Integer.parseInt(request.getParameter("difficultyLevel"));
 				
 				approvedTutorialList.add(currentTutorial);
