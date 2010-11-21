@@ -118,7 +118,7 @@ public class WordInfoPresenter {
 	public void AccessRepository(String query, ArrayList<ResultEntry> resultEntryList) {
 		this.compilationUnitFacadeList = compilationUnitStore.createCompilationUnitFacadeList(query, resultEntryList);
 		this.setRepository(RepositoryStore.UpdateRepository(compilationUnitFacadeList));
-		_tutorialName = query.hashCode() + "" + System.currentTimeMillis();
+		_tutorialName = Integer.toString(query.hashCode());
 		_readableName = query;
 		
 	}

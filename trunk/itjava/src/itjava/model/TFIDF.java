@@ -4,11 +4,13 @@
 package itjava.model;
 
 /**
+ * Wrapper object that consists all necessary information for calculating tfidf value for each term.
+ * Use method getValue() to get the actual tfidf value.
  * @author Aniket
  *
  */
 public class TFIDF implements Comparable<TFIDF>{
-	private  Number numOfOccurrences;
+	private Number numOfOccurrences;
 	private Number totalTermsInDocument;
 	private Number totalDocuments;
 	private Number numOfDocumentsWithTerm;

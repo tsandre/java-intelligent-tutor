@@ -107,7 +107,7 @@ for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 
 
 <input type="submit" name="btnSubmit" id="btnSubmit"
-	value="Next Tutorial >>" />
+	value="Next Example >>" />
 
 </div>
 </form>
