@@ -25,6 +25,12 @@ public class TFIDFStore {
 	static TFIDFVector _tfVector;
 	static Repository _repository;
 
+	/**
+	 * Accepts a facade and repository object. Calls an internal method GetTF() for each type of Node.
+	 * @param facade
+	 * @param repository
+	 * @return
+	 */
 	public static TFIDFVector GetTF(CompilationUnitFacade facade, Repository repository) {
 		_repository = repository;
 		if (facade.getTFVector() == null) {
