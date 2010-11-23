@@ -32,7 +32,7 @@ eg. <property name="projects-dir" value="C:/Project/myworkspace/itjava/"/>
 Edit tmp_jar_location to webcontent delivery folder.
 eg. <property name="tmp_jar_location" value="C:/Project/myworkspace/itjava/WebContent/delivery"/> 
 
-==keystore value build.xml==
+==keystore Path in build.xml==
 
 *File - build.xml*
 
