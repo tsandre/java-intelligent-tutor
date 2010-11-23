@@ -13,6 +13,9 @@ import itjava.presenter.TutorialPresenter;
 import java.io.*;
 import java.util.ArrayList;
 
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +28,14 @@ public class TutorialPresenterTest {
 	private Tutorial tutorial;
 	private String[] _bounds;
 
+	@Test
+	public final void MultipleWordsTutorialCodeHasBalancedParanthesis() {
+		GivenValidMultipleWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		ThenNumberofParanthesisIsBalanced();
+	}
+
 	@Before
 	public final void SetUp() {
 		wordInfo = new WordInfo();
@@ -34,179 +45,6 @@ public class TutorialPresenterTest {
 		linesOfCode = new ArrayList<String>();
 
 		tutorialPresenter = new TutorialPresenter();
-	}
-
-	//START	Tests
-	@Test
-	public final void GetTutorialReturnsNullOnPassingInvalidParams() {
-		wordInfo.wordToBeBlanked = "new";
-		wordInfo.lineNumber = 2;
-		wordInfo.blankType = BlankType.Text;
-		wordInfo.columnNumber = 10;
-		wordInfoList.add(wordInfo);
-		tutorial = tutorialPresenter.GetTutorial("SampleGUI", linesOfCode,
-				wordInfoList, "blank source");
-		assertEquals(null, tutorial);
-	}
-	
-
-	@Test
-	public final void GetTutorialReturnsNotNullTutorial() {
-		GivenValidWordInfoList();
-		GivenValidLinesOfCode();
-		WhenGetTutorialIsCalled();
-		ThenReturnedTutorialIsNotNull();
-	}
-
-	@Test
-	public final void GetTutorialWithMultipleWordsReturnsNotNullTutorial() {
-		GivenValidMultipleWordInfoList();
-		GivenValidLinesOfCode();
-		WhenGetTutorialIsCalled();
-		ThenReturnedTutorialIsNotNull();
-	}
-
-	@Test
-	public final void TutorialCodeHasBalancedParanthesis() {
-		GivenValidWordInfoList();
-		GivenValidLinesOfCode();
-		WhenGetTutorialIsCalled();
-		ThenNumberofParanthesisIsBalanced();
-	}
-
-	@Test
-	public final void MultipleWordsTutorialCodeHasBalancedParanthesis() {
-		GivenValidMultipleWordInfoList();
-		GivenValidLinesOfCode();
-		WhenGetTutorialIsCalled();
-		ThenNumberofParanthesisIsBalanced();
-	}
-
-	@Test
-	public final void AllDataListArePopulated() {
-		GivenValidMultipleWordInfoList();
-		GivenValidLinesOfCode();
-		WhenGetTutorialIsCalled();
-		ThenEdgeDataListIsPopulated();
-		ThenLabelDataListIsPopulated();
-	}
-	
-	@Test
-	public final void BRDIsGenerated() {
-		GivenValidMultipleWordInfoList();
-		GivenValidLinesOfCode();
-		WhenGetTutorialIsCalled();
-		WhenBRDStoreIsCalled();
-		ThenBrdFilesAreStored();
-	}
-	
-	@Test
-	public final void DeliverableIsGenerated() {
-		GivenValidMultipleWordInfoList();
-		GivenValidLinesOfCode();
-		WhenGetTutorialIsCalled();
-		WhenBRDStoreIsCalled();
-		WhenDeployBatchScriptIsCalled();
-		WhenGeneratedFilesAreRenamed();
-		WhenDeliveryBatchScriptIsCalled();
-		ThenAllDeliverablesArePresentInDeliveryFolder();
-	}
-	
-	private void WhenDeliveryBatchScriptIsCalled() {
-		// TODO Auto-generated method stub
-		try
-		{
-		System.out.println("Running the batch script for Copying files to Delivery Folder");
-		String command = "cmd /C start C:/Project/myworkspace/itjava/automate/autoCopyDeliveryFiles.bat";
-		Runtime rt = Runtime.getRuntime();
-		rt.exec(command);
-		//rt.exec("cmd /c start /MIN ...");
-		System.out.println("Finished running the autoCopyDeliveryFiles batch script");
-		}
-		catch(Exception e) {
-		System.out.println("Error creating the FileInfo panel: " +e);
-		e.printStackTrace();
-		}
-	}
-
-	private void WhenDeployBatchScriptIsCalled() {
-		// TODO Auto-generated method stub
-		try
-		{
-		System.out.println("Running the batch script for Building Webserver Files");
-		String command = "cmd /C start C:/Project/myworkspace/itjava/automate/autoBuild.bat";
-		Runtime rt = Runtime.getRuntime();
-		rt.exec(command);
-		System.out.println("Finished running the autoBuild batch script");
-		}
-		catch(Exception e) {
-		System.out.println("Error creating the FileInfo panel: " +e);
-		e.printStackTrace();
-		}
-	}
-
-	private void ThenAllDeliverablesArePresentInDeliveryFolder() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void WhenGeneratedFilesAreRenamed() {
-		// TODO Auto-generated method stub
-		String NewName = tutorial.getTutorialName();
-		String tempLocation= "C:/Users/Vasanth K/AppData/Local/VirtualStore/Program Files (x86)/Cognitive Tutor Authoring Tools/deploy-tutor/temp/";
-		String HtmlToRename = tempLocation+"java.html";
-		String RenamedHTML = tempLocation+NewName+".html";
-		String JarToRename = tempLocation+"java.jar";
-		String RenamedJAR = tempLocation+NewName+".jar";
-		String JnlpToRename = tempLocation+"java.jnlp";
-		String RenamedJNLP = tempLocation+NewName+".jnlp";
-		File NewJAR = new File(RenamedJAR);
-		File NewJNLP = new File(RenamedJNLP);
-		File NewHTML = new File(RenamedHTML);
-		File JARfile = new File(JarToRename);
-		File JNLPfile = new File(JnlpToRename);
-		File Htmlfile = new File(HtmlToRename);
-		JARfile.renameTo(NewJAR);
-		JNLPfile.renameTo(NewJNLP);
-		Htmlfile.renameTo(NewHTML);
-	}
-
-
-	private void WhenBRDStoreIsCalled() {
-		BRDStore.GenerateBRD(tutorial);
-	}
-
-	private void ThenBrdFilesAreStored() {
-		//TODO Write a function that will test if .brd files are saved in the directory generated
-		// check if the file has name tutorial.tutorialName
-
-		String fileToCheck = LocalMachine.home+"generated/"+tutorial.getTutorialName()+".brd";
-		File f = new File(fileToCheck);
-		assertTrue(f.exists());
-
-	}
-	
-/*	public int CheckIfBRDExists(){
-		int exists;
-		String fileToCheck = "generated/"+tutorial.tutorialName+".brd";
-		File f = new File(fileToCheck);
-		  if(f.exists()){
-			exists =  1;
-			return exists;
-		  }
-		  else{
-			exists =  0;
-			return exists;
-		  }
-	}
-*/
-	private void ThenLabelDataListIsPopulated() {
-		System.out.println(this.tutorial.getLabelDataList());
-		assertTrue(this.tutorial.getLabelDataList().size() > 0);
-	}
-
-	private void ThenEdgeDataListIsPopulated() {
-		assertTrue(this.tutorial.getEdgeDataList().size() > 0);
 	}
 
 	@Test
@@ -227,6 +65,32 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
+	public final void AllDataListArePopulated() {
+		GivenValidMultipleWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		ThenEdgeDataListIsPopulated();
+		ThenLabelDataListIsPopulated();
+	}
+
+	@Test
+	public final void BRDIsGenerated() {
+		GivenValidMultipleWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		WhenBRDStoreIsCalled();
+		ThenBrdFilesAreStored();
+	}
+
+	@Test
+	public final void TutorialCodeHasBalancedParanthesis() {
+		GivenValidWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		ThenNumberofParanthesisIsBalanced();
+	}
+
+	@Test
 	public void ButtonFieldIsAdded() {
 		GivenValidLinesOfCode();
 		GivenValidWordInfoList();
@@ -234,8 +98,56 @@ public class TutorialPresenterTest {
 		ThenDoneButtonSyntaxHasPositiveIndices();
 		ThenButtonFieldHasProperBounds();
 	}
-	//END Tests
-	
+
+	@Test
+	public final void DeliverableIsGenerated() {
+		GivenValidMultipleWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		WhenJavaCodeIsCompiled();
+		WhenBRDStoreIsCalled();
+		WhenDeployBatchScriptIsCalled();
+		WhenGeneratedFilesAreRenamed();
+		// WhenDeliveryBatchScriptIsCalled();
+		ThenAllDeliverablesArePresentInDeliveryFolder();
+	}
+
+	@Test
+	public final void GetTutorialReturnsNotNullTutorial() {
+		GivenValidWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		ThenReturnedTutorialIsNotNull();
+	}
+
+	@Test
+	public final void GetTutorialReturnsNullOnPassingInvalidParams() {
+		wordInfo.wordToBeBlanked = "new";
+		wordInfo.lineNumber = 2;
+		wordInfo.blankType = BlankType.Text;
+		wordInfo.columnNumber = 10;
+		wordInfoList.add(wordInfo);
+		tutorial = tutorialPresenter.GetTutorial("sampleName", "query",
+				linesOfCode, wordInfoList, "blank source");
+		assertEquals(null, tutorial);
+	}
+
+	@Test
+	public final void GetTutorialWithMultipleWordsReturnsNotNullTutorial() {
+		GivenValidMultipleWordInfoList();
+		GivenValidLinesOfCode();
+		WhenGetTutorialIsCalled();
+		ThenReturnedTutorialIsNotNull();
+	}
+
+	private void GivenValidLinesOfCode() {
+		linesOfCode.add("class myfirstjavaprog {");
+		linesOfCode.add("public static void main(String args[]) {");
+		linesOfCode.add("System.out.println(\"Hello World!\");");
+		linesOfCode.add("}");
+		linesOfCode.add("}");
+	}
+
 	private void GivenValidMultipleWordInfoList() {
 
 		wordInfo.wordToBeBlanked = "out";
@@ -249,6 +161,31 @@ public class TutorialPresenterTest {
 		wordInfo.lineNumber = 2;
 		wordInfo.columnNumber = 7;
 		wordInfoList.add(wordInfo);
+	}
+
+	private void GivenValidWordInfoList() {
+		wordInfo.wordToBeBlanked = "out";
+		wordInfo.lineNumber = 3;
+		wordInfo.columnNumber = 7;
+		wordInfo.blankType = BlankType.Text;
+		wordInfoList.add(wordInfo);
+	}
+
+	private void ThenAllDeliverablesArePresentInDeliveryFolder() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void ThenBrdFilesAreStored() {
+		// TODO Write a function that will test if .brd files are saved in the
+		// directory generated
+		// check if the file has name tutorial.tutorialName
+
+		String fileToCheck = LocalMachine.home + "generated/"
+				+ tutorial.getTutorialName() + ".brd";
+		File f = new File(fileToCheck);
+		assertTrue(f.exists());
+
 	}
 
 	private void ThenButtonFieldHasProperBounds() {
@@ -270,19 +207,13 @@ public class TutorialPresenterTest {
 		assertTrue(tutorial.tutorialCode.indexOf("add(doneButton);") > 0);
 	}
 
-	private void ThenXCoordIsHigherThanPriorComponent() {
-		assertTrue(Integer.parseInt(_bounds[1]) > 20);
+	private void ThenEdgeDataListIsPopulated() {
+		assertTrue(this.tutorial.getEdgeDataList().size() > 0);
 	}
 
-	private void ThenWidthIsPositive() {
-		String subStringCode = tutorial.tutorialCode
-				.substring(tutorial.tutorialCode
-						.indexOf("txtLine3Col7.setBounds(")
-						+ ("txtLine3Col7.setBounds(").length());
-		subStringCode = subStringCode.substring(0,
-				subStringCode.indexOf(')') - 1);
-		_bounds = subStringCode.split(",");
-		assertTrue(Integer.parseInt(_bounds[2]) > 0);
+	private void ThenLabelDataListIsPopulated() {
+		System.out.println(this.tutorial.getLabelDataList());
+		assertTrue(this.tutorial.getLabelDataList().size() > 0);
 	}
 
 	private void ThenLabelSyntaxHasPositiveIndices() {
@@ -311,25 +242,70 @@ public class TutorialPresenterTest {
 		assertNotNull(tutorial);
 	}
 
+	private void ThenWidthIsPositive() {
+		String subStringCode = tutorial.tutorialCode
+				.substring(tutorial.tutorialCode
+						.indexOf("txtLine3Col7.setBounds(")
+						+ ("txtLine3Col7.setBounds(").length());
+		subStringCode = subStringCode.substring(0,
+				subStringCode.indexOf(')') - 1);
+		_bounds = subStringCode.split(",");
+		assertTrue(Integer.parseInt(_bounds[2]) > 0);
+	}
+
+	private void ThenXCoordIsHigherThanPriorComponent() {
+		assertTrue(Integer.parseInt(_bounds[1]) > 20);
+	}
+
+	private void WhenBRDStoreIsCalled() {
+		BRDStore.GenerateBRD(tutorial);
+	}
+
+	private void WhenDeployBatchScriptIsCalled() {
+		try {
+			System.out
+					.println("Running the batch script for Building Webserver Files");
+			String command = "cmd /C start " + LocalMachine.home
+					+ "automate/autoBuild.bat";
+			Runtime rt = Runtime.getRuntime();
+			rt.exec(command);
+			System.out.println("Finished running the autoBuild batch script");
+		} catch (Exception e) {
+			System.out.println("Error creating the FileInfo panel: " + e);
+			e.printStackTrace();
+		}
+	}
+
+	private void WhenGeneratedFilesAreRenamed() {
+		// TODO Auto-generated method stub
+		String NewName = tutorial.getTutorialName();
+		String tempLocation = LocalMachine.home + "delivery/";
+		String HtmlToRename = tempLocation + "java.html";
+		String RenamedHTML = tempLocation + NewName + ".html";
+		String JarToRename = tempLocation + "java.jar";
+		String RenamedJAR = tempLocation + NewName + ".jar";
+		String JnlpToRename = tempLocation + "java.jnlp";
+		String RenamedJNLP = tempLocation + NewName + ".jnlp";
+		File NewJAR = new File(RenamedJAR);
+		File NewJNLP = new File(RenamedJNLP);
+		File NewHTML = new File(RenamedHTML);
+		File JARfile = new File(JarToRename);
+		File JNLPfile = new File(JnlpToRename);
+		File Htmlfile = new File(HtmlToRename);
+		JARfile.renameTo(NewJAR);
+		JNLPfile.renameTo(NewJNLP);
+		Htmlfile.renameTo(NewHTML);
+	}
+
 	private void WhenGetTutorialIsCalled() {
-		tutorial = tutorialPresenter.GetTutorial("System", linesOfCode,
-				wordInfoList, "blank source");
+		tutorial = tutorialPresenter.GetTutorial("testClassName", "test query",
+				linesOfCode, wordInfoList, "blank source");
 	}
 
-	private void GivenValidWordInfoList() {
-		wordInfo.wordToBeBlanked = "out";
-		wordInfo.lineNumber = 3;
-		wordInfo.columnNumber = 7;
-		wordInfo.blankType = BlankType.Text;
-		wordInfoList.add(wordInfo);
-	}
-
-	private void GivenValidLinesOfCode() {
-		linesOfCode.add("class myfirstjavaprog {");
-		linesOfCode.add("public static void main(String args[]) {");
-		linesOfCode.add("System.out.println(\"Hello World!\");");
-		linesOfCode.add("}");
-		linesOfCode.add("}");
+	private void WhenJavaCodeIsCompiled() {
+		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+		int result = compiler.run(null, null, null, LocalMachine.home
+				+ "generated/testClassName.java");
 	}
 
 }
