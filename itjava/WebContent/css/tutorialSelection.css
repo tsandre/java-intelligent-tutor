@@ -9,10 +9,6 @@ div {
 	margin: 2px;
 }
 
-#divMain {
-	margin:0 auto;
-}
-
 div .step {
 	border: none;
 	width: 60px;
@@ -24,8 +20,6 @@ div .step {
 div .active {
 	width: 120px;
 	height: 50px;
-	font-size: 2em;
-	background-color: #46c02d;
 }
 
 #divCode {
@@ -56,19 +50,27 @@ div .active {
 	background-color: #EDF7EA;
 }
 
-table .active {
+tr .active {
 	font-weight: bold;
 	font-size: 1.2em;
 	background-color: #D4E692;
 }
 
-table .passive {
+tr .passive {
 	background-color: #EDF7EA;
+	cursor: pointer;
+	font-size: 0.8em;
+	text-align: top;
+}
+
+tr .passive:hover {
+	background-color: #edfcb0;
+	text-decoration: underline;
 }
 
 #divRating {
 	text-align: center;
-	width: 250px;
+	width: 240px;
 }
 
 #divApproveSample {
@@ -85,4 +87,23 @@ table .passive {
 .stepBox {
 	position: relative;
 	float: left;
+}
+
+.copyright {
+	font-size: 0.9em;
+	color:blue;
+}
+
+.noimage {
+	visibility: hidden;
+}
+
+.showimage {
+	visibility: visible;
+	margin-left: 35%;
+}
+
+#divMain {
+	margin-left:auto;
+	margin-right:auto;
 }
