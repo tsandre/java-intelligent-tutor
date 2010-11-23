@@ -24,7 +24,6 @@ public class WordInfoPresenter {
 	public ArrayList<CompilationUnitFacade> compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
 	public boolean hasCommonNodes;
 	private Repository _repository;
-	private String _tutorialName;
 	private String _readableName;
 	
 	/**
@@ -59,6 +58,7 @@ public class WordInfoPresenter {
 	 */
 	public ArrayList<Tutorial> GenerateWordInfoMap() {
 		ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
+		int tutorialNameIndex = 0;
 		
 		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 10);
 		for (CompilationUnitFacade facade : similarFacades) {
@@ -103,7 +103,8 @@ public class WordInfoPresenter {
 				}
 			}
 			if (wordInfoList.size() > 0) {
-				tutorialList.add(new Tutorial(_tutorialName, _readableName, wordInfoList, facade.getLinesOfCode(), facade.getUrl()));
+				tutorialList.add(new Tutorial("Example" + tutorialNameIndex, _readableName, wordInfoList, facade.getLinesOfCode(), facade.getUrl()));
+				tutorialNameIndex++;
 			}
 		}
 		return tutorialList;
@@ -118,7 +119,6 @@ public class WordInfoPresenter {
 	public void AccessRepository(String query, ArrayList<ResultEntry> resultEntryList) {
 		this.compilationUnitFacadeList = compilationUnitStore.createCompilationUnitFacadeList(query, resultEntryList);
 		this.setRepository(RepositoryStore.UpdateRepository(compilationUnitFacadeList));
-		_tutorialName = Integer.toString(query.hashCode());
 		_readableName = query;
 		
 	}
