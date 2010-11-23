@@ -158,19 +158,18 @@ public class TutorialStore {
 			y += height;
 			indexOfLinesOfCode++;
 		}
-
+/*
 		DorminComponent hintButton = new DorminComponent();
-		hintButton.Button("Help", "hint", 90, y + 20, 20, 60);
+		hintButton.Button("Help", "hint", 90, y + 20, 20, 60);*/
 		DorminComponent doneButton = new DorminComponent();
 		doneButton.Button("Done", "doneButton", 20, y + 20, 20, 60);
 	
 		//TODO : add button to List<EdgeData>
 		
-		//edgeDataList.add(new EdgeData("Help","hint"));
-		labelDataList.add(new LabelData("hint","Help"));
+		/*labelDataList.add(new LabelData("hint","Help"));*/
 		labelDataList.add(new LabelData("doneButton","Done"));
 		edgeDataList.add(new EdgeData("Done","doneButton"));
-		_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(hintButton);
+		/*_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(hintButton);*/
 		_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(doneButton);
 	}
 
