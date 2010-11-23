@@ -8,7 +8,7 @@
     * *[http://www.javapassion.com/ajax/GWT.pdf Presentation on GWT by developer at Sun]* 
     * *[http://code.google.com/webtoolkit/doc/latest/tutorial/create.html GWT: Getting started Tutorial]* 
     * *[http://code.google.com/webtoolkit/doc/latest/tutorial/create.html GWT: Making remote procedure Calls]* 
-    * *[http://code.google.com/p/java-intelligent-tutor/wiki/HardCoded]* 
+    * *[http://code.google.com/p/java-intelligent-tutor/wiki/HardCoded Changes to be HardCoded in your Workspace.]* 
     * *[http://code.google.com/p/support/wiki/WikiSyntax Maintaining the wiki]* 
     * *[http://agile.csc.ncsu.edu/SEMaterials/tutorials/subclipse Help with SVN plugin for eclipse]*
   * *[References Notes]*
