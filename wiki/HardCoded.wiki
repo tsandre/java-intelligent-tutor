@@ -1,4 +1,4 @@
-#summary Changes to be HardCoded in Workspace.
+#summary Changes to be HardCoded in your Workspace.
 
 ----
 <wiki:toc>
