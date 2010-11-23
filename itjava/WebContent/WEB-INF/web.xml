@@ -25,12 +25,20 @@
     <servlet-name>TutorialSelectionServlet</servlet-name>
     <url-pattern>/TutorialSelectionServlet</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>TutorialDeliveryServlet</servlet-name>
     <servlet-class>itjava.view.TutorialDeliveryServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TutorialDeliveryServlet</servlet-name>
     <url-pattern>/TutorialDeliveryServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SaveSelectionsServlet</servlet-name>
+    <servlet-class>itjava.view.SaveSelectionsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveSelectionsServlet</servlet-name>
+    <url-pattern>/SaveSelectionsServlet</url-pattern>
   </servlet-mapping>
 </web-app>
