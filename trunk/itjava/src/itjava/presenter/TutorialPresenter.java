@@ -16,8 +16,8 @@ private TutorialStore _tutorialStore;
 		_tutorialStore = new TutorialStore();
 	}
 
-	public Tutorial GetTutorial(String tutorialName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList, String sourceUrl) {
-		Tutorial tutorial = new Tutorial(Integer.toString(tutorialName.hashCode()), tutorialName, ArrangeWordsAccordingToLineNumber(wordInfoList), Convertor.TrimArrayListOfString(exampleCode), sourceUrl);
+	public Tutorial GetTutorial(String tutorialName, String readableName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList, String sourceUrl) {
+		Tutorial tutorial = new Tutorial(tutorialName, readableName, ArrangeWordsAccordingToLineNumber(wordInfoList), Convertor.TrimArrayListOfString(exampleCode), sourceUrl);
 		return _tutorialStore.GenerateTutorial(tutorial);
 	}
 	
