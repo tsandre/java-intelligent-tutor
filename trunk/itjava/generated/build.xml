@@ -1,0 +1,253 @@
+<project name="deploy-tutor" default="deploy-files" >
+
+	<property file="${user.home}/build.properties"/>
+	<property file="build.properties" />
+	
+	<!--Uncomment the property local-install to enable local (file) installation - mps -->
+	<!--property name="local-install" value="true" /-->
+	<property name="tutor-name-tag" value="__TUTOR_NAME__" />
+	<property name="main-name-tag" value="__MAIN_CLASS__" />
+	<property name="brd-name-tag" value="__BRD_FILE__" />
+	<property name="school-name-tag" value="__SCHOOL_NAME__" />
+	<property name="course-name-tag" value="__COURSE_NAME__" />
+	<property name="unit-name-tag" value="__UNIT_NAME__" />
+	<property name="section-name-tag" value="__SECTION_NAME__" />
+	<property name="br-mode-tag" value="__BR_MODE__" />
+	<property name="codebase-tag" value="__CODEBASE__" />
+	<property name="default-codebase" value="http://localhost:8080/itjava/delivery/"/>
+	
+	<!--condition property="default-codebase"
+		value="file:///g:/AT_1_4/AuthoringTools/java/deploy-tutor/test/"
+		else="http://web.engr.oregonstate.edu/~krishnav/tutors/">
+		<istrue value="${local-install}"/>
+	</condition-->
+	<property name="projects-dir" value="C:/Project/myworkspace/itjava/"/>
+	<property name="server" value="http://localhost:8080" />
+	<property name="server-dir" value="/itjava/delivery" />
+	<property name="server-login" value="" />
+	<property name="server-password" value="" />
+
+	<property name="master-jar" value="DorminWidgets.jar" />
+	<property name="preferences-xml" value="edu/cmu/pact/Preferences/InstallationPreferences.xml" />
+	<property name="tmp_jar_location" value="C:/Project/myworkspace/itjava/WebContent/delivery"/>
+	
+	<!--Execute this target if others fail on "can't rename" errors.-->
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset dir="${tmp_jar_location}"/>
+			<fileset dir="_tmp"/>
+			<fileset dir="temp"/>
+			<fileset dir="."
+				includes="**/*.jar,**/*.jnlp,**/*.html"
+				excludes="**/jsch.jar,**/basic.*"/>
+		</delete>
+		
+	</target>
+
+	<target name="build">
+		<property name="jar-file" value="${tutorial-name}.jar"/>
+		<property name="html-file" value="${tutorial-name}.html"/>
+		<property name="jnlp-file" value="${tutorial-name}.jnlp"/>
+		<antcall target="clean-one"/>
+		<antcall target="build-jar"/>
+		<antcall target="build-deployable"/>
+	</target>
+
+	<target name="get-input">
+		<property name="descriptive-name" value="${tutorial-name}"/>
+		<property name="tutor-dir" value="generated"/>
+		<property name="main-class" value="SystemClass"/>
+		<loadfile property="cls-txt" srcFile="../Projects/generated/SystemClass.class" failonerror="true"/>
+		<property name="brd-file" value="ProblemsOrganizer/Examples/Arithmetic/generated/SystemClass.brd"/>
+		<loadfile property="brd-txt" srcFile="../Projects/ProblemsOrganizer/Examples/Arithmetic/generated/SystemClass.brd" failonerror="true"/>
+		<property name="school-name" value="OSU"/>
+		<property name="course-name" value="${tutorial-name}"/>
+		<property name="unit-name" value="${tutorial-name}"/>
+		<property name="section-name" value="${tutorial-name}"/>
+		<property name="br-mode-initial" value="E"/>
+		<property name="codebase" value="http://web.engr.oregonstate.edu/~krishnav/tutors/"/>
+		</target>
+	
+	<target name="clean-one">
+		<delete failonerror="false">
+			<fileset dir="${tmp_jar_location}" includes="*.jar"/>
+			<fileset dir="${tmp_jar_location}" includes="*.jnlp"/>
+			<fileset dir="${tmp_jar_location}" includes="*.html"/>
+			<fileset dir="${tmp_jar_location}" includes="*.jsp"/>
+		</delete>
+	</target>
+
+	<target name="sign-one-jar">
+		<input message="Enter jar file name:" addproperty="jar-file"/>
+		<signjar jar="${jar-file}" keystore="../lib/PACTkeyStore" alias="mike" storepass="pact123" />
+	</target>
+
+	<target name="build-jar">
+		<jar jarfile="${tmp_jar_location}/${jar-file}" compress="true" update="false">
+			<fileset dir="${projects-dir}" includes="generated/**"/>
+		</jar>	
+		<signjar jar="${tmp_jar_location}/${jar-file}" keystore="C:/Project/myworkspace/itjava/automate/lib/PACTkeyStore" alias="mike" storepass="pact123" />
+	</target>
+
+	<target name="build-jar-all-tutors" description="build and sign a study's jar with multiple tutors and .brd files">
+		<input message="Enter parent folder (relative to current folder):" addproperty="parent-dir"/>		
+		<input message="Enter tutor folder (relative to parent folder):" addproperty="tutor-dir"/>		
+		<input message="Enter jar file name:" addproperty="jar-file"/>
+		<delete failonerror="false">
+			<fileset dir="temp"/>
+		</delete>
+		<mkdir dir="temp"/>
+		<jar jarfile="temp/${jar-file}" compress="true" update="false">
+			<fileset dir="${parent-dir}" includes="generated/**"/>
+			<fileset dir="${parent-dir}" includes="**/*.brd"/>
+		</jar>	
+		<signjar jar="temp/${jar-file}" keystore="../lib/PACTkeyStore" alias="mike" storepass="pact123" />
+	</target>
+
+	<target name="build-deployable">
+		<copy file="basic.html" tofile="${tmp_jar_location}/${html-file}"/>	
+		<copy file="basic.jnlp" tofile="${tmp_jar_location}/${jnlp-file}"/>	
+		<replace file="${tmp_jar_location}/${html-file}" value="${tutorial-name}" token="${tutor-name-tag}"/>
+		<replace file="${tmp_jar_location}/${html-file}" value="${jnlp-file}" token="${jnlp-name-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="${tutorial-name}" token="${tutor-name-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="generated/${tutorial-name}.brd" token="${brd-name-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="generated.${tutorial-name}" token="${main-name-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="OSU" token="${school-name-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="${tutorial-name}" token="${course-name-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="${tutorial-name}" token="${unit-name-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="${tutorial-name}" token="${section-name-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="Example-tracing Tutor" token="${br-mode-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="http://localhost:8080/itjava/delivery/" token="${codebase-tag}"/>
+	</target>
+
+	<target name="build-only" depends="build">
+		<echo>Next, transfer these files to ${server-login}@${server}:${server-dir}:
+temp/${jar-file}
+temp/${jnlp-file}
+temp/${html-file}
+		 </echo>
+	</target>
+
+	<target name="copy-libs" depends="build" if="local-install">
+		<antcall target="deploy-jars" />
+		<mkdir dir="test/lib/"/>
+		<copy todir="test/lib">
+			<fileset dir="${tmp_jar_location}" />
+		</copy>
+		<copy todir="test">
+			<fileset dir="temp" includes="${jar-file},${jnlp-file},${html-file}"/>
+		</copy>
+	</target>
+	
+	<target name="deploy-files" depends="copy-libs">
+		<scp todir="${server-login}@${server}:${server-dir}" password="${server-password}" trust="yes">
+			<fileset dir="temp" includes="${jar-file},${jnlp-file},${html-file}"/>
+		</scp>
+		<delete file="temp/${jar-file}" />
+		<delete file="temp/${jnlp-file}" />
+		<delete file="temp/${html-file}" />
+		<echo message="${line.separator}
+			The file has been deployed successfully	to ${server}${server-dir}/${html-file}"/>
+	</target>
+
+	<!-- Update all the lib/*jar files on the server.-->
+	<target name="deploy-jars">
+		<delete failonerror="false" dir="${tmp_jar_location}/lib"/>
+		<copy todir="${tmp_jar_location}/lib">
+			<fileset dir="../lib" includes="**/*.jar"/>
+		</copy>
+		<antcall target="edit-installation-preferences" />
+		<antcall target="sign-all-jars" />
+		<echo>
+************
+Transfer the entire tree of .jar files in ${tmp_jar_location}/ to
+${server-login}@${server}:${server-dir}/lib
+************
+		</echo>
+	</target>
+
+	<!-- Update only the master jar on the server.-->
+	<target name="deploy-dorminwidgetsjar">
+		<delete failonerror="false" dir="${tmp_jar_location}"/>
+		<copy todir="${tmp_jar_location}">
+			<fileset dir="../lib" includes="${master-jar}"/>
+		</copy>
+		<antcall target="deploy-master-jar" />
+	</target>
+
+	<target name="change-installation-preferences">
+		<delete failonerror="false" dir="${tmp_jar_location}"/>
+		<copy todir="${tmp_jar_location}">
+			<fileset dir="../lib" includes="${master-jar}"/>
+		</copy>
+		<antcall target="edit-installation-preferences" />
+		<antcall target="deploy-master-jar" />
+	</target>
+
+	<target name="deploy-master-jar">
+		<signjar keystore="../lib/PACTkeyStore" alias="mike" storepass="pact123">
+			<fileset dir="${tmp_jar_location}" includes="${master-jar}"/>
+		</signjar>
+		<echo>
+************
+Transfer the jar file ${tmp_jar_location}/${master-jar} to
+${server-login}@${server}:${server-dir}/lib
+************
+		</echo>
+	</target>
+
+	<target name="edit-installation-preferences">
+		<mkdir dir="_tmp" />
+		<unjar dest="_tmp" src="${tmp_jar_location}/lib/${master-jar}">
+			<patternset>
+				<include name="**/${preferences-xml}" />
+			</patternset>
+		</unjar>
+		<property name="pref-file" value="_tmp/${preferences-xml}" />
+		<antcall target="edit-preference">
+			<param name="pref-name" value="Log to Remote Server" />
+			<param name="pref-constraint" value="value must be true or false"/>
+			<param name="pref-default" value="false" />
+		</antcall>
+		<antcall target="edit-preference">
+			<param name="pref-name" value="Logging Server URL" />
+			<param name="pref-constraint" value="value must be a URL"/>
+			<param name="pref-default" value="http://localhost:8080" />
+		</antcall>
+		<antcall target="edit-preference">
+			<param name="pref-name" value="Log to Disk" />
+			<param name="pref-constraint" value="value must be true or false"/>
+			<param name="pref-default" value="false" />
+		</antcall>
+		<antcall target="edit-preference">
+			<param name="pref-name" value="Disk Logging Directory" />
+			<param name="pref-constraint" value="value must be a directory path on client machines; e.g. C:/temp/log"/>
+			<param name="pref-default" value="." />
+		</antcall>
+		<antcall target="edit-preference">
+			<param name="pref-name" value="Use Login Window" />
+			<param name="pref-constraint" value="value must be true or false"/>
+			<param name="pref-default" value="false" />
+		</antcall>
+		<jar update="true" basedir="_tmp" destfile="${tmp_jar_location}/lib/${master-jar}"/>
+		<delete failonerror="false" dir="_tmp"/>
+	</target>
+
+	<target name="sign-all-jars">
+		<signjar keystore="../lib/PACTkeyStore" alias="mike" storepass="pact123">
+			<fileset dir="${tmp_jar_location}" includes="**/*.jar"/>
+		</signjar>
+	</target>
+
+	<target name="edit-preference">
+		<input
+			message="Enter value for ${pref-name};&#x0A;${pref-constraint}&#x0A;(leave empty for default value &quot;${pref-default}&quot;)"
+			defaultvalue="${pref-default}"
+			addproperty="pref-value"/>
+		<replaceregexp byline="true"
+			file="${pref-file}"
+			match="(&lt;!--DEPLOY_TUTOR ${pref-name}--&gt;&lt;value&gt;)[^&lt;]*(&lt;/value&gt;)"
+			replace="\1${pref-value}\2" />
+	</target>
+
+
