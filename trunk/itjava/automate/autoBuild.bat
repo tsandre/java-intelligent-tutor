@@ -1,4 +1,4 @@
 @echo off
 
-CD C:\Program Files (x86)\Cognitive Tutor Authoring Tools\deploy-tutor
+CD C:\Project\myworkspace\itjava\automate\deploy-tutor
 ant build-only
