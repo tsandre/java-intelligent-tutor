@@ -6,26 +6,25 @@
 
 ==Local Machine Path==
 *File - itjava.data.LocalMachine.java*
-Edit value of string "home" to project Workspace location.
+*Edit value of string "home" to project Workspace location.
 eg. public static String home = "C:/Project/myworkspace/itjava/";
 
 ==autoBuild Path==
 *File - autoBuild.bat*
-Edit the path of deploy-tutor location inside workspace. 
+*Edit the path of deploy-tutor location inside workspace. 
 eg. C:\Project\myworkspace\itjava\automate\deploy-tutor
 
 ==Project Directory Path in build.xml==
 *File - build.xml*
-Set projects-dir to workspace home.
+*Set projects-dir to workspace home.
 eg. <property name="projects-dir" value="C:/Project/myworkspace/itjava/"/>
 
 ==Delivery Folder Path in build.xml==
 *File - build.xml*
-Edit tmp_jar_location to webcontent delivery folder.
+*Edit tmp_jar_location to webcontent delivery folder.
 eg. <property name="tmp_jar_location" value="C:/Project/myworkspace/itjava/WebContent/delivery"/> 
 
 ==keystore value build.xml==
 *File - build.xml*
-Edit keystore value to point to the PACTkeystore file in "lib".
+*Edit keystore value to point to the PACTkeystore file in "lib".
 eg. <signjar jar="${tmp_jar_location}/${jar-file}" keystore="C:/Project/myworkspace/itjava/automate/lib/PACTkeyStore" alias="mike" storepass="pact123" />
-
