@@ -10,11 +10,11 @@
 <link type="text/css" rel="stylesheet" href="css/tutorialSelection.css"/>
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
 <script type="text/javascript">
-$(function () {  
-    $('#divApproveSample input:radio').click(function () {  
+$(function () {
+    $('#divApproveSample input:radio').click(function () {
         var step2 = $('#divWordInfo');  
         var step3 = $('#divRating');
-        if (this.value == 'Yes')  {
+        if (this.value == 'Quiz')  {
             step2.show('slow');  
         	step3.show('slow');
         }
@@ -24,16 +24,52 @@ $(function () {
         }  
     });  
 });   
+
+function isReady(form) {
+	if (document.tutorialSelectionForm.radioApproval[1].checked || 
+			document.tutorialSelectionForm.radioApproval[2].checked) {
+		return true;
+	}
+	else if (document.tutorialSelectionForm.radioApproval[0].checked) {
+		var wordInfoFlag = false;
+		var difficultyFlag = false;
+		for (var i = 0; i < document.tutorialSelectionForm.cbxWordInfo.length; i++) {
+			if (document.tutorialSelectionForm.cbxWordInfo[i].checked) {
+				wordInfoFlag = true;
+				break;
+			}
+		}
+		for (i =0; i < 5; i++) {
+			if (document.tutorialSelectionForm.difficultyLevel[i].checked) {
+				difficultyFlag = true;
+				break;
+			}
+		}
+		if (difficultyFlag && wordInfoFlag) {
+			return true;
+		}
+	}
+	alert("Please finish all the required steps..");
+	return false;
+}
 </script>
+
 </head>
 <body>
 
-<form id="tutorialSelectionForm" method="post"
-	action="TutorialSelectionServlet">
+<!--<form id="tutorialSelectionForm" method="post" action="TutorialSelectionServlet">-->
+<form id="tutorialSelectionForm" name="tutorialSelectionForm" method="post" 
+	onsubmit="return isReady(this)" action="SaveSelectionsServlet">
 <div id="divMain">
 <%
+int currentIndex = Integer.parseInt(request.getParameter("index"));
+session.setAttribute("currentIndex", currentIndex);
+
+ArrayList<String> approvalList = (ArrayList<String>) session.getAttribute("approvalList");
+ArrayList<List<String>> wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
+ArrayList<Integer> difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
 ArrayList<Tutorial> tutorialList = (ArrayList<Tutorial>)session.getAttribute("tutorialList");
-int currentIndex = (Integer)session.getAttribute("currentIndex");
+
 Tutorial currentTutorial = tutorialList.get(currentIndex);
 %>
 
@@ -41,7 +77,20 @@ Tutorial currentTutorial = tutorialList.get(currentIndex);
 <%
 for (int i = 0; i < tutorialList.size(); i++) {
 	String tutorialSelectionClass = (i==currentIndex) ? "active" : "passive";
-	out.print("<td class=" + tutorialSelectionClass + ">Example # " + (i+1) + "</td>");
+	out.print("<td class=" + tutorialSelectionClass);
+	out.print(" onclick=\"window.location.href='tutorialSelection.jsp?index=");
+	out.print(i);
+	out.print("'\"");
+	out.print("><div>Example# " + (i+1));
+	out.print("</div><div><image src=\"images/tick.png\" class=\"");
+	if (approvalList.get(i) != null) {
+		out.print("showimage");
+	}
+	else {
+		out.print("noimage");
+	}
+	
+	out.println("\"/></div></td>");
 }
 %>
 </tr></tbody></table>	
@@ -51,9 +100,23 @@ for (int i = 0; i < tutorialList.size(); i++) {
 <div class="step">STEP 1</div>
 <fieldset>
 <label>What would you like to do with the following example?</label><br />
-<input type="radio" name="radioApproval" value="Yes" validate="required:true" /> Quiz
-<input type="radio" name="radioApproval" value="No" /> Example
-<input type="radio" name="radioApproval" value="No" /> Discard
+
+<%
+String approvalSelected = approvalList.get(currentIndex);
+String[] approvalOptions = {"Quiz", "Example", "Discard"};
+for (int approvalIndex = 0; approvalIndex < 3; approvalIndex++) {
+	out.print("<input type=\"radio\" name=\"radioApproval\" value=\""); 
+	out.print(approvalOptions[approvalIndex]);
+	out.print("\"");
+	if (approvalSelected != null) {
+		if (approvalSelected.equals(approvalOptions[approvalIndex])) {
+			out.print(" checked=\"checked\"");
+		}
+	}
+	out.print("/>");
+	out.println(approvalOptions[approvalIndex]);
+}
+%>
 </fieldset>
 </div>
 
@@ -63,10 +126,17 @@ for (int i = 0; i < tutorialList.size(); i++) {
 <label>Select the words to blank:</label><br />
 <%
 int index = 0;
+List<String> selectedWords = wordsList.get(currentIndex);
 for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
-	out.println("<input type=\"checkbox\" name=\"cbxWordInfo\" validate=\"required:true\" value=\"" + index + "\">");
+	out.print("<input type=\"checkbox\" name=\"cbxWordInfo\" value=\"" + index + "\"");
+	if(selectedWords != null) {
+		if (selectedWords.contains(Integer.toString(index))) {
+			out.print(" checked=\"checked\"");
+		}
+	}
+	out.print(">");
 	out.print(currentWordInfo.wordToBeBlanked + " : ");
-	out.println("<span class=\"lineNumber\">" + currentWordInfo.lineNumber + "</span>");
+	out.print("<span class=\"lineNumber\">" + currentWordInfo.lineNumber + "</span>");
 	out.println("</input><br />");
 	index++;
 }
@@ -77,12 +147,19 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 <div id="divRating" class="stepBox">
 <div class="step">STEP 3</div>
 <fieldset>
-	<label>Please rate the difficulty of this tutorial</label><br />
-	<input name="difficultyLevel" type="radio" value="1" class="star" /> 
-	<input name="difficultyLevel" type="radio" value="2" class="star" />
-	<input name="difficultyLevel" type="radio" value="3" class="star" /> 
-	<input name="difficultyLevel" type="radio" value="4" class="star" /> 
-	<input name="difficultyLevel" type="radio" value="5" class="star" />
+	<label>Rate the difficulty of this tutorial:</label><br />
+	<%
+	Integer difficultySelected = difficultyList.get(currentIndex);
+		for (int difficultyIndex = 1; difficultyIndex <=5; difficultyIndex++) {
+			out.print("<input name=\"difficultyLevel\" type=\"radio\" value=\"" + difficultyIndex + "\" class=\"star\"");
+			if (difficultySelected != null) {
+				if (difficultySelected == difficultyIndex) {
+					out.print(" checked=\"checked\"");
+				}
+			}
+			out.println("/>");
+		}
+	%>
 </fieldset>
 </div>
 </div>
@@ -100,13 +177,20 @@ for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 	out.println("</tr></td>");
 }
 %>
-<tr><td></td><td><% out.println(currentTutorial.sourceUrl); %></td></tr>
+<tr><td></td><td class="copyright">For copyright of this snippet visit: <% out.println(currentTutorial.sourceUrl.replaceFirst("^\\d", "")); %></td></tr>
 </tbody>
 </table>
 </div>
 
+<input type="submit" name="btnSubmit" id="btnSubmitPrev"
+<%
+if (currentIndex == 0) {
+	out.print(" disabled=\"disabled\" ");
+}
+%>
+	value="<< Previous Example" />
 
-<input type="submit" name="btnSubmit" id="btnSubmit"
+<input type="submit" name="btnSubmit" id="btnSubmitNext"
 	value="Next Example >>" />
 
 </div>

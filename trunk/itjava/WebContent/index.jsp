@@ -9,10 +9,10 @@
 <title>Tutorial Search</title>
 </head>
 <body>
-<pre>
 <form action="CodeSearchServlet" method="get" name="codeSearchForm" id="codeSearchForm">
+<pre>
   <input type="text" name="query" id="query" placeholder="Enter query" />  <input type="submit" value="Search" />
-</form>
 </pre>
+</form>
 </body>
 </html>
