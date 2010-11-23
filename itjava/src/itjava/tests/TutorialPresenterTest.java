@@ -6,11 +6,13 @@ import static org.junit.Assert.assertTrue;
 import itjava.data.BlankType;
 import itjava.data.LocalMachine;
 import itjava.model.BRDStore;
+import itjava.model.BuildXMLCreate;
 import itjava.model.Tutorial;
 import itjava.model.WordInfo;
 import itjava.presenter.TutorialPresenter;
 
 import java.io.*;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import javax.tools.JavaCompiler;
@@ -104,12 +106,32 @@ public class TutorialPresenterTest {
 		GivenValidMultipleWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
-		WhenJavaCodeIsCompiled();
+		WhenCompiled();
 		WhenBRDStoreIsCalled();
+		ResetBuildXMLFile();
+		WhenBuildPropertiesIsCreated();
+		WhenBuildXMLCreateIsCalled();
 		WhenDeployBatchScriptIsCalled();
-		WhenGeneratedFilesAreRenamed();
-		// WhenDeliveryBatchScriptIsCalled();
 		ThenAllDeliverablesArePresentInDeliveryFolder();
+	}
+
+	private void WhenBuildPropertiesIsCreated() {
+		try {
+			File buildPropertiesFile = new File(LocalMachine.home + "automate/deploy-tutor/build.properties");
+			if (buildPropertiesFile.exists()) {
+				buildPropertiesFile.delete();
+			}
+			BufferedWriter writer = new BufferedWriter(new FileWriter(buildPropertiesFile));
+			String buildProperties = "server=http://localhost:8080";
+			buildProperties += ("\nserver-dir=/itjava/delivery/" + tutorial.getReadableName());
+			buildProperties += ("\nserver-login=");
+			buildProperties += ("\ndefault-codebase=http://localhost:8080/itjava/delivery/" + tutorial.getReadableName());
+			writer.write(buildProperties);
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -177,10 +199,6 @@ public class TutorialPresenterTest {
 	}
 
 	private void ThenBrdFilesAreStored() {
-		// TODO Write a function that will test if .brd files are saved in the
-		// directory generated
-		// check if the file has name tutorial.tutorialName
-
 		String fileToCheck = LocalMachine.home + "generated/"
 				+ tutorial.getTutorialName() + ".brd";
 		File f = new File(fileToCheck);
@@ -276,36 +294,59 @@ public class TutorialPresenterTest {
 		}
 	}
 
-	private void WhenGeneratedFilesAreRenamed() {
-		// TODO Auto-generated method stub
-		String NewName = tutorial.getTutorialName();
-		String tempLocation = LocalMachine.home + "delivery/";
-		String HtmlToRename = tempLocation + "java.html";
-		String RenamedHTML = tempLocation + NewName + ".html";
-		String JarToRename = tempLocation + "java.jar";
-		String RenamedJAR = tempLocation + NewName + ".jar";
-		String JnlpToRename = tempLocation + "java.jnlp";
-		String RenamedJNLP = tempLocation + NewName + ".jnlp";
-		File NewJAR = new File(RenamedJAR);
-		File NewJNLP = new File(RenamedJNLP);
-		File NewHTML = new File(RenamedHTML);
-		File JARfile = new File(JarToRename);
-		File JNLPfile = new File(JnlpToRename);
-		File Htmlfile = new File(HtmlToRename);
-		JARfile.renameTo(NewJAR);
-		JNLPfile.renameTo(NewJNLP);
-		Htmlfile.renameTo(NewHTML);
-	}
-
 	private void WhenGetTutorialIsCalled() {
 		tutorial = tutorialPresenter.GetTutorial("testClassName", "test query",
 				linesOfCode, wordInfoList, "blank source");
 	}
 
-	private void WhenJavaCodeIsCompiled() {
+	private void WhenCompiled() {
+		String CompilePath = "generated/" + tutorial.getTutorialName()
+				+ ".java";
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-		int result = compiler.run(null, null, null, LocalMachine.home
-				+ "generated/testClassName.java");
+		int result = compiler.run(null, null, null, CompilePath);
+		System.out.println("Compile result code = " + result);
+	}
+
+	private void ResetBuildXMLFile() {
+		String XMLpath = LocalMachine.home + "automate/deploy-tutor/build.xml";
+		String BasicXML = LocalMachine.home + "generated/build.xml";
+		File toDel = new File(XMLpath);
+		toDel.delete();
+		File sourceFile = new File(BasicXML);
+		File destFile = new File(XMLpath);
+		try {
+			copyFile(sourceFile, destFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void copyFile(File sourceFile, File destFile) throws IOException {
+		if (!sourceFile.exists()) {
+			return;
+		}
+		if (!destFile.exists()) {
+			destFile.createNewFile();
+		}
+		FileChannel source = null;
+		FileChannel destination = null;
+		source = new FileInputStream(sourceFile).getChannel();
+		destination = new FileOutputStream(destFile).getChannel();
+		if (destination != null && source != null) {
+			destination.transferFrom(source, 0, source.size());
+		}
+		if (source != null) {
+			source.close();
+		}
+		if (destination != null) {
+			destination.close();
+		}
+
+	}
+
+	private void WhenBuildXMLCreateIsCalled() {
+		BuildXMLCreate.GenerateBuildXML(tutorial);
 	}
 
 }

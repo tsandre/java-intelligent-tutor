@@ -24,7 +24,7 @@ public class Tutorial {
 	public Tutorial(String tutorialName, String readableName, ArrayList<WordInfo> wordInfoListIn,
 			ArrayList<String> linesOfCodeIn, String sourceUrlIn) {
 		_tutorialName = tutorialName;
-		_readableName = readableName;
+		_readableName = readableName.trim().replaceAll("\\s", "");
 		this.wordInfoList = wordInfoListIn;
 		this.linesOfCode = linesOfCodeIn;
 		this.sourceUrl = sourceUrlIn;
@@ -90,12 +90,17 @@ public class Tutorial {
 	public String getPath() {
 		return path;
 	}
-	public void set_readableName(String _readableName) {
+	public void setReadableName(String _readableName) {
 		this._readableName = _readableName;
 	}
-	public String get_readableName() {
+	public String getReadableName() {
 		return _readableName;
 	}
-
+	public void setDifficulty(int difficulty) {
+		this.difficultyLevel = difficulty;
+	}
+	public int getDifficulty() {
+		return this.difficultyLevel;
+	}
 
 }
