@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!-- JNLP File for SwingSet2 Demo Application --> 
+<jnlp spec="1.0+" codebase="__CODEBASE__" href="__TUTOR_NAME__.jnlp"> 
+	<information> 
+		<title>__TUTOR_NAME__</title> 
+		<vendor>CMU</vendor> 
+		<homepage href="__TUTOR_NAME__.html"/> 
+		<description>__TUTOR_NAME__</description> 	
+		<offline-allowed/> 
+	</information> 
+	<security> 
+		<all-permissions/> 
+	</security> 
+	<resources> 
+		<j2se version="1.4+" href="http://java.sun.com/products/autodl/j2se"/> 
+		<jar href="__TUTOR_NAME__.jar"/> 
+		<jar href="lib/DorminWidgets.jar"/> 
+		<jar href="lib/aima.jar"/>
+		<jar href="lib/idw.jar"/> 
+		<jar href="lib/jdom.jar"/> 
+		<jar href="lib/jess.jar"/> 
+		<jar href="lib/jgraphlayout.jar"/> 
+		<jar href="lib/jnlp.jar"/>
+		<jar href="lib/junit.jar"/> 
+		<jar href="lib/logclient.jar"/> 
+		<jar href="lib/logging.jar"/>
+		<jar href="lib/mylib.jar"/>
+		<jar href="lib/runcc.jar"/>
+		<jar href="lib/xalan.jar"/>
+		<jar href="lib/xml-writer.jar"/>
+		<jar href="lib/cl/ui.jar"/>
+		<jar href="lib/cl/communication.jar"/>
+		<jar href="lib/cl/LMS.jar"/>
+		<jar href="lib/cl/LMSfiledata.jar"/>
+		<jar href="lib/cl/TT.jar"/>
+		<jar href="lib/cl/XPlauncher.jar"/>
+		<jar href="lib/cl/cl_common.jar"/>
+		<jar href="lib/cl/grant.jar"/> 
+		<jar href="lib/cl/jzlib.jar"/>
+		<jar href="lib/cl/thirdparty/TableLayout.jar"/> 
+		<jar href="lib/cl/thirdparty/webeq35.jar"/> 
+		<jar href="lib/cl/utilities.jar"/>
+		<property name="noCtatWindow" value="true"/>
+	</resources> 
+	<application-desc main-class="__MAIN_CLASS__">
+		<argument>-Dschool_name=__SCHOOL_NAME__</argument>
+		<argument>-Dcourse_name=__COURSE_NAME__</argument>
+		<argument>-Dunit_name=__UNIT_NAME__</argument>
+		<argument>-Dsection_name=__SECTION_NAME__</argument>
+		<argument>-DBehaviorRecorderVisible=false</argument>
+		<argument>-DProblemFileLocation=__BRD_FILE__</argument>
+		<argument>-DBehaviorRecorderMode=__BR_MODE__</argument>
+	</application-desc> 
+</jnlp> 
