@@ -41,9 +41,11 @@ public class TutorialStore {
 	}
 	
 	public Tutorial GenerateTutorial(Tutorial tutorial) {
-		if (tutorial.getLinesOfCode() == null || tutorial.getLinesOfCode().size() == 0) {
+		if (tutorial.getLinesOfCode() == null) {
+		if (tutorial.getLinesOfCode().size() == 0) {
 			System.err.println("Input param for GenerateTutorial are NULL");
 			return null;
+		}
 		}
 		_tutorial = tutorial;
 		_linesOfCode = tutorial.getLinesOfCode();
@@ -70,10 +72,9 @@ public class TutorialStore {
 
 	
 	private void SaveTutorialFile() {
-		_tutorial.setPath("generated/" + _tutorial.getTutorialName() + ".java");
 		BufferedWriter writer;
 		try {
-			writer = new BufferedWriter(new FileWriter(LocalMachine.home + _tutorial.getPath()));
+			writer = new BufferedWriter(new FileWriter(LocalMachine.home + "generated/" + _tutorial.getTutorialName() + ".java"));
 			writer.write(_tutorial.tutorialCode);
 			writer.close();
 		} catch (IOException e) {
@@ -107,8 +108,12 @@ public class TutorialStore {
 	private void AddComponentsToPanel() {
 		
 		ArrayList<Integer> lineNumbersForBlankedWords = new ArrayList<Integer>();
-		for(WordInfo currWordInfo: _wordInfoList) {
-			lineNumbersForBlankedWords.add(currWordInfo.lineNumber);
+		if (_wordInfoList != null) {
+		if (_wordInfoList.size() > 0) {
+			for (WordInfo currWordInfo : _wordInfoList) {
+				lineNumbersForBlankedWords.add(currWordInfo.lineNumber);
+			}
+		}
 		}
 		int indexOfLinesOfCode = 1;
 		int x = 0, y = 10, height = 25, width;
@@ -130,18 +135,13 @@ public class TutorialStore {
 				dorminLabel.Label(restOfLine, lblName, x + (8 * beginIndex) , y, height, width);
 				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
 				
-				
-				// TODO :Label added to List<LabelData>
 				labelDataList.add(new LabelData(lblName, restOfLine));
-				
 				
 				String nameOfTextField = "txtLine" + indexOfLinesOfCode + "Col" + currWordInfo.columnNumber;
 				DorminComponent dorminText = new DorminComponent();
 				width = currWordInfo.wordLength() * 8;
 				dorminText.TextField(nameOfTextField, x + (8 * currWordInfo.columnNumber), y, height, width);
 				
-				
-				//TODO : Add text box to List<EdgeData> here..
 				edgeDataList.add(new EdgeData(currWordInfo.wordToBeBlanked,nameOfTextField));
 			
 				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminText);
@@ -150,7 +150,6 @@ public class TutorialStore {
 			
 			DorminComponent dorminLabel = new DorminComponent();
 			dorminLabel.Label(firstPartOfLineOfCode, "lblLine" + indexOfLinesOfCode, x, y, height, firstPartOfLineOfCode.length() * 8);
-			//TODO
 			labelDataList.add(new LabelData("lblLine" + indexOfLinesOfCode, firstPartOfLineOfCode));
 			
 			_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
@@ -184,7 +183,8 @@ public class TutorialStore {
 			this._variableDeclarations.add(TutorialTemplate.labelDeclaration(labelName));
 		}
 		
-		if (_wordInfoList != null || _wordInfoList.size() != 0) {
+		if (_wordInfoList != null) {
+		if (_wordInfoList.size() != 0) {
 			for (WordInfo wordInfo : _wordInfoList) {
 
 				String variableName = "Line" + wordInfo.lineNumber
@@ -207,7 +207,7 @@ public class TutorialStore {
 				this._variableDeclarations.add(TutorialTemplate.labelDeclaration(labelName));
 			}			
 		}
-
+		}
 	}
 
 }

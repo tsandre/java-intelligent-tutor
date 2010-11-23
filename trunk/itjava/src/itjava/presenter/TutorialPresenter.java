@@ -21,6 +21,11 @@ private TutorialStore _tutorialStore;
 		return _tutorialStore.GenerateTutorial(tutorial);
 	}
 	
+	/**
+	 * Accepts a List<> of {@link Tutorial} approved by the user and creates the CTAT-ready GUI file (i.e. tutorialName.java) 
+	 * @param approvedTutorialList
+	 * @return List of CTAT ready tutorials.
+	 */
 	public ArrayList<Tutorial> GetFinalTutorialList(ArrayList<Tutorial> approvedTutorialList) {
 		ArrayList<Tutorial> finalTutorialList = new ArrayList<Tutorial>();
 		for (Tutorial approvedTutorial : approvedTutorialList) {
