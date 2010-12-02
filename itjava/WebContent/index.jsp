@@ -7,12 +7,36 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Tutorial Search</title>
+<style>
+#divProgress {
+	width:300px;
+	height:200px;
+	position:fixed;
+	top:30%;
+	left:30%;
+	background-color:#EDF7EA;
+	font-family: segoe ui, verdana;
+	display: none;
+}
+progress {
+	margin-bottom: 100px;
+}
+</style>
+<script src="http://code.jquery.com/jquery-1.4.4.js"></script>
+<script type="text/javascript">
+function showProgress() {
+	document.getElementById("divProgress").style.display = 'table-cell';
+}
+</script>
 </head>
 <body>
 <form action="CodeSearchServlet" method="get" name="codeSearchForm" id="codeSearchForm">
 <pre>
-  <input type="text" name="query" id="query" placeholder="Enter query" />  <input type="submit" value="Search" />
+  <input type="text" name="query" id="query" placeholder="Enter query"/>  <input type="submit" onclick="return showProgress();" value="Search" id="btnSearch"/>
 </pre>
 </form>
+<div id="divProgress">
+Searching the web for examples..<br />
+<progress></progress></div>
 </body>
 </html>
