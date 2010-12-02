@@ -1,5 +1,6 @@
 package itjava.view;
 
+import itjava.model.BRDStore;
 import itjava.model.Tutorial;
 import itjava.model.WordInfo;
 import itjava.presenter.TutorialPresenter;
@@ -79,7 +80,7 @@ public class TutorialDeliveryServlet extends HttpServlet {
 		TutorialPresenter tutorialPresenter = new TutorialPresenter();
 		ArrayList<Tutorial> finalTutorialList = tutorialPresenter.GetFinalTutorialList(approvedTutorialList);
 		for (Tutorial finalTutorial: finalTutorialList) {
-			display.println("<a href=\"/delivery/" + finalTutorial.getReadableName() + "/"
+			display.println("<a href=\"/itjava/delivery/" + finalTutorial.getReadableName() + "/"
 					+ finalTutorial.getTutorialName() + ".jnlp\">" + finalTutorial.getReadableName() + "</a> <br />");
 		}
 	}
