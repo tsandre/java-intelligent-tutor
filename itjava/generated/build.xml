@@ -14,22 +14,21 @@
 	<property name="section-name-tag" value="__SECTION_NAME__" />
 	<property name="br-mode-tag" value="__BR_MODE__" />
 	<property name="codebase-tag" value="__CODEBASE__" />
-	<property name="default-codebase" value="http://localhost:8080/itjava/delivery/"/>
+	<property name="default-codebase" value="http://localhost:8080/itjava/delivery/${folder-name}"/>
 	
 	<!--condition property="default-codebase"
 		value="file:///g:/AT_1_4/AuthoringTools/java/deploy-tutor/test/"
 		else="http://web.engr.oregonstate.edu/~krishnav/tutors/">
 		<istrue value="${local-install}"/>
 	</condition-->
-	<property name="projects-dir" value="C:/Project/myworkspace/itjava/"/>
+	<property name="projects-dir" value="e:/web/itjava/"/>
 	<property name="server" value="http://localhost:8080" />
-	<property name="server-dir" value="/itjava/delivery" />
+	<property name="server-dir" value="/itjava/delivery/${folder-name}" />
 	<property name="server-login" value="" />
 	<property name="server-password" value="" />
 
 	<property name="master-jar" value="DorminWidgets.jar" />
 	<property name="preferences-xml" value="edu/cmu/pact/Preferences/InstallationPreferences.xml" />
-	<property name="tmp_jar_location" value="C:/Project/myworkspace/itjava/WebContent/delivery"/>
 	
 	<!--Execute this target if others fail on "can't rename" errors.-->
 	<target name="clean">
@@ -48,7 +47,6 @@
 		<property name="jar-file" value="${tutorial-name}.jar"/>
 		<property name="html-file" value="${tutorial-name}.html"/>
 		<property name="jnlp-file" value="${tutorial-name}.jnlp"/>
-		<antcall target="clean-one"/>
 		<antcall target="build-jar"/>
 		<antcall target="build-deployable"/>
 	</target>
@@ -86,7 +84,7 @@
 		<jar jarfile="${tmp_jar_location}/${jar-file}" compress="true" update="false">
 			<fileset dir="${projects-dir}" includes="generated/**"/>
 		</jar>	
-		<signjar jar="${tmp_jar_location}/${jar-file}" keystore="C:/Project/myworkspace/itjava/automate/lib/PACTkeyStore" alias="mike" storepass="pact123" />
+		<signjar jar="${tmp_jar_location}/${jar-file}" keystore="e:/web/itjava/automate/lib/PACTkeyStore" alias="mike" storepass="pact123" />
 	</target>
 
 	<target name="build-jar-all-tutors" description="build and sign a study's jar with multiple tutors and .brd files">
@@ -117,7 +115,8 @@
 		<replace file="${tmp_jar_location}/${jnlp-file}" value="${tutorial-name}" token="${unit-name-tag}"/>
 		<replace file="${tmp_jar_location}/${jnlp-file}" value="${tutorial-name}" token="${section-name-tag}"/>
 		<replace file="${tmp_jar_location}/${jnlp-file}" value="Example-tracing Tutor" token="${br-mode-tag}"/>
-		<replace file="${tmp_jar_location}/${jnlp-file}" value="http://localhost:8080/itjava/delivery/" token="${codebase-tag}"/>
+		<replace file="${tmp_jar_location}/${jnlp-file}" value="http://localhost:8080/itjava/delivery/${folder-name}/" token="${codebase-tag}"/>
+		<echo>${codebase-tag}</echo>
 	</target>
 
 	<target name="build-only" depends="build">
