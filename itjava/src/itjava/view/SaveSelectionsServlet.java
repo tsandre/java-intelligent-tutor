@@ -80,7 +80,6 @@ public class SaveSelectionsServlet extends HttpServlet {
 			else {
 				nextPage = "tutorialSelection.jsp?index=" + firstSkipped;
 			}
-			
 		}
 		else {
 			nextPage = "tutorialSelection.jsp?index=" + nextIndex;
