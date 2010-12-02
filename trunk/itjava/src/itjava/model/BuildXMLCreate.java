@@ -8,6 +8,8 @@ public class BuildXMLCreate {
     	 FileWriter fw = new FileWriter(LocalMachine.home+"automate/deploy-tutor/build.xml",true);
     	 BufferedWriter out = new BufferedWriter(fw);
        	 out.write("<property name=\"tutorial-name\" value=\""+tutorial.getTutorialName()+"\"/>\n");
+       	out.write("<property name=\"tmp_jar_location\" value=\""+LocalMachine.home+ LocalMachine.webcontent +"delivery/"+tutorial.getReadableName()+"\"/>\n");
+       	out.write("<property name=\"folder-name\" value=\""+tutorial.getReadableName()+"\"/>\n");
     	 out.write("</project>\n");
     	 out.flush();
     	 out.close();

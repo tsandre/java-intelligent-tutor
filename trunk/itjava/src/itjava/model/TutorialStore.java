@@ -1,6 +1,7 @@
 package itjava.model;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,7 +75,11 @@ public class TutorialStore {
 	private void SaveTutorialFile() {
 		BufferedWriter writer;
 		try {
-			writer = new BufferedWriter(new FileWriter(LocalMachine.home + "generated/" + _tutorial.getTutorialName() + ".java"));
+			File file = new File(LocalMachine.home + "generated/" + _tutorial.getTutorialName() + ".java");
+			if (file.exists()) {
+				file.delete();
+			}
+			writer = new BufferedWriter(new FileWriter(file));
 			writer.write(_tutorial.tutorialCode);
 			writer.close();
 		} catch (IOException e) {
@@ -108,16 +113,18 @@ public class TutorialStore {
 	private void AddComponentsToPanel() {
 		
 		ArrayList<Integer> lineNumbersForBlankedWords = new ArrayList<Integer>();
+		Iterator<WordInfo> wordInfoIterator = null;
 		if (_wordInfoList != null) {
 		if (_wordInfoList.size() > 0) {
 			for (WordInfo currWordInfo : _wordInfoList) {
 				lineNumbersForBlankedWords.add(currWordInfo.lineNumber);
 			}
+			wordInfoIterator = _wordInfoList.iterator();
 		}
 		}
 		int indexOfLinesOfCode = 1;
 		int x = 0, y = 10, height = 25, width;
-		Iterator<WordInfo> wordInfoIterator = _wordInfoList.iterator();
+		
 		for (String lineOfCode:_linesOfCode) {
 			String firstPartOfLineOfCode = lineOfCode;
 			if(lineNumbersForBlankedWords.contains(indexOfLinesOfCode)) {
@@ -131,7 +138,7 @@ public class TutorialStore {
 				DorminComponent dorminLabel = new DorminComponent();
 				width = restOfLine.length() * 8;
 				String lblName = "lblLine" + indexOfLinesOfCode
-				+ "Col" + currWordInfo.columnNumber;
+									+ "Col" + currWordInfo.columnNumber;
 				dorminLabel.Label(restOfLine, lblName, x + (8 * beginIndex) , y, height, width);
 				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
 				
