@@ -4,7 +4,12 @@ import itjava.data.LocalMachine;
 import java.io.*;
 import java.util.ArrayList;
 public class BRDStore {
-  public static void GenerateBRD(Tutorial tutorial) {
+	
+  /**
+   * Generate .brd file required for delivering the tutorial
+ * @param tutorial
+ */
+public static void GenerateBRD(Tutorial tutorial) {
     ArrayList<EdgeData> edgeDataList = tutorial.getEdgeDataList();
     ArrayList<LabelData> labelDataList = tutorial.getLabelDataList();
     int edgeIndex = edgeDataList.size();
@@ -110,7 +115,11 @@ public class BRDStore {
 //    int[] destID = new int[] {2,3,4,5,6};
     	
       try {        
-        OutputStream fout= new FileOutputStream(LocalMachine.home+"generated/"+tutorial.getTutorialName()+".brd");
+    	  File file = new File(LocalMachine.home+"generated/"+tutorial.getTutorialName()+".brd");
+    	  if (file.exists()) {
+    		  file.delete();
+    	  }
+        OutputStream fout= new FileOutputStream(file);
     	//OutputStream fout= new FileOutputStream("generated/mainprog.brd");
         OutputStream bout= new BufferedOutputStream(fout);
         OutputStreamWriter out = new OutputStreamWriter(bout, "8859_1");
