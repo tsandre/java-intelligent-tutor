@@ -81,7 +81,7 @@ for (int i = 0; i < tutorialList.size(); i++) {
 	out.print(" onclick=\"window.location.href='tutorialSelection.jsp?index=");
 	out.print(i);
 	out.print("'\"");
-	out.print("><div>Example# " + (i+1));
+	out.print("><div>Snippet# " + (i+1));
 	out.print("</div><div><image src=\"images/tick.png\" class=\"");
 	if (approvalList.get(i) != null) {
 		out.print("showimage");
@@ -99,7 +99,7 @@ for (int i = 0; i < tutorialList.size(); i++) {
 <div id="divApproveSample" class="stepBox">
 <div class="step">STEP 1</div>
 <fieldset>
-<label>What would you like to do with the following example?</label><br />
+<label>What would you like to do with the following Snippet?</label><br />
 
 <%
 String approvalSelected = approvalList.get(currentIndex);
@@ -164,6 +164,19 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 </div>
 </div>
 
+<div id="divSubmit">
+<input type="submit" name="btnSubmit" id="btnSubmitPrev"
+<%
+if (currentIndex == 0) {
+	out.print(" disabled=\"disabled\" ");
+}
+%>
+	value="<< Previous Snippet" />
+
+<input type="submit" name="btnSubmit" id="btnSubmitNext"
+	value="Next Snippet >>" />
+</div>
+
 <div id="divCode">
 <table>
 <tbody>
@@ -182,16 +195,6 @@ for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 </table>
 </div>
 
-<input type="submit" name="btnSubmit" id="btnSubmitPrev"
-<%
-if (currentIndex == 0) {
-	out.print(" disabled=\"disabled\" ");
-}
-%>
-	value="<< Previous Example" />
-
-<input type="submit" name="btnSubmit" id="btnSubmitNext"
-	value="Next Example >>" />
 
 </div>
 </form>

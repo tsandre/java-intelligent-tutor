@@ -14,12 +14,12 @@
 	position:fixed;
 	top:30%;
 	left:30%;
-	background-color:#EDF7EA;
 	font-family: segoe ui, verdana;
 	display: none;
 }
 progress {
 	margin-bottom: 100px;
+	margin-left: 100px;
 }
 </style>
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
@@ -36,7 +36,8 @@ function showProgress() {
 </pre>
 </form>
 <div id="divProgress">
-Searching the web for examples..<br />
+Searching the web for code snippets..<br />
+<img src="images/loopLoader.gif" />
 <progress></progress></div>
 </body>
 </html>
