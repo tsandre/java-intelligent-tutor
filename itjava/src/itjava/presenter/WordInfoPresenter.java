@@ -51,7 +51,7 @@ public class WordInfoPresenter {
 	}
 
 	/**
-	 * Actually creates the {@link HashMap} of < codeSample, ArrayList < {@link WordInfo} > >
+	 * Creates the {@link ArrayList} of {@link Tutorial}
 	 * Seeks for top 10 similar {@link CompilationUnitFacade} out of the ones generated after the recent 
 	 * Once similar CompilationUnitFacade s are found, it creates {@link WordInfo} by calling createWordInfo method on {@link WordInfoStore}
 	 * @return
@@ -116,7 +116,7 @@ public class WordInfoPresenter {
 	 * @param query : Sets the tutorialName.
 	 * @param resultEntryList : {@link ArrayList}<{@link ResultEntry}> 
 	 */
-	public void AccessRepository(String query, ArrayList<ResultEntry> resultEntryList) {
+	public void SetCompilationUnitListAndAccessRepository(String query, ArrayList<ResultEntry> resultEntryList) {
 		this.compilationUnitFacadeList = compilationUnitStore.createCompilationUnitFacadeList(query, resultEntryList);
 		this.setRepository(RepositoryStore.UpdateRepository(compilationUnitFacadeList));
 		_readableName = query;
