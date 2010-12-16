@@ -47,7 +47,7 @@ public class SaveSelectionsServlet extends HttpServlet {
 		wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
 		difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
 		
-		if (nextExample.equals("Next Example >>")) {
+		if (nextExample.equals("Next Snippet >>")) {
 			nextIndex = currentIndex + 1;
 		}
 		else {

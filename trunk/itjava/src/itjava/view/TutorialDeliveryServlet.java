@@ -38,7 +38,6 @@ public class TutorialDeliveryServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter display = response.getWriter();
 		response.setContentType("text/html");
-		display.println("Reached the end of the list.. AWESOME..");
 		HttpSession session = request.getSession(true);
 		ArrayList<Tutorial> approvedTutorialList = new ArrayList<Tutorial>();
 

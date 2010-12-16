@@ -45,7 +45,7 @@ public class CodeSearchServlet extends HttpServlet {
 		
 		WordInfoPresenter wordInfoPresenter = new WordInfoPresenter();
 		CodeSearchPresenter codeSearchPresenter = new CodeSearchPresenter(query);
-		wordInfoPresenter.AccessRepository( query.replaceAll("\\s+", ""), codeSearchPresenter.SearchNext());
+		wordInfoPresenter.SetCompilationUnitListAndAccessRepository( query.replaceAll("\\s+", ""), codeSearchPresenter.SearchNext());
 
 		ArrayList<Tutorial> tutorialList = wordInfoPresenter.GenerateWordInfoMap();
 		session.setAttribute("tutorialList", tutorialList);
