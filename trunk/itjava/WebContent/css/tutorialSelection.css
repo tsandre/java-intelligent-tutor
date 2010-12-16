@@ -29,6 +29,10 @@ div .active {
 	clear: left;
 }
 
+#divSubmit {
+	clear: left;
+}
+
 .lineNumber {
 	background-color: #e0e9f2;
 	font-size: 12px;
