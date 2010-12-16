@@ -38,7 +38,7 @@ public class IntegrateCodeSearchWordInfo {
 	}
 	
 	private void WhenRepositoryIsGenerated() {
-		_wordInfoPresenter.AccessRepository(_query, _codeSearchPresenter.SearchNext());
+		_wordInfoPresenter.SetCompilationUnitListAndAccessRepository(_query, _codeSearchPresenter.SearchNext());
 	}
 
 	private void GivenQuery() {

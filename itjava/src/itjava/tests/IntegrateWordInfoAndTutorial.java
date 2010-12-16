@@ -77,7 +77,7 @@ public class IntegrateWordInfoAndTutorial {
 	}
 
 	private void WhenWordInfoIsGenerated() {
-		_wordInfoPresenter.AccessRepository(query,
+		_wordInfoPresenter.SetCompilationUnitListAndAccessRepository(query,
 				sourceCodes);
 		initTutorialList = _wordInfoPresenter.GenerateWordInfoMap();
 	}
