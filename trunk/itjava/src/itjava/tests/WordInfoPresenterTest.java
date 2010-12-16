@@ -294,7 +294,7 @@ public class WordInfoPresenterTest {
 	}
 
 	private void WhenGetCodeInfoIsCalled() {
-		_wordInfoPresenter.AccessRepository(query,
+		_wordInfoPresenter.SetCompilationUnitListAndAccessRepository(query,
 				sourceCodes);
 		_initTutorialList = _wordInfoPresenter.GenerateWordInfoMap();
 	}
