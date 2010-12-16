@@ -3,6 +3,7 @@ package itjava.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
@@ -137,7 +138,18 @@ public class CompilationUnitStore {
 		return _facade;
 	}
 	
+	/**
+	 * Accepts the list of {@link CompilationUnitFacade} and {@link Repository} object required for 
+	 * comparison. Also requires a number of results that are required. i.e. if numOfResults == 5, then 
+	 * the number of results returned will be 5 (or in some cases 6).
+	 * This method eliminates duplicate code snippets that are found in different URLs.
+	 * @param compilationUnitFacadeList
+	 * @param repository
+	 * @param numOfResults
+	 * @return
+	 */
 	public LinkedHashSet<CompilationUnitFacade> FindSimilarCompilationUnits(ArrayList<CompilationUnitFacade> compilationUnitFacadeList, Repository repository, int numOfResults) {
+
 		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
 			facade.setTFVector(repository);
 			System.out.println("Source Example: " + facade.getUrl());
@@ -148,9 +160,10 @@ public class CompilationUnitStore {
 			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);
 			System.out.println("---------------");
 		}
-		Matrix matrix = new Matrix(compilationUnitFacadeList);
-		for (CompilationUnitFacade x : compilationUnitFacadeList) {
-			for (CompilationUnitFacade y : compilationUnitFacadeList) {
+		ArrayList<CompilationUnitFacade> compilationUnits = RemoveDuplicateSnippets(compilationUnitFacadeList);
+		Matrix matrix = new Matrix(compilationUnits);
+		for (CompilationUnitFacade x : compilationUnits) {
+			for (CompilationUnitFacade y : compilationUnits) {
 				if (!matrix.contains(y, x)) {
 					matrix.setValues(x, y);
 				}
@@ -158,6 +171,27 @@ public class CompilationUnitStore {
 		}
 		LinkedHashSet<CompilationUnitFacade> tutorialReadyList = matrix.GetTopSimilar(numOfResults);
 		return tutorialReadyList;
+	}
+
+	/**
+	 * This function takes care of removing {@link CompilationUnitFacade} that have similar code but distinct URLs.
+	 * @param compilationUnitFacadeList
+	 * @return ArrayList of CompilationUnitFacade without very similar linesOfCode.
+	 */
+	private ArrayList<CompilationUnitFacade> RemoveDuplicateSnippets(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
+		ArrayList<String> cleanFacades = new ArrayList<String>();
+		Iterator<CompilationUnitFacade> itFacades = compilationUnitFacadeList.iterator();
+		while (itFacades.hasNext()) {
+			CompilationUnitFacade facade = itFacades.next();
+			if (!facade.IsSimilarToOthersInList(cleanFacades)) {
+				cleanFacades.add(facade.toString());
+			}
+			else {
+				System.err.println("Duplicate code: " + facade.getUrl());
+				itFacades.remove();
+			}
+		}
+		return compilationUnitFacadeList;
 	}
 
 	/*public HashMap<ArrayList<String>,ArrayList<WordInfo>> FindCommonDeclaration(ArrayList<CompilationUnitFacade> compilationUnitFacadeList){
