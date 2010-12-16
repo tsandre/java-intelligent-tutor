@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_21">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
@@ -24,6 +24,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.eclipse.jdt.core_3.6.1.v_A68_R36x.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.eclipse.osgi_3.6.1.R36x_v20100806.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sqlitejdbc-v056.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/simmetrics_jar_v1_6_2_d07_02_07.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/AbsoluteLayout.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/DorminWidgets.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/grant.jar"/>
