@@ -10,6 +10,7 @@ public class BuildXMLCreate {
        	 out.write("<property name=\"tutorial-name\" value=\""+tutorial.getTutorialName()+"\"/>\n");
        	out.write("<property name=\"tmp_jar_location\" value=\""+LocalMachine.home+ LocalMachine.webcontent +"delivery/"+tutorial.getReadableName()+"\"/>\n");
        	out.write("<property name=\"folder-name\" value=\""+tutorial.getReadableName()+"\"/>\n");
+       	out.write("<property name=\"projects-dir\" value=\""+LocalMachine.projectsDir+"\"/>\n");
     	 out.write("</project>\n");
     	 out.flush();
     	 out.close();

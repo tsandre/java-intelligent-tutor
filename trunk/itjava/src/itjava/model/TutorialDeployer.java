@@ -55,25 +55,28 @@ public class TutorialDeployer {
 	 * @param tutorial
 	 * @throws Exception
 	 */
-	private void CompileTutorial(Runtime rt) throws Exception {
+	public void CompileTutorial(Runtime rt) throws Exception {
 		String sourcepath = LocalMachine.home + "generated/";
 		File classFile = new File(LocalMachine.home + "generated/" + _tutorial.getTutorialName() + ".class");
 		File batFile = new File(LocalMachine.home + "generated/compiler.bat");
 		if (batFile.exists()) {
 			batFile.delete();
 		}
-		FileWriter compilerBat = new FileWriter(LocalMachine.home + "generated/compiler.bat");
+		batFile.createNewFile();
+		FileWriter compilerBat = new FileWriter(batFile);
 		if ( classFile.exists()) {
 			classFile.delete();
 		}
-		String classpath = "E:\\web\\itjava\\WebContent\\WEB-INF\\lib\\AbsoluteLayout.jar;E:\\web\\itjava\\WebContent\\WEB-INF\\lib\\DorminWidgets.jar;E:\\web\\itjava\\WebContent\\WEB-INF\\lib\\grant.jar;E:\\web\\itjava\\WebContent\\WEB-INF\\lib\\jess.jar;E:\\web\\itjava\\WebContent\\WEB-INF\\lib\\runcc.jar;\n";
-		String command = "e:\ncd " + sourcepath + "\njavac " + _tutorial.getTutorialName() + ".java";
-		compilerBat.write("@echo OFF\nset CLASSPATH=%CLASSPATH%" + classpath);
+		String classpath = LocalMachine.classPath.replace('/', '\\');
+//		String command = "\ncd " + sourcepath.replace('/', '\\') + "\njavac " + _tutorial.getTutorialName() + ".java";
+		String command = "\njavac " + _tutorial.getTutorialName() + ".java";
+		compilerBat.write("set CLASSPATH=%CLASSPATH%" + classpath);
 		compilerBat.append(command);
 		compilerBat.close();
-		String execBat = "cmd /C start " + LocalMachine.home + "generated/compiler.bat";
+//		String execBat = "cmd.exe /c " + LocalMachine.home + "generated/compiler.bat";
+		String execBat = "cmd.exe /c compiler.bat";
 		System.out.println("Compiling .java");
-		Process pr = rt.exec(execBat);
+		Process pr = rt.exec(execBat,null, new File(sourcepath) );
 		InputStreamReader tempReader = new InputStreamReader(new BufferedInputStream(pr.getInputStream()));
         BufferedReader reader = new BufferedReader(tempReader);
         while (true){
@@ -87,9 +90,9 @@ public class TutorialDeployer {
 
 	/**
 	 * Deletes existing build.xml from automate/deploy-tutor directory 
-	 * and copies the template to the location instead.
+	 * and copies the template to this location.
 	 */
-	private void ResetBuildXMLFile() {
+	public void ResetBuildXMLFile() {
 		String XMLpath = LocalMachine.home + "automate/deploy-tutor/build.xml";
 		String BasicXML = LocalMachine.home + "generated/build.xml";
 		File toDel = new File(XMLpath);
@@ -106,7 +109,11 @@ public class TutorialDeployer {
 
 	}
 	
-	private void CreateBuildPropertiesFile() {
+	/**
+	 * Function required to create library files. It is not necessary to call this 
+	 * function, since the library files need to be created only once.
+	 */
+	public void CreateBuildPropertiesFile() {
 		try {
 			File buildPropertiesFile = new File(LocalMachine.home + "automate/deploy-tutor/build.properties");
 			if (buildPropertiesFile.exists()) {
@@ -125,20 +132,31 @@ public class TutorialDeployer {
 		}
 	}
 		
-	private void ExecuteBatchScript(Runtime rt) {
+	/**
+	 * Executes the ant script to archive all the necessary components of a CTAT tutor
+	 * to be delivered as Java Web Start (.jnlp and .jar)
+	 * @param rt
+	 */
+	public void ExecuteBatchScript(Runtime rt) {
 		try {
-			File batFile = new File(LocalMachine.home + "automate/autoBuild.bat");
-			if (!batFile.exists()) {
-				FileWriter compilerBat = new FileWriter(LocalMachine.home + "automate/autoBuild.bat");
-				compilerBat.write("CD " + LocalMachine.home + "automate/deploy-tutor \n");
-				compilerBat.append("ant build-only");
+			File batDirectory = new File(LocalMachine.home + "automate/deploy-tutor");
+			File batFile = new File(batDirectory, "autoBuild.bat");
+//			File batFile = new File(LocalMachine.home + "automate/deploy-tutor/autoBuild.bat");
+			if (batFile.exists()) {
+				batFile.delete();
 			}
+			//TODO : Check if all other required files exist in deploy-tutor folder.
+			batFile.createNewFile();
+			batFile.setWritable(true);
+			FileWriter compilerBat = new FileWriter(batFile);
+//			compilerBat.write("CD " + LocalMachine.home + "automate/deploy-tutor \n");
+			compilerBat.write("echo %cd%\n");
+			compilerBat.append("ant build-only");
+			compilerBat.close();
 			
 			System.out.println("Running the batch script for Building Webserver Files");
-			String command = "e:\ncmd /C start " + LocalMachine.home
-					+ "automate/autoBuild.bat";
-			rt.exec(command);
-			Process pr = rt.exec(command);
+			String command = "cmd.exe /c autoBuild.bat";
+			Process pr = rt.exec(command, null, batDirectory);
 			InputStreamReader tempReader = new InputStreamReader(new BufferedInputStream(pr.getInputStream()));
 	            BufferedReader reader = new BufferedReader(tempReader);
 	            while (true){
@@ -154,6 +172,7 @@ public class TutorialDeployer {
 			e.printStackTrace();
 		}
 	}
+	
 	private void copyFile(File sourceFile, File destFile) throws IOException {
 		if (!sourceFile.exists()) {
 			return;

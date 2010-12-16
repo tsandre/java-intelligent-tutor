@@ -27,6 +27,10 @@ public class Matrix {
 	private float[][] methodInvocationSimilarity;
 	private float[][] variableDeclarationSimilarity;
 	
+	/**
+	 * Creates a blank [][] array to store similarity corresponding to all the compilation units present 
+	 * in the {@link ArrayList}<{@link CompilationUnitFacade}>. 
+	 */
 	public Matrix(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
 		facadeList = compilationUnitFacadeList;
 		similarity = new float[facadeList.size()] [facadeList.size()];

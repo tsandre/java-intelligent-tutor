@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
 
+import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein;
+
 public class CompilationUnitFacade {
 	private List<ImportDeclaration> _importDeclarations;
 	private List<SimpleType> _superInterfaces;
@@ -32,13 +34,24 @@ public class CompilationUnitFacade {
 	private TFIDFVector _tfVector;
 	private String _url;
 	
+	@Override
 	public String toString() {
 		return getLinesOfCode().toString();
 	}
+	
+	@Override
+	public int hashCode() {
+		return this.toString().hashCode();
+	}
+
 	public void setLinesOfCode(String linesOfCode) throws Exception {
 		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
 	}
 
+	/**
+	 * Returns the lines of code in a format ArrayList < String >  for the facade.
+	 * @return
+	 */
 	public ArrayList<String> getLinesOfCode() {
 		return _linesOfCode;
 	}
@@ -534,6 +547,21 @@ public class CompilationUnitFacade {
 	
 	public String getUrl() {
 		return _url;
+	}
+
+	/**
+	 * Compares the lines of code of the current facade with others in the list using Levenshtein distance.
+	 * @param cleanFacades
+	 * @return true: Another facade found with similarity rank > 0.85, otherwise false
+	 */
+	public boolean IsSimilarToOthersInList(ArrayList<String> cleanFacadeStrings) {
+		Levenshtein metric = new Levenshtein();
+		for (String codeSample : cleanFacadeStrings) {
+			if (metric.getSimilarity(this.toString(), codeSample) > 0.85) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
