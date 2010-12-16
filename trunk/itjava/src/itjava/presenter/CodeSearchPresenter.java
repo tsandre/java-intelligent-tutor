@@ -20,7 +20,7 @@ public class CodeSearchPresenter {
 	private String _query;
 	private String[] _cacheLinks;
 	private int _startPosition = 0;
-	private int _endPosition = 14;
+	private int _endPosition = 49;
 	public CodeSearchPresenter(String query) {
 		_query = query;
 		_cacheLinks = LinkStore.CreateLinks(_query).toArray(new String[0]);
