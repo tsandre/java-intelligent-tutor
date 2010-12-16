@@ -21,7 +21,7 @@
 		else="http://web.engr.oregonstate.edu/~krishnav/tutors/">
 		<istrue value="${local-install}"/>
 	</condition-->
-	<property name="projects-dir" value="e:/web/itjava/"/>
+	<property name="projects-dir" value="E:/web/itjava"/>
 	<property name="server" value="http://localhost:8080" />
 	<property name="server-dir" value="/itjava/delivery/${folder-name}" />
 	<property name="server-login" value="" />
@@ -84,7 +84,7 @@
 		<jar jarfile="${tmp_jar_location}/${jar-file}" compress="true" update="false">
 			<fileset dir="${projects-dir}" includes="generated/**"/>
 		</jar>	
-		<signjar jar="${tmp_jar_location}/${jar-file}" keystore="e:/web/itjava/automate/lib/PACTkeyStore" alias="mike" storepass="pact123" />
+		<signjar jar="${tmp_jar_location}/${jar-file}" keystore="E:/web/itjava/automate/lib/PACTkeyStore" alias="mike" storepass="pact123" />
 	</target>
 
 	<target name="build-jar-all-tutors" description="build and sign a study's jar with multiple tutors and .brd files">
