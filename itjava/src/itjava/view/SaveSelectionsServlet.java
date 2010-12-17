@@ -72,9 +72,9 @@ public class SaveSelectionsServlet extends HttpServlet {
 		session.setAttribute("approvalList", approvalList);
 		int tutorialListSize = (Integer) session.getAttribute("tutorialListSize");
 		String nextPage = "Error.jsp";
-		if (nextIndex == tutorialListSize) {
+		if (nextIndex == tutorialListSize) { //Reached end of list
 			int firstSkipped = FirstSkippedExample();
-			if ( firstSkipped == -1) {
+			if ( firstSkipped == -1) { //If no snippets are skipped
 				nextPage = "TutorialDeliveryServlet";
 			}
 			else {
@@ -88,6 +88,12 @@ public class SaveSelectionsServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	/**
+	 * Returns the integer index of the first skipped snippet 
+	 * from the list displayed on tutorialSelection.jsp.
+	 * If none are skipped returns -1.
+	 * @return -1 or index
+	 */
 	private int FirstSkippedExample() {
 		int index = 0;
 		for (String approvalChoice : approvalList) {
