@@ -21,7 +21,7 @@
 		else="http://web.engr.oregonstate.edu/~krishnav/tutors/">
 		<istrue value="${local-install}"/>
 	</condition-->
-	<property name="projects-dir" value="E:/web/itjava"/>
+	<property name="projects-dir" value="${projects-dir}"/>
 	<property name="server" value="http://localhost:8080" />
 	<property name="server-dir" value="/itjava/delivery/${folder-name}" />
 	<property name="server-login" value="" />
@@ -51,6 +51,7 @@
 		<antcall target="build-deployable"/>
 	</target>
 
+	<!-- Following Target is not used. START IGNORE. -->
 	<target name="get-input">
 		<property name="descriptive-name" value="${tutorial-name}"/>
 		<property name="tutor-dir" value="generated"/>
@@ -79,12 +80,19 @@
 		<input message="Enter jar file name:" addproperty="jar-file"/>
 		<signjar jar="${jar-file}" keystore="../lib/PACTkeyStore" alias="mike" storepass="pact123" />
 	</target>
+	<!-- END ignoring Targets.. -->
 
 	<target name="build-jar">
+	<echo>
+	*************************
+	JAR File : ${tmp_jar_location}/${jar-file}
+	Genereated directory: generated/${tutorial-name}.*
+	*************************
+	</echo>
 		<jar jarfile="${tmp_jar_location}/${jar-file}" compress="true" update="false">
-			<fileset dir="${projects-dir}" includes="generated/**"/>
+			<fileset dir="../.." includes="generated/${tutorial-name}.*"/>
 		</jar>	
-		<signjar jar="${tmp_jar_location}/${jar-file}" keystore="E:/web/itjava/automate/lib/PACTkeyStore" alias="mike" storepass="pact123" />
+		<signjar jar="${tmp_jar_location}/${jar-file}" keystore="../../automate/lib/PACTkeyStore" alias="mike" storepass="pact123" />
 	</target>
 
 	<target name="build-jar-all-tutors" description="build and sign a study's jar with multiple tutors and .brd files">
