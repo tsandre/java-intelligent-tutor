@@ -36,8 +36,8 @@ function showProgress() {
 </pre>
 </form>
 <div id="divProgress">
-Searching the web for code snippets..<br />
-<img src="images/loopLoader.gif" />
-<progress></progress></div>
+<img src="images/loopLoader.gif" /><br />
+Searching the web for code snippets..
+</div>
 </body>
 </html>
