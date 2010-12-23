@@ -1,0 +1,12 @@
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+public class Main {
+public static void main( String[] args) throws Exception {
+ZipFile zipFile=new ZipFile("testfile.zip");
+Enumeration zipEntries=zipFile.entries();
+while (zipEntries.hasMoreElements()) {
+System.out.println(((ZipEntry)zipEntries.nextElement()).getName());
+}
+}
+}

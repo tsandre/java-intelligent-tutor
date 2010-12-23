@@ -1,0 +1,6 @@
+{
+XMLDocument doc1=new XMLDocument();
+DOMImplementation impl=doc1.getImplementation();
+System.out.println("The impl supports Events " + impl.hasFeature("Events","2.0"));
+System.out.println("The impl supports Mutation Events " + impl.hasFeature("MutationEvents","2.0"));
+}

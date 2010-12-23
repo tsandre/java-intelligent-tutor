@@ -1,0 +1,4 @@
+{
+fromClient=new BufferedReader(new InputStreamReader(System.in));
+toClient=System.out;
+}

@@ -1,0 +1,5 @@
+{
+String classname="fully.qualified.classname.of.someHandlerObject.Implementation";
+Class handlerClass=Class.forName(classname);
+HandlerObject handlerObject=(HandlerObject)handlerClass.newInstance();
+}

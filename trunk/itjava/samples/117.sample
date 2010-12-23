@@ -1,0 +1,23 @@
+package com.bsj.itext;
+import java.io.*;
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.*;
+public class WrapImageinPdf {
+public static void main( String arg[]) throws Exception {
+Document document=new Document(PageSize.A4.rotate());
+PdfWriter.getInstance(document,new FileOutputStream("imagePdf.pdf"));
+Font font=new Font(Font.TIMES_ROMAN,18,Font.BOLD);
+document.open();
+Paragraph paragraph=new Paragraph("Original:",font);
+Paragraph par=new Paragraph("After rotate:",font);
+Image image=Image.getInstance("2.jpg");
+document.add(paragraph);
+document.add(image);
+document.add(par);
+image.scaleAbsolute(500.0f,500.0f);
+image.setBorder(1);
+image.setRotationDegrees(45.0f);
+document.add(image);
+document.close();
+}
+}

@@ -1,0 +1,14 @@
+import java.io.*;
+public class CmdExec {
+public static void main( String argv[]){
+try {
+String line;
+Process p=Runtime.getRuntime().exec("test.cmd");
+p.waitFor();
+System.out.println(p.exitValue());
+}
+catch ( Exception err) {
+err.printStackTrace();
+}
+}
+}

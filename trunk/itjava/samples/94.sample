@@ -1,0 +1,5 @@
+{
+ExecFileCommandsHelper execHelper=new ExecFileCommandsHelper();
+P4JServerFactory.setRpcFileSystemHelper(execHelper);
+P4JSystemFileCommandsHelper fileHelper=P4JServerFactory.getRpcFileSystemHelper();
+}

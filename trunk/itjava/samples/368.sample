@@ -1,0 +1,4 @@
+{
+Parser parser=new SAXParser();
+((SAXParser)parser).setValidationMode(SAXParser.DTD_VALIDATION);
+}

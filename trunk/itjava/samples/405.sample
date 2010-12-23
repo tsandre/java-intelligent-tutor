@@ -1,0 +1,7 @@
+import org.w3c.dom.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+public class CreateBlankDocument {
+public static void main( String[] args){
+}
+}

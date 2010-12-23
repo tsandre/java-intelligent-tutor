@@ -1,0 +1,5 @@
+{
+EOKeyValueQualifier qual1=new EOKeyValueQualifier(keyName1,EOQualifier.QualifierOperatorEqual,value1);
+EOKeyValueQualifier qual2=new EOKeyValueQualifier(keyName2,EOQualifier.QualifierOperatorEqual,value2);
+EOAndQualifier finalQual=new EOAndQualifier(new NSArray(new object[]{qual1,qual2}));
+}

@@ -1,0 +1,6 @@
+{
+byte[] xmlByteArray=xmlStr.getBytes();
+ByteArrayInputStream xmlStream=newByteArrayInputStream(xmlByteArray);
+InputStreamReader xmlReader=newInputStreamReader(xmlStream);
+XmlParser parser=new XmlParser(xmlReader);
+}

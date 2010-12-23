@@ -1,0 +1,10 @@
+import java.io.*;
+import oracle.xml.parser.v2.*;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+public class selectNodesTest {
+public static void main( String[] args) throws Exception {
+}
+}

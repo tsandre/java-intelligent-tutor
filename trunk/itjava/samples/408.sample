@@ -1,0 +1,16 @@
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+public class TestDOMParsing {
+public static void main( String[] args){
+}
+}

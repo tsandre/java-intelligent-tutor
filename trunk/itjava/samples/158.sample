@@ -1,0 +1,54 @@
+public class BPELCRunner {
+private static final Log log=LogFactory.getLog(BPELCRunner.class);
+private ProcessBuilder pb;
+private String message;
+public BPELCRunner( String command, String bpel){
+pb=new ProcessBuilder(command,bpel);
+}
+public boolean compile(){
+Process p=null;
+try {
+p=pb.start();
+InputStreamReaderThread errorReader=new InputStreamReaderThread(p.getErrorStream());
+errorReader.start();
+InputStreamReaderThread inputReader=new InputStreamReaderThread(p.getInputStream());
+inputReader.start();
+p.waitFor();
+if (errorReader.getInput() != null) {
+message=errorReader.getInput();
+return false;
+}
+}
+catch ( Throwable t) {
+log.error("Could not validate WS-BPEL process",t);
+message="Error occurred while validating WS-BPEL process";
+return false;
+}
+return true;
+}
+public String getMessage(){
+return message;
+}
+public void setMessage( String message){
+this.message=message;
+}
+private class InputStreamReaderThread extends Thread {
+private InputStream is;
+private String input;
+public void ThreadInputStreamReader( InputStream is){
+this.is=is;
+}
+@Overridepublic void run(){
+try {
+byte[] output=IOUtils.toByteArray(is);
+input=new String(output);
+}
+catch ( Exception e) {
+throw new RuntimeException(e);
+}
+}
+public String getInput(){
+return input;
+}
+}
+}

@@ -1,0 +1,6 @@
+{
+HttpConnection hc=(HttpConnection)Connector.open(url);
+InputStream is=hc.openInputStream();
+Reader reader=new InputStreamReader(is);
+XmlParser parser=new XmlParser(reader);
+}

@@ -1,0 +1,10 @@
+{
+InputStream in=conn.getInputStream();
+InputStreamReader rdr=new InputStreamReader(in);
+LineNumberReader lnr=new LineNumberReader(rdr);
+Request req=new Request();
+while (!req.isComplete()) {
+String s=lnr.readLine();
+req.addLine(s);
+}
+}

@@ -1,0 +1,4 @@
+{
+InputSource is=new InputSource(xmlID);
+reader.parse(is);
+}

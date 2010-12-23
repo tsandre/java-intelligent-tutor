@@ -1,0 +1,7 @@
+{
+List myObjs=getMyObjects();
+Query q=new Query();
+q.parse(sql);
+QueryResults qr=q.execute(myObjs);
+List res=qr.getResults();
+}

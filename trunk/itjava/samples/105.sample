@@ -1,0 +1,10 @@
+{
+PersistenceManager pm=PMF.get().getPersistenceManager();
+Employee e=new Employee("Alfred","Smith",new Date());
+try {
+pm.makePersistent(e);
+}
+finally {
+pm.close();
+}
+}

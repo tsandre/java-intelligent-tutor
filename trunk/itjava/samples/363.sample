@@ -1,0 +1,7 @@
+{
+att.setNodeValue("abc");
+el.appendChild(el1);
+el.appendChild(text);
+text.setNodeValue("xyz");
+doc1.removeChild(el);
+}

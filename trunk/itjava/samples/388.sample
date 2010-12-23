@@ -1,0 +1,4 @@
+{
+DOMParser d=new DOMParser();
+d.setValidationMode(DTD_VALIDATION);
+}

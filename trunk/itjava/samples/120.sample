@@ -1,0 +1,9 @@
+{
+DocumentBuilderFactory builderFactory=DocumentBuilderFactory.newInstance();
+try {
+DocumentBuilder builder=builderFactory.newDocumentBuilder();
+}
+catch ( ParserConfigurationException e) {
+e.printStackTrace();
+}
+}

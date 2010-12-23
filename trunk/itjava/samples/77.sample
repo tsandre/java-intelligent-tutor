@@ -1,0 +1,17 @@
+import java.io.*;
+public class CmdExec {
+public static void main( String argv[]){
+try {
+String line;
+Process p=Runtime.getRuntime().exec(System.getenv("windir") + "\\system32\\" + "tree.com /A");
+BufferedReader input=new BufferedReader(new InputStreamReader(p.getInputStream()));
+while ((line=input.readLine()) != null) {
+System.out.println(line);
+}
+input.close();
+}
+catch ( Exception err) {
+err.printStackTrace();
+}
+}
+}

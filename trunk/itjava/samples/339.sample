@@ -1,0 +1,8 @@
+{
+XPath xpath=XpathFactory.newInstance().newXPath();
+String expression="/Books/Book/Name/text()";
+NodeSet nameNodes=(NodeSet)xpath.evaluate(expression,newInputSource("Books.xml"),XpathConstants.NODESET);
+for (int i=0; i < result.getLength(); i++) {
+System.out.println("Book name " + (i + 1) + " is "+ result.item(i).getNodeValue());
+}
+}

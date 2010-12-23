@@ -1,0 +1,15 @@
+import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+import java.sql.*;
+import java.io.*;
+public class DatabaseFilter extends XMLFilterImpl {
+private Connection connection;
+public DatabaseFilter( String jdbcURL) throws SQLException {
+connection=DriverManager.getConnection(jdbcURL);
+}
+public void parse( InputSource in) throws SAXException, IOException, UnsupportedOperationException {
+throw new UnsupportedOperationException("Can't read a database from an InputStream or Reader");
+}
+public void parse( String selectQuery) throws SAXException, IOException {
+}
+}

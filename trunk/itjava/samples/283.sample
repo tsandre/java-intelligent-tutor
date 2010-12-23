@@ -1,0 +1,5 @@
+{
+String fileName="c:\\Applications\\My Documents\\test.doc";
+String[] commands={"cmd","/c","start","\"DummyTitle\"",fileName};
+Runtime.getRuntime().exec(commands);
+}

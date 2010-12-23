@@ -1,0 +1,5 @@
+{
+String path="afile.zip";
+FileOutputStream fos=new FileOutputStream(path);
+ZipOutputStream zos=new ZipOutputStream(fos);
+}

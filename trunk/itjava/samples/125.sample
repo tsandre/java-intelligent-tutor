@@ -1,0 +1,4 @@
+{
+parser.parse("http://www.w3.org/TR/DOM-Level-2-Core");
+Document spec=parser.getDocument();
+}

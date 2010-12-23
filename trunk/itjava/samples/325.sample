@@ -1,0 +1,62 @@
+import java.io.*;
+import java.net.*;
+public class Demo {
+private static class Server extends Thread {
+int port;
+public Server( int port){
+this.port=port;
+setDaemon(true);
+start();
+}
+public void run(){
+try {
+ServerSocket ss=new ServerSocket(port);
+while (true) {
+ServerWorker worker=new ServerWorker(ss.accept());
+}
+}
+catch ( IOException ioe) {
+ioe.printStackTrace();
+}
+}
+}
+private static class ServerWorker extends Thread {
+Socket s=null;
+public ServerWorker( Socket s){
+this.s=s;
+setDaemon(false);
+start();
+}
+public void run(){
+try {
+BufferedReader in=new BufferedReader(new InputStreamReader(new CompressedBlockInputStream(s.getInputStream())));
+String line=in.readLine();
+while (line != null) {
+System.out.println(line);
+line=in.readLine();
+}
+System.out.flush();
+}
+catch ( IOException ioe) {
+ioe.printStackTrace();
+}
+}
+}
+public static void sendData( int port) throws IOException {
+Socket s=new Socket("localhost",port);
+CompressedBlockOutputStream compressed=new CompressedBlockOutputStream(s.getOutputStream(),1024);
+PrintWriter out=new PrintWriter(new OutputStreamWriter(compressed));
+for (int i=0; i < 1000; i++) {
+out.println("This is line " + (i + 1) + " of the test output.");
+}
+out.close();
+}
+public static void main( String[] args) throws IOException {
+int port=11535;
+if (args.length > 0) {
+port=Integer.parseInt(args[0]);
+}
+Server s=new Server(port);
+sendData(port);
+}
+}

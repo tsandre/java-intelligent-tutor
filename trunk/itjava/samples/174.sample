@@ -1,0 +1,7 @@
+public class RssItem {
+private String pubDate;
+private String title;
+private String description;
+private String link;
+private String author;
+}

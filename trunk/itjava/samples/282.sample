@@ -1,0 +1,4 @@
+{
+String[] cmd={"myProgram.exe","-o=This is an option"};
+Runtime.getRuntime().exec(cmd);
+}

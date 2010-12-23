@@ -1,0 +1,56 @@
+import java.util.*;
+import java.util.prefs.*;
+import java.io.*;
+public class PreferenceExample {
+public void printInformation( Preferences p) throws BackingStoreException {
+System.out.println("Node's absolute path: " + p.absolutePath());
+System.out.print("Node's children: ");
+for ( String s : p.childrenNames()) {
+System.out.print(s + " ");
+}
+System.out.println("");
+System.out.print("Node's keys: ");
+for ( String s : p.keys()) {
+System.out.print(s + " ");
+}
+System.out.println("");
+System.out.println("Node's name: " + p.name());
+System.out.println("Node's parent: " + p.parent());
+System.out.println("NODE: " + p);
+System.out.println("userNodeForPackage: " + Preferences.userNodeForPackage(PreferenceExample.class));
+System.out.println("All information in node");
+for ( String s : p.keys()) {
+System.out.println(" " + s + " = "+ p.get(s,""));
+}
+}
+public void setSomeProperties( Preferences p) throws BackingStoreException {
+p.put("fruit","apple");
+p.put("cost","1.01");
+p.put("store","safeway");
+}
+public void exportToFile( Preferences p, String fileName) throws BackingStoreException {
+try {
+FileOutputStream fos=new FileOutputStream(fileName);
+p.exportSubtree(fos);
+fos.close();
+}
+catch ( IOException ioe) {
+System.out.println("IOException in exportToFile\n" + ioe);
+ioe.printStackTrace();
+}
+}
+public static void main( String args[]){
+PreferenceExample pe=new PreferenceExample();
+Preferences prefsRoot=Preferences.userRoot();
+Preferences myPrefs=prefsRoot.node("PreferenceExample");
+try {
+pe.setSomeProperties(myPrefs);
+pe.printInformation(myPrefs);
+pe.exportToFile(myPrefs,"prefs.xml");
+}
+catch ( BackingStoreException bse) {
+System.out.println("Problem with accessing the backing store\n" + bse);
+bse.printStackTrace();
+}
+}
+}

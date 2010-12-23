@@ -1,0 +1,34 @@
+class BasicUses {
+public static void main( String[] args){
+System.out.println("Average: " + avg(20.3,3.1415,32.3));
+System.out.println("Concatenation: " + concat("Hello"," ","World"));
+System.out.println("Maximum: " + max(30,22.3,-9.3,173.2));
+System.out.println("Minimum: " + min(30,22.3,-9.3,173.2));
+System.out.println("Sum: " + sum(20,30));
+}
+static double avg( double... numbers){
+double total=0;
+for (int i=0; i < numbers.length; i++) total+=numbers[i];
+return total / numbers.length;
+}
+static String concat( String... strings){
+StringBuilder sb=new StringBuilder();
+for (int i=0; i < strings.length; i++) sb.append(strings[i]);
+return sb.toString();
+}
+static double max( double... numbers){
+double maximum=Double.MIN_VALUE;
+for (int i=0; i < numbers.length; i++) if (numbers[i] > maximum) maximum=numbers[i];
+return maximum;
+}
+static double min( double... numbers){
+double minimum=Double.MAX_VALUE;
+for (int i=0; i < numbers.length; i++) if (numbers[i] < minimum) minimum=numbers[i];
+return minimum;
+}
+static int sum( int... numbers){
+int total=0;
+for (int i=0; i < numbers.length; i++) total+=numbers[i];
+return total;
+}
+}

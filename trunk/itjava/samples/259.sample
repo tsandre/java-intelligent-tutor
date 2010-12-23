@@ -1,0 +1,4 @@
+{
+ProcessBuilder processBuilder=new ProcessBuilder(command);
+Map env=processBuilder.environment();
+}
