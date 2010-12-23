@@ -18,6 +18,10 @@
 #tableMeta {
 	width: 800px;
 }
+
+#alternateLaunch {
+	display: none;
+}
 </style>
 
 <script type="text/javascript">
@@ -26,7 +30,8 @@ function launchNext(folderName, deliverableName) {
 	if (launchCounts == 0) {
 		launchCounts++;
 		window.open("delivery/" + folderName + "/" + deliverableName + ".jnlp");
-		document.getElementById("btnLaunch").value = "Next >>";
+		document.getElementById("btnLaunch").value = "Save & Next >>";
+		document.getElementById("alternateLaunch").style.display = 'block';
 		return false;
 	}
 	else {
@@ -34,16 +39,42 @@ function launchNext(folderName, deliverableName) {
 		return true;
 	}
 }
+
+function launchNow(folderName, deliverableName) {
+	window.open("delivery/" + folderName + "/" + deliverableName + ".jnlp");
+	launchCounts = 1;
+}
 </script>
 
 </head>
 
 <body>
 <%
+
+int tutorialInfoId = Integer.parseInt(request.getParameter("id"));
+
+DeliverableLauncher deliverableLauncher = (DeliverableLauncher)session.getAttribute("deliverableLauncher");
+if (deliverableLauncher == null) {
+	response.sendRedirect("studentWelcome.jsp");
+}
+else {
+	deliverableLauncher.setStudentId((Integer)session.getAttribute("studentId"));
+	deliverableLauncher.setTutorialInfoId(tutorialInfoId);
+}
+
 HashMap<String, String> whereClause = new HashMap<String, String>();
-whereClause.put("tutorialId", request.getParameter("id"));
+whereClause.put("tutorialInfoId", Integer.toString(tutorialInfoId));
+session.setAttribute("tutorialInfoId", tutorialInfoId);
 ArrayList<TutorialInfo> tutorialInfoList = TutorialInfoStore.SelectInfo(whereClause);
-String deliverableName = request.getParameter("deliName");
+
+KeyValue<Integer, String> deliveryKeyValue = (KeyValue<Integer, String>)session.getAttribute("deliveryKeyValue");
+int deliverableId = -1;
+String deliverableName = null;
+if (deliveryKeyValue == null) {
+	deliveryKeyValue = deliverableLauncher.GetFirstDeliverableName();
+}
+deliverableId = deliveryKeyValue.getKey();
+deliverableName = deliveryKeyValue.getValue();
 %>
 <form id="formMainTest" method="post" action="DeliverableSelectionServlet">
 <div id="divMainContent">
@@ -56,7 +87,7 @@ if (tutorialInfoList.size() != 1) {
 else {
 	tutorialInfo = tutorialInfoList.get(0);
 	int timesAccessed = tutorialInfo.getTimesAccessed() + 1;
-	TutorialInfoStore.UpdateInfo(Integer.parseInt(request.getParameter("id")), 
+	TutorialInfoStore.UpdateInfo(tutorialInfoId, 
 			new KeyValue<String, String>("timesAccessed", Integer.toString(timesAccessed)));
 	out.println("<tr>");
 	out.print("<td colspan=\"3\" class=\"tdTutorialName\">");
@@ -79,18 +110,17 @@ else {
 	
 }
 String folderName = tutorialInfo.getFolderName();
-String buttonLabel = (deliverableName.equals("0")) ? "Begin Lesson" : "Save & Next" ;
-KeyValue<Integer, String> deliveryKeyValue = DeliverableLauncher.GetFirstDeliverableName(tutorialInfo.getTutorialId());
-deliverableName = (deliverableName.equals("0")) ? deliveryKeyValue.getValue() : deliverableName;
+String buttonLabel = "Begin Lesson";
+
 String disabledLaunch = "";
 if (deliverableName == null) {
 	disabledLaunch = "disabled";
 }
 else {
-	session.setAttribute("deliverableName", deliverableName);
-	session.setAttribute("deliverableId", deliveryKeyValue.getKey());
-	session.setAttribute("tutorialInfoId", tutorialInfo.getTutorialId());
+	session.setAttribute("deliveryKeyValue", deliveryKeyValue);
+	session.setAttribute("tutorialInfoId", tutorialInfoId);
 	session.setAttribute("studentId", 99);
+	session.setAttribute("deliverableLauncher", deliverableLauncher);
 }
 %>
 </tbody></table>
@@ -98,6 +128,9 @@ else {
 <input type="submit" id="btnLaunch" name="btnLaunch" value="<%= buttonLabel%>" 
 	onclick="return launchNext('<%= folderName%>', '<%= deliverableName%>');"
 	<%= disabledLaunch%>/>
+</div>
+<div id="alternateLaunch">
+If you closed the pop-up by mistake, click on this <input type="button" value="button" onclick="return launchNow('<%= folderName%>', '<%= deliverableName%>');"/> to re-take the quiz.
 </div>
 
 </div>
