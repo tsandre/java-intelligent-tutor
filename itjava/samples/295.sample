@@ -1,0 +1,7 @@
+{
+Enumeration entries=jarFile.entries();
+while (entries.hasMoreElements()) {
+ZipEntry entry=(ZipEntry)entries.nextElement();
+System.out.println(entry.getName());
+}
+}

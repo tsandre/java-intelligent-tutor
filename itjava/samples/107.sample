@@ -1,0 +1,92 @@
+package mail;
+import javax.mail.*;
+import java.util.*;
+import java.io.*;
+public class RM {
+private void handle( Message msg) throws Exception {
+System.out.println("Subject: " + msg.getSubject());
+System.out.println("From: " + msg.getFrom()[0].toString());
+System.out.println("Sending date: " + msg.getSentDate());
+}
+private void handleText( Message msg) throws Exception {
+this.handle(msg);
+System.out.println("Content: " + msg.getContent());
+}
+private void handleMultipart( Message msg) throws Exception {
+String disposition;
+BodyPart part;
+System.out.println("Class:" + msg.getContent().getClass().getName());
+System.out.println("Content:" + msg.getContent());
+Multipart mp=(Multipart)msg.getContent();
+int mpCount=mp.getCount();
+for (int m=0; m < mpCount; m++) {
+this.handle(msg);
+part=mp.getBodyPart(m);
+disposition=part.getDisposition();
+if (disposition != null && disposition.equals(Part.ATTACHMENT)) {
+saveAttach(part);
+}
+else {
+System.out.println(part.getContent());
+}
+}
+}
+private void saveAttach( BodyPart part) throws Exception {
+String temp=part.getFileName();
+String fileName=temp;
+System.out.println("File name:" + fileName);
+InputStream in=part.getInputStream();
+FileOutputStream writer=new FileOutputStream(new File("c:\\temp\\" + fileName));
+byte[] content=new byte[255];
+int read=0;
+while ((read=in.read(content)) != -1) {
+writer.write(content);
+}
+writer.close();
+in.close();
+}
+private static String base64Decoder( String s) throws Exception {
+sun.misc.BASE64Decoder decoder=new sun.misc.BASE64Decoder();
+byte[] b=decoder.decodeBuffer(s);
+return (new String(b));
+}
+public void receive( String username, String password){
+String host="127.0.0.1";
+try {
+Properties prop=new Properties();
+prop.put("mail.pop3.host",host);
+Session session=Session.getDefaultInstance(prop);
+session.setDebug(true);
+Store store=session.getStore("pop3");
+store.connect(host,username,password);
+Folder inbox=store.getDefaultFolder().getFolder("INBOX");
+inbox.open(Folder.READ_WRITE);
+Message[] msg=inbox.getMessages();
+FetchProfile profile=new FetchProfile();
+profile.add(FetchProfile.Item.ENVELOPE);
+inbox.fetch(msg,profile);
+String str=msg.toString();
+for (int i=0; i < msg.length; i++) {
+msg[i].setFlag(Flags.Flag.DELETED,true);
+System.out.println("Deleted");
+Message ms=msg[i];
+this.handleMultipart(ms);
+System.out.println("****************************");
+}
+if (inbox != null) {
+inbox.close(true);
+}
+if (store != null) {
+store.close();
+}
+}
+catch ( Exception e) {
+e.printStackTrace();
+}
+}
+public static String Receive(){
+RM cn=new RM();
+cn.receive("username","pass");
+return "OK";
+}
+}

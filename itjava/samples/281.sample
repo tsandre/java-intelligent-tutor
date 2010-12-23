@@ -1,0 +1,6 @@
+public class Test {
+public static void main( String[] args) throws Exception {
+Process p=Runtime.getRuntime().exec("\"c:/program files/windows/notepad.exe\"");
+p.waitFor();
+}
+}

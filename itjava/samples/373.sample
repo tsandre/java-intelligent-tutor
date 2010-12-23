@@ -1,0 +1,10 @@
+public class JAXPExamples {
+public static void main( String argv[]) throws TransformerException, TransformerConfigurationException, IOException, SAXException, ParserConfigurationException, FileNotFoundException {
+}
+public static void basic( String xmlID, String xslID) throws TransformerException, TransformerConfigurationException {
+TransformerFactory tfactory=TransformerFactory.newInstance();
+Transformer transformer=tfactory.newTransformer(new StreamSource(xslID));
+StreamSource source=new StreamSource(xmlID);
+transformer.transform(source,new StreamResult(System.out));
+}
+}

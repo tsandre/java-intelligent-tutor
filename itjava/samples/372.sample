@@ -1,0 +1,27 @@
+class XMLDefaultHandler extends DefaultHandler {
+public void XMLDefaultHandler(){
+}
+public void startElement( String uri, String localName, String qName, Attributes atts) throws SAXException {
+System.out.println("ELEMENT Qualified Name:" + qName);
+System.out.println("ELEMENT Local Name :" + localName);
+System.out.println("ELEMENT Namespace :" + uri);
+for (int i=0; i < atts.getLength(); i++) {
+qName=atts.getQName(i);
+localName=atts.getLocalName(i);
+uri=atts.getURI(i);
+System.out.println(" ATTRIBUTE Qualified Name :" + qName);
+System.out.println(" ATTRIBUTE Local Name :" + localName);
+System.out.println(" ATTRIBUTE Namespace :" + uri);
+String type=atts.getType(qName);
+String value=atts.getValue(qName);
+System.out.println(" ATTRIBUTE Type :" + type);
+System.out.println(" ATTRIBUTE Value :" + value);
+System.out.println();
+}
+}
+public void endElement( String uri, String localName, String qName) throws SAXException {
+System.out.println("ELEMENT Qualified Name:" + qName);
+System.out.println("ELEMENT Local Name :" + localName);
+System.out.println("ELEMENT Namespace :" + uri);
+}
+}

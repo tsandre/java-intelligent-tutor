@@ -1,0 +1,4 @@
+{
+InitialContext ctx=new InitialContext();
+NamingEnumeration namingEnum=ctx.list("");
+}

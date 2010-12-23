@@ -1,0 +1,6 @@
+{
+FileInputStream f=new FileInputStream(name);
+int b;
+long checkSum=0L;
+while ((b=f.read()) != -1) checkSum+=b;
+}

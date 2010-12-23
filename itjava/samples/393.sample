@@ -1,0 +1,6 @@
+{
+StringWriter sw=new StringWriter();
+PrintWriter pw=new PrintWriter(sw);
+doc.print(pw);
+String YourDocInString=sw.toString();
+}

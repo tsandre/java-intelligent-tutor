@@ -1,0 +1,5 @@
+{
+int BUFFER=2048;
+FileOutputStream fos=newFileOutputStream(entry.getName());
+BufferedOutputStream dest=newBufferedOutputStream(fos,BUFFER);
+}

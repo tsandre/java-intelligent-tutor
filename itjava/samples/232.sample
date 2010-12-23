@@ -1,0 +1,34 @@
+package net.viralpatel.java;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.ResourceBundle;
+public class LoadPropertiesExample {
+private Properties configProp=new Properties();
+public static void main( String[] args){
+LoadPropertiesExample sample=new LoadPropertiesExample();
+sample.loadProps2();
+sample.sayHello();
+}
+public void loadProps1(){
+InputStream in=this.getClass().getResourceAsStream("/net/viralpatel/resources/config.properties");
+try {
+configProp.load(in);
+}
+catch ( IOException e) {
+e.printStackTrace();
+}
+}
+public void loadProps2(){
+InputStream in=this.getClass().getClassLoader().getResourceAsStream("net/viralpatel/resources/config.properties");
+try {
+configProp.load(in);
+}
+catch ( IOException e) {
+e.printStackTrace();
+}
+}
+public void sayHello(){
+System.out.println(configProp.getProperty("hello.world"));
+}
+}

@@ -1,0 +1,35 @@
+public class EnumerationAdapter {
+{
+}
+private EnumerationMethod m_Method;
+public EnumerationAdapter( EnumerationMethod method){
+if (method == null) throw new ArgumentException();
+m_Method=method;
+}
+public IEnumerator GetEnumerator(){
+return new EnumerationWrapper(m_Method);
+}
+public delegate bool;
+void FilterEntryMethod( ZipEntry e){
+}
+public class ZipUtils {
+public static void CopyStream( java.io.InputStream from, java.io.OutputStream to){
+sbyte[] buffer=new sbyte[8192];
+int got;
+while ((got=from.read(buffer,0,buffer.Length)) > 0) to.write(buffer,0,got);
+}
+public static void ExtractZipFile( ZipFile file, string path, FilterEntryMethod filter){
+}
+public static ZipFile CreateEmptyZipFile( string fileName){
+new ZipOutputStream(newjava.io.FileOutputStream(fileName)).close();
+return new ZipFile(fileName);
+}
+public static ZipFile UpdateZipFile( ZipFile file, FilterEntryMethod filter, string[] newFiles){
+}
+public static void CopyEntries( ZipFile from, ZipOutputStream to){
+CopyEntries(from,to,null);
+}
+public static void CopyEntries( ZipFile from, ZipOutputStream to, FilterEntryMethod filter){
+}
+}
+}

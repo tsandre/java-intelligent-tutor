@@ -1,0 +1,43 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+public class LoadText extends JFrame {
+private static final long serialVersionUID=1L;
+JTextArea m_textArea;
+public LoadText() throws IOException {
+super("File I/O");
+m_textArea=new JTextArea();
+m_textArea.setEditable(false);
+JScrollPane sc=new JScrollPane(m_textArea);
+getContentPane().setLayout(new BorderLayout(10,10));
+getContentPane().add(BorderLayout.NORTH,new JLabel("Loaded text from file : test.txt"));
+getContentPane().add(BorderLayout.CENTER,sc);
+loadtext();
+}
+private void loadtext() throws IOException {
+File f=new File("C:\\test.txt");
+FileReader fr=new FileReader(f);
+BufferedReader br=new BufferedReader(fr);
+StringBuffer sb=new StringBuffer();
+String eachLine=br.readLine();
+while (eachLine != null) {
+sb.append(eachLine);
+sb.append("\n");
+eachLine=br.readLine();
+}
+m_textArea.setText(sb.toString());
+}
+public static void main( String[] arg) throws IOException {
+LoadText m=new LoadText();
+m.setVisible(true);
+m.setSize(new Dimension(400,300));
+m.validate();
+}
+}

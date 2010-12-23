@@ -1,0 +1,7 @@
+{
+XMLDocument doc1=new XMLDocument();
+XMLElement element1=doc1.createElement("person");
+XMLDocument doc2=new XMLDocument();
+XMLElement element2=doc2.createElement("firstname");
+element1.appendChild(element2);
+}

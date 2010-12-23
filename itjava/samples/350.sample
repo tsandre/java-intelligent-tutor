@@ -1,0 +1,4 @@
+{
+NodeSet nodes=(NodeSet)xPath.evaluate(expression,inputSource,XPathConstants.NODESET);
+NodeList nodeList=(NodeList)nodes;
+}

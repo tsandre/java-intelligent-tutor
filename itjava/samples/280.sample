@@ -1,0 +1,5 @@
+public class ShowPDF {
+public static void main( String[] args) throws Exception {
+Process p=Runtime.getRuntime().exec("open /Documents/mypdf.pdf");
+}
+}

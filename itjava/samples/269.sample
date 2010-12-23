@@ -1,0 +1,21 @@
+package examples.forkingjavaprocesses;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+public class HelloWorldServer {
+private ServerSocket server;
+private Socket client;
+private BufferedReader in;
+private PrintWriter out;
+private String line;
+private int listenerPort;
+public HelloWorldServer( int listenerPort){
+}
+public void startListening(){
+}
+public static void main( String[] args){
+}
+}

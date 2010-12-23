@@ -1,0 +1,4 @@
+{
+SaferExec se=new SaferExec();
+String result=se.exec("dir /W *.java");
+}

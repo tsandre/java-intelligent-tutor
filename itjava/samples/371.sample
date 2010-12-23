@@ -1,0 +1,6 @@
+{
+parser.setContentHandler(defHandler);
+parser.setEntityResolver(defHandler);
+parser.setDTDHandler(defHandler);
+parser.setErrorHandler(defHandler);
+}

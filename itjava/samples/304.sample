@@ -1,0 +1,20 @@
+public static class CompressedURL {
+private URL mURL=null;
+private String mCompression=null;
+public CompressedURL( URL url){
+mURL=url;
+}
+public String getCompression(){
+return mCompression;
+}
+public void InputStreamgetCompressedStream(){
+HttpURLConnection conn=(HttpURLConnection)mURL.openConnection();
+conn.setRequestProperty("Accept-Encoding",compression);
+conn.connect();
+mCompression=conn.getContentEncoding();
+if (mCompression == null) {
+mCompression="";
+}
+return conn.getInputStream();
+}
+}

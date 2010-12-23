@@ -1,0 +1,4 @@
+{
+String flag1=System.getProperties().getProperty("flag1.key");
+String flag2=System.getProperties().getProperty("flag2.key");
+}

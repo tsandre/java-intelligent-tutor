@@ -1,0 +1,47 @@
+import java.net._import;
+class CrawlerJob {
+class FutureInfo {
+{
+}
+def url(){
+}
+def out(){
+}
+private var futures=new scala.collection.immutable.Stack[java.util.concurrent.Future[FutureInfo]];
+private val executor=Executors.newCachedThreadPool();
+class UrlFetcher {
+{
+}
+def call(){
+}
+out write(){
+}
+in.closenew FutureInfo(){
+}
+}
+def act(){
+}
+void println( e getMessage){
+}
+}
+{
+}
+def crawl(){
+}
+def handle(){
+}
+link startsWith(){
+}
+link startsWith(){
+}
+link startsWith(){
+}
+link contains(){
+}
+{
+}
+{
+}
+private def crawlable(){
+}
+}

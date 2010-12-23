@@ -1,0 +1,6 @@
+{
+parser.setDocumentHandler(sample);
+parser.setEntityResolver(sample);
+parser.setDTDHandler(sample);
+parser.setErrorHandler(sample);
+}

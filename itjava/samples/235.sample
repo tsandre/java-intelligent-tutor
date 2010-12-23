@@ -1,0 +1,23 @@
+package org.kodejava.example.util;
+import java.util.*;
+public class ResourceBundleToProperties {
+public static void main( String[] args){
+ResourceBundle resource=ResourceBundle.getBundle("Messages",Locale.UK);
+Properties properties=convertResourceBundleToProperties(resource);
+Enumeration keys=properties.keys();
+while (keys.hasMoreElements()) {
+String key=(String)keys.nextElement();
+String value=(String)properties.get(key);
+System.out.println(key + " = " + value);
+}
+}
+private static Properties convertResourceBundleToProperties( ResourceBundle resource){
+Properties properties=new Properties();
+Enumeration<String> keys=resource.getKeys();
+while (keys.hasMoreElements()) {
+String key=keys.nextElement();
+properties.put(key,resource.getString(key));
+}
+return properties;
+}
+}

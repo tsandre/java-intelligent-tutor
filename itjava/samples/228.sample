@@ -1,0 +1,5 @@
+{
+Properties defaultProps=new Properties();
+defaultProps.setProperty("sourceFile","");
+defaultProps.serProperty("enableScrolling","false");
+}

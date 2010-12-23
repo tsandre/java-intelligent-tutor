@@ -1,0 +1,4 @@
+{
+FileOutputStream dest=newFileOutputStream("myfigs.zip");
+ZipOutputStream out=newZipOutputStream(new BufferedOutputStream(dest));
+}

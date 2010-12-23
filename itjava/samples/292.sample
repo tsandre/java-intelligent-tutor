@@ -1,0 +1,5 @@
+{
+ZipFile zip=new ZipFile("afile.zip");
+ZipEntry entry=zip.getEntry("anEntry.name");
+InputStream is=zip.getInputStream(entry);
+}

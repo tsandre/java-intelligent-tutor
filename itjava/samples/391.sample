@@ -1,0 +1,5 @@
+{
+DOMParser parser=new DOMParser();
+parser.setPreserveWhitespace(true);
+parser.parse(istr);
+}

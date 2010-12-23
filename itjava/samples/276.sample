@@ -1,0 +1,4 @@
+{
+String[] cmd={"/bin/sh","-c","ls > hello"};
+Runtime.getRuntime().exec(cmd);
+}

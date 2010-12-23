@@ -1,0 +1,7 @@
+{
+String uri="http://www.j2medeveloper.com/xmldocument.xml";
+InputStream inputStream=getXMLDoc(uri);
+InputSource inputSource=new InputSource(inputStream);
+MyEventHandler=new MyEventHandler();
+saxParser.parse(inputSource,myEventHandler);
+}

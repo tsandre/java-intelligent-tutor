@@ -1,0 +1,4 @@
+{
+ContentHandler contentHandler=new oraContentHandler();
+reader.setContentHandler(contentHandler);
+}

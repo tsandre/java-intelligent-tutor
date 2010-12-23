@@ -1,0 +1,4 @@
+{
+InetAddress inet=InetAddress.getByName("www.davidreilly.com");
+System.out.println("IP : " + inet.getHostAddress());
+}

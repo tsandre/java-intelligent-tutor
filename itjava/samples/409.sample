@@ -1,0 +1,4 @@
+{
+var w=frame.getWindow();
+GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(w);
+}

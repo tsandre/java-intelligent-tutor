@@ -1,0 +1,12 @@
+package javaxml3;
+import java.io.FileReader;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+public class GuestList {
+public static void main( String[] args) throws Exception {
+}
+}

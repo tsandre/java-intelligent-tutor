@@ -1,0 +1,7 @@
+{
+Iterator iter=nodeList.iterator();
+while (iter.hasNext()) {
+org.jdom.Element element=(org.jdom.Element)iter.next();
+element.setAttribute("section","Java Technology");
+}
+}

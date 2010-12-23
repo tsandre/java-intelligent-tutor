@@ -1,0 +1,6 @@
+{
+String xml="<person><first>" + firstname + "</first>"+ "<last>"+ lastname+ "</last></person>";
+DOMParser d=new DOMParser();
+d.parse(new StringReader(xml));
+Document xmldoc=d.getDocument();
+}

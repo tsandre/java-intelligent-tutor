@@ -1,0 +1,6 @@
+{
+System.out.print("The elements are: ");
+printElements(doc);
+System.out.println("The attributes of each element are: ");
+printElementAttributes(doc);
+}

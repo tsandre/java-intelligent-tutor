@@ -1,0 +1,5 @@
+{
+parser.setContentHandler(cxml);
+parser.setEntityResolver(cxml);
+parser.setValidationMode(XMLConstants.NONVALIDATING);
+}

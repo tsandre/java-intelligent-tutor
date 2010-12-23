@@ -1,0 +1,4 @@
+{
+serializedDoc.readExternal(ois);
+serializedDoc.print(System.out);
+}
