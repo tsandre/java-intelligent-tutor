@@ -41,4 +41,12 @@
     <servlet-name>SaveSelectionsServlet</servlet-name>
     <url-pattern>/SaveSelectionsServlet</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>DeliverableSelectionServlet</servlet-name>
+    <servlet-class>itjava.view.DeliverableSelectionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeliverableSelectionServlet</servlet-name>
+    <url-pattern>/DeliverableSelectionServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
