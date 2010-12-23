@@ -29,7 +29,7 @@ public class TutorialInfoSQL {
 			java.sql.Statement stat = conn.createStatement();
 			stat.executeUpdate("drop table if exists TutorialInfo;");
 			stat.executeUpdate("create table TutorialInfo " +
-					"(tutorialId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					"(tutorialInfoId INTEGER PRIMARY KEY AUTOINCREMENT, " +
 					"folderName varchar(50)," +
 					"tutorialName varchar(50)," +
 					"tutorialDescription varchar(200) default \" \"," +
@@ -44,7 +44,7 @@ public class TutorialInfoSQL {
 			conn.setAutoCommit(true);
 			ResultSet rs = stat.executeQuery("select * from TutorialInfo;");
 			while (rs.next()) {
-				System.out.println("TutorialId = " + rs.getString("tutorialId"));
+				System.out.println("TutorialInfoId = " + rs.getString("tutorialInfoId"));
 				System.out.println("folderName = " + rs.getString("folderName"));
 			}
 			rs.close();
