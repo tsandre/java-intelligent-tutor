@@ -42,7 +42,7 @@ public class TutorialInfoStore {
 	 */
 	public static int InsertInfo(TutorialInfo tutorialInfo) {
 		Connection _conn = null;
-		int tutorialId = -1;
+		int tutorialInfoId = -1;
 		try{	
 			_conn = GetConnection();
 			System.out.println("Current tutorialInfo folderName : " + tutorialInfo.getFolderName());
@@ -60,7 +60,7 @@ public class TutorialInfoStore {
 			insertStmt.executeUpdate();
 			ResultSet rs = insertStmt.getGeneratedKeys();
 			rs.next();
-			tutorialId = rs.getInt(1);
+			tutorialInfoId = rs.getInt(1);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -72,7 +72,7 @@ public class TutorialInfoStore {
 				e.printStackTrace();
 			}
 		}
-		return tutorialId;
+		return tutorialInfoId;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class TutorialInfoStore {
 			PreparedStatement selectStmt = _conn.prepareStatement(selectSql);
 			ResultSet result = selectStmt.executeQuery();
 			while (result.next()) {
-				int tutorialId = result.getInt("tutorialId");
+				int tutorialInfoId = result.getInt("tutorialInfoId");
 				String folderName = result.getString("folderName");
 				String tutorialName = result.getString("tutorialName");
 				String tutorialDescription = result.getString("tutorialDescription");
@@ -115,7 +115,7 @@ public class TutorialInfoStore {
 				String creationDate = result.getString("creationDate");
 				String createdBy = result.getString("createdBy");
 				int timesAccessed = result.getInt("timesAccessed");
-				tutorialInfoList.add(new TutorialInfo(tutorialId, folderName, tutorialName, 
+				tutorialInfoList.add(new TutorialInfo(tutorialInfoId, folderName, tutorialName, 
 						tutorialDescription, numExamples, numQuizes, creationDate, 
 						createdBy, timesAccessed));
 			}
@@ -146,7 +146,7 @@ public class TutorialInfoStore {
 		try {
 			conn = GetConnection();
 			String updateSql = "update TutorialInfo set " + keyValuePair.getKey() + "=" + quotes + keyValuePair.getValue() + quotes + " " +
-					"where tutorialId = ?";
+					"where tutorialInfoId = ?";
 			PreparedStatement stmt = conn.prepareStatement(updateSql);
 			stmt.setInt(1, tutorialInfoId);
 			int rowsUpdated = stmt.executeUpdate();

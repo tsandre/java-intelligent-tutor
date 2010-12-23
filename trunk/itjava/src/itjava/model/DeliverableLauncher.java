@@ -3,6 +3,7 @@
  */
 package itjava.model;
 
+import itjava.data.Scores;
 import itjava.db.DBConnection;
 import itjava.util.KeyValue;
 
@@ -12,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -22,12 +24,21 @@ import java.util.TreeMap;
  *
  */
 public class DeliverableLauncher {
+	
+	private int _studentId;
+	private int _tutorialInfoId;
+	private HashMap<Integer, Integer> _deliveredHistory;
+	
+	public DeliverableLauncher() {
+		_deliveredHistory = new HashMap<Integer, Integer>();
+	}
+	
 	/**
 	 * Finds the easiest of the deliverables available corresponding to the tutorialId passes as parameter
 	 * @param tutorialId Primary key of the {@link TutorialInfo}
 	 * @return < id, Name> of the deliverable resource.
 	 */
-	public static KeyValue<Integer,String> GetFirstDeliverableName(int tutorialId) {
+	public KeyValue<Integer,String> GetFirstDeliverableName() {
 		Connection conn = null;
 		String deliverableName = null;
 		int deliverableId = -1;
@@ -35,10 +46,10 @@ public class DeliverableLauncher {
 		try {
 			 conn = DBConnection.GetConnection();
 			 String getFirstSql = "select min(deliverableName), deliverableId from DeliverableInfo " + 
-			 	"where tutorialInfoId = ? " +
+			 	" where tutorialInfoId = ? " +
 			 	" and deliverableType = ?";
 			 PreparedStatement selectStmt = conn.prepareStatement(getFirstSql);
-			 selectStmt.setInt(1, tutorialId);
+			 selectStmt.setInt(1, this._tutorialInfoId);
 			 selectStmt.setString(2, "Example");
 			 
 			 ResultSet rs = selectStmt.executeQuery();
@@ -47,9 +58,14 @@ public class DeliverableLauncher {
 				 deliverableId = rs.getInt(2);
 			 }
 			 else {
-				 selectStmt.setInt(1, tutorialId);
+				 getFirstSql += " and difficultyLevel = " +
+				 		"(select min(difficultyLevel) from DeliverableInfo where tutorialInfoId = ?" +
+				 		" and deliverableType = ?)";
+				 selectStmt = conn.prepareStatement(getFirstSql);
+				 selectStmt.setInt(1, this._tutorialInfoId);
 				 selectStmt.setString(2, "Quiz");
-				 //TODO: Add to whereclause : min(difficultylevel)
+				 selectStmt.setInt(3, this._tutorialInfoId);
+				 selectStmt.setString(4, "Quiz");
 				 
 				 rs = selectStmt.executeQuery();
 				 if (rs.next()) {
@@ -57,7 +73,7 @@ public class DeliverableLauncher {
 					 deliverableId = rs.getInt(2);
 				 }
 				 else {
-					 System.err.println("0 tuples for TutorialInfoId : " + tutorialId);	 
+					 System.err.println("0 tuples for TutorialInfoId : " + this._tutorialInfoId);	 
 				 }
 			 }
 			 
@@ -78,21 +94,82 @@ public class DeliverableLauncher {
 		return new KeyValue<Integer, String>(deliverableId, deliverableName);
 	}
 
-	public static void SetScore(int studentId, int deliverableId, int score) {
-		Connection conn = null;
-		try {
-			conn = DBConnection.GetConnection();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				DBConnection.CloseConnection(conn);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+	/**
+	 * Saves the score for the corresponding deliverableId in the database
+	 * and in the current object.
+	 * @param deliverableId
+	 * @param score
+	 * @return primary key of the table Scores corresponding to the current entry.
+	 */
+	public int SetScore(int deliverableId, int score) {
+		_deliveredHistory.put(deliverableId, score);
+		Scores scores = new Scores();
+		scores.setScore(score);
+		scores.setDeliverableId(deliverableId);
+		scores.setStudentId(_studentId);
+		return ScoresStore.InsertScores(scores);
+	}
+
+	/**
+	 * Depending upon the currently delivered resources, and the latest score, 
+	 * decide the next deliverable.
+	 * @return
+	 */
+	public KeyValue<Integer, String> GetNextDeliverableName(int deliverableId, int scoreId) {
+		
+		
+		int score;
+		if (!_deliveredHistory.containsKey(deliverableId)) {
+			HashMap<String, String> whereClause = new HashMap<String, String>();
+			whereClause.put("scoreId", Integer.toString(scoreId));
+			score = (Integer) ScoresStore.Select("score", whereClause).get(0);
+		}
+		else {
+			score = _deliveredHistory.get(deliverableId);
 		}
 		
+		// if score is less than 50, then show an example that is not present in _delivered
+		if (score <= 50) {
+			
+		}
+		// if score is 100 (that means last deliverable was either example or successful quiz)
+		//		then deliver quiz with difficulty level higher than current one. 
+		else if (score >= 100) {
+			
+		}
+		// if 50 < score < 100 , 
+		//		then deliver quiz with difficulty level same as current one, if not available then next level.
+		else {
+			
+		}
+		return null;
+	}
+
+	/**
+	 * @return the studentId
+	 */
+	public int getStudentId() {
+		return _studentId;
+	}
+
+	/**
+	 * @param studentId the studentId to set
+	 */
+	public void setStudentId(int studentId) {
+		_studentId = studentId;
+	}
+
+	/**
+	 * @return the tutorialInfoId
+	 */
+	public int getTutorialInfoId() {
+		return _tutorialInfoId;
+	}
+
+	/**
+	 * @param tutorialInfoId the tutorialInfoId to set
+	 */
+	public void setTutorialInfoId(int tutorialInfoId) {
+		_tutorialInfoId = tutorialInfoId;
 	}
 }
