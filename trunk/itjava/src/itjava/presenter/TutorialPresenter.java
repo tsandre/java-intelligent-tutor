@@ -27,7 +27,7 @@ private TutorialStore _tutorialStore;
 	/**
 	 * Accepts a List<> of {@link Tutorial} approved by the user and creates the CTAT-ready GUI file (i.e. tutorialName.java)
 	 * Then compiles the .java file to create a .class file. Calls required routines to generate .brd file for each tutorial.
-	 *  
+	 * And finally, deploys the CTAT tutor as web-start ready files.
 	 * @param approvedTutorialList
 	 * @return List of CTAT ready tutorials.
 	 */

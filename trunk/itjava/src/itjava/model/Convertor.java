@@ -1,9 +1,14 @@
 package itjava.model;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringReader;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class Convertor {
@@ -95,6 +100,29 @@ public class Convertor {
 			_linesOfCode.add(line.trim().replace("\n", ""));
 		}
 		return _linesOfCode;
+	}
+	
+	public static void copyFile(File sourceFile, File destFile) throws IOException {
+		if (!sourceFile.exists()) {
+			return;
+		}
+		if (!destFile.exists()) {
+			destFile.createNewFile();
+		}
+		FileChannel source = null;
+		FileChannel destination = null;
+		source = new FileInputStream(sourceFile).getChannel();
+		destination = new FileOutputStream(destFile).getChannel();
+		if (destination != null && source != null) {
+			destination.transferFrom(source, 0, source.size());
+		}
+		if (source != null) {
+			source.close();
+		}
+		if (destination != null) {
+			destination.close();
+		}
+
 	}
 
 }

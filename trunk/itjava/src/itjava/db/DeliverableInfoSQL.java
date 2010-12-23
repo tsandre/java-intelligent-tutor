@@ -12,10 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * @author student
+ * @author Aniket
  * 
  */
-public class DocumentsSQL {
+public class DeliverableInfoSQL {
 
 	/**
 	 * @param args
@@ -27,13 +27,21 @@ public class DocumentsSQL {
 			conn = DriverManager
 					.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
 			java.sql.Statement stat = conn.createStatement();
-			stat.executeUpdate("drop table if exists Documents;");
-			stat.executeUpdate("create table Documents (fileName INTEGER PRIMARY KEY AUTOINCREMENT, url varchar(100));");
+			stat.executeUpdate("drop table if exists DeliverableInfo;");
+			stat.executeUpdate("create table DeliverableInfo (" +
+					" deliverableId integer primary key autoincrement," +
+					" deliverableName varchar(15)," +
+					" tutorialInfoId integer references TutorialInfo(tutorialId)," +
+					" deliverableType char(7)," + 
+					" difficultyLevel integer," +
+					" numOfBlanks integer, " +
+					" constraint uniqDeliverableInfo unique(deliverableName, tutorialInfoId) " +
+					" );");
 			conn.setAutoCommit(true);
-			ResultSet rs = stat.executeQuery("select * from Documents;");
+			ResultSet rs = stat.executeQuery("select * from DeliverableInfo;");
 			while (rs.next()) {
-				System.out.println("FileName = " + rs.getString("fileName"));
-				System.out.println("URL = " + rs.getString("url"));
+				System.out.println("DeliverableName = " + rs.getString("deliverableName"));
+				System.out.println("TutorialId = " + rs.getString("tutorialInfoId"));
 			}
 			rs.close();
 		} catch (Exception e) {

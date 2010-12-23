@@ -4,6 +4,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -215,6 +219,50 @@ public class TutorialStore {
 			}			
 		}
 		}
+	}
+	
+	/**
+	 * Stores the statistical information of a {@link Tutorial} to database
+	 * @param tutorialList List of tutorials to be stored
+	 * @param tutorialInfoId The corresponding foreign key.
+	 * @return Number of rows inserted.
+	 */
+	public static int InsertDeliverableInfo(ArrayList<Tutorial> tutorialList, int tutorialInfoId) {
+		Connection conn = null;
+		int rowsInserted = 0;
+		try {
+			conn = GetConnection();
+			for (Tutorial tutorial : tutorialList) {
+				String insertSql = "insert into DeliverableInfo" +
+						"(deliverableName, tutorialInfoId, deliverableType, difficultyLevel, numOfBlanks)" +
+						" values (?,?,?,?,?)";
+				PreparedStatement insertStmt = conn.prepareStatement(insertSql);
+				insertStmt.setString(1, tutorial.getTutorialName());
+				insertStmt.setInt(2, tutorialInfoId);
+				insertStmt.setString(3, tutorial.getType());
+				insertStmt.setInt(4, tutorial.getDifficulty());
+				insertStmt.setInt(5, tutorial.getWordInfoList().size());
+				rowsInserted += insertStmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				CloseConnection(conn);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return rowsInserted;
+	}
+	
+	private static Connection GetConnection() throws Exception {
+		Class.forName("org.sqlite.JDBC");
+		return DriverManager.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
+	}
+	private static void CloseConnection(Connection conn) throws SQLException {
+		conn.close();
 	}
 
 }

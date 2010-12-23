@@ -3,6 +3,8 @@
  */
 package itjava.db;
 
+import itjava.data.LocalMachine;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,19 +25,21 @@ public class TutorialInfoSQL {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager
-					.getConnection("jdbc:sqlite:samples/itjava.db");
+					.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
 			java.sql.Statement stat = conn.createStatement();
 			stat.executeUpdate("drop table if exists TutorialInfo;");
 			stat.executeUpdate("create table TutorialInfo " +
 					"(tutorialId INTEGER PRIMARY KEY AUTOINCREMENT, " +
 					"folderName varchar(50)," +
 					"tutorialName varchar(50)," +
-					"tutorialDescription varchar(200)," +
-					"numExamples integer," +
-					"numQuizes integer," +
-					"creationDate Date," +
-					"createdBy integer," +
-					"timesAccessed integer" +
+					"tutorialDescription varchar(200) default \" \"," +
+					"numExamples integer default 0," +
+					"numQuizes integer default 0," +
+					"creationDate Date default CURRENT_DATE," +
+					"createdBy varchar(20) default \"testuser\"," +
+					"timesAccessed integer default 0," +
+					"constraint uniqTutorialInfo_folderNameCreatedBy unique(folderName, createdBy) " +
+					"on conflict replace" +
 					");");
 			conn.setAutoCommit(true);
 			ResultSet rs = stat.executeQuery("select * from TutorialInfo;");

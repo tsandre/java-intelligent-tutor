@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Tutorial {
 	private String _tutorialName;
 	private String _readableName;
+	private String _type;
 	public String tutorialCode = "";
 	private ArrayList<WordInfo> wordInfoList;
 	private ArrayList<String> linesOfCode;
@@ -101,6 +102,12 @@ public class Tutorial {
 	}
 	public int getDifficulty() {
 		return this.difficultyLevel;
+	}
+	public void setType(String type) {
+		this._type = type;
+	}
+	public String getType() {
+		return this._type;
 	}
 
 }

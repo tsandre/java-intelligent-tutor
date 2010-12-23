@@ -3,6 +3,8 @@
  */
 package itjava.db;
 
+import itjava.data.LocalMachine;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,7 +23,7 @@ public class SuperTypeTermsSQL {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager
-					.getConnection("jdbc:sqlite:samples/itjava.db");
+					.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
 			java.sql.Statement stat = conn.createStatement();
 			stat.executeUpdate("drop table if exists SuperTypeTerms;");
 			stat.executeUpdate("create table SuperTypeTerms (term varchar(30)  PRIMARY KEY DESC, numOccurrences int);");
