@@ -31,17 +31,17 @@ public class DeliverableInfoSQL {
 			stat.executeUpdate("create table DeliverableInfo (" +
 					" deliverableId integer primary key autoincrement," +
 					" deliverableName varchar(15)," +
-					" tutorialInfoId integer references TutorialInfo(tutorialId)," +
+					" tutorialInfoId integer references TutorialInfo(tutorialInfoId)," +
 					" deliverableType char(7)," + 
-					" difficultyLevel integer," +
-					" numOfBlanks integer, " +
+					" difficultyLevel integer default 0," +
+					" numOfBlanks integer default 0, " +
 					" constraint uniqDeliverableInfo unique(deliverableName, tutorialInfoId) " +
 					" );");
 			conn.setAutoCommit(true);
 			ResultSet rs = stat.executeQuery("select * from DeliverableInfo;");
 			while (rs.next()) {
 				System.out.println("DeliverableName = " + rs.getString("deliverableName"));
-				System.out.println("TutorialId = " + rs.getString("tutorialInfoId"));
+				System.out.println("TutorialInfoId = " + rs.getString("tutorialInfoId"));
 			}
 			rs.close();
 		} catch (Exception e) {
