@@ -4,10 +4,14 @@ import itjava.data.LogData;
 import itjava.model.DeliverableInfoStore;
 import itjava.model.DeliverableLauncher;
 import itjava.model.LogDataStore;
+import itjava.util.KeyValue;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,13 +43,13 @@ public class DeliverableSelectionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		Date testDate;
-		Float score;
-		int deliverableId = (Integer) session.getAttribute("deliverableId");
+		KeyValue<Integer, String> deliveryKeyValue = (KeyValue<Integer, String>) session.getAttribute("deliveryKeyValue");
+		DeliverableLauncher deliverableLauncher = (DeliverableLauncher) session.getAttribute("deliverableLauncher");
 		int studentId = (Integer) session.getAttribute("studentId");
+		int tutorialInfoId = (Integer) session.getAttribute("tutorialInfoId");
 		HashMap<String, Integer> whereClause = new HashMap<String, Integer>();
-		whereClause.put("deliverableId", deliverableId);
-		int numOfBlanks = (Integer) DeliverableInfoStore.Select("numOfBlanks", whereClause);
+		whereClause.put("deliverableId", deliveryKeyValue.getKey());
+		int numOfBlanks = (Integer)(DeliverableInfoStore.Select("numOfBlanks", whereClause).get(0));
 		LogData logData = null;
 		try {
 			logData = LogDataStore.CreateLogData(numOfBlanks, null);
@@ -54,10 +58,9 @@ public class DeliverableSelectionServlet extends HttpServlet {
 			System.err.println("Problem creating log data");
 		}
 		
-		DeliverableLauncher.SetScore(studentId, deliverableId, logData.getScore());
-		String deliverableName = null;
-		String tutorialInfoId = null;
-		String nextPage = "studentMainTest.jsp?id=" + tutorialInfoId  + "&deliName=" + deliverableName;
+		int scoreId = deliverableLauncher.SetScore(deliveryKeyValue.getKey(), logData.getScore());
+		deliveryKeyValue = deliverableLauncher.GetNextDeliverableName(deliveryKeyValue.getKey(), scoreId);
+		String nextPage = "studentMainTest.jsp?id=" + tutorialInfoId  + "&deliName=" + deliveryKeyValue.getValue();
 	}
 
 }
