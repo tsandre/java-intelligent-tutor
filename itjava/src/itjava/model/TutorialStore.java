@@ -241,7 +241,7 @@ public class TutorialStore {
 				insertStmt.setInt(2, tutorialInfoId);
 				insertStmt.setString(3, tutorial.getType());
 				insertStmt.setInt(4, tutorial.getDifficulty());
-				insertStmt.setInt(5, tutorial.getWordInfoList().size());
+				insertStmt.setInt(5, (tutorial.getWordInfoList() == null) ? 0 : tutorial.getWordInfoList().size());
 				rowsInserted += insertStmt.executeUpdate();
 			}
 		} catch (Exception e) {

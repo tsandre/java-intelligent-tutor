@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -18,9 +19,9 @@ import java.util.Map.Entry;
  */
 public class DeliverableInfoStore {
 
-	public static Object Select(String attribute, HashMap<String, Integer> whereClause) {
+	public static ArrayList<Object> Select(String attribute, HashMap<String, Integer> whereClause) {
 		Connection conn = null;
-		Object retValue = null;
+		ArrayList<Object> retValue = null;
 		try {
 			conn = DBConnection.GetConnection();
 			String selectSql = "select ? from deliverableInfo";
@@ -35,8 +36,8 @@ public class DeliverableInfoStore {
 			PreparedStatement selectStmt = conn.prepareStatement(selectSql);
 			selectStmt.setString(1, attribute);
 			ResultSet rs = selectStmt.executeQuery();
-			if (rs.next()) {
-				retValue = rs.getObject(1);
+			while (rs.next()) {
+				retValue.add(rs.getObject(1));
 			}
 			
 		} catch (ClassNotFoundException e) {

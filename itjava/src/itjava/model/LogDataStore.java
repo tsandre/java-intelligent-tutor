@@ -37,12 +37,14 @@ public class LogDataStore {
 	private final static int INCORRECT_WEIGHT = 10;
 
 	public static LogData CreateLogData(int numOfBlanks, Concordance<String> hintsAvailable) throws IOException, ParserConfigurationException, SAXException {
-		LogData logData = new LogData(numOfBlanks);
-		logData.hintsAvailable = hintsAvailable;
-		if (!VerifyLogFileAndRename(System.getProperty("user.name"))) throw new IOException("Problem locating raw log file");
-		ConvertToXml();
-		ProcessXmlToLogData(logData);
-		CalculateScore(numOfBlanks, logData);
+		LogData logData = new LogData(numOfBlanks);		
+		if (numOfBlanks > 0) {
+			logData.hintsAvailable = hintsAvailable;
+			if (!VerifyLogFileAndRename(System.getProperty("user.name"))) throw new IOException("Problem locating raw log file");
+			ConvertToXml();
+			ProcessXmlToLogData(logData);
+			CalculateScore(numOfBlanks, logData);
+		}
 		return logData;
 	}
 
