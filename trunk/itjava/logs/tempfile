@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?><root><log_session_start auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:17.00738" timezone="US/Eastern" class_id="" treatment_id="" assignment_id="" info_type="" /><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:17.00690" timezone="US/Eastern" action_id="tool_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tool_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7fbd" name="ATTEMPT" />
+	<event_descriptor>
+		<selection>txtLine2Col7</selection>
+		<action>UpdateTextField</action>
+		<input>static</input>
+	</event_descriptor>
+	<custom_field>
+		<name>tool_event_time</name>
+		<value>2010-12-15 19:58:17.690 UTC</value>
+	</custom_field>
+</tool_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:17.00810" timezone="US/Eastern" action_id="message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<property name="verb">
+		SendNoteProperty
+	</property>
+	<property name="MessageType">
+		CorrectAction
+	</property>
+	<property name="Selection">
+		<entry>txtLine2Col7</entry>
+	</property>
+	<property name="Action">
+		<entry>UpdateTextField</entry>
+	</property>
+	<property name="Input">
+		<entry>static</entry>
+	</property>
+	<property name="end_of_transaction">
+		false
+	</property>
+</message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:17.00821" timezone="US/Eastern" action_id="tutor_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tutor_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7fbd" name="RESULT" />
+	<event_descriptor>
+		<selection>txtLine2Col7</selection>
+		<action>UpdateTextField</action>
+		<input>static</input>
+	</event_descriptor>
+	<action_evaluation>Correct</action_evaluation>
+	<skill>
+		<name>unnamed</name>
+	</skill>
+	<custom_field>
+		<name>tutor_event_time</name>
+		<value>2010-12-15 19:58:17.821 UTC</value>
+	</custom_field>
+</tutor_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:19.00572" timezone="US/Eastern" action_id="tool_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tool_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7fb4" name="ATTEMPT" />
+	<event_descriptor>
+		<selection>txtLine3Col7</selection>
+		<action>UpdateTextField</action>
+		<input>in</input>
+	</event_descriptor>
+	<custom_field>
+		<name>tool_event_time</name>
+		<value>2010-12-15 19:58:19.572 UTC</value>
+	</custom_field>
+</tool_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:19.00581" timezone="US/Eastern" action_id="message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<property name="verb">
+		SendNoteProperty
+	</property>
+	<property name="MessageType">
+		InCorrectAction
+	</property>
+	<property name="Selection">
+		<entry>txtLine3Col7</entry>
+	</property>
+	<property name="Action">
+		<entry>UpdateTextField</entry>
+	</property>
+	<property name="Input">
+		<entry>in</entry>
+	</property>
+	<property name="end_of_transaction">
+		false
+	</property>
+</message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:19.00586" timezone="US/Eastern" action_id="tutor_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tutor_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7fb4" name="RESULT" />
+	<event_descriptor>
+		<selection>txtLine3Col7</selection>
+		<action>UpdateTextField</action>
+		<input>out</input>
+	</event_descriptor>
+	<action_evaluation>InCorrect</action_evaluation>
+	<skill>
+		<name>unnamed</name>
+	</skill>
+	<custom_field>
+		<name>tutor_event_time</name>
+		<value>2010-12-15 19:58:19.586 UTC</value>
+	</custom_field>
+</tutor_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:25.00498" timezone="US/Eastern" action_id="tool_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tool_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7fac" name="ATTEMPT" />
+	<event_descriptor>
+		<selection>txtLine3Col7</selection>
+		<action>UpdateTextField</action>
+		<input />
+	</event_descriptor>
+	<custom_field>
+		<name>tool_event_time</name>
+		<value>2010-12-15 19:58:25.498 UTC</value>
+	</custom_field>
+</tool_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:25.00506" timezone="US/Eastern" action_id="message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<property name="verb">
+		SendNoteProperty
+	</property>
+	<property name="MessageType">
+		InCorrectAction
+	</property>
+	<property name="Selection">
+		<entry>txtLine3Col7</entry>
+	</property>
+	<property name="Action">
+		<entry>UpdateTextField</entry>
+	</property>
+	<property name="Input">
+		<entry />
+	</property>
+	<property name="end_of_transaction">
+		false
+	</property>
+</message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:25.00510" timezone="US/Eastern" action_id="tutor_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tutor_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7fac" name="RESULT" />
+	<event_descriptor>
+		<selection>txtLine3Col7</selection>
+		<action>UpdateTextField</action>
+		<input>out</input>
+	</event_descriptor>
+	<action_evaluation>InCorrect</action_evaluation>
+	<skill>
+		<name>unnamed</name>
+	</skill>
+	<custom_field>
+		<name>tutor_event_time</name>
+		<value>2010-12-15 19:58:25.510 UTC</value>
+	</custom_field>
+</tutor_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:25.00623" timezone="US/Eastern" action_id="tool_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tool_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7fa4" name="HINT_REQUEST" />
+	<event_descriptor>
+		<selection>hint</selection>
+		<selection>txtLine3Col7</selection>
+		<action>ButtonPressed</action>
+		<action>PreviousFocus</action>
+		<input>-1</input>
+		<input />
+	</event_descriptor>
+	<custom_field>
+		<name>tool_event_time</name>
+		<value>2010-12-15 19:58:25.623 UTC</value>
+	</custom_field>
+</tool_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:25.00631" timezone="US/Eastern" action_id="message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<property name="verb">
+		SendNoteProperty
+	</property>
+	<property name="MessageType">
+		ShowHintsMessage
+	</property>
+	<property name="HintsMessage">
+		<entry><![CDATA[Please enter 'out' in the highlighted field.]]></entry>
+	</property>
+	<property name="Selection">
+		<entry>txtLine3Col7</entry>
+	</property>
+	<property name="Action">
+		<entry>UpdateTextField</entry>
+	</property>
+	<property name="Input">
+		<entry>out</entry>
+	</property>
+	<property name="StepID">
+		3
+	</property>
+	<property name="end_of_transaction">
+		false
+	</property>
+</message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:25.00752" timezone="US/Eastern" action_id="tutor_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tutor_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7fa4" name="HINT_MSG" subtype="Hint" />
+	<event_descriptor>
+		<selection>txtLine3Col7</selection>
+		<action>UpdateTextField</action>
+		<input>out</input>
+	</event_descriptor>
+	<action_evaluation current_hint_number="1" total_hints_available="1">Hint</action_evaluation>
+	<tutor_advice><![CDATA[Please enter 'out' in the highlighted field.]]></tutor_advice>
+	<skill>
+		<name>unnamed</name>
+	</skill>
+	<custom_field>
+		<name>tutor_event_time</name>
+		<value>2010-12-15 19:58:25.752 UTC</value>
+	</custom_field>
+</tutor_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:29.00403" timezone="US/Eastern" action_id="tool_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tool_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7f9d" name="ATTEMPT" />
+	<event_descriptor>
+		<selection>txtLine3Col7</selection>
+		<action>UpdateTextField</action>
+		<input>out</input>
+	</event_descriptor>
+	<custom_field>
+		<name>tool_event_time</name>
+		<value>2010-12-15 19:58:29.403 UTC</value>
+	</custom_field>
+</tool_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:29.00415" timezone="US/Eastern" action_id="message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<property name="verb">
+		SendNoteProperty
+	</property>
+	<property name="MessageType">
+		CorrectAction
+	</property>
+	<property name="Selection">
+		<entry>txtLine3Col7</entry>
+	</property>
+	<property name="Action">
+		<entry>UpdateTextField</entry>
+	</property>
+	<property name="Input">
+		<entry>out</entry>
+	</property>
+	<property name="end_of_transaction">
+		false
+	</property>
+</message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:29.00420" timezone="US/Eastern" action_id="tutor_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tutor_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7f9d" name="RESULT" />
+	<event_descriptor>
+		<selection>txtLine3Col7</selection>
+		<action>UpdateTextField</action>
+		<input>out</input>
+	</event_descriptor>
+	<action_evaluation>Correct</action_evaluation>
+	<skill>
+		<name>unnamed</name>
+	</skill>
+	<custom_field>
+		<name>tutor_event_time</name>
+		<value>2010-12-15 19:58:29.420 UTC</value>
+	</custom_field>
+</tutor_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:29.00535" timezone="US/Eastern" action_id="tool_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tool_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7f95" name="ATTEMPT" />
+	<event_descriptor>
+		<selection>doneButton</selection>
+		<action>ButtonPressed</action>
+		<input>Done</input>
+	</event_descriptor>
+	<custom_field>
+		<name>tool_event_time</name>
+		<value>2010-12-15 19:58:29.535 UTC</value>
+	</custom_field>
+</tool_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:29.00552" timezone="US/Eastern" action_id="message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<property name="verb">
+		SendNoteProperty
+	</property>
+	<property name="MessageType">
+		CorrectAction
+	</property>
+	<property name="Selection">
+		<entry>doneButton</entry>
+	</property>
+	<property name="Action">
+		<entry>ButtonPressed</entry>
+	</property>
+	<property name="Input">
+		<entry>Done</entry>
+	</property>
+	<property name="end_of_transaction">
+		false
+	</property>
+</message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:29.00559" timezone="US/Eastern" action_id="tutor_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tutor_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7f95" name="RESULT" />
+	<event_descriptor>
+		<selection>doneButton</selection>
+		<action>ButtonPressed</action>
+		<input>Done</input>
+	</event_descriptor>
+	<action_evaluation>Correct</action_evaluation>
+	<skill>
+		<name>unnamed</name>
+	</skill>
+	<custom_field>
+		<name>tutor_event_time</name>
+		<value>2010-12-15 19:58:29.559 UTC</value>
+	</custom_field>
+</tutor_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:30.00760" timezone="US/Eastern" action_id="tool_message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<tool_message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<problem_name>testClassName</problem_name>
+	<semantic_event transaction_id="T5107b344:12ceb9bf792:-7f8d" name="ATTEMPT" />
+	<event_descriptor>
+		<selection>done</selection>
+		<action>ButtonPressed</action>
+		<input>-1</input>
+	</event_descriptor>
+	<custom_field>
+		<name>tool_event_time</name>
+		<value>2010-12-15 19:58:30.760 UTC</value>
+	</custom_field>
+</tool_message>
+</tutor_related_message_sequence>
+</log_action><log_action auth_token="" session_id="L5107b344%3A12ceb9bf792%3A-8000" user_guid="Vasanth+K" date_time="2010/12/15 11:58:30.00828" timezone="US/Eastern" action_id="message" source_id="PACT_CTAT" external_object_id="" info_type="tutor_message.dtd">
+<tutor_related_message_sequence version_number="4"> 
+<message context_message_id="C5107b344:12ceb9bf792:-7fbb">
+	<property name="verb">
+		SendNoteProperty
+	</property>
+	<property name="MessageType">
+		InCorrectAction
+	</property>
+	<property name="Selection">
+		<entry>done</entry>
+	</property>
+	<property name="Action">
+		<entry>ButtonPressed</entry>
+	</property>
+	<property name="Input">
+		<entry>-1</entry>
+	</property>
+	<property name="end_of_transaction">
+		true
+	</property>
+</message>
+</tutor_related_message_sequence>
+</log_action></root>
