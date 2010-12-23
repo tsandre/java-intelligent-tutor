@@ -26,10 +26,15 @@ public class LogData {
 	public Concordance<String> hintsAvailable;
 	
 	public LogData(int numOfBlanks) {
+		if (numOfBlanks != 0) {
 		_incorrectAttemptList = new int[numOfBlanks];
 		_hintList = new int[numOfBlanks];
 		incorrectAttemptsConcordance = new Concordance<String>();
 		hintsUsed = new Concordance<String>();
+		}
+		else if(numOfBlanks == 0) {
+			_score = 100;
+		}
 		
 	}
 
