@@ -75,7 +75,8 @@ public class SaveSelectionsServlet extends HttpServlet {
 		if (nextIndex == tutorialListSize) { //Reached end of list
 			int firstSkipped = FirstSkippedExample();
 			if ( firstSkipped == -1) { //If no snippets are skipped
-				nextPage = "TutorialDeliveryServlet";
+				nextPage = "tutorialMetaData.jsp";
+//				nextPage = "TutorialDeliveryServlet";
 			}
 			else {
 				nextPage = "tutorialSelection.jsp?index=" + firstSkipped;

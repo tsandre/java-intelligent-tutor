@@ -3,6 +3,8 @@
  */
 package itjava.db;
 
+import itjava.data.LocalMachine;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.sql.Connection;
@@ -25,7 +27,7 @@ public class TruncateRepository {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager
-					.getConnection("jdbc:sqlite:samples/itjava.db");
+					.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
 			java.sql.Statement stat = conn.createStatement();
 			ArrayList<String> tableNames = new ArrayList<String>();
 			tableNames.add("ClassInstanceTerms");
