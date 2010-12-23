@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="itjava.view.*" %>
+<%@ page import="itjava.view.*, java.util.Enumeration" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -17,10 +17,7 @@
 	font-family: segoe ui, verdana;
 	display: none;
 }
-progress {
-	margin-bottom: 100px;
-	margin-left: 100px;
-}
+
 </style>
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
 <script type="text/javascript">
@@ -30,6 +27,9 @@ function showProgress() {
 </script>
 </head>
 <body>
+<%
+session.setAttribute("username", "Aniket");
+%>
 <form action="CodeSearchServlet" method="get" name="codeSearchForm" id="codeSearchForm">
 <pre>
   <input type="text" name="query" id="query" placeholder="Enter query"/>  <input type="submit" onclick="return showProgress();" value="Search" id="btnSearch"/>
