@@ -56,6 +56,10 @@ a[href] {
 <%
 ArrayList<TutorialInfo> tutorialInfoList = TutorialInfoStore.SelectInfo(null);
 session.setAttribute("tutorialInfoList", tutorialInfoList);
+int STUDENT_ID = 99;
+session.setAttribute("studentId", STUDENT_ID);
+DeliverableLauncher launcher = new DeliverableLauncher();
+session.setAttribute("deliverableLauncher", launcher);
 %>
 <div id="divBanner">
 Main Banner
@@ -69,7 +73,7 @@ Main Banner
 for (TutorialInfo tutorialInfo : tutorialInfoList) {
 	out.println("<tr>");
 	out.print("<td rowspan=\"3\" class=\"tdTutorialName\">");
-	out.print("<a href=\"studentMainTest.jsp?deliName=0&id=" + tutorialInfo.getTutorialId() + "\">");
+	out.print("<a href=\"studentMainTest.jsp?id=" + tutorialInfo.getTutorialId() + "\">");
 	out.print(tutorialInfo.getTutorialName());
 	out.println("</a></td>");
 	out.print("<td class=\"tdMeta\">Created by : ");
