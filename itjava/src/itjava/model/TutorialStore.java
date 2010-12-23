@@ -127,10 +127,17 @@ public class TutorialStore {
 		}
 		}
 		int indexOfLinesOfCode = 1;
-		int x = 0, y = 10, height = 25, width;
+		int x = 0, y = 10, height = 25, width, indent = 0;
+		String prevLineOfCode = " ";
 		
 		for (String lineOfCode:_linesOfCode) {
 			String firstPartOfLineOfCode = lineOfCode;
+			if (prevLineOfCode.contains("{")) {
+				indent += 30;
+			}
+			else if (lineOfCode.contains("}")) {
+				indent -= 30;
+			}
 			if(lineNumbersForBlankedWords.contains(indexOfLinesOfCode)) {
 				WordInfo currWordInfo = wordInfoIterator.next();
 				if (currWordInfo.lineNumber != indexOfLinesOfCode) {
@@ -143,7 +150,7 @@ public class TutorialStore {
 				width = restOfLine.length() * 8;
 				String lblName = "lblLine" + indexOfLinesOfCode
 									+ "Col" + currWordInfo.columnNumber;
-				dorminLabel.Label(restOfLine, lblName, x + (8 * beginIndex) , y, height, width);
+				dorminLabel.Label(restOfLine, lblName, x + (8 * beginIndex) + indent, y, height, width);
 				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
 				
 				labelDataList.add(new LabelData(lblName, restOfLine));
@@ -151,7 +158,7 @@ public class TutorialStore {
 				String nameOfTextField = "txtLine" + indexOfLinesOfCode + "Col" + currWordInfo.columnNumber;
 				DorminComponent dorminText = new DorminComponent();
 				width = currWordInfo.wordLength() * 8;
-				dorminText.TextField(nameOfTextField, x + (8 * currWordInfo.columnNumber), y, height, width);
+				dorminText.TextField(nameOfTextField, x + (8 * currWordInfo.columnNumber) + indent, y, height, width);
 				
 				edgeDataList.add(new EdgeData(currWordInfo.wordToBeBlanked,nameOfTextField));
 			
@@ -160,13 +167,14 @@ public class TutorialStore {
 			}
 			
 			DorminComponent dorminLabel = new DorminComponent();
-			dorminLabel.Label(firstPartOfLineOfCode, "lblLine" + indexOfLinesOfCode, x, y, height, firstPartOfLineOfCode.length() * 8);
+			dorminLabel.Label(firstPartOfLineOfCode, "lblLine" + indexOfLinesOfCode, x + indent, y, height, firstPartOfLineOfCode.length() * 8);
 			labelDataList.add(new LabelData("lblLine" + indexOfLinesOfCode, firstPartOfLineOfCode));
 			
 			_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
 			
 			y += height;
 			indexOfLinesOfCode++;
+			prevLineOfCode = lineOfCode;
 		}
 /*
 		DorminComponent hintButton = new DorminComponent();
@@ -174,7 +182,6 @@ public class TutorialStore {
 		DorminComponent doneButton = new DorminComponent();
 		doneButton.Button("Done", "doneButton", 20, y + 20, 20, 60);
 	
-		//TODO : add button to List<EdgeData>
 		
 		/*labelDataList.add(new LabelData("hint","Help"));*/
 		labelDataList.add(new LabelData("doneButton","Done"));
