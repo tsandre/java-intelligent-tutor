@@ -1,0 +1,1 @@
+java -cp "../automate/lib/DorminWidgets.jar" edu.cmu.pact.Log.LogFormatUtils raw.log dummyLog.xml tempfile finalLog.xml
