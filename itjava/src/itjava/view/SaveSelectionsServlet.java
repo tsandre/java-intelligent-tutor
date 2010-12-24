@@ -6,6 +6,7 @@ import itjava.model.WordInfo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -22,9 +23,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/SaveSelectionsServlet")
 public class SaveSelectionsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ArrayList<String> approvalList;
-	private ArrayList<List<String>> wordsList;
-	private ArrayList<Integer> difficultyList;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -43,9 +41,10 @@ public class SaveSelectionsServlet extends HttpServlet {
 		
 		String nextExample = request.getParameter("btnSubmit");
 		int nextIndex;
-		approvalList = (ArrayList<String>) session.getAttribute("approvalList");
-		wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
-		difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
+		ArrayList<String> approvalList = (ArrayList<String>) session.getAttribute("approvalList");
+		ArrayList<List<String>> wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
+		ArrayList<Integer> difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
+		ArrayList<HashMap<String, ArrayList<String>>> hintsMapList = (ArrayList<HashMap<String, ArrayList<String>>>)session.getAttribute("hintsMapList");
 		
 		if (nextExample.equals("Next Snippet >>")) {
 			nextIndex = currentIndex + 1;
@@ -73,10 +72,9 @@ public class SaveSelectionsServlet extends HttpServlet {
 		int tutorialListSize = (Integer) session.getAttribute("tutorialListSize");
 		String nextPage = "Error.jsp";
 		if (nextIndex == tutorialListSize) { //Reached end of list
-			int firstSkipped = FirstSkippedExample();
+			int firstSkipped = FirstSkippedExample(approvalList);
 			if ( firstSkipped == -1) { //If no snippets are skipped
 				nextPage = "tutorialMetaData.jsp";
-//				nextPage = "TutorialDeliveryServlet";
 			}
 			else {
 				nextPage = "tutorialSelection.jsp?index=" + firstSkipped;
@@ -93,9 +91,10 @@ public class SaveSelectionsServlet extends HttpServlet {
 	 * Returns the integer index of the first skipped snippet 
 	 * from the list displayed on tutorialSelection.jsp.
 	 * If none are skipped returns -1.
+	 * @param approvalList
 	 * @return -1 or index
 	 */
-	private int FirstSkippedExample() {
+	private int FirstSkippedExample(ArrayList<String> approvalList) {
 		int index = 0;
 		for (String approvalChoice : approvalList) {
 			if (approvalChoice == null) {

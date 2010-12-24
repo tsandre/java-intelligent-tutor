@@ -60,7 +60,7 @@ public class WordInfoPresenter {
 		ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
 		int tutorialNameIndex = 0;
 		
-		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 2);
+		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 5);
 		for (CompilationUnitFacade facade : similarFacades) {
 			ArrayList<WordInfo> wordInfoList = new ArrayList<WordInfo>();
 			
