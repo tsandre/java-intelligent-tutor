@@ -8,6 +8,7 @@ import itjava.presenter.WordInfoPresenter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -53,16 +54,19 @@ public class CodeSearchServlet extends HttpServlet {
 		ArrayList<String> approvalList = new ArrayList<String>();
 		ArrayList<ArrayList<String>> wordsList = new ArrayList<ArrayList<String>>();
 		ArrayList<Integer> difficultyList = new ArrayList<Integer>(); 
+		ArrayList<HashMap<String, ArrayList<String>>> hintsMapList = new ArrayList<HashMap<String,ArrayList<String>>>();
 		
 		for (int initializer = 0; initializer < tutorialList.size(); initializer++) {
 			approvalList.add(null);
 			wordsList.add(null);
 			difficultyList.add(null);
+			hintsMapList.add(null);
 		}
 		
 		session.setAttribute("approvalList", approvalList);
 		session.setAttribute("wordsList", wordsList);
 		session.setAttribute("difficultyList", difficultyList);
+		session.setAttribute("hintsMapList", hintsMapList);
 		session.setAttribute("tutorialListSize", tutorialList.size());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("tutorialSelection.jsp?index=0");
 		

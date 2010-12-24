@@ -27,6 +27,7 @@ div .active {
 	font-size: 1em;
 	line-height: 1.5em;
 	clear: left;
+	width: 1000px;
 }
 
 #divSubmit {
@@ -96,6 +97,9 @@ tr .passive:hover {
 .copyright {
 	font-size: 0.9em;
 	color:blue;
+	width: 600px;
+	position: relative;
+	border:1px solid gray;
 }
 
 .noimage {
@@ -110,4 +114,17 @@ tr .passive:hover {
 #divMain {
 	margin-left:auto;
 	margin-right:auto;
+}
+
+#divHint {
+	vertical-align: top;
+	width: 350px;
+}
+
+#tdHintCell {
+	font-family: segoe ui, verdana;
+}
+
+.divInvisibleHint {
+	display: none;
 }

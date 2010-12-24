@@ -20,24 +20,22 @@ import org.jsoup.select.Elements;
  *
  */
 public class LinkStore {
-	private static String _query;
-	private static LinkedHashSet<String> _setOfLinks;
 	
 	public static LinkedHashSet<String> CreateLinks(String query) {
+		LinkedHashSet<String> _setOfLinks;
 		_setOfLinks = new LinkedHashSet<String>();
-		_query = query;
 		//_setOfLinks.addAll(GoogleSearch());
 		//_setOfLinks.addAll(BingSearch());
-		_setOfLinks.addAll(YahooSearch());
+		_setOfLinks.addAll(YahooSearch(query));
 		return _setOfLinks;
 	}
 
-	private static ArrayList<String> YahooSearch() {
+	private static ArrayList<String> YahooSearch(String query) {
 		ArrayList<String> yahooSearchResults = new ArrayList<String>();
 		try {
 			String request = "http://boss.yahooapis.com/ysearch/web/v1/"
-				+ URLEncoder.encode(_query, "UTF-8")
-				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf&format=xml&count=50&type=-msoffice,-pdf";
+				+ URLEncoder.encode(query, "UTF-8")
+				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf&format=xml&count=20&type=-msoffice,-pdf";
 		
 			URL url = new URL(request);
 			System.out.println("Host : " + url.getHost());

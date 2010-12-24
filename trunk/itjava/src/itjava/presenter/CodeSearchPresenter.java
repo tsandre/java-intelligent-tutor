@@ -11,6 +11,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 /**
  * @author Aniket, Matt
@@ -18,29 +19,29 @@ import java.util.ArrayList;
  */
 public class CodeSearchPresenter {
 	private String _query;
-	private String[] _cacheLinks;
-	private int _startPosition = 0;
-	private int _endPosition = 19;
+	private Iterable<String> _cacheLinks;
 	public CodeSearchPresenter(String query) {
 		_query = query;
-		_cacheLinks = LinkStore.CreateLinks(_query).toArray(new String[0]);
+		_cacheLinks = LinkStore.CreateLinks(_query);
 	}
 	
-	public String[] ShowLinks(){
+	public Iterable<String> ShowLinks(){
 		return _cacheLinks;
 	}
 	
+	/**
+	 * Uses web search APIs to return a list of {@link ResultEntry} objects
+	 * @return Search results
+	 */
 	public ArrayList<ResultEntry> SearchNext() {
 		ArrayList<URL> currLinks = new ArrayList<URL>();
-		for(int index = _startPosition; index <= _endPosition; index++) {
+		for(String link : _cacheLinks) {
 			try {
-				currLinks.add(new URL(_cacheLinks[index]));
+				currLinks.add(new URL(link));
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
 		}
-		_startPosition = _endPosition + 1;
-		_endPosition = _endPosition + 10;
 		return ResultEntryStore.createResultEntryList(currLinks);
 	}
 	

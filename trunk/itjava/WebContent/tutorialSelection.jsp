@@ -11,6 +11,10 @@
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
 <script type="text/javascript">
 $(function () {
+    toggleHints();
+    
+    $('#divWordInfo input:checkbox').click(toggleHints);
+	
     $('#divApproveSample input:radio').click(function () {
         var step2 = $('#divWordInfo');  
         var step3 = $('#divRating');
@@ -22,7 +26,23 @@ $(function () {
             step2.hide('slow');  
             step3.hide('slow'); 
         }  
-    });  
+    });
+    
+    function toggleHints(){
+    	$('#divHint').hide();
+    	$('#divHint div').hide();
+    	var allVals = [];
+    	$('#divWordInfo input:checkbox:checked').each(function () {
+    		allVals.push(this.value);
+    	}); 
+		if (allVals.length > 0) {
+			$('#divHint').show('fast');
+		}
+		for (var i =0 ; i < allVals.length; i++ ) {
+			var divHintId = "divHint" + allVals[i];
+			document.getElementById(divHintId).style.display = "block";
+		} 
+    }
 });   
 
 function isReady(form) {
@@ -69,6 +89,7 @@ ArrayList<String> approvalList = (ArrayList<String>) session.getAttribute("appro
 ArrayList<List<String>> wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
 ArrayList<Integer> difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
 ArrayList<Tutorial> tutorialList = (ArrayList<Tutorial>)session.getAttribute("tutorialList");
+ArrayList<HashMap<String, ArrayList<String>>> hintsMapList = (ArrayList<HashMap<String, ArrayList<String>>>)session.getAttribute("hintsMapList");
 
 Tutorial currentTutorial = tutorialList.get(currentIndex);
 %>
@@ -179,6 +200,9 @@ if (currentIndex == 0) {
 
 <div id="divCode">
 <table>
+<tr><td>
+<div id="divCodeTable">
+<table>
 <tbody>
 <%
 for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
@@ -192,6 +216,42 @@ for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 %>
 <tr><td></td><td class="copyright">For copyright of this snippet visit: <% out.println(currentTutorial.sourceUrl.replaceFirst("^\\d", "")); %></td></tr>
 </tbody>
+</table>
+</div>
+</td>
+<td id="tdHintCell">
+<div class="step">STEP 4</div>
+<div id="divHint"> Hints Corresponding to : 
+<% 
+HashMap<String, ArrayList<String>> hintsMap = hintsMapList.get(currentIndex);
+int currWordInfoIndex = 0;
+for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
+	String wordToBeBlanked = currentWordInfo.wordToBeBlanked;
+	ArrayList<String> currHintsList = null;
+	String hintValue = "";
+	if (hintsMap != null) {
+		currHintsList = hintsMap.get(wordToBeBlanked);
+	}
+	out.println("<div class=\"divInvisibleHint\" id=\"divHint" + currWordInfoIndex + "\"> ");
+	out.println(wordToBeBlanked);
+	for (int hintIndex = 1; hintIndex <= 2; hintIndex++) {
+		if (currHintsList != null) {
+			hintValue = currHintsList.get(hintIndex);
+		}
+		out.println("<br /><input type=\"text\" " +
+				"name=\"txtHint_" + currWordInfoIndex + "_" + hintIndex + "\" " + 
+				"placeholder=\"Hint " + hintIndex + "\" " + 
+				"value=\"" + hintValue + "\" " +
+				"size=\"30\" " +
+				" />");		
+	}
+	out.println("</div>");
+	currWordInfoIndex++;
+}
+%>
+</div>
+</td>
+</tr>
 </table>
 </div>
 
