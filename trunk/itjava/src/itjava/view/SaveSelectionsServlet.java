@@ -61,7 +61,23 @@ public class SaveSelectionsServlet extends HttpServlet {
 			approvalList.set(currentIndex, "Quiz");
 			wordsList.set(currentIndex, selectedWordInfoIndices);
 			difficultyList.set(currentIndex, difficultyLevel);
+			HashMap<String, ArrayList<String>> currHintsMaps = new HashMap<String, ArrayList<String>>();
+			for (String selectedWordIndex : selectedWordInfoIndices) {
+				ArrayList<String> hintsList = new ArrayList<String>();
+				for (int hintNum = 1; hintNum <= 2; hintNum++) {
+					String hint = request.getParameter("txtHint_" + selectedWordIndex + "_" + hintNum);
+					if (hint != null) {
+						hintsList.add(hint);
+					}
+				}
+				//TODO : Find the actual value of the blank
+				//TODO : Verify whether this is required. Or the last hint is by default the actual value.
+				hintsList.add("Actual value"); // The last hint should be the actual value
+				currHintsMaps.put(selectedWordIndex, hintsList);
+			}
+			hintsMapList.set(currentIndex, currHintsMaps);
 			
+			session.setAttribute("hintsMapList", hintsMapList);
 			session.setAttribute("wordsList", wordsList);
 			session.setAttribute("difficultyList", difficultyList);
 		}
