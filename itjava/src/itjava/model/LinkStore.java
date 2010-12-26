@@ -35,7 +35,7 @@ public class LinkStore {
 		try {
 			String request = "http://boss.yahooapis.com/ysearch/web/v1/"
 				+ URLEncoder.encode(query, "UTF-8")
-				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf&format=xml&count=50&type=-msoffice,-pdf";
+				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf&format=xml&count=20&type=-msoffice,-pdf";
 		
 			URL url = new URL(request);
 			System.out.println("Host : " + url.getHost());

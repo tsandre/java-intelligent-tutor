@@ -28,7 +28,7 @@ public class ScoresStore {
 			conn = DBConnection.GetConnection();
 			String insertSql = "insert into Scores (deliverableId, studentId, score)" +
 					" values(?, ?, ?)";
-			PreparedStatement insertStmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement insertStmt = conn.prepareStatement(insertSql);
 			insertStmt.setInt(1, scores.getDeliverableId());
 			insertStmt.setInt(2, scores.getStudentId());
 			insertStmt.setInt(3, scores.getScore());

@@ -246,7 +246,7 @@ public class TutorialStore {
 				String insertSql = "insert into DeliverableInfo" +
 						"(deliverableName, tutorialInfoId, deliverableType, difficultyLevel, numOfBlanks)" +
 						" values (?,?,?,?,?)";
-				PreparedStatement insertStmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement insertStmt = conn.prepareStatement(insertSql);
 				insertStmt.setString(1, tutorial.getTutorialName());
 				insertStmt.setInt(2, tutorialInfoId);
 				insertStmt.setString(3, tutorial.getType());
