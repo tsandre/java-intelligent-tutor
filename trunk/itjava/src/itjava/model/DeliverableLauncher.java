@@ -51,7 +51,6 @@ public class DeliverableLauncher {
 			 PreparedStatement selectStmt = conn.prepareStatement(getFirstSql);
 			 selectStmt.setInt(1, this._tutorialInfoId);
 			 selectStmt.setString(2, "Example");
-			 
 			 ResultSet rs = selectStmt.executeQuery();
 			 if (rs.next()) {
 				 deliverableName = rs.getString(1);
@@ -116,7 +115,9 @@ public class DeliverableLauncher {
 	 * @return
 	 */
 	public KeyValue<Integer, String> GetNextDeliverableName(int deliverableId, int scoreId) {
-		
+		Connection conn = null;
+		String deliverableName = null;
+		int prevDeliveryId = _deliveredHistory.get(deliverableId);
 		
 		int score;
 		if (!_deliveredHistory.containsKey(deliverableId)) {
@@ -130,19 +131,144 @@ public class DeliverableLauncher {
 		
 		// if score is less than 50, then show an example that is not present in _delivered
 		if (score <= 50) {
-			
+			try {
+				 conn = DBConnection.GetConnection();
+				 String getSql = "select deliverableName, deliverableId from DeliverableInfo " + 
+				 	" where tutorialInfoId = ? " +
+				 	" and deliverableType = ? ";
+				 
+				 String lessThanSql = getSql + "and deliverableId <> ?";
+				 PreparedStatement selectStmt = conn.prepareStatement(lessThanSql);
+				 selectStmt.setInt(1, this._tutorialInfoId);
+				 selectStmt.setString(2, "Example");
+				 selectStmt.setInt(3, prevDeliveryId);
+				 selectStmt.setInt(4, prevDeliveryId);
+				 			 
+				 ResultSet rs = selectStmt.executeQuery();
+				 if (rs.next()) {
+					 deliverableName = rs.getString(1);
+					 deliverableId = rs.getInt(2);
+				 }
+				 else {
+					 String greaterThanSql = getSql + "and deliverableId <> ?" + "and difficultyLevel <= " +
+				 		"(select difficultyLevel from DeliverableInfo where deliverableId = ?)";
+					 selectStmt = conn.prepareStatement(greaterThanSql);
+					 selectStmt.setInt(1, this._tutorialInfoId);
+					 selectStmt.setString(2, "Quiz");
+					 selectStmt.setInt(3, prevDeliveryId);
+					 selectStmt.setInt(4, prevDeliveryId);
+					 rs = selectStmt.executeQuery();
+					 if (rs.next()) {
+						 deliverableName = rs.getString(1);
+						 deliverableId = rs.getInt(2);
+					 }
+					 else {
+						 System.err.println("0 tuples for TutorialInfoId : " + this._tutorialInfoId);	 
+					 }
+				 }
+				 
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					DBConnection.CloseConnection(conn);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return new KeyValue<Integer, String>(deliverableId, deliverableName);
 		}
 		// if score is 100 (that means last deliverable was either example or successful quiz)
 		//		then deliver quiz with difficulty level higher than current one. 
 		else if (score >= 100) {
-			
+			try {
+				 conn = DBConnection.GetConnection();
+				 String getSql = "select deliverableName, deliverableId from DeliverableInfo " + 
+				 	" where tutorialInfoId = ? " +
+				 	" and deliverableType = ? ";
+				 
+				 String nextSql = getSql + "and deliverableId <> ?" + "and difficultyLevel > " +
+				 		"(select difficultyLevel from DeliverableInfo where deliverableId = ?)";
+				 PreparedStatement selectStmt = conn.prepareStatement(nextSql);
+				 selectStmt.setInt(1, this._tutorialInfoId);
+				 selectStmt.setString(2, "Quiz");
+				 selectStmt.setInt(3, prevDeliveryId);
+				 selectStmt.setInt(4, prevDeliveryId);
+				 			 
+				 ResultSet rs = selectStmt.executeQuery();
+				 if (rs.next()) {
+					 deliverableName = rs.getString(1);
+					 deliverableId = rs.getInt(2);
+				 }
+					 else {
+						 System.err.println("0 tuples for TutorialInfoId : " + this._tutorialInfoId);	 
+					 }
+				 }
+				 
+			catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					DBConnection.CloseConnection(conn);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return new KeyValue<Integer, String>(deliverableId, deliverableName);
 		}
 		// if 50 < score < 100 , 
 		//		then deliver quiz with difficulty level same as current one, if not available then next level.
 		else {
-			
+			try {
+				 conn = DBConnection.GetConnection();
+				 String getSql = "select deliverableName, deliverableId from DeliverableInfo " + 
+				 	" where tutorialInfoId = ? " +
+				 	" and deliverableType = ? ";
+				 
+				 String nextSql = getSql + "and deliverableId <> ?" + "and difficultyLevel = " +
+				 		"(select difficultyLevel from DeliverableInfo where deliverableId = ?)";
+				 PreparedStatement selectStmt = conn.prepareStatement(nextSql);
+				 selectStmt.setInt(1, this._tutorialInfoId);
+				 selectStmt.setString(2, "Quiz");
+				 selectStmt.setInt(3, prevDeliveryId);
+				 selectStmt.setInt(4, prevDeliveryId);
+				 			 
+				 ResultSet rs = selectStmt.executeQuery();
+				 if (rs.next()) {
+					 deliverableName = rs.getString(1);
+					 deliverableId = rs.getInt(2);
+				 }
+					 else {
+						 System.err.println("0 tuples for TutorialInfoId : " + this._tutorialInfoId);	 
+					 }
+				 }
+				 
+			catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					DBConnection.CloseConnection(conn);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return new KeyValue<Integer, String>(deliverableId, deliverableName);
 		}
-		return null;
 	}
 
 	/**
