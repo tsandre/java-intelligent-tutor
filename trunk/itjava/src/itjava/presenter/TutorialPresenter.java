@@ -19,9 +19,10 @@ import itjava.model.WordInfo;
 public class TutorialPresenter {
 private TutorialStore _tutorialStore;
 
-	public Tutorial GetTutorial(String tutorialName, String readableName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList, String sourceUrl) {
+	public Tutorial GetTutorial(String tutorialName, String readableName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList, String sourceUrl) throws Exception {
 		Tutorial tutorial = new Tutorial(tutorialName, readableName, ArrangeWordsAccordingToLineNumber(wordInfoList), Convertor.TrimArrayListOfString(exampleCode), sourceUrl);
-		return (new TutorialStore()).GenerateTutorial(tutorial);
+		tutorial = new TutorialStore().GenerateTutorial(tutorial);
+		return tutorial;
 	}
 	
 	/**
