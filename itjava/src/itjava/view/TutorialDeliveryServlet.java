@@ -11,6 +11,7 @@ import itjava.presenter.TutorialPresenter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class TutorialDeliveryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<String> approvalList;
 	private ArrayList<List<String>> wordsList;
+	private ArrayList<HashMap<String, ArrayList<String>>> hintsMapList;
 	private ArrayList<Integer> difficultyList;
 	private ArrayList<Tutorial> tutorialList;
 	private ArrayList<Tutorial> approvedTutorialList;
@@ -55,6 +57,7 @@ public class TutorialDeliveryServlet extends HttpServlet {
 		wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
 		difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
 		tutorialList = (ArrayList<Tutorial>)session.getAttribute("tutorialList");
+		hintsMapList = (ArrayList<HashMap<String, ArrayList<String>>>) session.getAttribute("hintsMapList");
 		
 		approvedTutorialList = AbsorbUserApprovalsInTutorialList(tutorialInfo);
 		ProcessMetaData(request, tutorialInfo);
@@ -110,11 +113,13 @@ public class TutorialDeliveryServlet extends HttpServlet {
 			if (approvalList.get(tutorialIndex).equals("Quiz")) {
 				tutorialInfo.setNumQuizes(tutorialInfo.getNumQuizes() + 1);
 				List<String> selectedWordInfoIndices = wordsList.get(tutorialIndex);
+				HashMap<String, ArrayList<String>> currTutorialHintsMap = hintsMapList.get(tutorialIndex);
 				Integer difficulty = difficultyList.get(tutorialIndex);
 				ArrayList<WordInfo> approvedWordInfoList = new ArrayList<WordInfo>();
 				int wordInfoIndex = 0;
 				for (WordInfo wordInfo : currentTutorial.getWordInfoList()) {
 					if(selectedWordInfoIndices.contains(Integer.toString(wordInfoIndex))) {
+						wordInfo.hintsAvailable = currTutorialHintsMap.get(Integer.toString(wordInfoIndex));
 						approvedWordInfoList.add(wordInfo);
 					}
 					wordInfoIndex++;
