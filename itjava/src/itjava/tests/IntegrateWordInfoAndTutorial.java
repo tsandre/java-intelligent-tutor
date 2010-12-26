@@ -39,7 +39,7 @@ public class IntegrateWordInfoAndTutorial {
 	}
 
 	@Test
-	public void ResultFilesTOWordInfoTOTutorial() {
+	public void ResultFilesTOWordInfoTOTutorial() throws Exception {
 		GivenFiles();
 		WhenWordInfoIsGenerated();
 		WhenTutorialIsGenerated();
@@ -47,16 +47,22 @@ public class IntegrateWordInfoAndTutorial {
 
 	}
 
-	private void WhenTutorialIsGenerated() {
+	private void WhenTutorialIsGenerated() throws Exception {
 		int i = 0;
-		for (Tutorial initialTutorial : initTutorialList) {
-			tutorialPresenter = new TutorialPresenter();
-			Tutorial tutorial = tutorialPresenter.GetTutorial(initialTutorial.getTutorialName(),
-					initialTutorial.getReadableName(), initialTutorial.getLinesOfCode(), initialTutorial.getWordInfoList(),
-					"sourceUrl");
-			tutorialList.add(tutorial);
-			i++;
-		}
+		for (Tutorial initialTutorial : initTutorialList)
+			try {
+				{
+					tutorialPresenter = new TutorialPresenter();
+					Tutorial tutorial = tutorialPresenter.GetTutorial(initialTutorial.getTutorialName(),
+							initialTutorial.getReadableName(), initialTutorial.getLinesOfCode(), initialTutorial.getWordInfoList(),
+							"sourceUrl");
+					tutorialList.add(tutorial);
+					i++;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 	}
 
