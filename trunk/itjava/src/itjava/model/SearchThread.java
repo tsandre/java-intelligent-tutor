@@ -31,8 +31,8 @@ public class SearchThread implements Runnable {
 		try {
 			System.out.println("Scraping : " + _url);
 			URLConnection urlConn = _url.openConnection();
-			urlConn.setConnectTimeout(10000);
-			urlConn.setReadTimeout(10000);
+			urlConn.setConnectTimeout(5000);
+			urlConn.setReadTimeout(5000);
 			int urlPadding = 0; //Padding is used to uniquely identify each piece of code in spite of same url.
 			BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 			String inputLine;

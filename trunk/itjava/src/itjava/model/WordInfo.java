@@ -1,5 +1,7 @@
 package itjava.model;
 
+import java.util.ArrayList;
+
 import itjava.data.BlankType;
 
 public class WordInfo {	
@@ -12,6 +14,7 @@ public class WordInfo {
 	public BlankType blankType;
 	//Options for combo
 	//Number of lines for text area	
+	public ArrayList<String> hintsAvailable;
 	
 	public WordInfo() {
 		this.lineNumber = -1;
