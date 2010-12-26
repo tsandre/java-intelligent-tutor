@@ -31,7 +31,7 @@ public class TutorialPresenterTest {
 	private String[] _bounds;
 
 	@Test
-	public final void MultipleWordsTutorialCodeHasBalancedParanthesis() {
+	public final void MultipleWordsTutorialCodeHasBalancedParanthesis() throws Exception {
 		GivenValidMultipleWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
@@ -50,7 +50,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public final void SplitLabelsAreDeclaredInitiatedAndAdded() {
+	public final void SplitLabelsAreDeclaredInitiatedAndAdded() throws Exception {
 		GivenValidLinesOfCode();
 		GivenValidWordInfoList();
 		WhenGetTutorialIsCalled();
@@ -58,7 +58,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public final void TextFieldHasPositiveWidthAndHigherXCoord() {
+	public final void TextFieldHasPositiveWidthAndHigherXCoord() throws Exception {
 		GivenValidLinesOfCode();
 		GivenValidWordInfoList();
 		WhenGetTutorialIsCalled();
@@ -67,7 +67,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public final void AllDataListArePopulated() {
+	public final void AllDataListArePopulated() throws Exception {
 		GivenValidMultipleWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
@@ -76,7 +76,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public final void BRDIsGenerated() {
+	public final void BRDIsGenerated() throws Exception {
 		GivenValidMultipleWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
@@ -85,7 +85,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public final void TutorialCodeHasBalancedParanthesis() {
+	public final void TutorialCodeHasBalancedParanthesis() throws Exception {
 		GivenValidWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
@@ -93,7 +93,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public void ButtonFieldIsAdded() {
+	public void ButtonFieldIsAdded() throws Exception {
 		GivenValidLinesOfCode();
 		GivenValidWordInfoList();
 		WhenGetTutorialIsCalled();
@@ -102,7 +102,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public final void DeliverableIsGenerated() {
+	public final void DeliverableIsGenerated() throws Exception {
 		GivenValidMultipleWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
@@ -135,7 +135,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public final void GetTutorialReturnsNotNullTutorial() {
+	public final void GetTutorialReturnsNotNullTutorial() throws Exception {
 		GivenValidWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
@@ -143,7 +143,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public final void GetTutorialReturnsNullOnPassingInvalidParams() {
+	public final void GetTutorialReturnsNullOnPassingInvalidParams() throws Exception {
 		wordInfo.wordToBeBlanked = "new";
 		wordInfo.lineNumber = 2;
 		wordInfo.blankType = BlankType.Text;
@@ -155,7 +155,7 @@ public class TutorialPresenterTest {
 	}
 
 	@Test
-	public final void GetTutorialWithMultipleWordsReturnsNotNullTutorial() {
+	public final void GetTutorialWithMultipleWordsReturnsNotNullTutorial() throws Exception {
 		GivenValidMultipleWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
@@ -294,7 +294,7 @@ public class TutorialPresenterTest {
 		}
 	}
 
-	private void WhenGetTutorialIsCalled() {
+	private void WhenGetTutorialIsCalled() throws Exception {
 		tutorial = tutorialPresenter.GetTutorial("testClassName", "test query",
 				linesOfCode, wordInfoList, "blank source");
 	}
