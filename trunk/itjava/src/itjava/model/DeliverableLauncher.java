@@ -117,8 +117,7 @@ public class DeliverableLauncher {
 	public KeyValue<Integer, String> GetNextDeliverableName(int deliverableId, int scoreId) {
 		Connection conn = null;
 		String deliverableName = null;
-		int prevDeliveryId = _deliveredHistory.get(deliverableId);
-		
+		KeyValue<Integer, String> keyVal = null;
 		int score;
 		if (!_deliveredHistory.containsKey(deliverableId)) {
 			HashMap<String, String> whereClause = new HashMap<String, String>();
@@ -141,8 +140,8 @@ public class DeliverableLauncher {
 				 PreparedStatement selectStmt = conn.prepareStatement(lessThanSql);
 				 selectStmt.setInt(1, this._tutorialInfoId);
 				 selectStmt.setString(2, "Example");
-				 selectStmt.setInt(3, prevDeliveryId);
-				 selectStmt.setInt(4, prevDeliveryId);
+				 selectStmt.setInt(3, deliverableId);
+				 selectStmt.setInt(4, deliverableId);
 				 			 
 				 ResultSet rs = selectStmt.executeQuery();
 				 if (rs.next()) {
@@ -155,8 +154,8 @@ public class DeliverableLauncher {
 					 selectStmt = conn.prepareStatement(greaterThanSql);
 					 selectStmt.setInt(1, this._tutorialInfoId);
 					 selectStmt.setString(2, "Quiz");
-					 selectStmt.setInt(3, prevDeliveryId);
-					 selectStmt.setInt(4, prevDeliveryId);
+					 selectStmt.setInt(3, deliverableId);
+					 selectStmt.setInt(4, deliverableId);
 					 rs = selectStmt.executeQuery();
 					 if (rs.next()) {
 						 deliverableName = rs.getString(1);
@@ -187,28 +186,33 @@ public class DeliverableLauncher {
 		//		then deliver quiz with difficulty level higher than current one. 
 		else if (score >= 100) {
 			try {
-				 conn = DBConnection.GetConnection();
-				 String getSql = "select deliverableName, deliverableId from DeliverableInfo " + 
-				 	" where tutorialInfoId = ? " +
-				 	" and deliverableType = ? ";
-				 
-				 String nextSql = getSql + "and deliverableId <> ?" + "and difficultyLevel > " +
-				 		"(select difficultyLevel from DeliverableInfo where deliverableId = ?)";
-				 PreparedStatement selectStmt = conn.prepareStatement(nextSql);
-				 selectStmt.setInt(1, this._tutorialInfoId);
-				 selectStmt.setString(2, "Quiz");
-				 selectStmt.setInt(3, prevDeliveryId);
-				 selectStmt.setInt(4, prevDeliveryId);
-				 			 
-				 ResultSet rs = selectStmt.executeQuery();
-				 if (rs.next()) {
-					 deliverableName = rs.getString(1);
-					 deliverableId = rs.getInt(2);
-				 }
-					 else {
-						 System.err.println("0 tuples for TutorialInfoId : " + this._tutorialInfoId);	 
-					 }
-				 }
+				conn = DBConnection.GetConnection();
+				String getSql = "select deliverableName, deliverableId from DeliverableInfo "
+						+ " where tutorialInfoId = ? "
+						+ " and deliverableType = ? ";
+				
+				//TODO : order by difficultyLevel
+				String nextSql = getSql
+						+ "and deliverableId <> ?"
+						+ "and difficultyLevel > "
+						+ "(select difficultyLevel from DeliverableInfo where deliverableId = ?)";
+				PreparedStatement selectStmt = conn.prepareStatement(nextSql);
+				selectStmt.setInt(1, this._tutorialInfoId);
+				selectStmt.setString(2, "Quiz");
+				selectStmt.setInt(3, deliverableId);
+				selectStmt.setInt(4, deliverableId);
+
+				ResultSet rs = selectStmt.executeQuery();
+				while (rs.next()) {
+					deliverableName = rs.getString(1);
+					deliverableId = rs.getInt(2);
+					if (!_deliveredHistory.containsKey(deliverableId)) {
+						keyVal = new KeyValue<Integer, String>(deliverableId, deliverableName);
+						break;
+					}
+				} 
+
+			}
 				 
 			catch (ClassNotFoundException e) {
 				e.printStackTrace();
@@ -224,7 +228,7 @@ public class DeliverableLauncher {
 					e.printStackTrace();
 				}
 			}
-			return new KeyValue<Integer, String>(deliverableId, deliverableName);
+			return keyVal;
 		}
 		// if 50 < score < 100 , 
 		//		then deliver quiz with difficulty level same as current one, if not available then next level.
@@ -240,8 +244,8 @@ public class DeliverableLauncher {
 				 PreparedStatement selectStmt = conn.prepareStatement(nextSql);
 				 selectStmt.setInt(1, this._tutorialInfoId);
 				 selectStmt.setString(2, "Quiz");
-				 selectStmt.setInt(3, prevDeliveryId);
-				 selectStmt.setInt(4, prevDeliveryId);
+				 selectStmt.setInt(3, deliverableId);
+				 selectStmt.setInt(4, deliverableId);
 				 			 
 				 ResultSet rs = selectStmt.executeQuery();
 				 if (rs.next()) {
