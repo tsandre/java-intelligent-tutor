@@ -1,9 +1,17 @@
 package itjava.model;
 
 import itjava.data.BlankType;
+import itjava.db.DBConnection;
+import itjava.util.Concordance;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
@@ -89,5 +97,39 @@ public class WordInfoStore {
 		wordInfoStore._wordInfo.wordToBeBlanked = currPropertyAssignment.getName().toString();
 		wordInfoStore.createWordInfo(currPropertyAssignment);
 		return wordInfoStore._wordInfo;
+	}
+
+	public static Concordance<String> SelectWordInfo(HashMap<String, Integer> whereClause){
+		Connection conn = null;
+		Concordance<String> retVal = new Concordance<String>();
+		try {
+			conn = DBConnection.GetConnection();
+			String selectSql = "select blankName, numOfHints from WordInfo";
+			if (whereClause != null) {
+			if (!whereClause.isEmpty()) {
+				selectSql += " where ";
+				for (Entry<String, Integer> entry: whereClause.entrySet()) {
+					selectSql += entry.getKey() + "=" + entry.getValue();
+				}
+			}
+			}
+			PreparedStatement selectStmt = conn.prepareStatement(selectSql);
+			ResultSet rs = selectStmt.executeQuery();
+			while (rs.next()) {
+				retVal.put(rs.getString(1), rs.getInt(2));
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				DBConnection.CloseConnection(conn);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return retVal;
 	}
 }
