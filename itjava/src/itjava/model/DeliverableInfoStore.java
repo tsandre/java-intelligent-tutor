@@ -21,12 +21,12 @@ import java.util.Map.Entry;
  */
 public class DeliverableInfoStore {
 
-	public static ArrayList<Integer> Select(String attribute, HashMap<String, Integer> whereClause) {
+	public static ArrayList<Integer> SelectNumOfBlanks(String attribute, HashMap<String, Integer> whereClause) {
 		Connection conn = null;
 		ArrayList<Integer> retValue = new ArrayList<Integer>();
 		try {
 			conn = DBConnection.GetConnection();
-			String selectSql = "select ? from deliverableInfo";
+			String selectSql = "select numOfBlanks from deliverableInfo";
 			if (whereClause != null) {
 				if (!whereClause.isEmpty()) {
 					selectSql += " where ";
@@ -36,7 +36,6 @@ public class DeliverableInfoStore {
 				}
 			}
 			PreparedStatement selectStmt = conn.prepareStatement(selectSql);
-			selectStmt.setString(1, attribute);
 			ResultSet rs = selectStmt.executeQuery();
 			while (rs.next()) {
 				retValue.add(rs.getInt(1));
