@@ -31,6 +31,9 @@ public class LogData {
 		_hintList = new int[numOfBlanks];
 		incorrectAttemptsConcordance = new Concordance<String>();
 		hintsUsed = new Concordance<String>();
+		//added by vasanth
+		hintsAvailable = new Concordance<String>();
+		//
 		}
 		else if(numOfBlanks == 0) {
 			_score = 100;
