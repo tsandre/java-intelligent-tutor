@@ -45,10 +45,14 @@ public class LogDataStore {
 			ProcessXmlToLogData(logData);
 			CalculateScore(numOfBlanks, logData);
 		}
+		else
+		{
+			if (!VerifyLogFileAndRename(System.getProperty("user.name"))) throw new IOException("Problem locating raw log file");
+		}
 		return logData;
 	}
 
-	
+
 	/**
 	 * Calculate the score for the current quiz
 	 * @param numOfBlanks 
@@ -58,10 +62,13 @@ public class LogDataStore {
 		float weightForEachBlank = (float)1 / (float)numOfBlanks;
 		int totalScore = 100;
 		for (String blankName : logData.hintsAvailable.keySet()) {
-			int currHintsUsed = logData.hintsUsed.get(blankName);
+			String logBlankName = blankName + "Action";
+			int currHintsUsed = logData.hintsUsed.get(logBlankName);
 			int currHintsAvailable = logData.hintsAvailable.get(blankName);
-			float scoreLostForHints = ((currHintsUsed >= currHintsAvailable) ? currHintsAvailable : currHintsUsed ) / currHintsAvailable * HINT_WEIGHT;
-			float scoreLostForIncorrect = logData.incorrectAttemptsConcordance.get(blankName) * INCORRECT_WEIGHT;
+			//float scoreLostForHints = (((currHintsUsed >= currHintsAvailable) ? currHintsAvailable : currHintsUsed ) / currHintsAvailable) * HINT_WEIGHT; 
+			float tempScoreLostForHints = (((currHintsUsed >= currHintsAvailable) ? currHintsAvailable : currHintsUsed ) * HINT_WEIGHT ) ; 
+			float scoreLostForHints = tempScoreLostForHints / currHintsAvailable;
+			float scoreLostForIncorrect = logData.incorrectAttemptsConcordance.get(logBlankName) * INCORRECT_WEIGHT;
 			float scoreLost = scoreLostForHints + scoreLostForIncorrect;
 			scoreLost = (scoreLost >= 100 ) ? weightForEachBlank * 100 : weightForEachBlank * scoreLost;
 			totalScore = (int) (totalScore - scoreLost);
@@ -78,46 +85,46 @@ public class LogDataStore {
 	 * @throws SAXException 
 	 */
 	private static void ProcessXmlToLogData(LogData logData) throws ParserConfigurationException, SAXException, IOException {
-        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse (new File(LocalMachine.home + "logs/finalLog.xml"));
+		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+		Document doc = docBuilder.parse (new File(LocalMachine.home + "logs/finalLog.xml"));
 
-        // normalize text representation
-        doc.getDocumentElement ().normalize ();
-        NodeList listOfLogActions = doc.getElementsByTagName("log_action");
-        int totalLogActions = listOfLogActions.getLength();
-        String prevNodeText = null;
-        for (int logActionIndex = 0; logActionIndex < totalLogActions; logActionIndex++) {
-        	NodeList childsOfLogAction = listOfLogActions.item(logActionIndex).getChildNodes();
-        	int index = 0;
-        	String nodeText = null;
-        	if (childsOfLogAction.item(1).getFirstChild() == null) {
-        		logData.hintsUsed.put(prevNodeText);
-        	}
-        	else{
-        	while (index < childsOfLogAction.getLength()) {
-        		Node childNode = childsOfLogAction.item(index);
-        		
-        		if (childNode.getNodeName().equals("action")) {
-        			nodeText = childNode.getFirstChild().getTextContent();
-        			nodeText = nodeText.substring
-        					(nodeText.indexOf(":") + 1, nodeText.lastIndexOf(":")).trim();
-        			prevNodeText = nodeText;
-        		}
-        		else if (childNode.getNodeName().equals("result")) {
-        			String resultNodeText = childNode.getFirstChild().getTextContent();
-        			if (resultNodeText.equals("Correct")) {
-        				logData.setCorrectAnswers(logData.getCorrectAnswers() + 1);
-        			}
-        			else if (resultNodeText.equals("InCorrect")) {
-        				logData.setTotalIncorrectAttempts(logData.getTotalIncorrectAttempts() + 1);
-        				logData.incorrectAttemptsConcordance.put(nodeText);
-        			}
-        		}
-        		index++;
-        	}
-        	}
-        }
+		// normalize text representation
+		doc.getDocumentElement ().normalize ();
+		NodeList listOfLogActions = doc.getElementsByTagName("log_action");
+		int totalLogActions = listOfLogActions.getLength();
+		String prevNodeText = null;
+		for (int logActionIndex = 0; logActionIndex < totalLogActions; logActionIndex++) {
+			NodeList childsOfLogAction = listOfLogActions.item(logActionIndex).getChildNodes();
+			int index = 0;
+			String nodeText = null;
+			if (childsOfLogAction.item(1).getFirstChild() == null) {
+				logData.hintsUsed.put(prevNodeText);
+			}
+			else{
+				while (index < childsOfLogAction.getLength()) {
+					Node childNode = childsOfLogAction.item(index);
+					String presentNodeName = childNode.getNodeName();
+					if (childNode.getNodeName().equals("action")) {
+						nodeText = childNode.getFirstChild().getTextContent();
+						nodeText = nodeText.substring
+						(nodeText.indexOf(":") + 1, nodeText.lastIndexOf(":")).trim();
+						prevNodeText = nodeText;
+					}
+					else if (childNode.getNodeName().equals("result")) {
+						String resultNodeText = childNode.getFirstChild().getTextContent();
+						if (resultNodeText.equals("Correct")) {
+							logData.setCorrectAnswers(logData.getCorrectAnswers() + 1);
+						}
+						else if (resultNodeText.equals("InCorrect")) {
+							logData.setTotalIncorrectAttempts(logData.getTotalIncorrectAttempts() + 1);
+							logData.incorrectAttemptsConcordance.put(nodeText);
+						}
+					}
+					index++;
+				}
+			}
+		}
 	}
 
 	/**
@@ -134,27 +141,27 @@ public class LogDataStore {
 			xmlFile.delete();
 		}
 		FileWriter out = new FileWriter(batFile);
-//			out.write("set CLASSPATH=%CLASSPATH%" + LocalMachine.classPath.replace("/", "\\"));
+		//			out.write("set CLASSPATH=%CLASSPATH%" + LocalMachine.classPath.replace("/", "\\"));
 		out.write("java -cp \"../automate/lib/DorminWidgets.jar\" edu.cmu.pact.Log.LogFormatUtils " + "raw.log dummyLog.xml tempfile finalLog.xml");  
 		out.close();
 		String execBat = "cmd.exe /c CreateFinalLog.bat";
 		System.out.println("Converting raw.log to finalLog.xml");
-		
+
 		Process pr = Runtime.getRuntime().exec(execBat,null, new File(LocalMachine.home+"logs"));
 		InputStreamReader tempReader = new InputStreamReader(new BufferedInputStream(pr.getInputStream()));
-        BufferedReader reader = new BufferedReader(tempReader);
-        while (true){
-            String line = reader.readLine();
-            if (line == null)
-                break;
-            System.out.println(line);
-        }	
+		BufferedReader reader = new BufferedReader(tempReader);
+		while (true){
+			String line = reader.readLine();
+			if (line == null)
+				break;
+			System.out.println(line);
+		}	
 		try {
 			System.out.println((pr.waitFor() == 0) ? "Converted to XML" : "Problem in converting to XML");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-			
+
 	}
 
 	/**
@@ -168,7 +175,7 @@ public class LogDataStore {
 			File oldLog = new File(logFolder, "raw.log");
 			if (oldLog.exists()) oldLog.delete();
 			String[] fileList = logFolder.list(new FilenameFilter() {
-				
+
 				@Override
 				public boolean accept(File dir, String name) {
 					return (name.endsWith(".log") && name.startsWith(logFileNameStartsWith)) ? true : false;
