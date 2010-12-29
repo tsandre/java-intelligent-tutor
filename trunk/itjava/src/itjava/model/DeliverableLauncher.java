@@ -45,7 +45,7 @@ public class DeliverableLauncher {
 		
 		try {
 			 conn = DBConnection.GetConnection();
-			 String getFirstSql = "select min(deliverableName), deliverableId from DeliverableInfo " + 
+			 String getFirstSql = "select deliverableName, deliverableId from DeliverableInfo " + 
 			 	" where tutorialInfoId = ? " +
 			 	" and deliverableType = ?";
 			 PreparedStatement selectStmt = conn.prepareStatement(getFirstSql);
@@ -125,6 +125,7 @@ public class DeliverableLauncher {
 			score = (Integer) ScoresStore.Select("score", whereClause).get(0);
 		}
 		else {
+			//TODO: Add code to delete log file of example.
 			score = _deliveredHistory.get(deliverableId);
 		}
 		
@@ -135,37 +136,20 @@ public class DeliverableLauncher {
 				 String getSql = "select deliverableName, deliverableId from DeliverableInfo " + 
 				 	" where tutorialInfoId = ? " +
 				 	" and deliverableType = ? ";
-				 
 				 String lessThanSql = getSql + "and deliverableId <> ?";
 				 PreparedStatement selectStmt = conn.prepareStatement(lessThanSql);
 				 selectStmt.setInt(1, this._tutorialInfoId);
 				 selectStmt.setString(2, "Example");
 				 selectStmt.setInt(3, deliverableId);
-				 selectStmt.setInt(4, deliverableId);
-				 			 
 				 ResultSet rs = selectStmt.executeQuery();
-				 if (rs.next()) {
+				 while (rs.next()) {
 					 deliverableName = rs.getString(1);
 					 deliverableId = rs.getInt(2);
-				 }
-				 else {
-					 String greaterThanSql = getSql + "and deliverableId <> ?" + "and difficultyLevel <= " +
-				 		"(select difficultyLevel from DeliverableInfo where deliverableId = ?)";
-					 selectStmt = conn.prepareStatement(greaterThanSql);
-					 selectStmt.setInt(1, this._tutorialInfoId);
-					 selectStmt.setString(2, "Quiz");
-					 selectStmt.setInt(3, deliverableId);
-					 selectStmt.setInt(4, deliverableId);
-					 rs = selectStmt.executeQuery();
-					 if (rs.next()) {
-						 deliverableName = rs.getString(1);
-						 deliverableId = rs.getInt(2);
-					 }
-					 else {
-						 System.err.println("0 tuples for TutorialInfoId : " + this._tutorialInfoId);	 
+					 if (!_deliveredHistory.containsKey(deliverableId)) {
+						 keyVal = new KeyValue<Integer, String>(deliverableId, deliverableName);
+						 break;
 					 }
 				 }
-				 
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {
@@ -180,7 +164,10 @@ public class DeliverableLauncher {
 					e.printStackTrace();
 				}
 			}
-			return new KeyValue<Integer, String>(deliverableId, deliverableName);
+			// TODO: Direct to End page
+			//if(deliverableName != "null"){
+			return keyVal;
+			//}
 		}
 		// if score is 100 (that means last deliverable was either example or successful quiz)
 		//		then deliver quiz with difficulty level higher than current one. 
@@ -193,14 +180,12 @@ public class DeliverableLauncher {
 				
 				//TODO : order by difficultyLevel
 				String nextSql = getSql
-						+ "and deliverableId <> ?"
 						+ "and difficultyLevel > "
-						+ "(select difficultyLevel from DeliverableInfo where deliverableId = ?)";
+						+ "(select difficultyLevel from DeliverableInfo where deliverableId = ?) order by difficultyLevel";
 				PreparedStatement selectStmt = conn.prepareStatement(nextSql);
 				selectStmt.setInt(1, this._tutorialInfoId);
 				selectStmt.setString(2, "Quiz");
 				selectStmt.setInt(3, deliverableId);
-				selectStmt.setInt(4, deliverableId);
 
 				ResultSet rs = selectStmt.executeQuery();
 				while (rs.next()) {
@@ -239,8 +224,8 @@ public class DeliverableLauncher {
 				 	" where tutorialInfoId = ? " +
 				 	" and deliverableType = ? ";
 				 
-				 String nextSql = getSql + "and deliverableId <> ?" + "and difficultyLevel = " +
-				 		"(select difficultyLevel from DeliverableInfo where deliverableId = ?)";
+				 String nextSql = getSql + "and deliverableId <> ?" + "and difficultyLevel >= " +
+				 		"(select difficultyLevel from DeliverableInfo where deliverableId = ?) order by difficultyLevel";
 				 PreparedStatement selectStmt = conn.prepareStatement(nextSql);
 				 selectStmt.setInt(1, this._tutorialInfoId);
 				 selectStmt.setString(2, "Quiz");
@@ -248,13 +233,14 @@ public class DeliverableLauncher {
 				 selectStmt.setInt(4, deliverableId);
 				 			 
 				 ResultSet rs = selectStmt.executeQuery();
-				 if (rs.next()) {
-					 deliverableName = rs.getString(1);
-					 deliverableId = rs.getInt(2);
-				 }
-					 else {
-						 System.err.println("0 tuples for TutorialInfoId : " + this._tutorialInfoId);	 
-					 }
+				 while (rs.next()) {
+						deliverableName = rs.getString(1);
+						deliverableId = rs.getInt(2);
+						if (!_deliveredHistory.containsKey(deliverableId)) {
+							keyVal = new KeyValue<Integer, String>(deliverableId, deliverableName);
+							break;
+						}
+					} 
 				 }
 				 
 			catch (ClassNotFoundException e) {
@@ -271,7 +257,7 @@ public class DeliverableLauncher {
 					e.printStackTrace();
 				}
 			}
-			return new KeyValue<Integer, String>(deliverableId, deliverableName);
+			return keyVal;
 		}
 	}
 
