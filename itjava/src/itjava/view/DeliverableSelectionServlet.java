@@ -4,6 +4,8 @@ import itjava.data.LogData;
 import itjava.model.DeliverableInfoStore;
 import itjava.model.DeliverableLauncher;
 import itjava.model.LogDataStore;
+import itjava.model.WordInfoStore;
+import itjava.util.Concordance;
 import itjava.util.KeyValue;
 
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,18 +52,22 @@ public class DeliverableSelectionServlet extends HttpServlet {
 		int tutorialInfoId = (Integer) session.getAttribute("tutorialInfoId");
 		HashMap<String, Integer> whereClause = new HashMap<String, Integer>();
 		whereClause.put("deliverableId", deliveryKeyValue.getKey());
-		int numOfBlanks = DeliverableInfoStore.Select("numOfBlanks", whereClause).get(0);
+		int numOfBlanks = DeliverableInfoStore.SelectNumOfBlanks("numOfBlanks", whereClause).get(0);
 		LogData logData = null;
 		try {
-			logData = LogDataStore.CreateLogData(numOfBlanks, null);
+			Concordance<String> hintsAvailable = new Concordance<String>();
+			hintsAvailable = WordInfoStore.SelectWordInfo(whereClause);
+			logData = LogDataStore.CreateLogData(numOfBlanks, hintsAvailable);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Problem creating log data");
 		}
-		
 		int scoreId = deliverableLauncher.SetScore(deliveryKeyValue.getKey(), logData.getScore());
 		deliveryKeyValue = deliverableLauncher.GetNextDeliverableName(deliveryKeyValue.getKey(), scoreId);
-		String nextPage = "studentMainTest.jsp?id=" + tutorialInfoId  + "&deliName=" + deliveryKeyValue.getValue();
+		session.setAttribute("deliveryKeyValue", deliveryKeyValue);
+		String nextPage = "studentMainTest.jsp?id=" + tutorialInfoId;
+		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
+		dispatcher.forward(request, response);
 	}
 
 }
