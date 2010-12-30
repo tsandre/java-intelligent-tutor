@@ -70,7 +70,7 @@ ArrayList<TutorialInfo> tutorialInfoList = TutorialInfoStore.SelectInfo(whereCla
 KeyValue<Integer, String> deliveryKeyValue = (KeyValue<Integer, String>)session.getAttribute("deliveryKeyValue");
 int deliverableId = -1;
 String deliverableName = null;
-if (deliveryKeyValue == null  && request.getParameter("start").trim() == "1") {
+if (deliveryKeyValue == null  && request.getParameter("start").trim().equals("1")) {
 	deliveryKeyValue = deliverableLauncher.GetFirstDeliverableName();
 }
 else if (deliveryKeyValue == null)
