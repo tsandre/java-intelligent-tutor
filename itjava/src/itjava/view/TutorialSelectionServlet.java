@@ -46,9 +46,7 @@ public class TutorialSelectionServlet extends HttpServlet {
 		if (approved.equals("Yes")) {
 			approvedTutorialList = (ArrayList<Tutorial>) session.getAttribute("approvedTutorialList");
 			approvedListIndex = approvedTutorialList.size();
-
 			List<String> selectedWordInfoIndices = Arrays.asList(request.getParameterValues("cbxWordInfo"));
-			
 			if (selectedWordInfoIndices == null) {
 				System.err.println("Check boxes not selected");
 			}
