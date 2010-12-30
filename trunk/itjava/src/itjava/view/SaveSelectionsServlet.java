@@ -45,7 +45,7 @@ public class SaveSelectionsServlet extends HttpServlet {
 		ArrayList<List<String>> wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
 		ArrayList<Integer> difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
 		ArrayList<HashMap<String, ArrayList<String>>> hintsMapList = (ArrayList<HashMap<String, ArrayList<String>>>)session.getAttribute("hintsMapList");
-		
+		ArrayList<Tutorial> tutorialList = (ArrayList<Tutorial>) session.getAttribute("tutorialList");
 		if (nextExample.equals("Next Snippet >>")) {
 			nextIndex = currentIndex + 1;
 		}
@@ -71,8 +71,10 @@ public class SaveSelectionsServlet extends HttpServlet {
 					}
 				}
 				//TODO : Find the actual value of the blank
-				//TODO : Verify whether this is required. Or the last hint is by default the actual value.
-				hintsList.add("Actual value"); // The last hint should be the actual value
+				int currentWordIndex = Integer.parseInt(selectedWordIndex);
+				ArrayList<WordInfo> currentWordInfo = tutorialList.get(currentIndex).getWordInfoList();
+				String currentWord = currentWordInfo.get(currentWordIndex).wordToBeBlanked;
+				hintsList.add(currentWord);
 				currHintsMaps.put(selectedWordIndex, hintsList);
 			}
 			hintsMapList.set(currentIndex, currHintsMaps);
