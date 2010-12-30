@@ -73,7 +73,7 @@ Main Banner
 for (TutorialInfo tutorialInfo : tutorialInfoList) {
 	out.println("<tr>");
 	out.print("<td rowspan=\"3\" class=\"tdTutorialName\">");
-	out.print("<a href=\"studentMainTest.jsp?id=" + tutorialInfo.getTutorialId() + "\">");
+	out.print("<a href=\"studentMainTest.jsp?start=1&id=" + tutorialInfo.getTutorialId() + "\">");
 	out.print(tutorialInfo.getTutorialName());
 	out.println("</a></td>");
 	out.print("<td class=\"tdMeta\">Created by : ");
