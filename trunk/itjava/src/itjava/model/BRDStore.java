@@ -12,9 +12,7 @@ public class BRDStore {
 	public static void GenerateBRD(Tutorial tutorial) {
 		ArrayList<EdgeData> edgeDataList = tutorial.getEdgeDataList();
 		ArrayList<LabelData> labelDataList = tutorial.getLabelDataList();
-		ArrayList<WordInfo> hintList = tutorial.getWordInfoList();
-		int hintIndex = hintList.get(0).hintsAvailable.size();
-		String[] hintValue = new String[hintIndex];
+		ArrayList<WordInfo> wordList = tutorial.getWordInfoList();
 		int edgeIndex = edgeDataList.size();
 		int labelIndex = labelDataList.size();
 		String[] edgeValue = new String[edgeIndex];
@@ -39,10 +37,7 @@ public class BRDStore {
 		int _destID = 1;
 		//   int x_val = 200;
 		//   int y_val = 0;
-		for (int a = 0; a < hintList.get(0).hintsAvailable.size(); a++)
-		{
-			hintValue[a] = hintList.get(0).hintsAvailable.get(a);
-		}
+	
 		for (int i = 0; i < edgeDataList.size(); i++)
 		{
 			edgeValue[i] = edgeDataList.get(i).getEdgeVal();
@@ -204,9 +199,16 @@ public class BRDStore {
 				out.write(" <buggyMessage>"+buggyMessage[k]+"</buggyMessage>\r\n");
 				out.write(" <successMessage></successMessage>\r\n");
 				//TODO: Add a for loop here also, to print all hints
-				for( int b =0; b < hintValue.length; b++)
+				if(edgeValue[k].trim().toLowerCase().contentEquals("done"))
 				{
-				out.write(" <hintMessage>"+hintValue[b]+"</hintMessage>\r\n");
+					out.write(" <hintMessage>Press \"Done\" button</hintMessage>\r\n");
+				}
+				else
+				{
+				for( int b =0; b < wordList.get(k).hintsAvailable.size(); b++)
+				{
+				out.write(" <hintMessage>"+wordList.get(k).hintsAvailable.get(b)+"</hintMessage>\r\n");
+				}
 				}
 				if (edgeactionLabel[k] == "true")
 				{
