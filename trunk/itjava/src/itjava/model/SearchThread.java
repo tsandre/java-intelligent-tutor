@@ -40,7 +40,7 @@ public class SearchThread implements Runnable {
 			while ((inputLine = reader.readLine()) != null) {
 				finalContents += "\n" + inputLine.replaceAll("<code", "<pre").replaceAll("code>", "pre>");
 			}
-			
+			reader.close();
 			Document doc = Jsoup.parse(finalContents);
 			Elements eles = doc.getElementsByTag("pre");
 			ResultEntry newEntry;

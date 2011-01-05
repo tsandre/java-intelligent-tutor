@@ -1,5 +1,6 @@
 package itjava.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,6 +31,18 @@ public class CompilationUnitStore {
 	private static CompilationUnitFacade _facade;
 	private static List<CompilationUnitFacade> _facadeList;
 
+	/**
+	 * This is the method that accepts a list of {@link ResultEntry} objects.
+	 * Processes the Text of each {@link ResultEntry} object in 3 steps: <br /><ol>
+	 * <li>Removes the code if it is blank or does not contain a single semicolon(;)</li>
+	 * <li>Initializes an AST Parser as a complete COMPILATION UNIT. This fails if the code snippet cannot be compiled 
+	 * as an entire atomic unit.</li>
+	 * <li>This step gets executed only if the last one failed. AST parser is initialized in form of a group of STATEMENTS.</li>
+	 * </ol>
+	 * @param query
+	 * @param resultEntryList
+	 * @return ArrayList<{@link CompilationUnitFacade}> 
+	 */
 	public ArrayList<CompilationUnitFacade> createCompilationUnitFacadeList(
 			String query, ArrayList<ResultEntry> resultEntryList) {
 		ArrayList<CompilationUnitFacade> compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
@@ -52,9 +65,12 @@ public class CompilationUnitStore {
 					compilationUnitFacade.setUrl(resultEntry.url);
 					compilationUnitFacadeList.add(compilationUnitFacade);
 					}
-					catch(Exception e) {
-						System.err.println("Problem creating valid facade..");
+					catch(IOException e) {
+						System.err.println("Problem setting lines of code.." + e.getMessage());
+					}
+					catch (Exception e) {
 						e.printStackTrace();
+						System.err.println("Problem creating valid facade..");
 					}
 					break;
 				}
@@ -71,9 +87,12 @@ public class CompilationUnitStore {
 					compilationUnitFacade.setUrl(resultEntry.url);
 					compilationUnitFacadeList.add(compilationUnitFacade);
 					}
+					catch(IOException e) {
+						System.err.println("Problem setting lines of code.." + e.getMessage());
+					}
 					catch (Exception e) {
-						System.err.println("Problem creating valid facade..");
 						e.printStackTrace();
+						System.err.println("Problem creating valid facade..");
 					}
 					break;
 				}
@@ -90,7 +109,7 @@ public class CompilationUnitStore {
 	}
 	
 	private CompilationUnitFacade createCompilationUnitFacade(
-			CompilationUnit compilationUnit, String sourceCode) throws Exception {
+			CompilationUnit compilationUnit, String sourceCode) throws IOException {
 				
 		_facade = new CompilationUnitFacade();
 		_facade.setLinesOfCode(sourceCode);
@@ -127,7 +146,7 @@ public class CompilationUnitStore {
 		return _facade;
 	}
 	
-	private CompilationUnitFacade createCompilationUnitFacade(Block block, String sourceCode) throws Exception {
+	private CompilationUnitFacade createCompilationUnitFacade(Block block, String sourceCode) throws IOException  {
 		_facade = new CompilationUnitFacade();
 		_facade.setLinesOfCode(sourceCode);
 
@@ -160,10 +179,10 @@ public class CompilationUnitStore {
 			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);
 			System.out.println("---------------");
 		}
-		ArrayList<CompilationUnitFacade> compilationUnits = RemoveDuplicateSnippets(compilationUnitFacadeList);
-		Matrix matrix = new Matrix(compilationUnits);
-		for (CompilationUnitFacade x : compilationUnits) {
-			for (CompilationUnitFacade y : compilationUnits) {
+		RemoveDuplicateSnippets(compilationUnitFacadeList);
+		Matrix matrix = new Matrix(compilationUnitFacadeList);
+		for (CompilationUnitFacade x : compilationUnitFacadeList) {
+			for (CompilationUnitFacade y : compilationUnitFacadeList) {
 				if (!matrix.contains(y, x)) {
 					matrix.setValues(x, y);
 				}
@@ -178,7 +197,8 @@ public class CompilationUnitStore {
 	 * @param compilationUnitFacadeList
 	 * @return ArrayList of CompilationUnitFacade without very similar linesOfCode.
 	 */
-	private ArrayList<CompilationUnitFacade> RemoveDuplicateSnippets(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
+	private void RemoveDuplicateSnippets(ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
+		System.err.println("Removing duplicates now..");
 		ArrayList<String> cleanFacades = new ArrayList<String>();
 		Iterator<CompilationUnitFacade> itFacades = compilationUnitFacadeList.iterator();
 		while (itFacades.hasNext()) {
@@ -191,7 +211,7 @@ public class CompilationUnitStore {
 				itFacades.remove();
 			}
 		}
-		return compilationUnitFacadeList;
+		System.err.println("Done removing duplicates..");
 	}
 
 	/*public HashMap<ArrayList<String>,ArrayList<WordInfo>> FindCommonDeclaration(ArrayList<CompilationUnitFacade> compilationUnitFacadeList){

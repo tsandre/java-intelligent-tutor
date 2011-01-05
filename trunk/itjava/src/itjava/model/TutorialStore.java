@@ -48,7 +48,7 @@ public class TutorialStore {
 		edgeDataList = new ArrayList<EdgeData>();
 	}
 	
-	public Tutorial GenerateTutorial(Tutorial tutorial) {
+	public Tutorial GenerateTutorial(Tutorial tutorial) throws Exception {
 		if (tutorial.getLinesOfCode() == null) {
 		if (tutorial.getLinesOfCode().size() == 0) {
 			System.err.println("Input param for GenerateTutorial are NULL");
@@ -95,7 +95,7 @@ public class TutorialStore {
 		}
 	}
 
-	private void CreateInitComponentsFunction() {
+	private void CreateInitComponentsFunction() throws Exception {
 		_initComponentFunctionDeclaration = TutorialTemplate.initComponentsBegin();
 		
 		for(String labelVariable: _labelVariables) {
@@ -117,7 +117,7 @@ public class TutorialStore {
 		
 	}
 
-	private void AddComponentsToPanel() {
+	private void AddComponentsToPanel() throws Exception {
 		
 		ArrayList<Integer> lineNumbersForBlankedWords = new ArrayList<Integer>();
 		Iterator<WordInfo> wordInfoIterator = null;
@@ -146,6 +146,7 @@ public class TutorialStore {
 				if (currWordInfo.lineNumber != indexOfLinesOfCode) {
 					System.err.println("WordInfoList and LinesOfCode List not in sync..");
 					System.err.println("OR multiple words on single line");
+					throw new Exception("WordInfo not in sync with AST parser data..");
 				}
 				int beginIndex = currWordInfo.columnNumber + currWordInfo.wordLength();
 				String restOfLine = lineOfCode.trim().substring(beginIndex);
@@ -254,7 +255,7 @@ public class TutorialStore {
 				insertStmt.setInt(5, (tutorial.getWordInfoList() == null) ? 0 : tutorial.getWordInfoList().size());
 				rowsInserted += insertStmt.executeUpdate();
 				ResultSet rs = insertStmt.getGeneratedKeys();
-				while (rs.next()) {
+				while (rs.next() && tutorial.getType().equals("Quiz")) {
 					DeliverableInfoStore.InsertBlankWordsInfo(rs.getInt(1), tutorial.getWordInfoList());
 				}
 			}

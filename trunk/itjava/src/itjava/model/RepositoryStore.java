@@ -153,6 +153,7 @@ public class RepositoryStore {
 				}
 			}
 			ArrayList<ResultEntry> resultEntryList = ResultEntryStore.createResultEntryList(fileContentsToUrlMap);
+			System.out.println("Now creating compilation units of snippets saved in the repository..");
 			repository.allDocuments = cuStore.createCompilationUnitFacadeList(null, resultEntryList);
 			repository.allUrls = allUrls;
 		}

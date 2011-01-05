@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import org.jsoup.Jsoup;
@@ -25,9 +26,38 @@ public class LinkStore {
 		LinkedHashSet<String> _setOfLinks;
 		_setOfLinks = new LinkedHashSet<String>();
 		//_setOfLinks.addAll(GoogleSearch());
-		//_setOfLinks.addAll(BingSearch());
+		_setOfLinks.addAll(BingSearch(query));
 		_setOfLinks.addAll(YahooSearch(query));
 		return _setOfLinks;
+	}
+
+	private static ArrayList<String> BingSearch(String query) {
+		ArrayList<String> bingSearchResults = new ArrayList<String>();
+		try {
+			String request = "http://api.bing.net/xml.aspx?AppId=731DD1E61BE6DE4601A3008DC7A0EB379149EC29" +
+					"&Version=2.2&Market=en-US&Query=" + URLEncoder.encode(query, "UTF-8") +
+					"&Sources=web+spell&Web.Count=30";
+			
+			URL url = new URL(request);
+			System.out.println("Host : " + url.getHost());
+			url.openConnection();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					url.openStream()));
+			String inputLine;
+			String finalContents = "";
+			while ((inputLine = reader.readLine()) != null) {
+				finalContents += "\n" + inputLine;
+			}
+			Document doc = Jsoup.parse(finalContents);
+			Elements eles = doc.getElementsByTag("web:Url");
+			for (Element ele : eles) {
+				if ( !ele.text().endsWith(".pdf") || !ele.text().endsWith(".doc") || !ele.text().endsWith(".ppt"))
+				bingSearchResults.add(ele.text());	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bingSearchResults;
 	}
 
 	private static ArrayList<String> YahooSearch(String query) {
@@ -35,7 +65,8 @@ public class LinkStore {
 		try {
 			String request = "http://boss.yahooapis.com/ysearch/web/v1/"
 				+ URLEncoder.encode(query, "UTF-8")
-				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf&format=xml&count=20&type=-msoffice,-pdf";
+				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf"
+				+ "&format=xml&count=30&type=-msoffice,-pdf";
 		
 			URL url = new URL(request);
 			System.out.println("Host : " + url.getHost());

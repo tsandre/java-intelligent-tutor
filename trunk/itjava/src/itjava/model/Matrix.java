@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.NoSuchElementException;
 
 /**
  * @author Aniket
@@ -72,7 +73,7 @@ public class Matrix {
 		variableDeclarationSimilarity[indexOfX][indexOfY] = variableDecVal;
 		variableDeclarationSimilarity[indexOfY][indexOfX] = variableDecVal;
 		
-		float similarityVal = importVal * 1 + classInstanceVal * 3 + methodVal * 2 + variableDecVal * 1;
+		float similarityVal = importVal * 1 + classInstanceVal * 3 + methodVal * 5 + variableDecVal * 1;
 		similarity[indexOfX][indexOfY] = similarityVal;
 		similarity[indexOfY][indexOfX] = similarityVal;
 		
@@ -85,8 +86,9 @@ public class Matrix {
 		Collections.sort(sortedSimilarity, new SimilarityComparator());
 		Collections.reverse(sortedSimilarity);
 		Iterator<Similarity> it = sortedSimilarity.iterator();
-		try {
+		/*try {*/
 		while (topSimilar.size() <= numOfSimilarUnits) {
+			try {
 			Similarity currSimilarity = it.next();
 			if (currSimilarity.similarity == (float) 0) {
 				break;
@@ -95,11 +97,16 @@ public class Matrix {
 				topSimilar.add(facadeList.get(currSimilarity.x));
 				topSimilar.add(facadeList.get(currSimilarity.y));
 			}
-		}
+			}
+			catch (NoSuchElementException e ) {
+				System.err.println("Less than " + numOfSimilarUnits + " found..");
+				break;
+			}
+		}/*
 		}
 		catch (Exception e) {
 			System.err.println("Less than " + numOfSimilarUnits + "found..");
-		}
+		}*/
 		return topSimilar;
 	}
 	
