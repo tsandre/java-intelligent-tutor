@@ -203,7 +203,7 @@ public class WordInfoPresenterTest {
 	}
 
 	private void GivenInvalidFile() {
-		GivenFile("samples/UseThisForTestingFacade_4.java");
+		GivenFile("samples/UseThisForTestingFacade_7.java");
 	}
 
 	private void GivenSingleFile() {
