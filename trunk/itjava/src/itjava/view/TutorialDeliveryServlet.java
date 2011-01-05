@@ -89,10 +89,10 @@ public class TutorialDeliveryServlet extends HttpServlet {
 	 * @param finalTutorialList 
 	 */
 	private void SaveChoicesToDisk(TutorialInfo tutorialInfo, ArrayList<Tutorial> finalTutorialList) {
-		int tutorialId = TutorialInfoStore.InsertInfo(tutorialInfo);
-		tutorialInfo.setTutorialId(tutorialId);
-		int rowsInsertedInDeliverableInfo = TutorialStore.InsertDeliverableInfo(finalTutorialList, tutorialId);
-		display.println("<br/> TutorialID:" + tutorialId);
+		int tutorialInfoId = TutorialInfoStore.InsertInfo(tutorialInfo);
+		tutorialInfo.setTutorialId(tutorialInfoId);
+		int rowsInsertedInDeliverableInfo = TutorialStore.InsertDeliverableInfo(finalTutorialList, tutorialInfoId);
+		display.println("<br/> TutorialID:" + tutorialInfoId);
 		display.println("<br />Total number of rows inserted in deliverableInfo : " + rowsInsertedInDeliverableInfo);
 	}
 
