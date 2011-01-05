@@ -46,6 +46,20 @@ public class IntegrateWordInfoAndTutorial {
 		ThenNumberofParanthesisIsBalanced();
 
 	}
+	
+	@Test
+	public void TestAllWordsAreAccessible() throws Exception {
+		GivenFiles();
+		GivenFileWithMultipleWordsOnOneLine();
+		WhenWordInfoIsGenerated();
+		WhenTutorialIsGenerated();
+		ThenWordsInaccesibleMessageNotShown();
+	}
+
+	private void ThenWordsInaccesibleMessageNotShown() {
+		// TODO Check the System.err Stream for presence of the error message.
+		
+	}
 
 	private void WhenTutorialIsGenerated() throws Exception {
 		int i = 0;
@@ -70,16 +84,22 @@ public class IntegrateWordInfoAndTutorial {
 		try {
 			sourceCodes.add(new ResultEntry(Convertor
 					.FileToString("samples/UseThisForTestingFacade_1.java"),
-					"url", 0));
+					"url1", 0));
 			sourceCodes.add(new ResultEntry(Convertor
 					.FileToString("samples/UseThisForTestingFacade_2.java"),
-					"url", 0));
+					"url2", 0));
 			sourceCodes.add(new ResultEntry(Convertor
 					.FileToString("samples/UseThisForTestingFacade_3.java"),
-					"url", 0));
+					"url3", 0));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void GivenFileWithMultipleWordsOnOneLine() throws Exception {
+		sourceCodes.add(new ResultEntry(Convertor
+				.FileToString("samples/UseThisForTestingFacade_8.java"),
+				"url", 0));
 	}
 
 	private void WhenWordInfoIsGenerated() {

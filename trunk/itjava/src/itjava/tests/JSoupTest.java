@@ -7,6 +7,7 @@ import java.net.URLConnection;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
@@ -26,7 +27,9 @@ public class JSoupTest {
 			}
 			Document doc = Jsoup.parse(finalContents);
 			Elements eles = doc.getElementsByTag("pre");
-			System.out.println(eles.text());
+			for (Element ele : eles) {
+				System.out.println(ele.text());
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
