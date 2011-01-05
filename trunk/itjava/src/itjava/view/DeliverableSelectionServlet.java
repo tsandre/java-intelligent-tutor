@@ -52,7 +52,7 @@ public class DeliverableSelectionServlet extends HttpServlet {
 		int tutorialInfoId = (Integer) session.getAttribute("tutorialInfoId");
 		HashMap<String, Integer> whereClause = new HashMap<String, Integer>();
 		whereClause.put("deliverableId", deliveryKeyValue.getKey());
-		int numOfBlanks = DeliverableInfoStore.Select("numOfBlanks", whereClause).get(0);
+		int numOfBlanks = DeliverableInfoStore.SelectNumOfBlanks(whereClause).get(0);
 		LogData logData = null;
 		try {
 			Concordance<String> hintsAvailable = new Concordance<String>();
