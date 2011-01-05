@@ -21,7 +21,7 @@ import java.util.Map.Entry;
  */
 public class DeliverableInfoStore {
 
-	public static ArrayList<Integer> SelectNumOfBlanks(String attribute, HashMap<String, Integer> whereClause) {
+	public static ArrayList<Integer> SelectNumOfBlanks(HashMap<String, Integer> whereClause) {
 		Connection conn = null;
 		ArrayList<Integer> retValue = new ArrayList<Integer>();
 		try {
