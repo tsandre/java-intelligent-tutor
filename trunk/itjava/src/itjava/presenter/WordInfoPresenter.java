@@ -9,8 +9,10 @@ import itjava.model.ResultEntry;
 import itjava.model.Tutorial;
 import itjava.model.WordInfo;
 import itjava.model.WordInfoStore;
+import itjava.util.WordInfoComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 
@@ -21,7 +23,7 @@ import org.eclipse.jdt.core.dom.Type;
 public class WordInfoPresenter {
 
 	public CompilationUnitStore compilationUnitStore;
-	public ArrayList<CompilationUnitFacade> compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
+	public ArrayList<CompilationUnitFacade> compilationUnitFacadeList;
 	public boolean hasCommonNodes;
 	private Repository _repository;
 	private String _readableName;
@@ -48,19 +50,21 @@ public class WordInfoPresenter {
 	 */
 	public WordInfoPresenter() {
 		compilationUnitStore = new CompilationUnitStore();
+		compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
 	}
 
 	/**
 	 * Creates the {@link ArrayList} of {@link Tutorial}
 	 * Seeks for top 10 similar {@link CompilationUnitFacade} out of the ones generated after the recent 
-	 * Once similar CompilationUnitFacade s are found, it creates {@link WordInfo} by calling createWordInfo method on {@link WordInfoStore}
+	 * Once similar CompilationUnitFacade s are found, it creates {@link WordInfo} by calling 
+	 * createWordInfo method on {@link WordInfoStore}
 	 * @return
 	 */
 	public ArrayList<Tutorial> GenerateWordInfoMap() {
 		ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
 		int tutorialNameIndex = 0;
 		
-		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 5);
+		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 15);
 		for (CompilationUnitFacade facade : similarFacades) {
 			ArrayList<WordInfo> wordInfoList = new ArrayList<WordInfo>();
 			
@@ -77,7 +81,7 @@ public class WordInfoPresenter {
 				}
 			}
 			
-			ArrayList<String> topMethods = facade.getTFVector().getSortedTerms(NodeToCompare.MethodInvocation, 2);
+			ArrayList<String> topMethods = facade.getTFVector().getSortedTerms(NodeToCompare.MethodInvocation, 5);
 			for (SimpleName methodInvocation : facade.getMethodInvocations()) {
 				if (topMethods.contains(methodInvocation.getFullyQualifiedName())) {
 					try {
@@ -90,7 +94,7 @@ public class WordInfoPresenter {
 				}
 			}
 			
-			ArrayList<String> topClassInstances = facade.getTFVector().getSortedTerms(NodeToCompare.ClassInstanceCreator, 2);
+			ArrayList<String> topClassInstances = facade.getTFVector().getSortedTerms(NodeToCompare.ClassInstanceCreator, 3);
 			for (Type classInstance : facade.getClassInstances()) {
 				if (topClassInstances.contains(classInstance.toString())) {
 					try {
@@ -103,6 +107,7 @@ public class WordInfoPresenter {
 				}
 			}
 			if (wordInfoList.size() > 0) {
+				Collections.sort(wordInfoList, new WordInfoComparator());
 				tutorialList.add(new Tutorial("Example" + tutorialNameIndex, _readableName, wordInfoList, facade.getLinesOfCode(), facade.getUrl()));
 				tutorialNameIndex++;
 			}

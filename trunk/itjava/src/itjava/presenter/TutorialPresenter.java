@@ -15,6 +15,7 @@ import itjava.model.Tutorial;
 import itjava.model.TutorialDeployer;
 import itjava.model.TutorialStore;
 import itjava.model.WordInfo;
+import itjava.util.WordInfoComparator;
 
 public class TutorialPresenter {
 private TutorialStore _tutorialStore;
@@ -71,12 +72,4 @@ private TutorialStore _tutorialStore;
 		return wordInfoList;
 	}
 	
-	static class WordInfoComparator implements Comparator<WordInfo>{
-		@Override
-		public int compare(WordInfo w1, WordInfo w2) {
-			return ((w1).lineNumber > (w2).lineNumber) ? 1 : 0;
-		}
-	}
-	
-
 }
