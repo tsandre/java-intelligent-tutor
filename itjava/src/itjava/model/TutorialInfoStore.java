@@ -105,7 +105,10 @@ public class TutorialInfoStore {
 			}
 			PreparedStatement selectStmt = _conn.prepareStatement(selectSql);
 			ResultSet result = selectStmt.executeQuery();
+			System.out.println("Where clause size for TutorialInfo:" + ((whereClause == null)? 0 : whereClause.size()));
+			int numOfRowsReturned = 0;
 			while (result.next()) {
+				numOfRowsReturned++;
 				int tutorialInfoId = result.getInt("tutorialInfoId");
 				String folderName = result.getString("folderName");
 				String tutorialName = result.getString("tutorialName");
@@ -119,6 +122,7 @@ public class TutorialInfoStore {
 						tutorialDescription, numExamples, numQuizes, creationDate, 
 						createdBy, timesAccessed));
 			}
+			System.out.println("Corresponding # of rows:" + numOfRowsReturned);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

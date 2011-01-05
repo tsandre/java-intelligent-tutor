@@ -28,6 +28,11 @@ public class Convertor {
 		return fileContent;
 	}
 	
+	/**
+	 * Removes empty lines from the code. Also replaces multiple whitespace characters with single space.
+	 * @param rawCode
+	 * @return
+	 */
 	public static String FormatCode(String rawCode) {
 		String formattedCode = "";
 		try {
@@ -36,6 +41,10 @@ public class Convertor {
 			while (currLine != null) {
 				if (currLine.trim().length() > 0) {
 					if (!currLine.trim().startsWith("//")) {
+						if (currLine.contains("//")) {
+							int commentStartIndex = currLine.indexOf("//");
+							currLine = currLine.substring(0, commentStartIndex);
+						}
 						formattedCode += currLine.trim().replaceAll("\\s+", " "); // + "\n"; // Removed \n and also removed all possible whitespace
 					}
 				}
@@ -48,7 +57,7 @@ public class Convertor {
 		return formattedCode;
 	}
 	
-	public static ArrayList<String> StringToArrayListOfStrings(String linesOfCode) throws Exception {
+	/*public static ArrayList<String> StringToArrayListOfStrings(String linesOfCode) throws Exception {
 		ArrayList<String> _linesOfCode = new ArrayList<String>();
 		try {
 			BufferedReader bReader = new BufferedReader(new StringReader(linesOfCode));
@@ -65,31 +74,17 @@ public class Convertor {
 		catch(Exception e) {
 			System.err.println(e.getMessage() + "Problem in converting String to ArrayList of Strings");
 		}
-		/*String codeInSingleLine = linesOfCode.replace("\n", "");
-		String tempLinesOfCode = linesOfCode;
-		while (tempLinesOfCode.indexOf("\n") != -1) {
-			_linesOfCode.add(tempLinesOfCode.substring(0, tempLinesOfCode.indexOf("\n")).trim().replaceAll("\\s+", " "));
-			tempLinesOfCode = tempLinesOfCode.substring(tempLinesOfCode.indexOf("\n") + 1);
-		}*/
-		
-		/*ArrayList<Character> newLineCandidates = new ArrayList<Character>();
-		newLineCandidates.add('{');
-		newLineCandidates.add('}');
-		newLineCandidates.add(';');
-		
-
-		char[] charsOfCode = codeInSingleLine.trim().toCharArray();
-		int length = charsOfCode.length;
-		int cursorPosition = 0;
-		int lastNewLinePosition = -1;
-		while (cursorPosition < length) {
-			if (newLineCandidates.contains(charsOfCode[cursorPosition])) {
-				_linesOfCode.add(codeInSingleLine.substring(1 + lastNewLinePosition,
-						1 + cursorPosition));
-				lastNewLinePosition = cursorPosition;
-			}
-			cursorPosition++;
-		}*/
+		return _linesOfCode;
+	}*/
+	
+	public static ArrayList<String> StringToArrayListOfStrings(String linesOfCode) throws IOException   {
+		ArrayList<String> _linesOfCode = new ArrayList<String>();
+		BufferedReader bReader = new BufferedReader(new StringReader(linesOfCode));
+		String currLine = bReader.readLine();
+		while (currLine != null) {
+			_linesOfCode.add(currLine);
+			currLine = bReader.readLine();
+		}
 		return _linesOfCode;
 	}
 

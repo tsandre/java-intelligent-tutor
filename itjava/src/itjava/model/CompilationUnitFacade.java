@@ -2,6 +2,7 @@ package itjava.model;
 
 import itjava.data.NodeToCompare;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,7 @@ public class CompilationUnitFacade {
 		return this.toString().hashCode();
 	}
 
-	public void setLinesOfCode(String linesOfCode) throws Exception {
+	public void setLinesOfCode(String linesOfCode) throws IOException   {
 		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
 	}
 
@@ -233,6 +234,14 @@ public class CompilationUnitFacade {
 //		    BooleanLiteral
 //		    StringLiteral
 //		    TypeLiteral
+			case (Expression.STRING_LITERAL) :
+			case (Expression.NUMBER_LITERAL) :
+			case (Expression.BOOLEAN_LITERAL) :
+			case (Expression.NULL_LITERAL) :
+			case (Expression.CHARACTER_LITERAL) :
+			case (Expression.TYPE_LITERAL) :
+				break;
+			
 //		    ThisExpression
 //		    SuperFieldAccess
 //		    FieldAccess
@@ -264,15 +273,27 @@ public class CompilationUnitFacade {
 //		    InfixExpression
 			case (Expression.INFIX_EXPRESSION) :
 				//expression like: (a==b) :Do nothing
+				InfixExpression infix = (InfixExpression) expression;
+				addExpression(infix.getLeftOperand());
+				addExpression(infix.getRightOperand());
+				List<Expression> extendedOperands = infix.extendedOperands();
+				for (Expression extendedOperand : extendedOperands) {
+					addExpression(extendedOperand);
+				}
 				break;
 //		    InstanceofExpression
 //		    ConditionalExpression
 //		    PostfixExpression
 //		    PrefixExpression
 //		    CastExpression
+			case(Expression.CAST_EXPRESSION) :
+				CastExpression cast = (CastExpression) expression;
+				addExpression(cast.getExpression());
+				break;
 //		    VariableDeclarationExpression
 			default: 
-				_expressions.add(expression);
+				System.err.println("Expression type not defined: " + expression.getClass());
+				System.err.println("Expression: " + expression.toString());
 				break;
 			}
 		}
