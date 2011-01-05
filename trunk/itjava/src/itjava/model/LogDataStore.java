@@ -165,7 +165,7 @@ public class LogDataStore {
 	}
 
 	/**
-	 * Check presence of .log file in particular location & rename
+	 * Check presence of .log file in particular location & renames to raw.log
 	 * @return
 	 */
 	public static boolean VerifyLogFileAndRename(final String logFileNameStartsWith) {
