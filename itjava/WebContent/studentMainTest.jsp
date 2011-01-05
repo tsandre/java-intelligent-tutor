@@ -55,6 +55,7 @@ int tutorialInfoId = Integer.parseInt(request.getParameter("id"));
 
 DeliverableLauncher deliverableLauncher = (DeliverableLauncher)session.getAttribute("deliverableLauncher");
 if (deliverableLauncher == null) {
+	System.err.println("Landed on studentMainTest.jsp from a wrong source..");
 	response.sendRedirect("studentWelcome.jsp");
 }
 else {
@@ -86,6 +87,7 @@ deliverableName = deliveryKeyValue.getValue();
 <%
 TutorialInfo tutorialInfo = new TutorialInfo();
 if (tutorialInfoList.size() != 1) {
+	System.err.println("TutorialInfo table should have returned only 1 tuple..");
 	out.println("Error seeking Tutorial Information..");
 }
 else {
