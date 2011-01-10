@@ -31,6 +31,11 @@ public class Repository {
 		propertyAssignmentTerms = new TreeMap<String, Integer>();
 	}
 
+	/**
+	 * Checks whether the repository contains the URL.
+	 * @param url
+	 * @return
+	 */
 	public boolean Contains(String url) {
 		return allUrls.contains(url);
 	}
