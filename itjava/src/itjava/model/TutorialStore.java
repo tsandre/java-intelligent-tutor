@@ -136,17 +136,17 @@ public class TutorialStore {
 		for (String lineOfCode:_linesOfCode) {
 			String firstPartOfLineOfCode = lineOfCode;
 			if (prevLineOfCode.contains("{")) {
-				indent += 30;
+				indent += 20;
 			}
 			else if (lineOfCode.contains("}")) {
-				indent -= 30;
+				indent -= 20;
 			}
 			if(lineNumbersForBlankedWords.contains(indexOfLinesOfCode)) {
 				WordInfo currWordInfo = wordInfoIterator.next();
 				if (currWordInfo.lineNumber != indexOfLinesOfCode) {
 					System.err.println("WordInfoList and LinesOfCode List not in sync..");
 					System.err.println("OR multiple words on single line");
-					throw new Exception("WordInfo not in sync with AST parser data..");
+					throw new Exception("Multiple words on single line");
 				}
 				int beginIndex = currWordInfo.columnNumber + currWordInfo.wordLength();
 				String restOfLine = lineOfCode.trim().substring(beginIndex);
