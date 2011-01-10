@@ -65,7 +65,15 @@ public class DeliverableSelectionServlet extends HttpServlet {
 		int scoreId = deliverableLauncher.SetScore(deliveryKeyValue.getKey(), logData.getScore());
 		deliveryKeyValue = deliverableLauncher.GetNextDeliverableName(deliveryKeyValue.getKey(), scoreId);
 		session.setAttribute("deliveryKeyValue", deliveryKeyValue);
-		String nextPage = "studentMainTest.jsp?id=" + tutorialInfoId;
+		String nextPage;
+		if(deliveryKeyValue == null)
+		{
+		nextPage = "studentFinalPage.jsp";
+		}
+		else
+		{
+		nextPage = "studentMainTest.jsp?id=" + tutorialInfoId;
+		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);
 	}
