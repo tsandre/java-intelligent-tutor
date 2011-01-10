@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Convertor {
 
@@ -86,6 +87,18 @@ public class Convertor {
 			currLine = bReader.readLine();
 		}
 		return _linesOfCode;
+	}
+	
+	public static String ArrayListOfStringsToString (ArrayList<String> linesOfCodes) {
+		String stringOfCode = null;
+		Iterator<String> itLines = linesOfCodes.iterator();
+		if (itLines.hasNext()) {
+			stringOfCode = itLines.next();
+		}
+		while (itLines.hasNext()) {
+			stringOfCode += "\n" + itLines.next();
+		}
+		return stringOfCode;
 	}
 
 	public static ArrayList<String> TrimArrayListOfString(
