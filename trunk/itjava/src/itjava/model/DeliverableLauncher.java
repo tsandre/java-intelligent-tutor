@@ -70,7 +70,6 @@ public class DeliverableLauncher {
 				 if (rs.next()) {
 					 deliverableName = rs.getString(1);
 					 deliverableId = rs.getInt(2);
-					 System.out.println("Found first deliverable: " + deliverableName + ":(id=)" + deliverableId);
 				 }
 				 else {
 					 System.err.println("0 tuples for TutorialInfoId : " + this._tutorialInfoId);	 

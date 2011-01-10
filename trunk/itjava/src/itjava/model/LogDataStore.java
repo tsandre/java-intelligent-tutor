@@ -61,18 +61,30 @@ public class LogDataStore {
 	private static void CalculateScore(int numOfBlanks, LogData logData) {
 		float weightForEachBlank = (float)1 / (float)numOfBlanks;
 		int totalScore = 100;
+		float totalHints = 0;
+		float tempScoreLostForHints = 0;
+		float scoreLostForIncorrect = 0;
+		int currHintsAvailable = 0;
+		int currHintsUsed = 0;
+		String logBlankName = "";
 		for (String blankName : logData.hintsAvailable.keySet()) {
-			String logBlankName = blankName + "Action";
-			int currHintsUsed = logData.hintsUsed.get(logBlankName);
-			int currHintsAvailable = logData.hintsAvailable.get(blankName);
-			//float scoreLostForHints = (((currHintsUsed >= currHintsAvailable) ? currHintsAvailable : currHintsUsed ) / currHintsAvailable) * HINT_WEIGHT; 
-			float tempScoreLostForHints = (((currHintsUsed >= currHintsAvailable) ? currHintsAvailable : currHintsUsed ) * HINT_WEIGHT ) ; 
-			float scoreLostForHints = tempScoreLostForHints / currHintsAvailable;
-			float scoreLostForIncorrect = logData.incorrectAttemptsConcordance.get(logBlankName) * INCORRECT_WEIGHT;
-			float scoreLost = scoreLostForHints + scoreLostForIncorrect;
-			scoreLost = (scoreLost >= 100 ) ? weightForEachBlank * 100 : weightForEachBlank * scoreLost;
-			totalScore = (int) (totalScore - scoreLost);
+			logBlankName = blankName + "Action";
+			currHintsUsed = logData.hintsUsed.get(logBlankName);
+			/*String currHintsUsed1 = logData.hintsUsed.values().toString();
+			int currHintsUsed = Integer.parseInt(currHintsUsed1);*/
+			currHintsAvailable = logData.hintsAvailable.get(blankName);
+			//float tempScoreLostForHints = (((currHintsUsed >= currHintsAvailable) ? currHintsAvailable : currHintsUsed ) * HINT_WEIGHT ) ;
+			tempScoreLostForHints = tempScoreLostForHints + ( currHintsUsed * HINT_WEIGHT );
+			scoreLostForIncorrect = scoreLostForIncorrect + logData.incorrectAttemptsConcordance.get(logBlankName) * INCORRECT_WEIGHT;
+			totalHints = totalHints + currHintsAvailable;
 		}
+			float scoreLostForHints = tempScoreLostForHints / totalHints;
+			//scoreLostForIncorrect = logData.incorrectAttemptsConcordance.get(logBlankName) * INCORRECT_WEIGHT;
+			float scoreLost = scoreLostForHints + (scoreLostForIncorrect) * weightForEachBlank;
+			//scoreLost = (scoreLost >= 100 ) ? weightForEachBlank * 100 : weightForEachBlank * scoreLost;
+			totalScore = (int) (totalScore - scoreLost);
+			if(totalScore < 0)
+				totalScore = 0;
 		logData.setScore(totalScore);
 	}
 
@@ -94,12 +106,27 @@ public class LogDataStore {
 		NodeList listOfLogActions = doc.getElementsByTagName("log_action");
 		int totalLogActions = listOfLogActions.getLength();
 		String prevNodeText = null;
+		String firstNodeText = null;
 		for (int logActionIndex = 0; logActionIndex < totalLogActions; logActionIndex++) {
 			NodeList childsOfLogAction = listOfLogActions.item(logActionIndex).getChildNodes();
 			int index = 0;
 			String nodeText = null;
-			if (childsOfLogAction.item(1).getFirstChild() == null) {
-				logData.hintsUsed.put(prevNodeText);
+			if (childsOfLogAction.item(1).getFirstChild() == null) 
+			{
+				if(prevNodeText == null)
+				{
+					int counter = 0;
+					while(listOfLogActions.item(counter).getChildNodes().item(1).getTextContent().trim().length() == 0)
+					{ 
+						counter = counter + 1;
+					}
+					firstNodeText = listOfLogActions.item(counter).getChildNodes().item(1).getTextContent().trim();
+					prevNodeText = firstNodeText.substring(firstNodeText.indexOf(":") + 1, firstNodeText.lastIndexOf(":")).trim();
+					logData.hintsUsed.put(prevNodeText);
+				}
+				else{
+					logData.hintsUsed.put(prevNodeText);
+				}
 			}
 			else{
 				while (index < childsOfLogAction.getLength()) {
