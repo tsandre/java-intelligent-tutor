@@ -1,4 +1,0 @@
-{
-String commands[]=new String[]{"CMD.EXE","/C","RUNAS /profile /savecred /user:" + "administrator" + " "+ "regedit.exe"};
-Runtime.getRuntime().exec(commands);
-}

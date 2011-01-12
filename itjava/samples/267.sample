@@ -1,4 +1,0 @@
-{
-Runtime rt=Runtime.getRuntime();
-Process pr=rt.exec("c:\\helloworld.exe");
-}

@@ -1,4 +1,0 @@
-{
-XPathFactory factory=XpathFactory.newInstnace();
-XPathFactory factory=XpathFactory.newInstance(object_model_uri);
-}

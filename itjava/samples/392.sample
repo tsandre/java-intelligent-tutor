@@ -1,8 +1,0 @@
-{
-DOMParser parser=new DOMParser();
-String xmlDoc="<?xml version='1.0'?>" + "<hello>" + " <world/>"+ "</hello>";
-byte aByteArr[]=xmlDoc.getBytes();
-ByteArrayInputStream bais=new ByteArrayInputStream(aByteArr,0,aByteArr.length);
-DOMParser.parse(bais);
-XMLDocument doc=parser.getDocument();
-}

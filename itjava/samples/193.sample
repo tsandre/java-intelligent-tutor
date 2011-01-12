@@ -1,4 +1,0 @@
-{
-File file=new File("c:\\data\\input-file.txt");
-boolean fileExists=file.exists();
-}

@@ -1,4 +1,0 @@
-{
-TransformerFactory tfactory=TransformerFactory.newInstance();
-SAXTransformerFactory stfactory=(SAXTransformerFactory)tfactory;
-}

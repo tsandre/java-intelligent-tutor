@@ -1,5 +1,0 @@
-{
-String compFile="xml.ser";
-FileOutputStream outStream=new FileOutputStream(compFile);
-ObjectOutputStream out=new ObjectOutputStream(outStream);
-}

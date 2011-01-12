@@ -1,4 +1,0 @@
-{
-FileInputStream fis=new FileInputStream("figs.zip");
-ZipInputStream zin=newZipInputStream(new BufferedInputStream(fis));
-}

@@ -1,4 +1,0 @@
-{
-Socket MyClient;
-MyClient=new Socket("Machine name",PortNumber);
-}

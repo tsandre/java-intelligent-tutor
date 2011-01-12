@@ -1,8 +1,0 @@
-public class Exec {
-static String WIN_PROGRAMFILES=System.getenv("programfiles");
-static String FILE_SEPARATOR=System.getProperty("file.separator");
-public static void main( String[] args) throws Exception {
-String[] commands={"cmd.exe","/c",WIN_PROGRAMFILES + FILE_SEPARATOR + "textpad 4"+ FILE_SEPARATOR+ "textpad.exe"};
-Runtime.getRuntime().exec(commands);
-}
-}

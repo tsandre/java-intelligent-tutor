@@ -1,5 +1,0 @@
-{
-Collection collection=(Collection)objFactory.createCollection();
-Collection.BooksType booksType=objFactory.createCollectionTypeBooksType();
-BookType book=objFactory.createBookType();
-}

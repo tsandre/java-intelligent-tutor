@@ -1,4 +1,0 @@
-{
-WVTStemmer stemmer=new DictionaryStemmer(new FileReader("../data/sample_dictionary.txt"));
-config.setConfigurationRule(WVTConfiguration.STEP_STEMMER,new WVTConfigurationFact(stemmer));
-}

@@ -1,4 +1,0 @@
-{
-r.selectNodeContents(c);
-System.out.println(r.toString());
-}

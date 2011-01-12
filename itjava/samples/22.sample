@@ -1,5 +1,0 @@
-package javax.servlet;
-public interface RequestDispatcher {
-public void forward( ServletRequest request, ServletResponse response) throws ServletException, java.io.IOException ;
-public void include( ServletRequest request, ServletResponse response) throws ServletException, java.io.IOException ;
-}

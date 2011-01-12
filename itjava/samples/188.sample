@@ -1,5 +1,0 @@
-import java.io.*;
-class FileOutputDemo {
-public static void main( String args[]){
-}
-}

@@ -1,4 +1,0 @@
-{
-BufferedOutputStream bos=new BufferedOutputStream(connection.getOutputStream());
-OutputStreamWriter osw=new OutputStreamWriter(bos,"US-ASCII");
-}

@@ -1,7 +1,0 @@
-public class ShowPDF {
-public static void main( String[] args) throws Exception {
-Process p=Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler c:/pdf/mypdf.pdf");
-p.waitFor();
-System.out.println("Done.");
-}
-}

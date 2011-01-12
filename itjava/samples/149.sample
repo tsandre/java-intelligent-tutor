@@ -1,9 +1,0 @@
-import java.io.*;
-public class ReadWriteTextFile {
-public static void main( String... aArguments) throws IOException {
-File testFile=new File("C:\\Temp\\blah.txt");
-System.out.println("Original file contents: " + getContents(testFile));
-setContents(testFile,"The content of this file has been overwritten...");
-System.out.println("New file contents: " + getContents(testFile));
-}
-}

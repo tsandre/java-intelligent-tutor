@@ -1,9 +1,0 @@
-import java.io.File;
-public class FileExample {
-public static void main( String[] args){
-File file=new File("d:\\temp\\test.txt");
-File cFile=new File("d:\\temp\\Copy of test.txtt");
-int value=file.compareTo(cFile);
-System.out.println("File comparison result : " + value);
-}
-}

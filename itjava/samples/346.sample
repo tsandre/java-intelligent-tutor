@@ -1,8 +1,0 @@
-import javax.xml.parsers.*;
-import org.xml.sax.*;
-import yaxa.xml.*;
-import yaxa.editor.*;
-public class ChessboardXSEPrinter {
-public static void main( String[] args){
-}
-}

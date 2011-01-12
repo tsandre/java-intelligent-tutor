@@ -1,8 +1,0 @@
-{
-DOMParser parser=new DOMParser();
-parser.setPreserveWhitespace(true);
-parser.setErrorStream(System.err);
-parser.setValidationMode(false);
-parser.showWarnings(true);
-parser.parse(new FileInputStream(new File("file_with_accents.xml")));
-}

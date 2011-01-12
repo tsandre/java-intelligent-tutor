@@ -1,5 +1,0 @@
-{
-Scanner ourScanner=new Scanner(new FileInputStream("ourfile.txt"));
-Scanner ourScanner=new Scanner(new File("ourfile.txt"));
-Scanner ourScanner=new Scanner("Even a String is a valid input");
-}

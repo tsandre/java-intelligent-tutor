@@ -1,5 +1,0 @@
-{
-FileOutputStream fout=new FileOutputStream("c:\\address.ser");
-ObjectOutputStream oos=new ObjectOutputStream(fout);
-oos.writeObject(address);
-}

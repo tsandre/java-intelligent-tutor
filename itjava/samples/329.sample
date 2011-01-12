@@ -1,6 +1,0 @@
-class MyElement2 {
-private String value;
-public void dump(){
-System.out.println("Value is: " + value);
-}
-}

@@ -1,5 +1,0 @@
-{
-File tempFile=File.createTempFile("info",".txt");
-tempFile.deleteOnExit();
-se.exec("foo info.txt");
-}

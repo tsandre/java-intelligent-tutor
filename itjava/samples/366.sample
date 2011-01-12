@@ -1,6 +1,0 @@
-{
-c=(XMLNode)r.getStartContainer();
-System.out.println(c.getText());
-c=(XMLNode)r.getEndContainer();
-System.out.println(c.getText());
-}

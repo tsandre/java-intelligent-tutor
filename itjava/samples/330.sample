@@ -1,4 +1,0 @@
-{
-SAXParserFactory factory=SAXParserFactory.newInstance();
-SAXParser saxParser=factory.newSAXParser();
-}

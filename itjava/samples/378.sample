@@ -1,4 +1,0 @@
-{
-XMLDocument serializedDoc=null;
-serializedDoc=new XMLDocument();
-}

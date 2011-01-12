@@ -1,5 +1,0 @@
-{
-com.foo.dbBean bean=new com.foo.dbBean();
-req.setAttribute("dbBean",bean);
-url="...";
-}

@@ -1,5 +1,0 @@
-{
-ClassLoader.getResourceAsStream("some/pkg/resource.properties");
-Class.getResourceAsStream("/some/pkg/resource.properties");
-ResourceBundle.getBundle("some.pkg.resource");
-}

@@ -1,6 +1,0 @@
-{
-GZIPOutputStream gzipout=newGZIPOutputStream(socket.getOutputStream());
-ObjectOutputStream oos=newObjectOutputStream(gzipout);
-oos.writeObject(obj);
-gzipos.finish();
-}

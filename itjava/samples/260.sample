@@ -1,6 +1,0 @@
-{
-ProcessBuilder processBuilder=new ProcessBuilder(command,arg1,arg2);
-Map env=processBuilder.environment();
-env.put("var1","value");
-env.remove("var3");
-}

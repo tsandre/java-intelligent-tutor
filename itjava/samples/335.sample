@@ -1,9 +1,0 @@
-import javax.microedition.midlet.*;
-import javax.microedition.lcdui.*;
-import javax.microedition.io.*;
-import java.io.*;
-import org.kxml.*;
-import org.kxml.parser.*;
-public class ParseXML extends MIDlet implements CommandListener {
-private Command exitCommand;
-}
