@@ -1,5 +1,0 @@
-{
-_fileChooser.setFileFilter(_filter);
-_fileChooser.setSelectedFile(new File(""));
-int result=_field.equals(_outfileField) ? _fileChooser.showSaveDialog(MainFrame.getInstance()) : _fileChooser.showOpenDialog(MainFrame.getInstance());
-}

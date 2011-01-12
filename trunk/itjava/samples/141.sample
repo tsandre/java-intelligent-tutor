@@ -1,4 +1,0 @@
-{
-CollectionType.BooksType booksType=collection.getBooks();
-List bookList=booksType.getBook();
-}

@@ -1,5 +1,0 @@
-{
-parser.setErrorStream(System.err);
-parser.setValidationMode(DOMParser.DTD_VALIDATION);
-parser.showWarnings(true);
-}

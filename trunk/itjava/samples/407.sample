@@ -1,6 +1,0 @@
-class MyHandler extends HandlerBase {
-through DocumentHandler, such;
-as achieving;
-the ErrorHandler;
-SAX callback;
-}

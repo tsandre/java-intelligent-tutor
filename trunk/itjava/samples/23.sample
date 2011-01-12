@@ -1,8 +1,0 @@
-{
-Enumeration keys=req.getParameterNames();
-while (keys.hasMoreElements()) {
-String key=(String)keys.nextElement();
-String value=req.getParameter(key);
-String[] valueArray=req.getParameterValues();
-}
-}

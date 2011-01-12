@@ -1,5 +1,0 @@
-{
-DOMParser parser=new DOMParser();
-DTD dtd=parser.getDoctype();
-parser.setDoctype(dtd);
-}

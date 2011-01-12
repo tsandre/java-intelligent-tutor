@@ -1,4 +1,0 @@
-{
-XMLDocumentFragment df=(XMLDocumentFragment)r.cloneContents();
-df.print(System.out);
-}

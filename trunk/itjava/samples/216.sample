@@ -1,4 +1,0 @@
-{
-javax.servlet.RequestDispatcher rd;
-rd.forward(request,response);
-}

@@ -1,6 +1,0 @@
-{
-Runtime.getRuntime().exec("start myscript.vbs");
-Runtime.getRuntime().exec("cmd /c start myscript.vbs");
-orRuntime.getRuntime().exec("cscript myscript.vbs");
-Runtime.getRuntime().exec("wscript myscript.vbs");
-}

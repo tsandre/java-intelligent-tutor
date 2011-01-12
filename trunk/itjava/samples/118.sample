@@ -1,7 +1,0 @@
-{
-SAXParserFactory spfactory=SAXParserFactory.newInstance();
-spfactory.setNamespaceAware(true);
-SAXParser saxparser=spfactory.newSAXParser();
-DefaultHandler handler=new MyHandler();
-saxparser.parse(new File("data.xml"),handler);
-}

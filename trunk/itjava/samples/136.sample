@@ -1,6 +1,0 @@
-{
-XMLReader reader=XMLReaderFactory.createXMLReader();
-ContentHandler handler=new PrintingContentHandler();
-reader.setContentHandler(handler);
-reader.parse(new InputSource(new FileReader(xmlFilename)));
-}

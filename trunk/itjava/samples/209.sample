@@ -1,5 +1,0 @@
-{
-System.out.println("Decompress file");
-ZipFileAccess.decompressFile("c:\\article.zip","c:\\article.txt");
-System.out.println("");
-}

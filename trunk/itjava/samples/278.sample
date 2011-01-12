@@ -1,7 +1,0 @@
-public class Dialup {
-public static void main( String[] args) throws Exception {
-Process p=Runtime.getRuntime().exec("rundll32.exe rnaui.dll,RnaDial MyConnection");
-p.waitFor();
-System.out.println("Done.");
-}
-}

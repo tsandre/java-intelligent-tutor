@@ -1,4 +1,0 @@
-{
-OutputStream os=new FileOutputStream("xml.ser");
-ObjectOutputStream oos=new ObjectOutputStream(os);
-}

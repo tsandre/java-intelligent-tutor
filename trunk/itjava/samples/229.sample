@@ -1,5 +1,0 @@
-{
-Properties systemProperties=new Properties();
-systemProperties.put("com.ibm.as400.access.AS400.proxyServer","hqoffice");
-System.setProperties(systemProperties);
-}

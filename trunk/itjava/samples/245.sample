@@ -1,5 +1,0 @@
-{
-Properties properties=new Properties();
-URL url=ClassLoader.getSystemResource("test.properties");
-properties.load(new FileInputStream(new File(url.getFile())));
-}

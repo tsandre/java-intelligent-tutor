@@ -1,4 +1,0 @@
-{
-FileSystem local=FileSystems.getDefault();
-Path p=local.getPath("/home/elharo/articles/java.net/article3.html");
-}

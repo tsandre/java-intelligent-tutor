@@ -1,6 +1,0 @@
-{
-Socket socket=new Socket(remoteServerIP,PORT);
-GZIPInputStream gzipin=newGZIPInputStream(socket.getInputStream());
-ObjectInputStream ois=new ObjectInputStream(gzipin);
-Object o=ois.readObject();
-}

@@ -1,6 +1,0 @@
-{
-StringTokenizer st=new StringTokenizer("This is a string");
-while (st.hasMoreTokens()) {
-System.out.println(st.nextToken());
-}
-}

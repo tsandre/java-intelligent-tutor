@@ -1,4 +1,0 @@
-{
-JarFile jarFile=new JarFile("test.jar");
-InputStream in=jarFile.getInputStream(jarFile.getEntry("META-INF/MANIFEST.MF"));
-}

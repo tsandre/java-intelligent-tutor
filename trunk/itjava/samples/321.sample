@@ -1,6 +1,0 @@
-import java.io.*;
-import java.util.zip.*;
-public class ReadEmployee {
-public static void main( String argv[]){
-}
-}

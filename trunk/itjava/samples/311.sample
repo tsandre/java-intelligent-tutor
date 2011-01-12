@@ -1,8 +1,0 @@
-{
-byte data[]=new byte[BUFFER];
-FileOutputStream fos=newFileOutputStream(entry.getName());
-dest=new BufferedOutputStream(fos,BUFFER);
-while ((count=is.read(data,0,BUFFER)) != -1) {
-dest.write(data,0,count);
-}
-}

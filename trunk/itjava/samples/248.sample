@@ -1,6 +1,0 @@
-{
-MethodDescriptor[] methodDescriptor=beanInfo.getMethodDescriptors();
-for (int i=0; i < methodDescriptor.length; i++) {
-System.out.println(methodDescriptor[i].getName());
-}
-}

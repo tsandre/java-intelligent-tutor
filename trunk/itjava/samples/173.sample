@@ -1,8 +1,0 @@
-{
-Element root=document.getRootElement();
-for (Iterator i=root.elementIterator(); i.hasNext(); ) {
-Element element=(Element)i.next();
-System.out.println("Element Name:" + element.getQualifiedName());
-System.out.println("Element Value:" + element.getText());
-}
-}

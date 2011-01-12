@@ -1,5 +1,0 @@
-{
-doc1.addEventListener("DOMNodeRemoved",evtlist,false);
-doc1.addEventListener("DOMNodeInserted",evtlist,false);
-doc1.addEventListener("DOMCharacterDataModified",evtlist,false);
-}

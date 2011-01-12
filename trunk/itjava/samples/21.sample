@@ -1,6 +1,0 @@
-public class Dispatcher extends HttpServlet {
-public void doGet( HttpServletRequest req, HttpServletResponse res){
-RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/banner");
-if (dispatcher != null) dispatcher.include(request,response);
-}
-}

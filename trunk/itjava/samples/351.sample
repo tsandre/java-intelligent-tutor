@@ -1,5 +1,0 @@
-{
-XPath xpath;
-NamespaceContext namepsaceContext=new NamespaceContextImpl();
-xpath.setNamespaceContext(namespaceContext);
-}

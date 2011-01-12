@@ -1,5 +1,0 @@
-{
-SOAPMessage message=messageFactory.createMessage();
-SOAPPart soapPart=message.getSOAPPart();
-soapPart.setContent(domSource);
-}

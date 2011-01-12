@@ -1,6 +1,0 @@
-import java.io.StringWriter;
-public class StringWriterExample {
-public static void main( String[] args){
-StringWriter writer=new StringWriter();
-}
-}

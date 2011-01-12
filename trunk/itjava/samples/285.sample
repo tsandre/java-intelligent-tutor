@@ -1,6 +1,0 @@
-import java.io.IOException;
-class StartExcel {
-public static void main( String args[]) throws IOException {
-Runtime.getRuntime().exec("cmd /c start excel.exe");
-}
-}

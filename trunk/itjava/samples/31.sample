@@ -1,8 +1,0 @@
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.*;
-import com.areane.www.ssi.*;
-public class SSITemplatingServlet extends HttpServlet {
-private String templateFilesDirectory="d:\\projects\\idemo\\templates\\";
-}

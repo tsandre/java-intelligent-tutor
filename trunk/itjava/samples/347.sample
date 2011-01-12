@@ -1,7 +1,0 @@
-{
-Document document;
-NodeList nodeList=document.getElementsByTagName("journal");
-Element journal=(Element)(nodeList.item(0));
-NodeList nodeList2=journal.getElementsByTagName("article");
-Element article=(Element)nodeList2.item(1);
-}

@@ -1,5 +1,0 @@
-public class IncomingCall {
-public String toString(){
-return "contactid=" + contact.getId() + "&name="+ callerName+ "&no="+ callerNumber;
-}
-}

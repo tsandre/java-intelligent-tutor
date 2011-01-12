@@ -1,4 +1,0 @@
-{
-XPath xpath=XPath.newInstance("/catalog//journal:journal//article/@journal:level");
-xpath.addNamespace("journal","http://www.w3.org/2001/XMLSchema-Instance");
-}

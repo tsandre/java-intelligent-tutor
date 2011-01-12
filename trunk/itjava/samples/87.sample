@@ -1,9 +1,0 @@
-public class OpenSite {
-public static void main( String arg[]){
-try {
-Process p=new ProcessBuilder("firefox","http://beginwithjava.blogspot.com/").start();
-}
-catch ( java.io.IOException io) {
-}
-}
-}
