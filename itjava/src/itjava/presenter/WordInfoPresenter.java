@@ -14,7 +14,9 @@ import itjava.util.WordInfoComparator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
@@ -67,10 +69,11 @@ public class WordInfoPresenter {
 	public ArrayList<Tutorial> GenerateWordInfoMap() {
 		ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
 		
-		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 15);
+		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 5);
 		for (CompilationUnitFacade facade : similarFacades) {
 			ArrayList<WordInfo> wordInfoList = new ArrayList<WordInfo>();
-
+			Set<Integer> lineNumbersUsed = new HashSet<Integer>();
+			
 			_tutorialNameIndex = 0;
 			_importsToBeAdded = 1;
 			_methodsToBeAdded = 5;
@@ -80,7 +83,7 @@ public class WordInfoPresenter {
 			for (ImportDeclaration importDeclaration : facade.getImportDeclarations()) {
 				if(_importsToBeAdded > 0 && topImports.contains(importDeclaration.getName().getFullyQualifiedName())) {
 					try {
-						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), importDeclaration));
+						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), importDeclaration, lineNumbersUsed));
 						_importsToBeAdded--;
 					}
 					catch (Exception e) {
@@ -94,7 +97,7 @@ public class WordInfoPresenter {
 			for (SimpleName methodInvocation : facade.getMethodInvocations()) {
 				if (_methodsToBeAdded > 0 && topMethods.contains(methodInvocation.getFullyQualifiedName())) {
 					try {
-						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), methodInvocation));
+						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), methodInvocation, lineNumbersUsed));
 						_methodsToBeAdded--;
 					}
 					catch (Exception e) {
@@ -108,7 +111,7 @@ public class WordInfoPresenter {
 			for (Type classInstance : facade.getClassInstances()) {
 				if (_classInstancesToBeAdded > 0 && topClassInstances.contains(classInstance.toString())) {
 					try {
-						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), classInstance));
+						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), classInstance, lineNumbersUsed));
 						_classInstancesToBeAdded--;
 					}
 					catch (Exception e) {
