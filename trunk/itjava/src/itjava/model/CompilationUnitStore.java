@@ -26,10 +26,10 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 public class CompilationUnitStore {
 	private ASTParser _astParser;
-	private static CompilationUnit _compilationUnit;
-	private static List<Statement> _statements;
-	private static CompilationUnitFacade _facade;
-	private static List<CompilationUnitFacade> _facadeList;
+	private CompilationUnit _compilationUnit;
+	private List<Statement> _statements;
+	private CompilationUnitFacade _facade;
+	private List<CompilationUnitFacade> _facadeList;
 
 	/**
 	 * This is the method that accepts a list of {@link ResultEntry} objects.
@@ -189,6 +189,8 @@ public class CompilationUnitStore {
 			}	
 		}
 		LinkedHashSet<CompilationUnitFacade> tutorialReadyList = matrix.GetTopSimilar(numOfResults);
+//		//TODO : Delete the next line: tutorialReadyList.add(comp.....
+//		tutorialReadyList.add(compilationUnitFacadeList.get(0));
 		return tutorialReadyList;
 	}
 
