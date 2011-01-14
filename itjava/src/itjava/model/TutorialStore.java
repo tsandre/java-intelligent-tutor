@@ -68,9 +68,10 @@ public class TutorialStore {
 			if (tutorial.getWordInfoList().size() > 0) {
 				_wordInfoList = tutorial.getWordInfoList();
 			}
-			else throw new NullPointerException("WordInfoList is NULL");
 		}
-		else throw new NullPointerException("WordInfoList is NULL");
+		else if (_oriWordInfoList == null) {
+			throw new NullPointerException("WordInfoList & OriWordInfoList are null");
+		}
 		
 		CreateVariableDeclarations();
 		CreateInitComponentsFunction();
@@ -178,7 +179,7 @@ public class TutorialStore {
 				edgeDataList.add(new EdgeData(currWordInfo.wordToBeBlanked,nameOfTextField));
 			
 				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminText, false);
-				firstPartOfLineOfCode = lineOfCode.substring(0, currWordInfo.columnNumber);
+				firstPartOfLineOfCode = lineOfCode.trim().substring(0, currWordInfo.columnNumber);
 			}
 			else if(_lineNumbersForHighlightedWords.contains(indexOfLinesOfCode)) {
 				WordInfo currWordInfo = highlightInfoIterator.next();
@@ -216,7 +217,7 @@ public class TutorialStore {
 				
 				labelDataList.add(new LabelData(hlLblName, highLightLine));
 				
-				firstPartOfLineOfCode = lineOfCode.substring(0, currWordInfo.columnNumber);
+				firstPartOfLineOfCode = lineOfCode.trim().substring(0, currWordInfo.columnNumber);
 			}
 			
 			DorminComponent dorminLabel = new DorminComponent();
