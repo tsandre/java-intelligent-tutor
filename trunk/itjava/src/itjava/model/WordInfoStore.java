@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
@@ -32,22 +35,40 @@ public class WordInfoStore {
 		_wordInfo = new WordInfo();
 	}
 
-	private void createWordInfo(ASTNode node) throws Exception {
+	private void createWordInfo(ASTNode node, Set<Integer> lineNumbersUsed) throws Exception {
 		int index = 0;
 		int lineNumber = 0;
 		for (String currLine : _linesOfCode) {
-			index += currLine.length();
+//			index += currLine.length();
+			// Replace lines from here to next comment with the single line that is 
+			// commented above if too many exceptions related to "word not accessible"
+			// are thrown.
+			int currLengthWithXtraSpace = currLine.length();
+			int numOfIndentSpaces = 0;
+			Pattern pattern = Pattern.compile("\\S");
+			Matcher matcher = pattern.matcher(currLine);
+			if (matcher.find()) {
+				numOfIndentSpaces = matcher.start();
+			}
+			index += currLengthWithXtraSpace - (numOfIndentSpaces / 2);
+			//End of change. 
 			if (index > node.getStartPosition()) {
 				//TODO Bug: when the wordToBeBlanked was "close", for the function .close();
 				//It was found that in line closeable.close(), the first 4 letters of closeable were blanked out since that was the indexOf("close").
 				_wordInfo.lineNumber = lineNumber + 1;
+				if (lineNumbersUsed.contains(_wordInfo.lineNumber)) {
+					throw new Exception("Line number repeated..");
+				}
+				else {
+					lineNumbersUsed.add(_wordInfo.lineNumber);
+				}
 				_wordInfo.blankType = BlankType.Text;
 				_wordInfo.columnNumber = currLine.trim().indexOf(_wordInfo.wordToBeBlanked);
 				break;
 			}
 			lineNumber++;
 		}
-		if (_wordInfo.columnNumber == -1 || _wordInfo.lineNumber == -1) {
+		if (_wordInfo.columnNumber == -1 ) {
 			throw new Exception("Word: " + _wordInfo.wordToBeBlanked + " not accessible");
 		}
 	}
@@ -55,31 +76,31 @@ public class WordInfoStore {
 	public static WordInfo createWordInfo(List<String> linesOfCode, Statement statement) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = ((VariableDeclarationStatement)statement).getType().toString();
-		wordInfoStore.createWordInfo(statement);
+		wordInfoStore.createWordInfo(statement, null);
 		return wordInfoStore._wordInfo;
 	}
 
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			ImportDeclaration importDeclaration) throws Exception {
+			ImportDeclaration importDeclaration, Set<Integer> lineNumbersUsed) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = importDeclaration.getName().getFullyQualifiedName();
-		wordInfoStore.createWordInfo(importDeclaration);
+		wordInfoStore.createWordInfo(importDeclaration, lineNumbersUsed);
 		return wordInfoStore._wordInfo;
 	}
 	
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			Type classInstanceType) throws Exception {
+			Type classInstanceType, Set<Integer> lineNumbersUsed) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = classInstanceType.toString();
-		wordInfoStore.createWordInfo(classInstanceType);
+		wordInfoStore.createWordInfo(classInstanceType, lineNumbersUsed);
 		return wordInfoStore._wordInfo;
 	}
 	
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			SimpleName methodInvocation) throws Exception {
+			SimpleName methodInvocation, Set<Integer> lineNumbersUsed) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = methodInvocation.getFullyQualifiedName();
-		wordInfoStore.createWordInfo(methodInvocation);
+		wordInfoStore.createWordInfo(methodInvocation, lineNumbersUsed);
 		return wordInfoStore._wordInfo;
 	}
 
@@ -87,7 +108,7 @@ public class WordInfoStore {
 			FieldDeclaration fieldDeclaration) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = ((FieldDeclaration)fieldDeclaration).getType().toString();
-		wordInfoStore.createWordInfo(fieldDeclaration);
+		wordInfoStore.createWordInfo(fieldDeclaration, null);
 		return wordInfoStore._wordInfo;
 	}
 
@@ -95,7 +116,7 @@ public class WordInfoStore {
 			QualifiedName currPropertyAssignment) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
 		wordInfoStore._wordInfo.wordToBeBlanked = currPropertyAssignment.getName().toString();
-		wordInfoStore.createWordInfo(currPropertyAssignment);
+		wordInfoStore.createWordInfo(currPropertyAssignment, null);
 		return wordInfoStore._wordInfo;
 	}
 
