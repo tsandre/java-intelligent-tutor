@@ -1,0 +1,46 @@
+.navmain:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFF;
+	text-align: center;
+	text-decoration:none;
+}
+
+.navmain:active {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFF;
+	text-align: center;
+	text-decoration:none;
+}
+
+.navmain:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFF;
+	text-align: center;
+	text-decoration:underline;
+}
+
+.navmain:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFF;
+	text-align: center;
+	text-decoration:none;
+}
+titleswhite {
+	color: #FFF;
+}
+.basic #form1 table tr td {
+	color: #333;
+	font-size: 12px;
+	font-weight: bold;
+}
+.whitetitle {
+	color: #FFF;
+}
