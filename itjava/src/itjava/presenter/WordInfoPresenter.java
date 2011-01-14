@@ -27,6 +27,10 @@ public class WordInfoPresenter {
 	public boolean hasCommonNodes;
 	private Repository _repository;
 	private String _readableName;
+	private int _classInstancesToBeAdded;
+	private int _methodsToBeAdded;
+	private int _importsToBeAdded;
+	private int _tutorialNameIndex;
 	
 	/**
 	 * Getter method for {@link Repository} repository
@@ -62,21 +66,22 @@ public class WordInfoPresenter {
 	 */
 	public ArrayList<Tutorial> GenerateWordInfoMap() {
 		ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
-		int tutorialNameIndex = 0;
-		int importsToBeAdded = 1;
-		int methodsToBeAdded = 5;
-		int classInstancesToBeAdded = 2;
 		
 		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 15);
 		for (CompilationUnitFacade facade : similarFacades) {
 			ArrayList<WordInfo> wordInfoList = new ArrayList<WordInfo>();
+
+			_tutorialNameIndex = 0;
+			_importsToBeAdded = 1;
+			_methodsToBeAdded = 5;
+			_classInstancesToBeAdded = 2;
 			
-			ArrayList<String> topImports = facade.getTFVector().getSortedTerms(NodeToCompare.ImportDeclaration, importsToBeAdded);
+			ArrayList<String> topImports = facade.getTFVector().getSortedTerms(NodeToCompare.ImportDeclaration, _importsToBeAdded);
 			for (ImportDeclaration importDeclaration : facade.getImportDeclarations()) {
-				if(importsToBeAdded > 0 && topImports.contains(importDeclaration.getName().getFullyQualifiedName())) {
+				if(_importsToBeAdded > 0 && topImports.contains(importDeclaration.getName().getFullyQualifiedName())) {
 					try {
 						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), importDeclaration));
-						importsToBeAdded--;
+						_importsToBeAdded--;
 					}
 					catch (Exception e) {
 						System.err.println(e.getMessage() + "; Facade URL : " + facade.getUrl());
@@ -85,12 +90,12 @@ public class WordInfoPresenter {
 				}
 			}
 			
-			ArrayList<String> topMethods = facade.getTFVector().getSortedTerms(NodeToCompare.MethodInvocation, methodsToBeAdded);
+			ArrayList<String> topMethods = facade.getTFVector().getSortedTerms(NodeToCompare.MethodInvocation, _methodsToBeAdded);
 			for (SimpleName methodInvocation : facade.getMethodInvocations()) {
-				if (methodsToBeAdded > 0 && topMethods.contains(methodInvocation.getFullyQualifiedName())) {
+				if (_methodsToBeAdded > 0 && topMethods.contains(methodInvocation.getFullyQualifiedName())) {
 					try {
 						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), methodInvocation));
-						methodsToBeAdded--;
+						_methodsToBeAdded--;
 					}
 					catch (Exception e) {
 						System.err.println(e.getMessage() + "; Facade URL : " + facade.getUrl());
@@ -99,12 +104,12 @@ public class WordInfoPresenter {
 				}
 			}
 			
-			ArrayList<String> topClassInstances = facade.getTFVector().getSortedTerms(NodeToCompare.ClassInstanceCreator, classInstancesToBeAdded);
+			ArrayList<String> topClassInstances = facade.getTFVector().getSortedTerms(NodeToCompare.ClassInstanceCreator, _classInstancesToBeAdded);
 			for (Type classInstance : facade.getClassInstances()) {
-				if (classInstancesToBeAdded > 0 && topClassInstances.contains(classInstance.toString())) {
+				if (_classInstancesToBeAdded > 0 && topClassInstances.contains(classInstance.toString())) {
 					try {
 						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), classInstance));
-						classInstancesToBeAdded--;
+						_classInstancesToBeAdded--;
 					}
 					catch (Exception e) {
 						System.err.println(e.getMessage() + "; Facade URL : " + facade.getUrl());
@@ -114,8 +119,8 @@ public class WordInfoPresenter {
 			}
 			if (wordInfoList.size() > 0) {
 				Collections.sort(wordInfoList, new WordInfoComparator());
-				tutorialList.add(new Tutorial("Example" + tutorialNameIndex, _readableName, wordInfoList, facade.getLinesOfCode(), facade.getUrl()));
-				tutorialNameIndex++;
+				tutorialList.add(new Tutorial("Example" + _tutorialNameIndex, _readableName, wordInfoList, facade.getLinesOfCode(), facade.getUrl()));
+				_tutorialNameIndex++;
 			}
 		}
 		return tutorialList;
