@@ -188,6 +188,12 @@ public class TutorialPresenterTest {
 		wordInfo.lineNumber = 2;
 		wordInfo.columnNumber = 7;
 		oriWordInfoList.add(wordInfo);
+		wordInfo = new WordInfo();
+		wordInfo.wordToBeBlanked = "myfirst";
+		wordInfo.blankType = BlankType.Text;
+		wordInfo.lineNumber = 1;
+		wordInfo.columnNumber = 6;
+		oriWordInfoList.add(wordInfo);
 	}
 	
 	private void GivenValidMultipleWordInfoList() {
