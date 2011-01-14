@@ -134,6 +134,7 @@ public class TutorialStore {
 		String prevLineOfCode = " ";
 		
 		for (String lineOfCode:_linesOfCode) {
+			lineOfCode = lineOfCode.replace("\\\"", "\"");
 			String firstPartOfLineOfCode = lineOfCode;
 			if (prevLineOfCode.contains("{")) {
 				indent += 20;
