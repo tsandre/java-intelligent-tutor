@@ -67,7 +67,14 @@ public class TFIDFVector {
 		List<TFIDF> tempCollection = new ArrayList<TFIDF> (entryMap.values());
 		Collections.sort(tempCollection);
 		Collections.reverse(tempCollection);
-		List<TFIDF> topElements = tempCollection.subList(0, topX);
+		List<TFIDF> topElements = null;
+		try {
+			topElements = tempCollection.subList(0, topX);
+		}
+		catch (IndexOutOfBoundsException e) {
+			topElements = tempCollection;
+			System.err.println("topElements contains less than topX(" + topX + ") elements");
+		}
 			Iterator<Entry<String, TFIDF>> mapIterator = entryMap.entrySet().iterator();
 			while (sortedTerms.size() < topX) {
 				try {
