@@ -23,6 +23,7 @@ public class TutorialStore {
 	public ArrayList<String> _linesOfCode;
 
 	private ArrayList<WordInfo> _wordInfoList;
+	private ArrayList<WordInfo> _oriWordInfoList;
 
 	private ArrayList<String> _variableDeclarations;
 	private String _initComponentFunctionDeclaration;
@@ -35,6 +36,8 @@ public class TutorialStore {
 
 	private ArrayList<LabelData> labelDataList;
 	private ArrayList<EdgeData> edgeDataList;
+	private final ArrayList<Integer> _lineNumbersForHighlightedWords;
+	private final ArrayList<Integer> _lineNumbersForBlankedWords;
 	
 	public TutorialStore() {
 		_variableDeclarations = new ArrayList<String>();
@@ -46,6 +49,8 @@ public class TutorialStore {
 		
 		labelDataList = new ArrayList<LabelData>();
 		edgeDataList = new ArrayList<EdgeData>();
+		_lineNumbersForHighlightedWords = new ArrayList<Integer>();
+		_lineNumbersForBlankedWords = new ArrayList<Integer>();
 	}
 	
 	public Tutorial GenerateTutorial(Tutorial tutorial) throws Exception {
@@ -57,7 +62,16 @@ public class TutorialStore {
 		}
 		_tutorial = tutorial;
 		_linesOfCode = tutorial.getLinesOfCode();
-		_wordInfoList = tutorial.getWordInfoList();
+		_oriWordInfoList = tutorial.getOriginalWordInfoList();
+
+		if (tutorial.getWordInfoList() != null) {
+			if (tutorial.getWordInfoList().size() > 0) {
+				_wordInfoList = tutorial.getWordInfoList();
+			}
+			else throw new NullPointerException("WordInfoList is NULL");
+		}
+		else throw new NullPointerException("WordInfoList is NULL");
+		
 		CreateVariableDeclarations();
 		CreateInitComponentsFunction();
 
@@ -119,16 +133,12 @@ public class TutorialStore {
 
 	private void AddComponentsToPanel() throws Exception {
 		
-		ArrayList<Integer> lineNumbersForBlankedWords = new ArrayList<Integer>();
 		Iterator<WordInfo> wordInfoIterator = null;
-		if (_wordInfoList != null) {
-		if (_wordInfoList.size() > 0) {
-			for (WordInfo currWordInfo : _wordInfoList) {
-				lineNumbersForBlankedWords.add(currWordInfo.lineNumber);
-			}
-			wordInfoIterator = _wordInfoList.iterator();
-		}
-		}
+		Iterator<WordInfo> highlightInfoIterator = null;
+		
+		wordInfoIterator = _wordInfoList.iterator();
+		highlightInfoIterator = _oriWordInfoList.iterator();
+			
 		int indexOfLinesOfCode = 1;
 		int x = 0, y = 10, height = 25, width, indent = 0;
 		String prevLineOfCode = " ";
@@ -142,11 +152,11 @@ public class TutorialStore {
 			else if (lineOfCode.contains("}")) {
 				indent -= 20;
 			}
-			if(lineNumbersForBlankedWords.contains(indexOfLinesOfCode)) {
+			if(_lineNumbersForBlankedWords.contains(indexOfLinesOfCode)) {
 				WordInfo currWordInfo = wordInfoIterator.next();
+				highlightInfoIterator.next(); // This is necessary to keep the highlightInfoIterator in sync
 				if (currWordInfo.lineNumber != indexOfLinesOfCode) {
 					System.err.println("WordInfoList and LinesOfCode List not in sync..");
-					System.err.println("OR multiple words on single line");
 					throw new Exception("Multiple words on single line");
 				}
 				int beginIndex = currWordInfo.columnNumber + currWordInfo.wordLength();
@@ -156,7 +166,7 @@ public class TutorialStore {
 				String lblName = "lblLine" + indexOfLinesOfCode
 									+ "Col" + currWordInfo.columnNumber;
 				dorminLabel.Label(restOfLine, lblName, x + (8 * beginIndex) + indent, y, height, width);
-				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
+				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel, false);
 				
 				labelDataList.add(new LabelData(lblName, restOfLine));
 				
@@ -167,7 +177,45 @@ public class TutorialStore {
 				
 				edgeDataList.add(new EdgeData(currWordInfo.wordToBeBlanked,nameOfTextField));
 			
-				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminText);
+				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminText, false);
+				firstPartOfLineOfCode = lineOfCode.substring(0, currWordInfo.columnNumber);
+			}
+			else if(_lineNumbersForHighlightedWords.contains(indexOfLinesOfCode)) {
+				WordInfo currWordInfo = highlightInfoIterator.next();
+				if (currWordInfo.lineNumber != indexOfLinesOfCode) {
+					System.err.println("OriginalWordInfoList and LinesOfCode List not in sync..");
+//					throw new Exception("Multiple words on single line");
+				}
+				int beginIndex = currWordInfo.columnNumber + currWordInfo.wordLength();
+				String restOfLine = lineOfCode.trim().substring(beginIndex);
+				DorminComponent dorminLabel = new DorminComponent();
+				width = restOfLine.length() * 8;
+				String lblName = "lblLine" + indexOfLinesOfCode
+									+ "Col" + currWordInfo.columnNumber;
+				dorminLabel.Label(restOfLine, lblName, x + (8 * beginIndex) + indent, y, height, width);
+				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel, false);
+				
+				labelDataList.add(new LabelData(lblName, restOfLine));
+				
+				/*String nameOfTextField = "txtLine" + indexOfLinesOfCode + "Col" + currWordInfo.columnNumber;
+				DorminComponent dorminText = new DorminComponent();
+				width = currWordInfo.wordLength() * 8;
+				dorminText.TextField(nameOfTextField, x + (8 * currWordInfo.columnNumber) + indent, y, height, width);
+				
+				edgeDataList.add(new EdgeData(currWordInfo.wordToBeBlanked,nameOfTextField));
+			
+				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminText, false);*/
+				
+				int highlightBeginIndex = currWordInfo.columnNumber;
+				String highLightLine = lineOfCode.trim().substring(highlightBeginIndex, beginIndex);
+				DorminComponent highlightLabel = new DorminComponent();
+				width = currWordInfo.wordLength() * 8;
+				String hlLblName = "hlLblLine" + indexOfLinesOfCode;
+				highlightLabel.Label(highLightLine, hlLblName, x + (8 * highlightBeginIndex) + indent, y, height, width);
+				_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(highlightLabel, true);
+				
+				labelDataList.add(new LabelData(hlLblName, highLightLine));
+				
 				firstPartOfLineOfCode = lineOfCode.substring(0, currWordInfo.columnNumber);
 			}
 			
@@ -175,7 +223,7 @@ public class TutorialStore {
 			dorminLabel.Label(firstPartOfLineOfCode, "lblLine" + indexOfLinesOfCode, x + indent, y, height, firstPartOfLineOfCode.length() * 8);
 			labelDataList.add(new LabelData("lblLine" + indexOfLinesOfCode, firstPartOfLineOfCode));
 			
-			_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel);
+			_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(dorminLabel, false);
 			
 			y += height;
 			indexOfLinesOfCode++;
@@ -192,7 +240,7 @@ public class TutorialStore {
 		labelDataList.add(new LabelData("doneButton","Done"));
 		edgeDataList.add(new EdgeData("Done","doneButton"));
 		/*_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(hintButton);*/
-		_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(doneButton);
+		_initComponentFunctionDeclaration += TutorialTemplate.addComponentToPanel(doneButton, false);
 	}
 
 	private void CreateVariableDeclarations() {
@@ -200,18 +248,31 @@ public class TutorialStore {
 		_variableDeclarations.add(TutorialTemplate.buttonDeclaration("doneButton"));
 		this._buttonVariables.add("doneButton");
 		
+		Iterator<WordInfo> wordInfoIterator = _wordInfoList.iterator();
+		Iterator<WordInfo> highlightInfoIterator = _oriWordInfoList.iterator();
+
+		for (WordInfo currWordInfo : _wordInfoList) {
+			_lineNumbersForBlankedWords.add(currWordInfo.lineNumber);
+		}
+		
+		for (WordInfo currWordInfo : _oriWordInfoList) {
+			_lineNumbersForHighlightedWords.add(currWordInfo.lineNumber);
+		}
+		
 		for (int indexOfLinesOfCode = 1; indexOfLinesOfCode <= _linesOfCode.size(); indexOfLinesOfCode++) {
 			String labelName = "lblLine" + indexOfLinesOfCode;
 			this._labelVariables.add(labelName);
 			this._variableDeclarations.add(TutorialTemplate.labelDeclaration(labelName));
-		}
-		
-		if (_wordInfoList != null) {
-		if (_wordInfoList.size() != 0) {
-			for (WordInfo wordInfo : _wordInfoList) {
 
+			if(_lineNumbersForBlankedWords.contains(indexOfLinesOfCode)) {
+				WordInfo wordInfo = wordInfoIterator.next();
+				highlightInfoIterator.next(); //To keep 2 lists in sync
+				
 				String variableName = "Line" + wordInfo.lineNumber
 						+ "Col" + wordInfo.columnNumber;
+				String restLabelName = "lbl" + variableName;
+				this._labelVariables.add(restLabelName);
+				this._variableDeclarations.add(TutorialTemplate.labelDeclaration(restLabelName));
 				
 				switch (wordInfo.blankType) {
 				case Text:
@@ -224,12 +285,23 @@ public class TutorialStore {
 					System.err.println("Not implemented");
 					break;
 				}
-								
-				String labelName = "lbl" + variableName;
-				this._labelVariables.add(labelName);
-				this._variableDeclarations.add(TutorialTemplate.labelDeclaration(labelName));
-			}			
-		}
+			}
+			else if (_lineNumbersForHighlightedWords.contains(indexOfLinesOfCode)) {
+				WordInfo wordInfo = highlightInfoIterator.next();
+				
+				String variableName = "Line" + wordInfo.lineNumber
+						+ "Col" + wordInfo.columnNumber;
+				String restLabelName = "lbl" + variableName;
+				this._labelVariables.add(restLabelName);
+				this._variableDeclarations.add(TutorialTemplate.labelDeclaration(restLabelName));
+				
+					/*String txtName = "txt" + variableName;
+					this._variableDeclarations.add(TutorialTemplate.textFieldDeclaration(txtName));
+					this._textVariables.add(txtName);*/
+				String hlLblName = "hlLblLine" + indexOfLinesOfCode;
+				this._labelVariables.add(hlLblName);
+				this._variableDeclarations.add(TutorialTemplate.labelDeclaration(hlLblName));
+			}
 		}
 	}
 	

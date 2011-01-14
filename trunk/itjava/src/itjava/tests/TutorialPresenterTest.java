@@ -25,6 +25,7 @@ public class TutorialPresenterTest {
 
 	private WordInfo wordInfo;
 	private ArrayList<WordInfo> wordInfoList;
+	private ArrayList<WordInfo> oriWordInfoList;
 	private ArrayList<String> linesOfCode;
 	private TutorialPresenter tutorialPresenter;
 	private Tutorial tutorial;
@@ -43,6 +44,8 @@ public class TutorialPresenterTest {
 		wordInfo = new WordInfo();
 
 		wordInfoList = new ArrayList<WordInfo>();
+		
+		oriWordInfoList = new ArrayList<WordInfo>();
 
 		linesOfCode = new ArrayList<String>();
 
@@ -87,6 +90,7 @@ public class TutorialPresenterTest {
 	@Test
 	public final void TutorialCodeHasBalancedParanthesis() throws Exception {
 		GivenValidWordInfoList();
+		GivenValidMultipleOriWordInfoList();
 		GivenValidLinesOfCode();
 		WhenGetTutorialIsCalled();
 		ThenNumberofParanthesisIsBalanced();
@@ -150,7 +154,7 @@ public class TutorialPresenterTest {
 		wordInfo.columnNumber = 10;
 		wordInfoList.add(wordInfo);
 		tutorial = tutorialPresenter.GetTutorial("sampleName", "query",
-				linesOfCode, wordInfoList, "blank source");
+				linesOfCode, wordInfoList, "blank source", oriWordInfoList);
 		assertEquals(null, tutorial);
 	}
 
@@ -170,8 +174,25 @@ public class TutorialPresenterTest {
 		linesOfCode.add("}");
 	}
 
+	private void GivenValidMultipleOriWordInfoList() {
+
+		wordInfo = new WordInfo();
+		wordInfo.wordToBeBlanked = "out";
+		wordInfo.lineNumber = 3;
+		wordInfo.columnNumber = 7;
+		wordInfo.blankType = BlankType.Text;
+		oriWordInfoList.add(wordInfo);
+		wordInfo = new WordInfo();
+		wordInfo.wordToBeBlanked = "static";
+		wordInfo.blankType = BlankType.Text;
+		wordInfo.lineNumber = 2;
+		wordInfo.columnNumber = 7;
+		oriWordInfoList.add(wordInfo);
+	}
+	
 	private void GivenValidMultipleWordInfoList() {
 
+		wordInfo = new WordInfo();
 		wordInfo.wordToBeBlanked = "out";
 		wordInfo.lineNumber = 3;
 		wordInfo.columnNumber = 7;
@@ -296,7 +317,7 @@ public class TutorialPresenterTest {
 
 	private void WhenGetTutorialIsCalled() throws Exception {
 		tutorial = tutorialPresenter.GetTutorial("testClassName", "test query",
-				linesOfCode, wordInfoList, "blank source");
+				linesOfCode, wordInfoList, "blank source", oriWordInfoList);
 	}
 
 	private void WhenCompiled() {

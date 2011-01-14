@@ -86,7 +86,7 @@ public class IntegrateWordInfoAndTutorial {
 					tutorialPresenter = new TutorialPresenter();
 					Tutorial tutorial = tutorialPresenter.GetTutorial(initialTutorial.getTutorialName(),
 							initialTutorial.getReadableName(), initialTutorial.getLinesOfCode(), initialTutorial.getWordInfoList(),
-							"sourceUrl");
+							"sourceUrl", null);
 					tutorialList.add(tutorial);
 					i++;
 				}

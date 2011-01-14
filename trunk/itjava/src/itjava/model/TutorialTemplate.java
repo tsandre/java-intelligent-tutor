@@ -3,7 +3,8 @@ package itjava.model;
 import itjava.data.DorminComponent;
 
 public class TutorialTemplate {
-	public static String importDeclaration = "import edu.cmu.pact.BehaviorRecorder.Controller.CTAT_Launcher;";
+	public static String importDeclaration = "import edu.cmu.pact.BehaviorRecorder.Controller.CTAT_Launcher; \n " +
+			"import java.awt.Color;";
 	
 	
 	/**
@@ -49,6 +50,7 @@ public class TutorialTemplate {
 	/**
 	 * This method returns the source code necessary for generating components that 
 	 * have some text to be displayed, eg.. label or button
+	 * @param highlight Whether the component should be highlighted or not.
 	 * @param componentName Variable Name of the label or button or etc.
 	 * @param textToDisplay Text to be displayed on the label or button or etc.
 	 * @param x
@@ -57,15 +59,24 @@ public class TutorialTemplate {
 	 * @param width
 	 * @return Source code for component
 	 */
-	public static String addComponentToPanel(DorminComponent component){
+	public static String addComponentToPanel(DorminComponent component, boolean highlight){
+		String fontStyle = "0";
+		if (highlight) {
+			fontStyle = "java.awt.Font.BOLD + java.awt.Font.ITALIC";
+		}
+		
 		String componentDeclaration = component.componentName + ".setBounds(" +
 				component.x + "," + component.y + "," + component.width + "," + component.height
 			+ "); \n" +
-			component.componentName + ".setFont(new java.awt.Font(\"Consolas\", 0, 12));\n";
+			component.componentName + ".setFont(new java.awt.Font(\"Consolas\", " + fontStyle + ", 12));\n";
 		
 		if(component.componentText != null) {
 			componentDeclaration += component.componentName + ".setText(\"" + cleanseText(component.componentText) + "\"); \n";
 		}			
+		if (highlight){
+			componentDeclaration += component.componentName + ".setForeground(Color.BLUE); \n";
+		}
+		
 		componentDeclaration += "add(" + component.componentName + "); \n";
 		return componentDeclaration;
 	}
