@@ -20,8 +20,18 @@ import itjava.util.WordInfoComparator;
 public class TutorialPresenter {
 private TutorialStore _tutorialStore;
 
-	public Tutorial GetTutorial(String tutorialName, String readableName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList, String sourceUrl) throws Exception {
-		Tutorial tutorial = new Tutorial(tutorialName, readableName, ArrangeWordsAccordingToLineNumber(wordInfoList), Convertor.TrimArrayListOfString(exampleCode), sourceUrl);
+	/**
+	 * This method is called only from tests. For creating tutorial objects, use {@link GetFinalTutorialList()} instead.
+	 * @param tutorialName
+	 * @param readableName
+	 * @param exampleCode
+	 * @param wordInfoList
+	 * @param sourceUrl
+	 * @return
+	 * @throws Exception
+	 */
+	public Tutorial GetTutorial(String tutorialName, String readableName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList, String sourceUrl, ArrayList<WordInfo> oriWordInfoList) throws Exception {
+		Tutorial tutorial = new Tutorial(tutorialName, readableName, ArrangeWordsAccordingToLineNumber(wordInfoList), Convertor.TrimArrayListOfString(exampleCode), sourceUrl, ArrangeWordsAccordingToLineNumber(oriWordInfoList));
 		tutorial = new TutorialStore().GenerateTutorial(tutorial);
 		return tutorial;
 	}

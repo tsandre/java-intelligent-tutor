@@ -10,6 +10,7 @@ public class Tutorial {
 	private String _type;
 	public String tutorialCode = "";
 	private ArrayList<WordInfo> wordInfoList;
+	private ArrayList<WordInfo> originalWordInfoList;
 	private ArrayList<String> linesOfCode;
 	
 	public File tutorialClassFile;
@@ -23,12 +24,13 @@ public class Tutorial {
 		
 	}
 	public Tutorial(String tutorialName, String readableName, ArrayList<WordInfo> wordInfoListIn,
-			ArrayList<String> linesOfCodeIn, String sourceUrlIn) {
+			ArrayList<String> linesOfCodeIn, String sourceUrlIn, ArrayList<WordInfo> originalWordInfoList) {
 		_tutorialName = tutorialName;
 		_readableName = readableName.trim().replaceAll("\\s", "");
 		this.wordInfoList = wordInfoListIn;
 		this.linesOfCode = linesOfCodeIn;
 		this.sourceUrl = sourceUrlIn;
+		this.originalWordInfoList = originalWordInfoList;
 	}
 
 	public void AppendCode(String currLineOfCode) {
@@ -108,6 +110,12 @@ public class Tutorial {
 	}
 	public String getType() {
 		return this._type;
+	}
+	public void setOriginalWordInfoList(ArrayList<WordInfo> originalWordInfoList) {
+		this.originalWordInfoList = originalWordInfoList;
+	}
+	public ArrayList<WordInfo> getOriginalWordInfoList() {
+		return originalWordInfoList;
 	}
 
 }

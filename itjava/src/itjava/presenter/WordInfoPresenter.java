@@ -119,7 +119,7 @@ public class WordInfoPresenter {
 			}
 			if (wordInfoList.size() > 0) {
 				Collections.sort(wordInfoList, new WordInfoComparator());
-				tutorialList.add(new Tutorial("Example" + _tutorialNameIndex, _readableName, wordInfoList, facade.getLinesOfCode(), facade.getUrl()));
+				tutorialList.add(new Tutorial("Example" + _tutorialNameIndex, _readableName, wordInfoList, facade.getLinesOfCode(), facade.getUrl(), wordInfoList));
 				_tutorialNameIndex++;
 			}
 		}
