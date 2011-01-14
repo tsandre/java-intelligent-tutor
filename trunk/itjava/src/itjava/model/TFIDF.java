@@ -22,6 +22,13 @@ public class TFIDF implements Comparable<TFIDF>{
 		numOfDocumentsWithTerm = docsWithTerms;
 	}
 	
+	/**
+	 * Calculates the tf-idf value of the current term. For description of tf-idf 
+	 * refer to <a href="http://en.wikipedia.org/wiki/Tf–idf">^ wikipedia.org/Tf–idf</a> <br />
+	 * Since there can be many cases where the current term is not present in any other 
+	 * document in the repository, 
+	 * @return
+	 */
 	public Float getValue(){
 		float tf = numOfOccurrences.floatValue() / (Float.MIN_VALUE + totalTermsInDocument.floatValue());
 		float idf = (float) Math.log10(totalDocuments.floatValue() / (Float.MIN_VALUE + numOfDocumentsWithTerm.floatValue()));
