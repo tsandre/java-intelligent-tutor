@@ -22,8 +22,7 @@ import itjava.data.NodeToCompare;
  *
  */
 public class TFIDFStore {
-	static TFIDFVector _tfVector;
-	static Repository _repository;
+	
 
 	/**
 	 * Accepts a facade and repository object. Calls an internal method GetTF() for each type of Node.
@@ -32,29 +31,25 @@ public class TFIDFStore {
 	 * @return
 	 */
 	public static TFIDFVector GetTF(CompilationUnitFacade facade, Repository repository) {
-		_repository = repository;
-		if (facade.getTFVector() == null) {
-			_tfVector = new TFIDFVector();
-		}
-		else {
-			_tfVector = facade.getTFVector();
-		}
-		_tfVector.importDeclarationsTF = GetTF(facade, NodeToCompare.ImportDeclaration);
-		_tfVector.superTypeTF = GetTF(facade, NodeToCompare.SuperType);
-		_tfVector.variableDeclarationsTF = GetTF(facade, NodeToCompare.VariableDeclaration);
-		_tfVector.classInstancesTF = GetTF(facade, NodeToCompare.ClassInstanceCreator);
-		_tfVector.methodInvoationsTF = GetTF(facade, NodeToCompare.MethodInvocation);
-		_tfVector.propertyAssignmentsTF = GetTF(facade, NodeToCompare.PropertyAssignment);
+		TFIDFVector _tfVector = new TFIDFVector();
+
+		_tfVector.importDeclarationsTF = GetTF(facade, NodeToCompare.ImportDeclaration, repository);
+		_tfVector.superTypeTF = GetTF(facade, NodeToCompare.SuperType, repository);
+		_tfVector.variableDeclarationsTF = GetTF(facade, NodeToCompare.VariableDeclaration, repository);
+		_tfVector.classInstancesTF = GetTF(facade, NodeToCompare.ClassInstanceCreator, repository);
+		_tfVector.methodInvoationsTF = GetTF(facade, NodeToCompare.MethodInvocation, repository);
+		_tfVector.propertyAssignmentsTF = GetTF(facade, NodeToCompare.PropertyAssignment, repository);
 		return _tfVector;
 	}
 
 	/**
 	 * Returns term-frequency map for a specified typeOfNode.
 	 * The map can be read as <String "actualWord", Float "term frequency">
+	 * @param _repository 
 	 * @param CompilationUnitFacade facade
 	 * @param NodeToCompare typeOfNode
 	 */
-	private static TreeMap<String,TFIDF> GetTF(CompilationUnitFacade facade, NodeToCompare nodeToCompare) {
+	private static TreeMap<String,TFIDF> GetTF(CompilationUnitFacade facade, NodeToCompare nodeToCompare, Repository _repository) {
 		TreeMap<String, TFIDF> tfMap = new TreeMap<String, TFIDF>();
 		int totDocs = _repository.allDocuments.size();
 		switch (nodeToCompare) {
@@ -104,22 +99,21 @@ public class TFIDFStore {
 			for(Entry<String, Integer> entry: _repository.classInstanceTerms.entrySet()) {
 				String term = entry.getKey();
 				int numOfOccurrences = (classInstanceTerms.contains(term)) ? (classInstanceTerms.lastIndexOf(term) - classInstanceTerms.indexOf(term) + 1): 0;
-				tfMap.put(entry.getKey(), new TFIDF(numOfOccurrences, totInstanceTermsInDoc,totDocs,entry.getValue()));
+				tfMap.put(term, new TFIDF(numOfOccurrences, totInstanceTermsInDoc,totDocs,entry.getValue()));
 			}
 			break;
 			
 		case MethodInvocation : 
-			List<SimpleName> methodInvocations = facade.getMethodInvocations();
 			ArrayList<String> methodTerms = new ArrayList<String>();
-			for (SimpleName methodInvocation : methodInvocations) {
+			for (SimpleName methodInvocation : facade.getMethodInvocations()) {
 				methodTerms.add(methodInvocation.toString());
 			}
 			Collections.sort(methodTerms);
-			int totMethodTermsInDoc = methodInvocations.size();
+			int totMethodTermsInDoc = facade.getMethodInvocations().size();
 			for(Entry<String, Integer> entry: _repository.methodInvocationTerms.entrySet()) {
 				String term = entry.getKey();
 				int numOfOccurrences = (methodTerms.contains(term)) ? (methodTerms.lastIndexOf(term) - methodTerms.indexOf(term) + 1): 0;
-				tfMap.put(entry.getKey(), new TFIDF(numOfOccurrences, totMethodTermsInDoc,totDocs,entry.getValue()));
+				tfMap.put(term, new TFIDF(numOfOccurrences, totMethodTermsInDoc,totDocs,entry.getValue()));
 			}
 			break;
 			
