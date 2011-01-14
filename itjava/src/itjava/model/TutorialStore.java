@@ -137,7 +137,9 @@ public class TutorialStore {
 		Iterator<WordInfo> wordInfoIterator = null;
 		Iterator<WordInfo> highlightInfoIterator = null;
 		
-		wordInfoIterator = _wordInfoList.iterator();
+		if (_wordInfoList != null) {
+			wordInfoIterator = _wordInfoList.iterator();
+		}
 		highlightInfoIterator = _oriWordInfoList.iterator();
 			
 		int indexOfLinesOfCode = 1;
@@ -248,13 +250,17 @@ public class TutorialStore {
 		_variableDeclarations.add(TutorialTemplate.ctatOptionsDeclaration("cTAT_Options1"));
 		_variableDeclarations.add(TutorialTemplate.buttonDeclaration("doneButton"));
 		this._buttonVariables.add("doneButton");
+		Iterator<WordInfo> wordInfoIterator = null;
+
+		if(_wordInfoList !=  null) {
+			wordInfoIterator = _wordInfoList.iterator();
+			for (WordInfo currWordInfo : _wordInfoList) {
+				_lineNumbersForBlankedWords.add(currWordInfo.lineNumber);
+			}
+		}
 		
-		Iterator<WordInfo> wordInfoIterator = _wordInfoList.iterator();
 		Iterator<WordInfo> highlightInfoIterator = _oriWordInfoList.iterator();
 
-		for (WordInfo currWordInfo : _wordInfoList) {
-			_lineNumbersForBlankedWords.add(currWordInfo.lineNumber);
-		}
 		
 		for (WordInfo currWordInfo : _oriWordInfoList) {
 			_lineNumbersForHighlightedWords.add(currWordInfo.lineNumber);
