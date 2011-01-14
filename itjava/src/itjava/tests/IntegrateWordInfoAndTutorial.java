@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+
 import itjava.model.Convertor;
 import itjava.model.ResultEntry;
 import itjava.model.Tutorial;
@@ -49,11 +52,25 @@ public class IntegrateWordInfoAndTutorial {
 	
 	@Test
 	public void TestAllWordsAreAccessible() throws Exception {
-		GivenFiles();
+	//	GivenFiles();
 		GivenFileWithMultipleWordsOnOneLine();
 		WhenWordInfoIsGenerated();
 		WhenTutorialIsGenerated();
 		ThenWordsInaccesibleMessageNotShown();
+	}
+	
+	@Test
+	public void TestEscapedQuotesHandled() throws Exception {
+		GivenFileWithEscapedQuotes();
+		WhenWordInfoIsGenerated();
+		WhenTutorialIsGenerated();
+		ThenTutorialDeployerSucceeds();
+	}
+
+	private void ThenTutorialDeployerSucceeds() {
+		Tutorial generated = initTutorialList.get(0);
+		WhenCompiled(generated);
+		
 	}
 
 	private void ThenWordsInaccesibleMessageNotShown() {
@@ -96,16 +113,30 @@ public class IntegrateWordInfoAndTutorial {
 		}
 	}
 	
+	private void GivenFileWithEscapedQuotes() throws Exception {
+		sourceCodes.add(new ResultEntry(Convertor
+				.FileToString("samples/UseThisForTestingFacade_10.java"),
+				"url111", 0));
+	}
+	
 	private void GivenFileWithMultipleWordsOnOneLine() throws Exception {
 		sourceCodes.add(new ResultEntry(Convertor
-				.FileToString("samples/UseThisForTestingFacade_8.java"),
-				"url", 0));
+				.FileToString("samples/UseThisForTestingFacade_9.java"),
+				"url5", 0));
 	}
 
 	private void WhenWordInfoIsGenerated() {
 		_wordInfoPresenter.SetCompilationUnitListAndAccessRepository(query,
 				sourceCodes);
 		initTutorialList = _wordInfoPresenter.GenerateWordInfoMap();
+	}
+	
+	private void WhenCompiled(Tutorial tutorial) {
+		String CompilePath = "generated/" + tutorial.getTutorialName()
+				+ ".java";
+		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+		int result = compiler.run(null, null, null, CompilePath);
+		System.out.println("Compile result code = " + result);
 	}
 
 	private void ThenNumberofParanthesisIsBalanced() {
