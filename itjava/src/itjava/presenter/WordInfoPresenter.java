@@ -63,16 +63,20 @@ public class WordInfoPresenter {
 	public ArrayList<Tutorial> GenerateWordInfoMap() {
 		ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
 		int tutorialNameIndex = 0;
+		int importsToBeAdded = 1;
+		int methodsToBeAdded = 5;
+		int classInstancesToBeAdded = 2;
 		
 		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 15);
 		for (CompilationUnitFacade facade : similarFacades) {
 			ArrayList<WordInfo> wordInfoList = new ArrayList<WordInfo>();
 			
-			ArrayList<String> topImports = facade.getTFVector().getSortedTerms(NodeToCompare.ImportDeclaration, 1);
+			ArrayList<String> topImports = facade.getTFVector().getSortedTerms(NodeToCompare.ImportDeclaration, importsToBeAdded);
 			for (ImportDeclaration importDeclaration : facade.getImportDeclarations()) {
-				if(topImports.contains(importDeclaration.getName().getFullyQualifiedName())) {
+				if(importsToBeAdded > 0 && topImports.contains(importDeclaration.getName().getFullyQualifiedName())) {
 					try {
 						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), importDeclaration));
+						importsToBeAdded--;
 					}
 					catch (Exception e) {
 						System.err.println(e.getMessage() + "; Facade URL : " + facade.getUrl());
@@ -81,11 +85,12 @@ public class WordInfoPresenter {
 				}
 			}
 			
-			ArrayList<String> topMethods = facade.getTFVector().getSortedTerms(NodeToCompare.MethodInvocation, 5);
+			ArrayList<String> topMethods = facade.getTFVector().getSortedTerms(NodeToCompare.MethodInvocation, methodsToBeAdded);
 			for (SimpleName methodInvocation : facade.getMethodInvocations()) {
-				if (topMethods.contains(methodInvocation.getFullyQualifiedName())) {
+				if (methodsToBeAdded > 0 && topMethods.contains(methodInvocation.getFullyQualifiedName())) {
 					try {
 						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), methodInvocation));
+						methodsToBeAdded--;
 					}
 					catch (Exception e) {
 						System.err.println(e.getMessage() + "; Facade URL : " + facade.getUrl());
@@ -94,11 +99,12 @@ public class WordInfoPresenter {
 				}
 			}
 			
-			ArrayList<String> topClassInstances = facade.getTFVector().getSortedTerms(NodeToCompare.ClassInstanceCreator, 3);
+			ArrayList<String> topClassInstances = facade.getTFVector().getSortedTerms(NodeToCompare.ClassInstanceCreator, classInstancesToBeAdded);
 			for (Type classInstance : facade.getClassInstances()) {
-				if (topClassInstances.contains(classInstance.toString())) {
+				if (classInstancesToBeAdded > 0 && topClassInstances.contains(classInstance.toString())) {
 					try {
 						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), classInstance));
+						classInstancesToBeAdded--;
 					}
 					catch (Exception e) {
 						System.err.println(e.getMessage() + "; Facade URL : " + facade.getUrl());
