@@ -177,7 +177,7 @@ function checkAvailability(){
           </tr>
           <% if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel").equals("student")){ %>
             <tr><td align="center">
-            <form id="form3" name="form3" method="post" action="updateStudent.jsp">
+            <form id="form3" name="form3" method="post" action="UpdateStudentServlet">
               <table width="450" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="1" rowspan="21" align="center" bgcolor="#3E4854" class="titles"></td>
@@ -322,7 +322,7 @@ function checkAvailability(){
           <tr>
             <td align="center">
             
-            <form id="form1" name="form1" method="post" action="createStudent.jsp">
+            <form id="form1" name="form1" method="post" action="CreateStudentServlet">
               <table width="450" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
@@ -500,7 +500,7 @@ function checkAvailability(){
               </tr>
               </table>
             <% }else{ %>
-            <form id="form2" name="form2" method="post" action="loginStudent.jsp">
+            <form id="form2" name="form2" method="post" action="LoginStudentServlet">
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <% if(request.getParameter("error") != null && request.getParameter("error").equals("4")){ %><tr>
                   <td align="center">*Login failed. Please try again.</td>

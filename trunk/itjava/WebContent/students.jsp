@@ -1,7 +1,7 @@
 <%@page import="org.apache.jasper.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*"%>
+<%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*, itjava.view.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -164,7 +164,7 @@ function checkAvailability(){
           <tr>
             <td align="center">
             
-            <form id="form1" name="form1" method="post" action="createStudent.jsp">
+            <form action="CreateStudentServlet" method="post" name="form1" id="form1">
               <table width="450" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
@@ -342,7 +342,7 @@ function checkAvailability(){
               </tr>
               </table>
             <% }else{ %>
-            <form id="form2" name="form2" method="post" action="loginStudent.jsp">
+            <form id="form2" name="form2" method="post" action="LoginStudentServlet">
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <% if(request.getParameter("error") != null && request.getParameter("error").equals("4")){ %><tr>
                   <td align="center">*Login failed. Please try again.</td>

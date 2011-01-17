@@ -166,7 +166,7 @@ function checkAvailability(){
           <tr>
             <td align="center">
             
-            <form id="form1" name="form1" method="post" action="createTeacher.jsp">
+            <form id="form1" name="form1" method="post" action="CreateTeacherServlet">
               <table width="450" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="1" rowspan="21" align="center" bgcolor="#3E4854" class="titles"></td>
@@ -345,7 +345,7 @@ function checkAvailability(){
               </tr>
               </table>
             <% }else{ %>
-            <form id="form2" name="form2" method="post" action="loginTeacher.jsp">
+            <form id="form2" name="form2" method="post" action="LoginTeacherServlet">
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <% if(request.getParameter("error") != null && request.getParameter("error").equals("4")){ %><tr>
                   <td align="center">*Login failed. Please try again.</td>
