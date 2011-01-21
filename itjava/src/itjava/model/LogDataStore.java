@@ -45,10 +45,10 @@ public class LogDataStore {
 			ProcessXmlToLogData(logData);
 			CalculateScore(numOfBlanks, logData);
 		}
-/*		else
+		else
 		{
 			if (!VerifyLogFileAndRename(System.getProperty("user.name"))) throw new IOException("Problem locating raw log file");
-		}*/
+		}
 		return logData;
 	}
 
