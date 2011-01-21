@@ -69,7 +69,7 @@ public class WordInfoPresenter {
 	public ArrayList<Tutorial> GenerateWordInfoMap() {
 		ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
 		
-		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 5);
+		LinkedHashSet<CompilationUnitFacade> similarFacades = compilationUnitStore.FindSimilarCompilationUnits(compilationUnitFacadeList, this.getRepository(), 15);
 		for (CompilationUnitFacade facade : similarFacades) {
 			ArrayList<WordInfo> wordInfoList = new ArrayList<WordInfo>();
 			Set<Integer> lineNumbersUsed = new HashSet<Integer>();
