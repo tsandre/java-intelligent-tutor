@@ -140,6 +140,7 @@ public class BRDStore {
 			for (int i = 0; i < codeContent.length ; i++) {
 				String[] oldstring = new String[codeContent.length + 1];
 				String[] tempstring = new String[codeContent.length + 1];
+				String[] tempstring1 = new String[codeContent.length + 1];
 				String[] newstring = new String[codeContent.length + 1];
 				out.write(" <message>\r\n");
 				out.write("  <verb>NotePropertySet</verb>\r\n");
@@ -153,7 +154,8 @@ public class BRDStore {
 				out.write("   </Action>\r\n");
 				oldstring[i] = dorminName[notepropertysetCount];
 				tempstring[i] = oldstring[i].replace(">", "&gt;");
-				newstring[i] = tempstring[i].replace("<", "&lt;");
+				tempstring1[i] = tempstring[i].replace("&", "&amp;");
+				newstring[i] = tempstring1[i].replace("<", "&lt;");
 				out.write("   <Input>\r\n");  
 				out.write("      <value>"+newstring[i]+"</value>\r\n");          		
 				out.write("   </Input>\r\n");
