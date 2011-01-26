@@ -168,7 +168,7 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 <div id="divRating" class="stepBox">
 <div class="step">STEP 3</div>
 <fieldset>
-	<label>Rate the difficulty of this tutorial:</label><br />
+	<label>Rate the difficulty level of this snippet:</label><br />
 	<%
 	Integer difficultySelected = difficultyList.get(currentIndex);
 		for (int difficultyIndex = 1; difficultyIndex <=5; difficultyIndex++) {
