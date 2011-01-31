@@ -49,7 +49,7 @@
 #form2 table tr td table tr .basic {
 	text-align: right;
 }
-#divProgress {
+#divProgress2 {
 	width:100%;
 	height:200px;
 	text-align:center;
@@ -136,8 +136,8 @@ function checkAvailability(){
 	window.open('checkAvailability.jsp?username='+document.getElementById("username").value,'mywindow','width=400,height=200')
 }
 
-function showProgress() {
-	document.getElementById("divProgress").style.display = 'table-cell';
+function showProgress2() {
+	document.getElementById("divProgress2").style.display = 'table-cell';
 }
 
 function showStudentLogin(){
@@ -192,14 +192,14 @@ function showTeacherLogin(){
           </tr>
           <tr>
             <td class="basic">
-<form action="CodeSearchServlet" method="get" name="codeSearchForm" id="codeSearchForm">
+<form action="TutorSearchServlet" method="get" name="tutorSearchForm" id="tutorSearchForm">
 
   <p>&nbsp;</p>
-  <p>Enter a Search Term to Begin<br />  <input type="text" name="query" id="query" placeholder="Enter query"/>  <br /><input name="btnSearch" type="submit" id="btnSearch" onclick="return showProgress();" value="Generate Tutor"/>
+  <p>Enter a Search Term to Begin<br />  <input type="text" name="query" id="query" placeholder="Enter query"/>  <br /><input name="btnSearch" type="submit" id="btnSearch" onclick="return showProgress2();" value="Find Tutors"/>
   </p>
 </form>
 <table width="0" align="center"><tr><td>
-<div id="divProgress">
+<div id="divProgress2">
 <img src="images/loopLoader.gif" /><br />
 Searching the web for code snippets...<br>Please Wait</br></div></td></tr></table></td>
           </tr>

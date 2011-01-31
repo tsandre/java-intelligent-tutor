@@ -9,11 +9,7 @@
 <body>
 <%
 	String redirectURL1 = "";
-	if(session.getAttribute("userLevel") == "teacher"){
-		redirectURL1 = "teachers.jsp";
-	}else{
-		redirectURL1 = "students.jsp";
-	}
+	redirectURL1 = "index.jsp";
 	session.setAttribute("userName", null);
 	session.setAttribute("userID", null);
 	session.setAttribute("userLevel", null);

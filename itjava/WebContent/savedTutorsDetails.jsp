@@ -1,16 +1,16 @@
 <%@page import="org.apache.jasper.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*, itjava.view.*"%>
+<%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Students Page</title>
+<title>My Saved Tutors</title>
 <link href="css/maincss.css" rel="stylesheet" type="text/css" /><style type="text/css">
 <!--
 .navmain a {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	font-weight: bold;
 	color: #FFF;
@@ -21,19 +21,19 @@
 	font-weight: bold;
 }
 .basic {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
 }
 .basicbutton {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: center;
 }
 .titles {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-weight: bold;
 	font-size: 16px;
 	color: #3E4854;
@@ -41,13 +41,38 @@
 #form1 table tr td p {
 	color: #900;
 }
-.basic1 {	font-family: Arial, Helvetica, sans-serif;
+.basic1 {	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
 }
 #form2 table tr td table tr .basic {
 	text-align: right;
+}
+.tdBold {
+	font-weight:bold;
+	font-size:12px;
+}
+
+.tdRegular {
+	font-size:12px;
+}
+
+#tableMain {
+	
+}
+
+#alternateLaunch {
+	display: none;
+}
+
+#divNavigate {
+	width: 600x;
+	text-align:left;
+}
+#divContainer {
+	width: 600px;
+	text-align: center;
 }
 -->
 </style>
@@ -91,8 +116,8 @@ function checkForm(){
 }
 
 function checkForm2(){
-	var username = document.getElementById("username3").value;
-	var password = document.getElementById("password3").value;
+	var username = document.getElementById("username2").value;
+	var password = document.getElementById("password2").value;
 	
 	if(username.length < 1){
 		alert("Please enter your username to login.");
@@ -101,8 +126,59 @@ function checkForm2(){
 		alert("Please enter your password");
 		document.form1.password2.focus();
 	}else{
+		document.forms["form2"].submit();
+	}
+}
+
+function checkForm3(){
+	var firstName = document.getElementById("firstName3").value;
+	var lastName = document.getElementById("lastName3").value;
+	var school = document.getElementById("school3").value;
+	var password1 = document.getElementById("password3").value;
+	var password2 = document.getElementById("passwordConfirm3").value;
+
+	if(firstName.length < 1){
+		alert("Please enter your first name.");
+		document.form3.firstName.focus();
+	}else if(lastName.length < 1){
+		alert("Please enter your last name.");
+		document.form3.lastName.focus();
+	}else if(school.length < 1){
+		alert("Please enter your school.");
+		document.form3.school.focus();
+	}else if(password1.length != 0 && (password1.length < 6 || password1.length > 12)){
+		alert("Please enter a valid password. Passwords must be 6-12 characters.");
+		document.form3.password.focus();
+	}else if(password1 != password2){
+		alert("The passwords do not match! Please re-enter your password to ensure they are correct.");
+		document.form3.password.focus();
+	}else{
 		document.forms["form3"].submit();
 	}
+}
+
+function gotoURL(URL) {
+	window.location = URL;
+}
+
+var launchCounts = 0;
+function launchNext(folderName, deliverableName) {
+	if (launchCounts == 0) {
+		launchCounts++;
+		window.open("delivery/" + folderName + "/" + deliverableName + ".jnlp");
+		document.getElementById("btnLaunch").value = "Save & Next >>";
+		document.getElementById("alternateLaunch").style.display = 'block';
+		return false;
+	}
+	else {
+		launchCounts = 0;
+		return true;
+	}
+}
+
+function launchNow(folderName, deliverableName) {
+	window.open("delivery/" + folderName + "/" + deliverableName + ".jnlp");
+	launchCounts = 1;
 }
 
 function checkAvailability(){
@@ -148,8 +224,147 @@ function checkAvailability(){
           <tr>
             <td height="10"></td>
           </tr>
-          <% if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel").equals("student")){ %>
-            <tr><td align="center">Content here for a logged in user.<br />
+          <% if(session.getAttribute("userName") != null && session.getAttribute("userID") != null){ %>
+            <tr><td align="center">
+            <%
+
+			int tutorialInfoId = Integer.parseInt(request.getParameter("id"));
+			
+			DeliverableLauncher deliverableLauncher = (DeliverableLauncher)session.getAttribute("deliverableLauncher");
+			if (deliverableLauncher == null) {
+				System.err.println("Landed on studentMainTest.jsp from a wrong source..");
+				response.sendRedirect("studentWelcome.jsp");
+			}
+			else {
+				deliverableLauncher.setStudentId((Integer)session.getAttribute("studentId"));
+				deliverableLauncher.setTutorialInfoId(tutorialInfoId);
+			}
+			
+			HashMap<String, String> whereClause = new HashMap<String, String>();
+			whereClause.put("tutorialInfoId", Integer.toString(tutorialInfoId));
+			session.setAttribute("tutorialInfoId", tutorialInfoId);
+			ArrayList<TutorialInfo> tutorialInfoList = TutorialInfoStore.SelectInfo(whereClause);
+			
+			KeyValue<Integer, String> deliveryKeyValue = (KeyValue<Integer, String>)session.getAttribute("deliveryKeyValue");
+			int deliverableId = -1;
+			String deliverableName = null;
+			if (deliveryKeyValue == null  && request.getParameter("start").trim().equals("1")) {
+				deliveryKeyValue = deliverableLauncher.GetFirstDeliverableName();
+			}
+			else if (deliveryKeyValue == null)
+			{
+				response.sendRedirect("studentFinalPage.jsp");
+			}
+			deliverableId = deliveryKeyValue.getKey();
+			deliverableName = deliveryKeyValue.getValue();
+			%>
+<form id="formMainTest" method="post" action="DeliverableSelection2Servlet">
+<div id="divMainContent">
+<table border="0" cellpadding="0" cellspacing="0" id="tableMeta" align="center"><tbody>
+<tr><td>
+  <table id="tableMain" border="0" align="center" cellpadding="0"  cellspacing="0">
+    <tbody>
+      <%
+		TutorialInfo tutorialInfo = new TutorialInfo();
+		if (tutorialInfoList.size() != 1) {
+			System.err.println("TutorialInfo table should have returned only 1 tuple..");
+			out.println("Error seeking Tutorial Information..");
+		}
+		else {
+			tutorialInfo = tutorialInfoList.get(0);
+			int timesAccessed = tutorialInfo.getTimesAccessed() + 1;
+			TutorialInfoStore.UpdateInfo(tutorialInfoId, 
+					new KeyValue<String, String>("timesAccessed", Integer.toString(timesAccessed)));
+      
+      		out.println("<tr>");
+        	out.println("<td height=\"1\" colspan=\"3\" bgcolor=\"#333333\"></td>");
+      		out.println("</tr>");
+      		out.println("<tr>");
+        	out.println("<td width=\"1\" bgcolor=\"#333333\"></td>");
+        	out.println("<td width=\"600\">");
+          	out.println("<table width=\"600\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">");
+            out.println("<tbody>");
+            out.println("<tr>");
+            out.print("<td colspan=\"3\" bgcolor=\"#F4F4F4\" class=\"tdBold\" style=\"padding-left:10px;\">");
+			out.print(tutorialInfo.getTutorialName());
+			out.println("</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.print("<td bgcolor=\"#F4F4F4\" class=\"tdRegular\" style=\"padding-left:10px;\" >Created by : ");
+			out.print(tutorialInfo.getCreatedBy());
+			out.println("</td>");
+            out.print("<td bgcolor=\"#F4F4F4\" class=\"tdRegular\">Date : ");
+			out.print(tutorialInfo.getCreationDate().toString());
+			out.println("</td>");
+            out.print("<td bgcolor=\"#F4F4F4\" class=\"tdRegular\">Downloads : ");
+			out.print(tutorialInfo.getTimesAccessed());
+			out.println("</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.print("<td colspan=\"3\" bgcolor=\"#F4F4F4\" class=\"tdRegular\" style=\"padding-left:10px;\">Description : ");
+			out.print(tutorialInfo.getTutorialDescription());
+			out.println("</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td height=\"5\" colspan=\"3\" bgcolor=\"#F4F4F4\" style=\"padding-left:10px;\"></td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td height=\"1\" colspan=\"3\" style=\"padding-left:10px;\" bgcolor=\"#F4F4F4\"></td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td height=\"5\" colspan=\"3\" bgcolor=\"#F4F4F4\" style=\"padding-left:10px;\"></td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td colspan=\"3\" bgcolor=\"#F4F4F4\" class=\"tdRegular\" style=\"padding-left:10px;\">");
+           // out.println("<input type=\"submit\" id=\"btnLaunch\" name=\"btnLaunch\" value=\"Begin Lesson\" class=\"tdRegular\" onclick=\"return launchNext('ProcessBuilderinjava', 'Example1');\" />");
+            out.println("</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td colspan=\"3\" bgcolor=\"#F4F4F4\" class=\"tdRegular\" style=\"padding-left:10px;\" height=\"10px\"></td>");
+            out.println("</tr>");
+            out.println("</tbody>");
+          	out.println("</table>");
+        	out.println("</td>");
+        	out.println("<td width=\"1\" bgcolor=\"#333333\"></td>");
+      		out.println("</tr>");
+      		out.println("<tr>");
+        	out.println("<td colspan=\"3\" bgcolor=\"#333333\" height=\"1\"></td>");
+      		out.println("</tr>");
+	}
+	String folderName = tutorialInfo.getFolderName();
+	String buttonLabel = "Begin Lesson";
+
+	String disabledLaunch = "";
+	if (deliverableName == null) {
+		disabledLaunch = "disabled";
+	}
+	else {
+		session.setAttribute("deliveryKeyValue", deliveryKeyValue);
+		session.setAttribute("tutorialInfoId", tutorialInfoId);
+		session.setAttribute("studentId", 99);
+		session.setAttribute("deliverableLauncher", deliverableLauncher);
+	}
+	%>
+</tbody></table></td></tr></tbody></table>
+<table id="divContainer" align="center"><tbody><tr><td>
+<div id="divNavigate">
+<input type="submit" id="btnLaunch" name="btnLaunch" value="<%= buttonLabel%>" 
+	onclick="return launchNext('<%= folderName%>', '<%= deliverableName%>');"
+	<%= disabledLaunch%>/>
+</div>
+<div id="alternateLaunch">
+If you closed the pop-up by mistake, click on this <input type="button" value="button" onclick="return launchNow('<%= folderName%>', '<%= deliverableName%>');"/> to re-take the quiz.
+</div>
+</td></tr></tbody>
+</div>
+</form>
+		</td>
+    	<td width="1" bgcolor="#333333"></td>
+    </tr>
+	<tr>
+  		<td height="1" colspan="3" bgcolor="#333333"></td>
+  	</tr>
+</table>
             </td></tr>
             <% }else{%>
           <tr>
@@ -164,7 +379,7 @@ function checkAvailability(){
           <tr>
             <td align="center">
             
-            <form action="CreateStudentServlet" method="post" name="form1" id="form1">
+            <form id="form1" name="form1" method="post" action="CreateStudentServlet">
               <table width="450" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
@@ -277,8 +492,7 @@ function checkAvailability(){
             </form></td>
           </tr><% } %>
         </table></td>
-        <td width="350">
-        <table width="351" border="0" cellspacing="0" cellpadding="0">
+        <td width="350"><table width="351" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td height="10" colspan="3"></td>
             </tr>
@@ -343,14 +557,14 @@ function checkAvailability(){
               </tr>
               </table>
             <% }else{ %>
-            <form id="form3" name="form3" method="post" action="LoginStudentServlet">
+            <form id="form2" name="form2" method="post" action="LoginStudentServlet">
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <% if(request.getParameter("error") != null && request.getParameter("error").equals("4")){ %><tr>
                   <td align="center">*Login failed. Please try again.</td>
                 </tr><br />
 				<% } %>
                 <tr>
-                  <td align="center"><span class="basic" style="font-weight:bold">Student Login</span></td>
+                  <td align="center"><span class="basic" style="font-weight:bold">Please Login</span></td>
                 </tr>
                 <tr>
                   <td height="5" align="center"></td>
@@ -360,12 +574,12 @@ function checkAvailability(){
                     <tr>
                       <td width="110" align="right" class="basic">Username:</td>
                       <td width="5">&nbsp;</td>
-                      <td align="left"><input name="username3" type="text" class="basic1" id="username3" style="width:140px" /></td>
+                      <td align="left"><input name="username2" type="text" class="basic1" id="username2" style="width:140px" /></td>
                     </tr>
                     <tr>
                       <td align="right" class="basic">Password:</td>
                       <td>&nbsp;</td>
-                      <td align="left"><input name="password3" type="password" class="basic1" id="password3" style="width:140px" /></td>
+                      <td align="left"><input name="password2" type="password" class="basic1" id="password2" style="width:140px" /></td>
                     </tr>
                     <tr>
                       <td height="5" colspan="3" align="right"></td>
