@@ -14,7 +14,7 @@ div .step {
 	width: 60px;
 	height: 25px;
 	font-size: 1em;
-	background-color: #d4e692;
+	background-color: #afbdca;
 }
 
 div .active {
@@ -48,28 +48,31 @@ div .active {
 }
 
 .odd {
-	background-color: #F5FCE9;
+	background-color: #dbdbdb;
+	color: #000000;
 }
 
 .even {
-	background-color: #EDF7EA;
+	background-color: #cccccc;
+	color: #000000;
 }
 
 tr .active {
 	font-weight: bold;
 	font-size: 1.2em;
-	background-color: #D4E692;
+	background-color: #567f9c;
+	color: #FFFFFF;
 }
 
 tr .passive {
-	background-color: #EDF7EA;
+	background-color: #e7e7e7	;
 	cursor: pointer;
 	font-size: 0.8em;
 	text-align: top;
 }
 
 tr .passive:hover {
-	background-color: #edfcb0;
+	background-color: #81a2bc;
 	text-decoration: underline;
 }
 

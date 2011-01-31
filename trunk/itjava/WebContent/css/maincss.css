@@ -1,3 +1,7 @@
+html {
+	overflow-y: scroll;
+}
+
 .navmain:link {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -33,6 +37,43 @@
 	text-align: center;
 	text-decoration:none;
 }
+
+.rightmenunav:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #999;
+	text-align: left;
+	text-decoration:none;
+}
+
+.rightmenunav:active {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #999;
+	text-align: left;
+	text-decoration:none;
+}
+
+.rightmenunav:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #000;
+	text-align: left;
+	text-decoration:none;
+}
+
+.rightmenunav:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #999;
+	text-align: left;
+	text-decoration:none;
+}
+
 titleswhite {
 	color: #FFF;
 }
