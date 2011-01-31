@@ -91,8 +91,8 @@ function checkForm(){
 }
 
 function checkForm2(){
-	var username = document.getElementById("username3").value;
-	var password = document.getElementById("password3").value;
+	var username = document.getElementById("username2").value;
+	var password = document.getElementById("password2").value;
 	
 	if(username.length < 1){
 		alert("Please enter your username to login.");
@@ -101,7 +101,7 @@ function checkForm2(){
 		alert("Please enter your password");
 		document.form1.password2.focus();
 	}else{
-		document.forms["form3"].submit();
+		document.forms["form2"].submit();
 	}
 }
 
@@ -277,8 +277,7 @@ function checkAvailability(){
             </form></td>
           </tr><% } %>
         </table></td>
-        <td width="350">
-        <table width="351" border="0" cellspacing="0" cellpadding="0">
+        <td width="350"><table width="351" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td height="10" colspan="3"></td>
             </tr>
@@ -330,27 +329,27 @@ function checkAvailability(){
                 <td>&nbsp;</td>
                 </tr>
               <tr>
-                <td align="left"><a href="accountStudent.jsp" target="_self" class="rightmenunav">Account Information</a></td>
+                <td align="left"><a href="accountStudent.jsp" target="_self">Account Information</a></td>
                 </tr>
               <tr>
-                <td align="left"><a href="savedTutors.jsp" class="rightmenunav">My Tutors</a></td>
+                <td align="left"><a href="savedTutors.jsp">My Tutors</a></td>
               </tr>
               <tr>
-                <td align="left"><a href="classLists.jsp" class="rightmenunav">Class Lists</a></td>
+                <td align="left"><a href="classLists.jsp">Class Lists</a></td>
               </tr>
               <tr>
-                <td align="left"><a href="logout.jsp" target="_self" class="rightmenunav">Click to logout</a></td>
+                <td align="left"><a href="logout.jsp" target="_self">Click to logout</a></td>
               </tr>
               </table>
             <% }else{ %>
-            <form id="form3" name="form3" method="post" action="LoginStudentServlet">
+            <form id="form2" name="form2" method="post" action="LoginStudentServlet">
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <% if(request.getParameter("error") != null && request.getParameter("error").equals("4")){ %><tr>
                   <td align="center">*Login failed. Please try again.</td>
                 </tr><br />
 				<% } %>
                 <tr>
-                  <td align="center"><span class="basic" style="font-weight:bold">Student Login</span></td>
+                  <td align="center"><span class="basic" style="font-weight:bold">Please Login</span></td>
                 </tr>
                 <tr>
                   <td height="5" align="center"></td>
@@ -360,12 +359,12 @@ function checkAvailability(){
                     <tr>
                       <td width="110" align="right" class="basic">Username:</td>
                       <td width="5">&nbsp;</td>
-                      <td align="left"><input name="username3" type="text" class="basic1" id="username3" style="width:140px" /></td>
+                      <td align="left"><input name="username2" type="text" class="basic1" id="username2" style="width:140px" /></td>
                     </tr>
                     <tr>
                       <td align="right" class="basic">Password:</td>
                       <td>&nbsp;</td>
-                      <td align="left"><input name="password3" type="password" class="basic1" id="password3" style="width:140px" /></td>
+                      <td align="left"><input name="password2" type="password" class="basic1" id="password2" style="width:140px" /></td>
                     </tr>
                     <tr>
                       <td height="5" colspan="3" align="right"></td>

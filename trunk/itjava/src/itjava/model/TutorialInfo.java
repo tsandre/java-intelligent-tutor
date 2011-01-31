@@ -13,6 +13,7 @@ public class TutorialInfo {
 		this.folderName = new String();
 		this.tutorialName = new String();
 		this.createdBy = new String();
+		this.userLevel = new String();
 		this.tutorialDescription = new String();
 		this.numExamples = 0;
 		this.numQuizes = 0;
@@ -46,11 +47,29 @@ public class TutorialInfo {
 		this.creationDate = creationDate;
 		this.timesAccessed = timesAccessed;
 	}
+	
+	public TutorialInfo(int tutorialId, String folderName,
+			String tutorialName, String tutorialDescription,
+			int numExamples, int numQuizes, String creationDate,
+			String createdBy, int timesAccessed, String userLevel) {
+		
+		this.tutorialId = tutorialId;
+		this.folderName = folderName;
+		this.tutorialName = tutorialName;
+		this.createdBy = createdBy;
+		this.tutorialDescription = tutorialDescription;
+		this.numExamples = numExamples;
+		this.numQuizes = numQuizes;
+		this.creationDate = creationDate;
+		this.timesAccessed = timesAccessed;
+		this.userLevel = userLevel;
+	}
 
 	private int tutorialId;
 	private String folderName;
 	private String tutorialName;
 	private String createdBy;
+	private String userLevel;
 	private String tutorialDescription;
 	private int numExamples;
 	private int numQuizes;
@@ -108,6 +127,18 @@ public class TutorialInfo {
 	 */
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+	/**
+	 * @return the userLevel
+	 */
+	public String getUserLevel() {
+		return userLevel;
+	}
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setUserLevel(String userLevel) {
+		this.userLevel = userLevel;
 	}
 	/**
 	 * @return the tutorialDescription

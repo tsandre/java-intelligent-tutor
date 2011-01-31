@@ -10,7 +10,7 @@
 <link href="css/maincss.css" rel="stylesheet" type="text/css" /><style type="text/css">
 <!--
 .navmain a {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	font-weight: bold;
 	color: #FFF;
@@ -21,19 +21,19 @@
 	font-weight: bold;
 }
 .basic {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
 }
 .basicbutton {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: center;
 }
 .titles {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-weight: bold;
 	font-size: 16px;
 	color: #3E4854;
@@ -41,7 +41,7 @@
 #form1 table tr td p {
 	color: #900;
 }
-.basic1 {	font-family: Arial, Helvetica, sans-serif;
+.basic1 {	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
@@ -148,7 +148,7 @@ function checkAvailability(){
         </tr>
       <tr>
         <td width="1" bgcolor="#122222"></td>
-        <td height="77" background="images/bannerbg.jpg"><img src="images/logo1.jpg" width="215" height="60" border="0" /></td>
+        <td height="77" background="images/bannerbg.jpg"><img src="images/logo1.jpg" width="200" height="60" border="0" /></td>
         <td width="1" bgcolor="#122222"></td>
       </tr>
       <tr>
@@ -159,7 +159,7 @@ function checkAvailability(){
   <tr>
     <td height="25" bgcolor="#122222"><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="110" align="center"><a href="index.jsp" title="Tutor Search" class="navmain">Tutor Search</a></td>
+        <td width="110" align="center"><a href="search.jsp" title="Tutor Search" class="navmain">Tutor Search</a></td>
         <td width="110" align="center"><a href="index.jsp" title="Create Tutor" class="navmain">Create Tutor</a></td>
         <td width="135" align="center"><a href="teachers.jsp" title="Teacher Account" class="navmain">Teacher Account</a></td>
         <td width="135" align="center"><a href="students.jsp" title="Student Account" class="navmain">Student Account</a></td>
@@ -181,7 +181,7 @@ function checkAvailability(){
               <table width="450" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="1" rowspan="21" align="center" bgcolor="#3E4854" class="titles"></td>
-                  <td colspan="3" align="center" bgcolor="#3E4854" class="titles"><span style="color:white; font:Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold;; font-family: Arial, Helvetica, sans-serif">Update Account Information</span></td>
+                  <td colspan="3" align="center" bgcolor="#122222" class="titles"><span style="color:white; font: segoe ui, verdana; font-size:12px; font-weight:bold;">Update Account Information</span></td>
                   <td width="1" rowspan="21" align="center" bgcolor="#3E4854" class="titles"></td>
                   </tr>
                 <tr>
@@ -213,7 +213,7 @@ function checkAvailability(){
         	     String usercheck = "SELECT firstName, lastName, school, username, email FROM students WHERE username = ? AND studentID = ?";
  				 ucpst = conn.prepareStatement(usercheck);
  				 ucpst.setString(1, (String) session.getAttribute("userName"));
- 				 ucpst.setString(2, (String) session.getAttribute("userID"));
+ 				 ucpst.setInt(2, (Integer) session.getAttribute("userID"));
  				 rs = ucpst.executeQuery();
  				 rs.next();
 				 out.println("<tr>");
@@ -471,7 +471,7 @@ function checkAvailability(){
 				String usercheck = "SELECT firstName, lastName, school, username, email FROM students WHERE username = ? AND studentID = ?";
 				ucpst = conn.prepareStatement(usercheck);
 				ucpst.setString(1, (String) session.getAttribute("userName"));
-				ucpst.setString(2, (String) session.getAttribute("userID"));
+				ucpst.setInt(2, (Integer) session.getAttribute("userID"));
 				rs = ucpst.executeQuery();
 				rs.next();
 				out.print(rs.getString("firstName"));
@@ -487,16 +487,16 @@ function checkAvailability(){
                 <td>&nbsp;</td>
                 </tr>
               <tr>
-                <td align="left"><a href="accountStudent.jsp" target="_self">Account Information</a></td>
+                <td align="left"><a href="accountStudent.jsp" target="_self" class="rightmenunav">Account Information</a></td>
                 </tr>
               <tr>
-                <td align="left"><a href="savedTutors.jsp">Saved Tutors</a></td>
+                <td align="left"><a href="savedTutors.jsp" class="rightmenunav">My Tutors</a></td>
               </tr>
               <tr>
-                <td align="left"><a href="classLists.jsp">Class Lists</a></td>
+                <td align="left"><a href="classLists.jsp" class="rightmenunav">Class Lists</a></td>
               </tr>
               <tr>
-                <td align="left"><a href="logout.jsp" target="_self">Click to logout</a></td>
+                <td align="left"><a href="logout.jsp" target="_self" class="rightmenunav">Click to logout</a></td>
               </tr>
               </table>
             <% }else{ %>

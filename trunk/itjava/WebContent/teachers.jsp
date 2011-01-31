@@ -134,7 +134,7 @@ function checkAvailability(){
   <tr>
     <td height="25" bgcolor="#122222"><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="110" align="center"><a href="index.jsp" title="Tutor Search" class="navmain">Tutor Search</a></td>
+        <td width="110" align="center"><a href="search.jsp" title="Tutor Search" class="navmain">Tutor Search</a></td>
         <td width="110" align="center"><a href="index.jsp" title="Create Tutor" class="navmain">Create Tutor</a></td>
         <td width="135" align="center"><a href="teachers.jsp" title="Teacher Account" class="navmain">Teacher Account</a></td>
         <td width="135" align="center"><a href="students.jsp" title="Student Account" class="navmain">Student Account</a></td>
@@ -332,16 +332,16 @@ function checkAvailability(){
                 <td>&nbsp;</td>
                 </tr>
               <tr>
-                <td align="left"><a href="accountTeacher.jsp" target="_self">Account Information</a></td>
+                <td align="left"><a href="accountTeacher.jsp" target="_self" class="rightmenunav">Account Information</a></td>
                 </tr>
               <tr>
-                <td align="left"><a href="savedTutors.jsp">Saved Tutors</a></td>
+                <td align="left"><a href="savedTutors.jsp" class="rightmenunav">Saved Tutors</a></td>
               </tr>
               <tr>
-                <td align="left"><a href="classLists.jsp">Class Lists</a></td>
+                <td align="left"><a href="classLists.jsp" class="rightmenunav">Class Lists</a></td>
               </tr>
               <tr>
-                <td align="left"><a href="logout.jsp" target="_self">Click to logout</a></td>
+                <td align="left"><a href="logout.jsp" target="_self" class="rightmenunav">Click to logout</a></td>
               </tr>
               </table>
             <% }else{ %>

@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page import="org.apache.jasper.util.*"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,7 +10,7 @@
 <link href="css/maincss.css" rel="stylesheet" type="text/css" /><style type="text/css">
 <!--
 .navmain a {
-	font-family: segoe ui, verdana;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	font-weight: bold;
 	color: #FFF;
@@ -20,19 +21,19 @@
 	font-weight: bold;
 }
 .basic {
-	font-family: segoe ui, verdana;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
 }
 .basicbutton {
-	font-family: segoe ui, verdana;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: center;
 }
 .titles {
-	font-family: segoe ui, verdana;
+	font-family: segoe ui, verdana
 	font-weight: bold;
 	font-size: 16px;
 	color: #3E4854;
@@ -40,8 +41,7 @@
 #form1 table tr td p {
 	color: #900;
 }
-.basic1 {	
-	font-family: segoe ui, verdana;
+.basic1 {	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
@@ -49,46 +49,101 @@
 #form2 table tr td table tr .basic {
 	text-align: right;
 }
-.tdBold {
-	font-weight:bold;
-	font-size:12px;
+#tableMain {
+	width:600px;
+	border:0;
+	padding:0;
+	border-spacing:0;
 }
 
-#divProgress {
-	display: none;
-	width: 200px;
-	margin:0 auto;
-	position: relative;
+#tableMain tr{
+	height:1;
+	background-color:#333333;
 }
-#tabletitle {
-	font-family: segoe ui, verdana;
-	font-weight: bold;
-	font-size: 12px;
-	text-align: center;
-	color: #FFF;
+
+.myClass:hover td {background-color: orange; color: black; cursor:pointer; }
+
+#subTable {
+	width:100%;
+	border:0;
+	padding:0;
+	border-spacing:0;
 }
-#txtTutorialName {
-	font-family: segoe ui, verdana;
-	font-weight: normal;
-	font-size: 12px;
-	text-align: left;
-	color: #000;
-	width: 400px;
+
+
+.tdDescription {
+	width: 45%;
+	vertical-align:top;
+	background-color: beige;
 }
-#txtTutorialDescription {
-	font-family: segoe ui, verdana;
-	font-weight: normal;
+
+.tdMeta {
+	width: 25%;
+	color: gray;
+	font-size: 0.9em;
+	background-color: beige;
+	border-collapse:collapse;
+}
+
+.tdTutorialName {
+	width: 30%;
+	vertical-align:top;
+	background-color: beige;
+	padding-left:10px;
+	border-right:1px;
+	border-right-color:#F4F4F4;
+}
+
+a {
+	color:#333333;
 	font-size: 12px;
-	text-align: left;
-	color: #000;
-	width: 400px;
-	height: 200px;
+	font-family: segoe ui, verdana;
+}
+
+a:hover {
+	color:#000000;
+	font-size: 12px;
+	font-family: segoe ui, verdana;
 }
 -->
 </style>
 <script language="javascript" type="text/javascript">
 function isValidEmail(str){
 	return(str.indexOf(".")>2)&&(str.indexOf("@")>0);
+}
+function checkForm(){
+	var firstName = document.getElementById("firstName").value;
+	var lastName = document.getElementById("lastName").value;
+	var school = document.getElementById("school").value;
+	var email = document.getElementById("email").value;
+	var username = document.getElementById("username").value;
+	var password1 = document.getElementById("password").value;
+	var password2 = document.getElementById("passwordConfirm").value;
+	
+	if(firstName.length < 1){
+		alert("Please enter your first name.");
+		document.form1.firstName.focus();
+	}else if(lastName.length < 1){
+		alert("Please enter your last name.");
+		document.form1.lastName.focus();
+	}else if(school.length < 1){
+		alert("Please enter your school.");
+		document.form1.school.focus();
+	}else if(!isValidEmail(email)){
+		alert("Please enter a valid email.");
+		document.form1.email.focus();
+	}else if(username.length < 1){
+		alert("Please enter your username.");
+		document.form1.username.focus();
+	}else if(password1.length < 6 || password1.length > 12){
+		alert("Please enter a valid password. Passwords must be 6-12 characters.");
+		document.form1.password.focus();
+	}else if(password1 != password2){
+		alert("The passwords do not match! Please re-enter your password to ensure they are correct.");
+		document.form1.password.focus();
+	}else{
+		document.forms["form1"].submit();
+	}
 }
 
 function checkForm2(){
@@ -133,8 +188,12 @@ function checkForm3(){
 	}
 }
 
-function showProgress() {
-	document.getElementById("divProgress").style.display = 'block';
+function gotoURL(URL) {
+	window.location = URL;
+}
+
+function checkAvailability(){
+	window.open('checkAvailability2.jsp?username='+document.getElementById("username").value,'mywindow','width=400,height=200')
 }
 </script>
 </head>
@@ -172,56 +231,82 @@ function showProgress() {
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="1" rowspan="3" bgcolor="#122222"></td>
-        <td rowspan="2" valign="top" style="padding:0px 5px 5px 5px; color: #333; font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
-	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td height="10"></td>
-	          </tr>
-	          
-	            <tr>
-	            	<td align="center">
-		            	<table border="0" align="center" cellpadding="0" cellspacing="0" width="600">
-			            	<tr>
-			            		<td colspan="3" height="1" bgcolor="#122222" id="tabletitle">Please Give Your Tutor a Description</td>
-			            	</tr>
-			            	<tr>
-				            	<td width="1" bgcolor="#122222"></td>
-				            	<td>
-				            		<form id="formTutorialMetaData" name="formTutorialMetaData" action="TutorialDeliveryServlet" method="post">
-									<table>
-										<tr>
-											<td align="right" width="150" valign="top">Tutorial Name: </td>
-											<td width="5"></td>
-											<td align="left"><input type="text" id="txtTutorialName" name="txtTutorialName" /></td>
-										</tr>
-										<tr>
-											<td align="right" valign="top">Tutorial Description: </td>
-											<td width="5"></td>
-											<td align="left"><textarea rows="5" cols="20" id="txtTutorialDescription" name="txtTutorialDescription"></textarea></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td width="5"></td>
-											<td align="center"><input type="submit" id="submitMetaData" name="submitMetaData" value="Save Info" onclick="return showProgress();"/></td>
-										</tr>
-									</table>
-									</form>
-								</td>
-			            		<td width="1" bgcolor="#122222"></td>
-			            	</tr>
-			            	<tr>
-			            		<td colspan="3" height="1" bgcolor="#122222"></td>
-			            	</tr>
-		            	</table>
-		            	<div id="divProgress">
-							<img src="images/loopLoader.gif" /><br />
-							Creating Deliverables....<br />Please Wait
-						</div>
-					</td>
-				</tr>
-	        </table>
-        </td>
-        <td width="350"><table width="351" border="0" cellspacing="0" cellpadding="0">
+        <td rowspan="2" valign="top" style="padding:0px 5px 5px 5px; color: #333; font-size: 12px; font-family: Arial, Helvetica, sans-serif;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="10"></td>
+          </tr>
+          
+            <tr><td align="center">
+            <%
+            ArrayList<TutorialInfo> tutorialInfoList = (ArrayList<TutorialInfo>) session.getAttribute("tutorialInfoList");
+            session.setAttribute("studentId", 99);
+            DeliverableLauncher launcher = new DeliverableLauncher();
+            session.setAttribute("deliverableLauncher", launcher);
+%>
+<table border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td height="1" colspan="3"></td>
+	</tr>
+	<tr>
+	<td width="1"></td>
+	<td><a href="search.jsp">Search Again</a></td>
+	<td width="1"></td>
+	</tr>
+	<tr height="5"><td></td><td></td><td></td></tr>
+	<tr>
+  		<td width="1" bgcolor="#333333"></td>
+  		<td>
+                <form id="formLaunch">
+                <table cellspacing="0" id="tableMain">
+                	<tbody>
+                        <tr><td colspan="3"></td></tr>
+                        <%
+                        for (TutorialInfo tutorialInfo : tutorialInfoList) {	
+                            out.println("<tr class=\"myClass\" onclick=\"gotoURL('tutorSearchResultsDetails.jsp?start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
+                            out.println("<td class=\"tdTutorialName\">");
+                            out.println(tutorialInfo.getTutorialName());
+                            out.println("</td>");
+                            out.println("<td class=\"tdMeta\">");
+                            out.println("<table cellspacing=\"0\" id=\"subTable\">");
+                            out.println("<tr class=\"myClass\">");
+                            out.print("<td class=\"tdMeta\">Created by: ");
+                            out.print(tutorialInfo.getCreatedBy());
+                            out.println("</td>");
+                            out.println("</tr>");
+                            out.println("<tr>");
+                            out.print("<td class=\"tdMeta\">Date:");
+                            out.print(tutorialInfo.getCreationDate().toString());
+                            out.println("</td>");
+                            out.println("</tr>");
+                            out.println("<tr>");
+                            out.print("<td class=\"tdMeta\">Downloads: ");
+                            out.print(tutorialInfo.getTimesAccessed());
+                            out.println("</td>");
+                            out.println("</tr>");
+                            out.println("</table></td>");
+                            out.print("<td class=\"tdDescription\">Description: ");
+                            String description = tutorialInfo.getTutorialDescription();
+                            out.print((description.length() > 30) ? description.substring(0, 30) + "..." : description);
+                            out.println("</td>");
+                            out.println("</tr>");
+                            out.println("<tr><td colspan=\"3\"></td></tr>");
+        
+                        }
+                        %>
+                	</tbody>
+                </table>
+                </form>
+		</td>
+    	<td width="1" bgcolor="#333333"></td>
+    </tr>
+	<tr>
+  		<td height="1" colspan="3" bgcolor="#333333"></td>
+  	</tr>
+</table>
+            </td></tr>
+           
+        </table></td>
+        <td width="350" valign="top"><table width="351" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td height="10" colspan="3"></td>
             </tr>
@@ -276,7 +361,7 @@ function showProgress() {
                 <td align="left"><a href="accountStudent.jsp" target="_self" class="rightmenunav">Account Information</a></td>
                 </tr>
               <tr>
-                <td align="left"><a href="savedTutors.jsp" class="rightmenunav">Saved Tutors</a></td>
+                <td align="left"><a href="savedTutors.jsp" class="rightmenunav">My Tutors</a></td>
               </tr>
               <tr>
                 <td align="left"><a href="classLists.jsp" class="rightmenunav">Class Lists</a></td>

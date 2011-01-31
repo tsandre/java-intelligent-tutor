@@ -161,7 +161,7 @@ function checkAvailability(){
   <tr>
     <td height="25" bgcolor="#122222"><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="110" align="center"><a href="index.jsp" title="Tutor Search" class="navmain">Tutor Search</a></td>
+        <td width="110" align="center"><a href="search.jsp" title="Tutor Search" class="navmain">Tutor Search</a></td>
         <td width="110" align="center"><a href="index.jsp" title="Create Tutor" class="navmain">Create Tutor</a></td>
         <td width="135" align="center"><a href="teachers.jsp" title="Teacher Account" class="navmain">Teacher Account</a></td>
         <td width="135" align="center"><a href="students.jsp" title="Student Account" class="navmain">Student Account</a></td>

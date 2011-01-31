@@ -1,16 +1,16 @@
 <%@page import="org.apache.jasper.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*, itjava.view.*"%>
+<%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Students Page</title>
+<title>My Saved Tutors</title>
 <link href="css/maincss.css" rel="stylesheet" type="text/css" /><style type="text/css">
 <!--
 .navmain a {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	font-weight: bold;
 	color: #FFF;
@@ -21,19 +21,19 @@
 	font-weight: bold;
 }
 .basic {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
 }
 .basicbutton {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: center;
 }
 .titles {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: segoe ui, verdana
 	font-weight: bold;
 	font-size: 16px;
 	color: #3E4854;
@@ -41,13 +41,57 @@
 #form1 table tr td p {
 	color: #900;
 }
-.basic1 {	font-family: Arial, Helvetica, sans-serif;
+.basic1 {	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
 }
 #form2 table tr td table tr .basic {
 	text-align: right;
+}
+#tableMain {
+	width:600px;
+	border:0;
+	padding:0;
+	border-spacing:0;
+}
+
+#tableMain tr{
+	height:1;
+	background-color:#333333;
+}
+
+.myClass:hover td {background-color: orange; color: black; cursor:pointer; }
+
+#subTable {
+	width:100%;
+	border:0;
+	padding:0;
+	border-spacing:0;
+}
+
+
+.tdDescription {
+	width: 45%;
+	vertical-align:top;
+	background-color: beige;
+}
+
+.tdMeta {
+	width: 25%;
+	color: gray;
+	font-size: 0.9em;
+	background-color: beige;
+	border-collapse:collapse;
+}
+
+.tdTutorialName {
+	width: 30%;
+	vertical-align:top;
+	background-color: beige;
+	padding-left:10px;
+	border-right:1px;
+	border-right-color:#F4F4F4;
 }
 -->
 </style>
@@ -91,8 +135,8 @@ function checkForm(){
 }
 
 function checkForm2(){
-	var username = document.getElementById("username3").value;
-	var password = document.getElementById("password3").value;
+	var username = document.getElementById("username2").value;
+	var password = document.getElementById("password2").value;
 	
 	if(username.length < 1){
 		alert("Please enter your username to login.");
@@ -101,8 +145,39 @@ function checkForm2(){
 		alert("Please enter your password");
 		document.form1.password2.focus();
 	}else{
+		document.forms["form2"].submit();
+	}
+}
+
+function checkForm3(){
+	var firstName = document.getElementById("firstName3").value;
+	var lastName = document.getElementById("lastName3").value;
+	var school = document.getElementById("school3").value;
+	var password1 = document.getElementById("password3").value;
+	var password2 = document.getElementById("passwordConfirm3").value;
+
+	if(firstName.length < 1){
+		alert("Please enter your first name.");
+		document.form3.firstName.focus();
+	}else if(lastName.length < 1){
+		alert("Please enter your last name.");
+		document.form3.lastName.focus();
+	}else if(school.length < 1){
+		alert("Please enter your school.");
+		document.form3.school.focus();
+	}else if(password1.length != 0 && (password1.length < 6 || password1.length > 12)){
+		alert("Please enter a valid password. Passwords must be 6-12 characters.");
+		document.form3.password.focus();
+	}else if(password1 != password2){
+		alert("The passwords do not match! Please re-enter your password to ensure they are correct.");
+		document.form3.password.focus();
+	}else{
 		document.forms["form3"].submit();
 	}
+}
+
+function gotoURL(URL) {
+	window.location = URL;
 }
 
 function checkAvailability(){
@@ -148,8 +223,72 @@ function checkAvailability(){
           <tr>
             <td height="10"></td>
           </tr>
-          <% if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel").equals("student")){ %>
-            <tr><td align="center">Content here for a logged in user.<br />
+          <% if(session.getAttribute("userName") != null && session.getAttribute("userID") != null){ %>
+            <tr><td align="center">
+            <%
+HashMap<String, String> filter = new HashMap<String, String>();
+filter.put("createdBy", (String) session.getAttribute("userName"));
+            
+ArrayList<TutorialInfo> tutorialInfoList = TutorialInfoStore.SelectInfo(filter);
+session.setAttribute("tutorialInfoList", tutorialInfoList);
+session.setAttribute("studentId", session.getAttribute("userID"));
+DeliverableLauncher launcher = new DeliverableLauncher();
+session.setAttribute("deliverableLauncher", launcher);
+%>
+<table border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td height="1" colspan="3" bgcolor="#333333"></td>
+	</tr>
+	<tr>
+  		<td width="1" bgcolor="#333333"></td>
+  		<td>
+                <form id="formLaunch">
+                <table cellspacing="0" id="tableMain">
+                	<tbody>
+                        <tr><td colspan="3"></td></tr>
+                        <%
+                        for (TutorialInfo tutorialInfo : tutorialInfoList) {	
+                            out.println("<tr class=\"myClass\" onclick=\"gotoURL('savedTutorsDetails.jsp?start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
+                            out.println("<td class=\"tdTutorialName\">");
+                            out.println(tutorialInfo.getTutorialName());
+                            out.println("</td>");
+                            out.println("<td class=\"tdMeta\">");
+                            out.println("<table cellspacing=\"0\" id=\"subTable\">");
+                            out.println("<tr class=\"myClass\">");
+                            out.print("<td class=\"tdMeta\">Created by: ");
+                            out.print(tutorialInfo.getCreatedBy());
+                            out.println("</td>");
+                            out.println("</tr>");
+                            out.println("<tr>");
+                            out.print("<td class=\"tdMeta\">Date:");
+                            out.print(tutorialInfo.getCreationDate().toString());
+                            out.println("</td>");
+                            out.println("</tr>");
+                            out.println("<tr>");
+                            out.print("<td class=\"tdMeta\">Downloads: ");
+                            out.print(tutorialInfo.getTimesAccessed());
+                            out.println("</td>");
+                            out.println("</tr>");
+                            out.println("</table></td>");
+                            out.print("<td class=\"tdDescription\">Description: ");
+                            String description = tutorialInfo.getTutorialDescription();
+                            out.print((description.length() > 30) ? description.substring(0, 30) + "..." : description);
+                            out.println("</td>");
+                            out.println("</tr>");
+                            out.println("<tr><td colspan=\"3\"></td></tr>");
+        
+                        }
+                        %>
+                	</tbody>
+                </table>
+                </form>
+		</td>
+    	<td width="1" bgcolor="#333333"></td>
+    </tr>
+	<tr>
+  		<td height="1" colspan="3" bgcolor="#333333"></td>
+  	</tr>
+</table>
             </td></tr>
             <% }else{%>
           <tr>
@@ -164,7 +303,7 @@ function checkAvailability(){
           <tr>
             <td align="center">
             
-            <form action="CreateStudentServlet" method="post" name="form1" id="form1">
+            <form id="form1" name="form1" method="post" action="CreateStudentServlet">
               <table width="450" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
@@ -277,8 +416,7 @@ function checkAvailability(){
             </form></td>
           </tr><% } %>
         </table></td>
-        <td width="350">
-        <table width="351" border="0" cellspacing="0" cellpadding="0">
+        <td width="350" valign="top"><table width="351" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td height="10" colspan="3"></td>
             </tr>
@@ -343,14 +481,14 @@ function checkAvailability(){
               </tr>
               </table>
             <% }else{ %>
-            <form id="form3" name="form3" method="post" action="LoginStudentServlet">
+            <form id="form2" name="form2" method="post" action="LoginStudentServlet">
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <% if(request.getParameter("error") != null && request.getParameter("error").equals("4")){ %><tr>
                   <td align="center">*Login failed. Please try again.</td>
                 </tr><br />
 				<% } %>
                 <tr>
-                  <td align="center"><span class="basic" style="font-weight:bold">Student Login</span></td>
+                  <td align="center"><span class="basic" style="font-weight:bold">Please Login</span></td>
                 </tr>
                 <tr>
                   <td height="5" align="center"></td>
@@ -360,12 +498,12 @@ function checkAvailability(){
                     <tr>
                       <td width="110" align="right" class="basic">Username:</td>
                       <td width="5">&nbsp;</td>
-                      <td align="left"><input name="username3" type="text" class="basic1" id="username3" style="width:140px" /></td>
+                      <td align="left"><input name="username2" type="text" class="basic1" id="username2" style="width:140px" /></td>
                     </tr>
                     <tr>
                       <td align="right" class="basic">Password:</td>
                       <td>&nbsp;</td>
-                      <td align="left"><input name="password3" type="password" class="basic1" id="password3" style="width:140px" /></td>
+                      <td align="left"><input name="password2" type="password" class="basic1" id="password2" style="width:140px" /></td>
                     </tr>
                     <tr>
                       <td height="5" colspan="3" align="right"></td>

@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page import="org.apache.jasper.util.*"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,7 +10,7 @@
 <link href="css/maincss.css" rel="stylesheet" type="text/css" /><style type="text/css">
 <!--
 .navmain a {
-	font-family: segoe ui, verdana;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	font-weight: bold;
 	color: #FFF;
@@ -20,19 +21,19 @@
 	font-weight: bold;
 }
 .basic {
-	font-family: segoe ui, verdana;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
 }
 .basicbutton {
-	font-family: segoe ui, verdana;
+	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: center;
 }
 .titles {
-	font-family: segoe ui, verdana;
+	font-family: segoe ui, verdana
 	font-weight: bold;
 	font-size: 16px;
 	color: #3E4854;
@@ -40,8 +41,7 @@
 #form1 table tr td p {
 	color: #900;
 }
-.basic1 {	
-	font-family: segoe ui, verdana;
+.basic1 {	font-family: segoe ui, verdana
 	font-size: 12px;
 	color: #333;
 	text-align: left;
@@ -54,41 +54,65 @@
 	font-size:12px;
 }
 
-#divProgress {
+.tdRegular {
+	font-size:12px;
+}
+
+#tableMain {
+	
+}
+
+#alternateLaunch {
 	display: none;
-	width: 200px;
-	margin:0 auto;
-	position: relative;
 }
-#tabletitle {
-	font-family: segoe ui, verdana;
-	font-weight: bold;
-	font-size: 12px;
+
+#divNavigate {
+	width: 600x;
+	text-align:left;
+}
+#divContainer {
+	width: 600px;
 	text-align: center;
-	color: #FFF;
-}
-#txtTutorialName {
-	font-family: segoe ui, verdana;
-	font-weight: normal;
-	font-size: 12px;
-	text-align: left;
-	color: #000;
-	width: 400px;
-}
-#txtTutorialDescription {
-	font-family: segoe ui, verdana;
-	font-weight: normal;
-	font-size: 12px;
-	text-align: left;
-	color: #000;
-	width: 400px;
-	height: 200px;
 }
 -->
 </style>
 <script language="javascript" type="text/javascript">
 function isValidEmail(str){
 	return(str.indexOf(".")>2)&&(str.indexOf("@")>0);
+}
+function checkForm(){
+	var firstName = document.getElementById("firstName").value;
+	var lastName = document.getElementById("lastName").value;
+	var school = document.getElementById("school").value;
+	var email = document.getElementById("email").value;
+	var username = document.getElementById("username").value;
+	var password1 = document.getElementById("password").value;
+	var password2 = document.getElementById("passwordConfirm").value;
+	
+	if(firstName.length < 1){
+		alert("Please enter your first name.");
+		document.form1.firstName.focus();
+	}else if(lastName.length < 1){
+		alert("Please enter your last name.");
+		document.form1.lastName.focus();
+	}else if(school.length < 1){
+		alert("Please enter your school.");
+		document.form1.school.focus();
+	}else if(!isValidEmail(email)){
+		alert("Please enter a valid email.");
+		document.form1.email.focus();
+	}else if(username.length < 1){
+		alert("Please enter your username.");
+		document.form1.username.focus();
+	}else if(password1.length < 6 || password1.length > 12){
+		alert("Please enter a valid password. Passwords must be 6-12 characters.");
+		document.form1.password.focus();
+	}else if(password1 != password2){
+		alert("The passwords do not match! Please re-enter your password to ensure they are correct.");
+		document.form1.password.focus();
+	}else{
+		document.forms["form1"].submit();
+	}
 }
 
 function checkForm2(){
@@ -133,8 +157,32 @@ function checkForm3(){
 	}
 }
 
-function showProgress() {
-	document.getElementById("divProgress").style.display = 'block';
+function gotoURL(URL) {
+	window.location = URL;
+}
+
+var launchCounts = 0;
+function launchNext(folderName, deliverableName) {
+	if (launchCounts == 0) {
+		launchCounts++;
+		window.open("delivery/" + folderName + "/" + deliverableName + ".jnlp");
+		document.getElementById("btnLaunch").value = "Save & Next >>";
+		document.getElementById("alternateLaunch").style.display = 'block';
+		return false;
+	}
+	else {
+		launchCounts = 0;
+		return true;
+	}
+}
+
+function launchNow(folderName, deliverableName) {
+	window.open("delivery/" + folderName + "/" + deliverableName + ".jnlp");
+	launchCounts = 1;
+}
+
+function checkAvailability(){
+	window.open('checkAvailability2.jsp?username='+document.getElementById("username").value,'mywindow','width=400,height=200')
 }
 </script>
 </head>
@@ -172,55 +220,154 @@ function showProgress() {
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="1" rowspan="3" bgcolor="#122222"></td>
-        <td rowspan="2" valign="top" style="padding:0px 5px 5px 5px; color: #333; font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
-	        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td height="10"></td>
-	          </tr>
-	          
-	            <tr>
-	            	<td align="center">
-		            	<table border="0" align="center" cellpadding="0" cellspacing="0" width="600">
-			            	<tr>
-			            		<td colspan="3" height="1" bgcolor="#122222" id="tabletitle">Please Give Your Tutor a Description</td>
-			            	</tr>
-			            	<tr>
-				            	<td width="1" bgcolor="#122222"></td>
-				            	<td>
-				            		<form id="formTutorialMetaData" name="formTutorialMetaData" action="TutorialDeliveryServlet" method="post">
-									<table>
-										<tr>
-											<td align="right" width="150" valign="top">Tutorial Name: </td>
-											<td width="5"></td>
-											<td align="left"><input type="text" id="txtTutorialName" name="txtTutorialName" /></td>
-										</tr>
-										<tr>
-											<td align="right" valign="top">Tutorial Description: </td>
-											<td width="5"></td>
-											<td align="left"><textarea rows="5" cols="20" id="txtTutorialDescription" name="txtTutorialDescription"></textarea></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td width="5"></td>
-											<td align="center"><input type="submit" id="submitMetaData" name="submitMetaData" value="Save Info" onclick="return showProgress();"/></td>
-										</tr>
-									</table>
-									</form>
-								</td>
-			            		<td width="1" bgcolor="#122222"></td>
-			            	</tr>
-			            	<tr>
-			            		<td colspan="3" height="1" bgcolor="#122222"></td>
-			            	</tr>
-		            	</table>
-		            	<div id="divProgress">
-							<img src="images/loopLoader.gif" /><br />
-							Creating Deliverables....<br />Please Wait
-						</div>
-					</td>
-				</tr>
-	        </table>
-        </td>
+        <td rowspan="2" valign="top" style="padding:0px 5px 5px 5px; color: #333; font-size: 12px; font-family: Arial, Helvetica, sans-serif;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="10"></td>
+          </tr>
+        
+            <tr><td align="center">
+            <%
+
+			int tutorialInfoId = Integer.parseInt(request.getParameter("id"));
+			
+			DeliverableLauncher deliverableLauncher = (DeliverableLauncher)session.getAttribute("deliverableLauncher");
+			if (deliverableLauncher == null) {
+				System.err.println("Landed on studentMainTest.jsp from a wrong source..");
+				response.sendRedirect("studentWelcome.jsp");
+			}
+			else {
+				deliverableLauncher.setStudentId((Integer)session.getAttribute("studentId"));
+				deliverableLauncher.setTutorialInfoId(tutorialInfoId);
+			}
+			
+			HashMap<String, String> whereClause = new HashMap<String, String>();
+			whereClause.put("tutorialInfoId", Integer.toString(tutorialInfoId));
+			session.setAttribute("tutorialInfoId", tutorialInfoId);
+			ArrayList<TutorialInfo> tutorialInfoList = TutorialInfoStore.SelectInfo(whereClause);
+			
+			KeyValue<Integer, String> deliveryKeyValue = (KeyValue<Integer, String>)session.getAttribute("deliveryKeyValue");
+			int deliverableId = -1;
+			String deliverableName = null;
+			if (deliveryKeyValue == null  && request.getParameter("start").trim().equals("1")) {
+				deliveryKeyValue = deliverableLauncher.GetFirstDeliverableName();
+			}
+			else if (deliveryKeyValue == null)
+			{
+				response.sendRedirect("studentFinalPage.jsp");
+			}
+			deliverableId = deliveryKeyValue.getKey();
+			deliverableName = deliveryKeyValue.getValue();
+			%>
+<form id="formMainTest" method="post" action="DeliverableSelection2Servlet">
+<div id="divMainContent">
+<table border="0" cellpadding="0" cellspacing="0" id="tableMeta" align="center"><tbody>
+<tr><td>
+  <table id="tableMain" border="0" align="center" cellpadding="0"  cellspacing="0">
+    <tbody>
+      <%
+		TutorialInfo tutorialInfo = new TutorialInfo();
+		if (tutorialInfoList.size() != 1) {
+			System.err.println("TutorialInfo table should have returned only 1 tuple..");
+			out.println("Error seeking Tutorial Information..");
+		}
+		else {
+			tutorialInfo = tutorialInfoList.get(0);
+			int timesAccessed = tutorialInfo.getTimesAccessed() + 1;
+			TutorialInfoStore.UpdateInfo(tutorialInfoId, 
+					new KeyValue<String, String>("timesAccessed", Integer.toString(timesAccessed)));
+      
+      		out.println("<tr>");
+        	out.println("<td height=\"1\" colspan=\"3\" bgcolor=\"#333333\"></td>");
+      		out.println("</tr>");
+      		out.println("<tr>");
+        	out.println("<td width=\"1\" bgcolor=\"#333333\"></td>");
+        	out.println("<td width=\"600\">");
+          	out.println("<table width=\"600\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">");
+            out.println("<tbody>");
+            out.println("<tr>");
+            out.print("<td colspan=\"3\" bgcolor=\"#F4F4F4\" class=\"tdBold\" style=\"padding-left:10px;\">");
+			out.print(tutorialInfo.getTutorialName());
+			out.println("</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.print("<td bgcolor=\"#F4F4F4\" class=\"tdRegular\" style=\"padding-left:10px;\" >Created by : ");
+			out.print(tutorialInfo.getCreatedBy());
+			out.println("</td>");
+            out.print("<td bgcolor=\"#F4F4F4\" class=\"tdRegular\">Date : ");
+			out.print(tutorialInfo.getCreationDate().toString());
+			out.println("</td>");
+            out.print("<td bgcolor=\"#F4F4F4\" class=\"tdRegular\">Downloads : ");
+			out.print(tutorialInfo.getTimesAccessed());
+			out.println("</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.print("<td colspan=\"3\" bgcolor=\"#F4F4F4\" class=\"tdRegular\" style=\"padding-left:10px;\">Description : ");
+			out.print(tutorialInfo.getTutorialDescription());
+			out.println("</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td height=\"5\" colspan=\"3\" bgcolor=\"#F4F4F4\" style=\"padding-left:10px;\"></td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td height=\"1\" colspan=\"3\" style=\"padding-left:10px;\" bgcolor=\"#F4F4F4\"></td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td height=\"5\" colspan=\"3\" bgcolor=\"#F4F4F4\" style=\"padding-left:10px;\"></td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td colspan=\"3\" bgcolor=\"#F4F4F4\" class=\"tdRegular\" style=\"padding-left:10px;\">");
+           // out.println("<input type=\"submit\" id=\"btnLaunch\" name=\"btnLaunch\" value=\"Begin Lesson\" class=\"tdRegular\" onclick=\"return launchNext('ProcessBuilderinjava', 'Example1');\" />");
+            out.println("</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td colspan=\"3\" bgcolor=\"#F4F4F4\" class=\"tdRegular\" style=\"padding-left:10px;\" height=\"10px\"></td>");
+            out.println("</tr>");
+            out.println("</tbody>");
+          	out.println("</table>");
+        	out.println("</td>");
+        	out.println("<td width=\"1\" bgcolor=\"#333333\"></td>");
+      		out.println("</tr>");
+      		out.println("<tr>");
+        	out.println("<td colspan=\"3\" bgcolor=\"#333333\" height=\"1\"></td>");
+      		out.println("</tr>");
+	}
+	String folderName = tutorialInfo.getFolderName();
+	String buttonLabel = "Begin Lesson";
+
+	String disabledLaunch = "";
+	if (deliverableName == null) {
+		disabledLaunch = "disabled";
+	}
+	else {
+		session.setAttribute("deliveryKeyValue", deliveryKeyValue);
+		session.setAttribute("tutorialInfoId", tutorialInfoId);
+		session.setAttribute("studentId", 99);
+		session.setAttribute("deliverableLauncher", deliverableLauncher);
+	}
+	%>
+</tbody></table></td></tr></tbody></table>
+<table id="divContainer" align="center"><tbody><tr><td>
+<div id="divNavigate">
+<input type="submit" id="btnLaunch" name="btnLaunch" value="<%= buttonLabel%>" 
+	onclick="return launchNext('<%= folderName%>', '<%= deliverableName%>');"
+	<%= disabledLaunch%>/>
+</div>
+<div id="alternateLaunch">
+If you closed the pop-up by mistake, click on this <input type="button" value="button" onclick="return launchNow('<%= folderName%>', '<%= deliverableName%>');"/> to re-take the quiz.
+</div>
+</td></tr></tbody>
+</div>
+</form>
+		</td>
+    	<td width="1" bgcolor="#333333"></td>
+    </tr>
+	<tr>
+  		<td height="1" colspan="3" bgcolor="#333333"></td>
+  	</tr>
+</table>
+            </td></tr>
+            
+        </table></td>
         <td width="350"><table width="351" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td height="10" colspan="3"></td>
@@ -276,7 +423,7 @@ function showProgress() {
                 <td align="left"><a href="accountStudent.jsp" target="_self" class="rightmenunav">Account Information</a></td>
                 </tr>
               <tr>
-                <td align="left"><a href="savedTutors.jsp" class="rightmenunav">Saved Tutors</a></td>
+                <td align="left"><a href="savedTutors.jsp" class="rightmenunav">My Tutors</a></td>
               </tr>
               <tr>
                 <td align="left"><a href="classLists.jsp" class="rightmenunav">Class Lists</a></td>
@@ -348,7 +495,7 @@ function showProgress() {
             </tr>
           <tr>
             <td bgcolor="#122222"></td>
-            <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td height="20" align="left" bgcolor="#122222" style="padding-left:5px; color: #FFF; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Most Popular</td>
                 </tr>
