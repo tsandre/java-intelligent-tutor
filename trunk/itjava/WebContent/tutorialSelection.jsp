@@ -8,6 +8,75 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Select tutorials here..</title>
 <link type="text/css" rel="stylesheet" href="css/tutorialSelection.css"/>
+<link href="css/maincss.css" rel="stylesheet" type="text/css" /><style type="text/css">
+<style>
+.navmain a {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFF;
+	text-decoration: none;
+}
+.asdf {
+	color: #000;
+	font-weight: bold;
+}
+.basic {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	color: #333;
+	text-align: center;
+}
+.basicbutton {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	color: #333;
+	text-align: center;
+}
+.titles {
+	font-family: segoe ui, verdana;
+	font-weight: bold;
+	font-size: 16px;
+	color: #3E4854;
+}
+#form1 table tr td p {
+	color: #900;
+}
+.basic1 {	font-family: segoe ui, verdana;
+	font-size: 12px;
+	color: #333;
+	text-align: left;
+}
+#form2 table tr td table tr .basic {
+	text-align: right;
+}
+#divProgress {
+	width:100%;
+	height:200px;
+	text-align:center;
+	font-family: segoe ui, verdana;
+	display: none;
+}
+#query {
+	width:450px;
+	border-color:#333;
+	border-style:inset;
+	border-width:1px;
+	margin: 5px 0 0 0;
+	font-family: segoe ui, verdana;
+	font-size:12px;
+}
+#btnSearch {
+	background-color:#EEE;
+	border:solid;
+	border-style:outset;
+	border-width:1px;
+	border-color:#CCC;
+	margin: 3px 0 0 0;
+	font-family: segoe ui, verdana;
+	font-size:12px;
+}
+</style>
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
 <script type="text/javascript">
 $(function () {
@@ -76,7 +145,40 @@ function isReady(form) {
 
 </head>
 <body>
-
+<table width="1024" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+    <table width="1024" border="0" cellspacing="0" cellpadding="0" bgcolor="#122222">
+      <tr>
+        <td height="1" colspan="3" bgcolor="#1222222"></td>
+        </tr>
+      <tr>
+        <td width="1" bgcolor="#122222"></td>
+        <td height="77" background="images/bannerbg.jpg"><img src="images/logo1.jpg" width="200" height="60" border="0" /></td>
+        <td width="1" bgcolor="#122222"></td>
+      </tr>
+      <tr>
+        <td height="2" colspan="3" bgcolor="#1222222"></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="25" bgcolor="#122222"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="110" align="center"><a href="search.jsp" title="Tutor Search" class="navmain">Tutor Search</a></td>
+        <td width="110" align="center"><a href="index.jsp" title="Create Tutor" class="navmain">Create Tutor</a></td>
+        <td width="135" align="center"><a href="teachers.jsp" title="Teacher Account" class="navmain">Teacher Account</a></td>
+        <td width="135" align="center"><a href="students.jsp" title="Student Account" class="navmain">Student Account</a></td>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="1" rowspan="3" bgcolor="#122222"></td>
+        <td rowspan="2" valign="top" style="padding:0px 5px 5px 5px; color: #333; font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
 <!--<form id="tutorialSelectionForm" method="post" action="TutorialSelectionServlet">-->
 <form id="tutorialSelectionForm" name="tutorialSelectionForm" method="post" 
 	onsubmit="return isReady(this)" action="SaveSelectionsServlet">
@@ -258,7 +360,15 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 
 </div>
 </form>
-	
-
+<td width="1" rowspan="3" bgcolor="#122222"></td>
+</td>
+</tr>
+</table>
+</td>
+  </tr>
+  <tr>
+    <td height="1" bgcolor="#122222"></td>
+  </tr>
+</table>
 </body>
 </html>
