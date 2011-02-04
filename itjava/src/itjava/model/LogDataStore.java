@@ -38,9 +38,15 @@ public class LogDataStore {
 
 	public static LogData CreateLogData(int numOfBlanks, Concordance<String> hintsAvailable) throws IOException, ParserConfigurationException, SAXException {
 		LogData logData = new LogData(numOfBlanks);		
-		if (numOfBlanks > 0) {
+		if (logData.getTotalActions() == 0)
+		{
+			System.out.println("Error code to be written here");
+			// Add code
+		}
+		else if (numOfBlanks > 0) {
 			logData.hintsAvailable = hintsAvailable;
 			if (!VerifyLogFileAndRename(System.getProperty("user.name"))) throw new IOException("Problem locating raw log file");
+			// Add code to handle terminate and next error here
 			ConvertToXml();
 			ProcessXmlToLogData(logData);
 			CalculateScore(numOfBlanks, logData);
