@@ -141,6 +141,7 @@ public class BRDStore {
 				String[] oldstring = new String[codeContent.length + 1];
 				String[] tempstring = new String[codeContent.length + 1];
 				String[] tempstring1 = new String[codeContent.length + 1];
+				String[] tempstring2 = new String[codeContent.length + 1];
 				String[] newstring = new String[codeContent.length + 1];
 				out.write(" <message>\r\n");
 				out.write("  <verb>NotePropertySet</verb>\r\n");
@@ -155,7 +156,8 @@ public class BRDStore {
 				oldstring[i] = dorminName[notepropertysetCount];
 				tempstring[i] = oldstring[i].replace(">", "&gt;");
 				tempstring1[i] = tempstring[i].replace("&", "&amp;");
-				newstring[i] = tempstring1[i].replace("<", "&lt;");
+				tempstring2[i] = tempstring1[i].replace("<", "&lt;");
+				newstring[i] = tempstring2[i].replace("'", "&apos;");
 				out.write("   <Input>\r\n");  
 				out.write("      <value>"+newstring[i]+"</value>\r\n");          		
 				out.write("   </Input>\r\n");
