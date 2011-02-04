@@ -65,9 +65,10 @@ public class TutorialDeliveryServlet extends HttpServlet {
 		ArrayList<Tutorial> finalTutorialList = tutorialPresenter.GetFinalTutorialList(approvedTutorialList);
 		SaveChoicesToDisk(tutorialInfo, finalTutorialList);
 		for (Tutorial finalTutorial: finalTutorialList) {
-			display.println("<a href=\"/itjava/delivery/" + finalTutorial.getReadableName() + "/"
-					+ finalTutorial.getTutorialName() + ".jnlp\">" + finalTutorial.getReadableName() + "</a> <br />");
+			display.println("<br /><a href=\"/itjava/delivery/" + finalTutorial.getReadableName() + "/"
+					+ finalTutorial.getTutorialName() + ".jnlp\">" + finalTutorial.getReadableName() + "</a> ");
 		}
+		display.println("<br><br><a href=\"/itjava/index.jsp\">Click here to return to home page, you can view these tutors at any time in your account.</a>");
 	}
 
 	/**
@@ -78,9 +79,15 @@ public class TutorialDeliveryServlet extends HttpServlet {
 		// TODO: Save userinfo in session and delete this line later
 		//session.setAttribute("username", "Aniket");
 		//
-		tutorialInfo.setCreatedBy((String) session.getAttribute("username"));
+		tutorialInfo.setCreatedBy((String) session.getAttribute("userName"));
+		if(session.getAttribute("userLevel")!=null){
+			tutorialInfo.setUserLevel((String) session.getAttribute("userLevel"));
+		}else{
+			tutorialInfo.setUserLevel("unknown");
+		}
 		tutorialInfo.setTutorialName(request.getParameter("txtTutorialName"));
 		tutorialInfo.setTutorialDescription(request.getParameter("txtTutorialDescription"));
+		
 	}
 
 	/**
@@ -89,6 +96,7 @@ public class TutorialDeliveryServlet extends HttpServlet {
 	 * @param finalTutorialList 
 	 */
 	private void SaveChoicesToDisk(TutorialInfo tutorialInfo, ArrayList<Tutorial> finalTutorialList) {
+		System.out.println("Username: " + tutorialInfo.getCreatedBy());
 		int tutorialInfoId = TutorialInfoStore.InsertInfo(tutorialInfo);
 		tutorialInfo.setTutorialId(tutorialInfoId);
 		int rowsInsertedInDeliverableInfo = TutorialStore.InsertDeliverableInfo(finalTutorialList, tutorialInfoId);
