@@ -1,5 +1,6 @@
 package itjava.view;
 
+import itjava.data.LocalMachine;
 import itjava.data.LogData;
 import itjava.model.DeliverableInfoStore;
 import itjava.model.DeliverableLauncher;
@@ -8,6 +9,8 @@ import itjava.model.WordInfoStore;
 import itjava.util.Concordance;
 import itjava.util.KeyValue;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Arrays;
@@ -74,6 +77,27 @@ public class DeliverableSelectionServlet extends HttpServlet {
 		{
 		nextPage = "studentMainTest.jsp?id=" + tutorialInfoId;
 		}
+		// New code to delete all log files
+		File logFolder = new File(LocalMachine.home + "/logs");
+		final String logFileUserName = System.getProperty("user.name");
+		if(logFolder.exists()) {
+			String[] fileList = logFolder.list(new FilenameFilter() {
+
+				@Override
+				public boolean accept(File dir, String name) {
+					return (name.endsWith(".log") && name.startsWith(logFileUserName)) ? true : false;
+				}
+			});
+			if (fileList.length != 0){
+				for (int i=0; i < fileList.length; i++){
+				String newFileName = fileList[i];
+				File logFile = new File(logFolder, newFileName);
+				logFile.delete();
+				}
+			}
+		}
+		// End of code - To delete all log files
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);
 	}
