@@ -36,7 +36,7 @@ public class ReadAndPrintXMLFile {
       }
     }
  catch (    SAXParseException err) {
-      System.out.println("** Parsing error" + ", line " + err.getLineNumber() + ", uri "+ err.getSystemId());
+      System.out.println("** Parsing \"error\"" + ", line " + err.getLineNumber() + ", uri "+ err.getSystemId());
       System.out.println(" " + err.getMessage());
     }
 catch (    SAXException e) {
