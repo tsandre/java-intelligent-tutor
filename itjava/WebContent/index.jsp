@@ -75,6 +75,15 @@
 	font-family: segoe ui, verdana;
 	font-size:12px;
 }
+#noResult {
+	display: block;
+	color: red;
+}
+
+#hideResult {
+	display: none;
+}
+
 <% 
 if(session.getAttribute("userLevel") != null && session.getAttribute("userLevel") == "student"){
 	out.println("#studentLogin {");
@@ -195,6 +204,14 @@ function showTeacherLogin(){
 <form action="CodeSearchServlet" method="get" name="codeSearchForm" id="codeSearchForm">
   <p>Enter a Search Term to Begin<br />  <input type="text" name="query" id="query" placeholder="Enter query"/>  <br /><input name="btnSearch" type="submit" id="btnSearch" onclick="return showProgress();" value="Generate Tutor"/>
   </p>
+  <% 
+  String noResultClass = null;
+  if(request.getParameter("error") != null && request.getParameter("error").equals("5")){ 
+	  noResultClass = "noResult";
+  }
+  else noResultClass = "hideResult";
+  %>
+  <div id="<%= noResultClass %>">* We did not find any results for the query.</div>
 </form>
 <table width="0" align="center"><tr><td>
 <div id="divProgress">
@@ -240,8 +257,8 @@ Searching the web for code snippets...<br>Please Wait</br></div></td></tr></tabl
         	     conn = DBConnection.GetConnection();
         	     String usercheck = "SELECT firstName, lastName, school, username, email FROM teachers WHERE username = ? AND teacherID = ?";
  				 ucpst = conn.prepareStatement(usercheck);
- 				 ucpst.setString(1, (String) session.getAttribute("userName"));
- 				 ucpst.setInt(2, (Integer) session.getAttribute("userID"));
+ 				 ucpst.setString(1, session.getAttribute("userName").toString());
+ 				 ucpst.setInt(2, Integer.parseInt(session.getAttribute("userID").toString()));
  				 rs = ucpst.executeQuery();
  				 rs.next();
  				 out.print("Welcome back " + rs.getString("firstName") + "!");
@@ -360,8 +377,8 @@ Searching the web for code snippets...<br>Please Wait</br></div></td></tr></tabl
 				conn = DBConnection.GetConnection();
 				String usercheck = "SELECT firstName, lastName, school, username, email FROM students WHERE username = ? AND studentID = ?";
 				ucpst = conn.prepareStatement(usercheck);
-				ucpst.setString(1, (String) session.getAttribute("userName"));
-				ucpst.setInt(2, (Integer) session.getAttribute("userID"));
+				ucpst.setString(1, session.getAttribute("userName").toString());
+				ucpst.setInt(2, Integer.parseInt(session.getAttribute("userID").toString()));
 				rs = ucpst.executeQuery();
 				rs.next();
 				out.print(rs.getString("firstName"));

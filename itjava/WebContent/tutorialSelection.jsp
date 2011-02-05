@@ -76,6 +76,20 @@
 	font-family: segoe ui, verdana;
 	font-size:12px;
 }
+#spanChange:hover {
+	background-color: orange;
+	cursor: pointer;
+}
+#cancelChange {
+	color: #f26818;
+	background-color:pink;
+	cursor: pointer;	
+}
+
+.tdSmall {
+	width: 1em;
+}
+
 </style>
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
 <script type="text/javascript">
@@ -97,6 +111,14 @@ $(function () {
         }  
     });
     
+	$('#spanChange').click(function () {
+		$('#divNewWord').toggle('slow');
+	});
+	
+	$('#cancelChange').click(function () {
+		$('#divNewWord').toggle('slow');
+	});
+	
     function toggleHints(){
     	$('#divHint').hide();
     	$('#divHint div').hide();
@@ -259,11 +281,19 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 	}
 	out.print(">");
 	out.print(currentWordInfo.wordToBeBlanked + " : ");
-	out.print("<span class=\"lineNumber\">" + currentWordInfo.lineNumber + "</span>");
+	out.print("<span class=\"lineNumber\">Line:" + currentWordInfo.lineNumber + "</span>");
 	out.println("</input><br />");
 	index++;
 }
 %>
+<label>Looking for a different word?</label> <span class="lineNumber" id="spanChange">Click to add more</span></br>
+<div class="divInvisibleNewWord" id="divNewWord" style="display: none; "> 
+<input type="text" name="txtNewWord" placeholder="Word 1, Word 2, ...(comma separated)" value="" size="50">
+<br/>
+<input type="submit" name="btnSubmit" id="btnSaveNewWord" value="Verify & Save" disabled="disabled"/>
+<span id="cancelChange">&nbsp;&nbsp;<b>X</b> Cancel&nbsp;&nbsp;</span>
+</div>
+
 <label for="cbxWordInfo" class="error">Required Field. If none are useful mark "NO" in STEP 1.</label>
 </fieldset>
 </div>
@@ -306,6 +336,11 @@ if (currentIndex == 0) {
 <div id="divCodeTable">
 <table>
 <tbody>
+<tr><td class="tdSmall"></td><td class="copyright">To read more about this snippet visit: 
+<a href="
+<% out.println(currentTutorial.sourceUrl.replaceFirst("^\\d*", "")); %>
+" target="_blank" >^ link.</a>
+</td></tr>
 <%
 for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 	String className = (index%2==0) ? "even" : "odd";
@@ -316,7 +351,6 @@ for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 	out.println("</tr></td>");
 }
 %>
-<tr><td></td><td class="copyright">For copyright of this snippet visit: <% out.println(currentTutorial.sourceUrl.replaceFirst("^\\d", "")); %></td></tr>
 </tbody>
 </table>
 </div>
