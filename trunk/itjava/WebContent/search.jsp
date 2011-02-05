@@ -242,8 +242,8 @@ Searching the web for code snippets...<br>Please Wait</br></div></td></tr></tabl
         	     conn = DBConnection.GetConnection();
         	     String usercheck = "SELECT firstName, lastName, school, username, email FROM teachers WHERE username = ? AND teacherID = ?";
  				 ucpst = conn.prepareStatement(usercheck);
- 				 ucpst.setString(1, (String) session.getAttribute("userName"));
- 				 ucpst.setInt(2, (Integer) session.getAttribute("userID"));
+ 				 ucpst.setString(1, session.getAttribute("userName").toString());
+ 				 ucpst.setInt(2, Integer.parseInt(session.getAttribute("userID").toString()));
  				 rs = ucpst.executeQuery();
  				 rs.next();
  				 out.print("Welcome back " + rs.getString("firstName") + "!");

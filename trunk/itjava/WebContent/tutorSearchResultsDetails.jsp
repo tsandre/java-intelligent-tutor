@@ -236,7 +236,8 @@ function checkAvailability(){
 				response.sendRedirect("studentWelcome.jsp");
 			}
 			else {
-				deliverableLauncher.setStudentId((Integer)session.getAttribute("studentId"));
+				String studentId = session.getAttribute("studentId").toString();
+				deliverableLauncher.setStudentId(Integer.parseInt(studentId));
 				deliverableLauncher.setTutorialInfoId(tutorialInfoId);
 			}
 			
