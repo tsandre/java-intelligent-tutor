@@ -15,6 +15,7 @@ div .step {
 	height: 25px;
 	font-size: 1em;
 	background-color: #afbdca;
+	text-align: center;
 }
 
 div .active {
@@ -102,7 +103,6 @@ tr .passive:hover {
 	color:blue;
 	width: 600px;
 	position: relative;
-	border:1px solid gray;
 }
 
 .noimage {
