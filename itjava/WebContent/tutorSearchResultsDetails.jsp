@@ -74,6 +74,9 @@
 	width: 600px;
 	text-align: center;
 }
+#divMessage {
+	text-align: center;
+}
 -->
 </style>
 <script language="javascript" type="text/javascript">
@@ -347,6 +350,16 @@ function checkAvailability(){
 	}
 	%>
 </tbody></table></td></tr></tbody></table>
+<%
+String messageToUser = null;
+if (deliverableName.contains("Example")) {
+	messageToUser = "Example";
+}
+else if (deliverableName.contains("Quiz")) {
+	messageToUser = "Quiz message";
+}
+%>
+<div id="divMessage"><%= messageToUser %></div>
 <table id="divContainer" align="center"><tbody><tr><td>
 <div id="divNavigate">
 <input type="submit" id="btnLaunch" name="btnLaunch" value="<%= buttonLabel%>" 
