@@ -70,6 +70,7 @@ public class CodeSearchServlet extends HttpServlet {
 		session.setAttribute("tutorialListSize", tutorialList.size());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("tutorialSelection.jsp?index=0");
 		
+		
 		dispatcher.forward(request, response);
 	}
 
