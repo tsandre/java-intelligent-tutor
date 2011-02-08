@@ -17,20 +17,6 @@ function rating(num, tutorid, s){
 			document.getElementById("_"+tutorid+"_"+i).className = "";
 		}
 	}
-	/*
-	if(s==0){
-		document.getElementById("rateStatus"+"_"+tutorid).innerHTML = "";
-	}else if(s==1){
-		document.getElementById("rateStatus"+"_"+tutorid).innerHTML = "Poor";
-	}else if(s==2){
-		document.getElementById("rateStatus"+"_"+tutorid).innerHTML = "Not Bad";
-	}else if(s==3){
-		document.getElementById("rateStatus"+"_"+tutorid).innerHTML = "Good";
-	}else if(s==4){
-		document.getElementById("rateStatus"+"_"+tutorid).innerHTML = "Great";
-	}else if(s==5){
-		document.getElementById("rateStatus"+"_"+tutorid).innerHTML = "Excellent";
-	}*/
 }
 
 // For when you roll out of the the whole thing //
@@ -40,7 +26,6 @@ function off(me, tutorid, s){
 
 // When you actually rate something //
 function rateIt(me, tutorid, s){
-	//document.getElementById("rateStatus_"+tutorid).innerHTML = document.getElementById("ratingSaved_"+tutorid).innerHTML + me.title;
 	document.getElementById("ratingValue_"+tutorid).value = s;
 	sendRate(me, tutorid);
 	rating(me, tutorid, s);
