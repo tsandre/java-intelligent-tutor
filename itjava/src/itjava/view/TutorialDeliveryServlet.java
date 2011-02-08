@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,11 +65,17 @@ public class TutorialDeliveryServlet extends HttpServlet {
 		TutorialPresenter tutorialPresenter = new TutorialPresenter();
 		ArrayList<Tutorial> finalTutorialList = tutorialPresenter.GetFinalTutorialList(approvedTutorialList);
 		SaveChoicesToDisk(tutorialInfo, finalTutorialList);
-		for (Tutorial finalTutorial: finalTutorialList) {
-			display.println("<br /><a href=\"/itjava/delivery/" + finalTutorial.getReadableName() + "/"
-					+ finalTutorial.getTutorialName() + ".jnlp\">" + finalTutorial.getReadableName() + "</a> ");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp?myaction=5");;
+		if(session.getAttribute("userLevel") == "unknown"){
+			dispatcher = request.getRequestDispatcher("index.jsp?myaction=5");
+			dispatcher.forward(request, response);
+		}else if(session.getAttribute("userLevel") == "student"){
+			dispatcher = request.getRequestDispatcher("savedTutors.jsp");
+			dispatcher.forward(request, response);
+		}else{
+			dispatcher = request.getRequestDispatcher("teachers.jsp");
+			dispatcher.forward(request, response);
 		}
-		display.println("<br><br><a href=\"/itjava/index.jsp\">Click here to return to home page, you can view these tutors at any time in your account.</a>");
 	}
 
 	/**
@@ -87,7 +94,6 @@ public class TutorialDeliveryServlet extends HttpServlet {
 		}
 		tutorialInfo.setTutorialName(request.getParameter("txtTutorialName"));
 		tutorialInfo.setTutorialDescription(request.getParameter("txtTutorialDescription"));
-		
 	}
 
 	/**
@@ -100,8 +106,6 @@ public class TutorialDeliveryServlet extends HttpServlet {
 		int tutorialInfoId = TutorialInfoStore.InsertInfo(tutorialInfo);
 		tutorialInfo.setTutorialId(tutorialInfoId);
 		int rowsInsertedInDeliverableInfo = TutorialStore.InsertDeliverableInfo(finalTutorialList, tutorialInfoId);
-		display.println("<br/> TutorialID:" + tutorialInfoId);
-		display.println("<br />Total number of rows inserted in deliverableInfo : " + rowsInsertedInDeliverableInfo);
 	}
 
 	/**
