@@ -298,10 +298,11 @@ session.setAttribute("deliverableLauncher", launcher);
 	                  		  	}else{
 	                  		  		ratingval = 0;
 	                  		  	}
-	                  		  	if(rs2.next()){
-	                  		  		avgrating = rs2.getString("avgrating");
+	                  		  	rs2.next();
+	                  		  	if(rs2.getString("avgrating") != null){
+	                  		  		avgrating = "AVG RATING: " + rs2.getString("avgrating");
 	                  		  	}else{
-	                  		  		avgrating = "NR";
+	                  		  		avgrating = "";
 	                  		  	}
 	                  		  	
 	                        	out.println("<tr>");
@@ -315,9 +316,9 @@ session.setAttribute("deliverableLauncher", launcher);
 	                            out.println("<a onclick=\"rateIt(this, " + i + ", 5)\" id=\"_" + i + "_5\" title=\"Excellent\" onmouseover=\"rating(this, " + i + ", 5)\" onmouseout=\"off(this, " + i + ", 5)\"></a>");
 	                            out.print("</div><input type=\"hidden\" id=\"tutorID_"+i+"\" value=\"" + tutorialInfo.getTutorialId() + "\" /><input type=\"hidden\" id=\"ratingValue_"+i+"\" value=\"");
 	                            if(ratingval != 0){
-		                  		    out.println(ratingval + ")\" /></form> <script language=\"javascript\" type=\"text/javascript\">rating(this, " + i + ", " + ratingval + ");</script>");
+		                  		    out.println(ratingval + "\" /></form> <script language=\"javascript\" type=\"text/javascript\">rating(this, " + i + ", " + ratingval + ");</script>");
 	                  		    }else{
-	                  		    	out.println("0)\" /></form>");
+	                  		    	out.println("0\" /></form>");
 	                  		    }
 	                            out.println("</td>");
 	                    		out.println("<td style=\"width:100px; margin-top:5px; padding-top:5px\">");
@@ -326,7 +327,7 @@ session.setAttribute("deliverableLauncher", launcher);
 	                            out.println("</td>");
 	                            out.println("</tr></table>");
 	                        	out.println("</td><td style=\"text-align:right; color:#FFF; font-size:11px;\">");
-	                        	out.println("AVG RATING: " + avgrating);
+	                        	out.println(avgrating);
 	                        	out.println("</td></tr>");
 	                            out.println("<tr class=\"myClass\" onclick=\"gotoURL('tutorSearchResultsDetails.jsp?start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
 	                            out.println("<td class=\"tdTutorialName\">");
