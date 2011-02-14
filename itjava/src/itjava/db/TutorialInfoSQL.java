@@ -35,6 +35,7 @@ public class TutorialInfoSQL {
 					"tutorialDescription varchar(200) default \" \"," +
 					"numExamples integer default 0," +
 					"numQuizes integer default 0," +
+					"userLevel varchar(50)," +
 					"creationDate Date default CURRENT_DATE," +
 					"createdBy varchar(20) default \"testuser\"," +
 					"timesAccessed integer default 0," +
