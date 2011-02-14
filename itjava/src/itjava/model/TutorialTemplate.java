@@ -68,7 +68,7 @@ public class TutorialTemplate {
 		String componentDeclaration = component.componentName + ".setBounds(" +
 				component.x + "," + component.y + "," + component.width + "," + component.height
 			+ "); \n" +
-			component.componentName + ".setFont(new java.awt.Font(\"Consolas\", " + fontStyle + ", 12));\n";
+			component.componentName + ".setFont(new java.awt.Font(\"Courier New\", " + fontStyle + ", 12));\n";
 		
 		if(component.componentText != null) {
 			componentDeclaration += component.componentName + ".setText(\"" + cleanseText(component.componentText) + "\"); \n";
