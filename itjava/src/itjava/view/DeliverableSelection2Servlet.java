@@ -68,7 +68,7 @@ public class DeliverableSelection2Servlet extends HttpServlet {
 		String nextPage;
 		if(deliveryKeyValue == null)
 		{
-		nextPage = "savedTutorsFinal.jsp";
+		nextPage = "studentFinalPage.jsp";
 		}
 		else
 		{
