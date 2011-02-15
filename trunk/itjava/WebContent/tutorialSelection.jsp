@@ -324,16 +324,16 @@ for (int approvalIndex = 0; approvalIndex < 3; approvalIndex++) {
 int index = 0;
 List<String> selectedWords = wordsList.get(currentIndex);
 for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
-	out.print("<input type=\"checkbox\" name=\"cbxWordInfo\" value=\"" + index + "\"");
+	out.print("<input type=\"checkbox\" name=\"cbxWordInfo\" value=\"" + index + "\" id=\"cb_" + index + "\"");
 	if(selectedWords != null) {
 		if (selectedWords.contains(Integer.toString(index))) {
 			out.print(" checked=\"checked\"");
 		}
 	}
-	out.print(">");
-	out.print(currentWordInfo.wordToBeBlanked + " : ");
-	out.print("<span class=\"lineNumber\">Line:" + currentWordInfo.lineNumber + "</span>");
-	out.println("</input><br />");
+	out.println(" />");
+	out.println("<label id=\"" + index + "\" for=\"cb_" + index + "\">" + currentWordInfo.wordToBeBlanked + " : ");
+	out.println("<span class=\"lineNumber\">Line:" + currentWordInfo.lineNumber + "</span>");
+	out.println("</label><br />");
 	index++;
 }
 %>
