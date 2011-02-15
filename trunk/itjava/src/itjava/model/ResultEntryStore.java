@@ -68,10 +68,7 @@ public class ResultEntryStore {
 		            System.out.print("Join interrupted\n");
 	        }
 		}
-		
-
-
-		
+		System.out.println("Done collecting html from urls..");
 		return _resultEntries;
 		
 	} 

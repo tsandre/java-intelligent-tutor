@@ -10,6 +10,7 @@ import javax.tools.ToolProvider;
 
 import itjava.data.LocalMachine;
 import itjava.model.BRDStore;
+import itjava.model.CompilationUnitFacade;
 import itjava.model.Convertor;
 import itjava.model.Tutorial;
 import itjava.model.TutorialDeployer;
@@ -31,7 +32,10 @@ private TutorialStore _tutorialStore;
 	 * @throws Exception
 	 */
 	public Tutorial GetTutorial(String tutorialName, String readableName, ArrayList<String> exampleCode, ArrayList<WordInfo> wordInfoList, String sourceUrl, ArrayList<WordInfo> oriWordInfoList) throws Exception {
-		Tutorial tutorial = new Tutorial(tutorialName, readableName, ArrangeWordsAccordingToLineNumber(wordInfoList), Convertor.TrimArrayListOfString(exampleCode), sourceUrl, ArrangeWordsAccordingToLineNumber(oriWordInfoList));
+		CompilationUnitFacade testFacade = new CompilationUnitFacade();
+		testFacade.setUrl(sourceUrl);
+		testFacade.setLinesOfCode(Convertor.TrimArrayListOfString(exampleCode));
+		Tutorial tutorial = new Tutorial(tutorialName, readableName, ArrangeWordsAccordingToLineNumber(wordInfoList), testFacade, ArrangeWordsAccordingToLineNumber(oriWordInfoList));
 		tutorial = new TutorialStore().GenerateTutorial(tutorial);
 		return tutorial;
 	}
@@ -62,18 +66,17 @@ private TutorialStore _tutorialStore;
 		return finalTutorialList;
 	}
 
-	private void CreateDeliveryFolder(String folderName) {
+	private void CreateDeliveryFolder(String folderName) throws Exception{
 		String folderPath = LocalMachine.home + LocalMachine.webcontent + "delivery/" + folderName;
 		File deliveryFolder = new File(folderPath);
 		if (deliveryFolder.exists()) {
 			deliveryFolder.delete();
 		}
+		
 		if(deliveryFolder.mkdir()) {
 			System.out.println("Delivery folder : " + folderPath + " created.");
 		}
-		else {
-			System.out.println("Problems creating folder " + folderPath);
-		}
+
 	}
 
 	private ArrayList<WordInfo> ArrangeWordsAccordingToLineNumber(

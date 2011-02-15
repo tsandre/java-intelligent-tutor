@@ -19,7 +19,7 @@ public class RepositoryStoreTest {
 
 	@Test
 	public void TestReadRepository() {
-		_repository = RepositoryStore.ReadRepository();
+		_repository = RepositoryStore.UpdateRepository(null);
 		ThenRepositoryHasImportTerms();
 	}
 

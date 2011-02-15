@@ -58,29 +58,10 @@ public class Convertor {
 		return formattedCode;
 	}
 	
-	/*public static ArrayList<String> StringToArrayListOfStrings(String linesOfCode) throws Exception {
-		ArrayList<String> _linesOfCode = new ArrayList<String>();
-		try {
-			BufferedReader bReader = new BufferedReader(new StringReader(linesOfCode));
-			String currLine = bReader.readLine();
-			while (currLine != null) {
-				if (currLine.trim().length() > 0) {
-					if (!currLine.trim().startsWith("//")) {
-						_linesOfCode.add(currLine.trim().replaceAll("\\s+", " ")); // + "\n"; // Removed \n and also removed all possible whitespace
-					}
-				}
-				currLine = bReader.readLine();
-			}
-		}
-		catch(Exception e) {
-			System.err.println(e.getMessage() + "Problem in converting String to ArrayList of Strings");
-		}
-		return _linesOfCode;
-	}*/
 	
-	public static ArrayList<String> StringToArrayListOfStrings(String linesOfCode) throws IOException   {
+	public static ArrayList<String> StringToArrayListOfStrings(String linesOfCode) throws IOException {
 		ArrayList<String> _linesOfCode = new ArrayList<String>();
-		BufferedReader bReader = new BufferedReader(new StringReader(linesOfCode));
+		BufferedReader bReader = new BufferedReader(new StringReader(linesOfCode.replace("{", "{\n").replace(";", ";\n").replace("}", "}\n")));
 		String currLine = bReader.readLine();
 		while (currLine != null) {
 			_linesOfCode.add(currLine);

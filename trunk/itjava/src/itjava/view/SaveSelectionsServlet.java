@@ -1,13 +1,20 @@
 package itjava.view;
 
+import itjava.model.CompilationUnitFacade;
+import itjava.model.CompilationUnitStore;
 import itjava.model.Tutorial;
+import itjava.model.TutorialStore;
 import itjava.model.WordInfo;
+import itjava.model.WordInfoStore;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +23,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.Type;
 
 /**
  * Servlet implementation class SaveSelectionsServlet
@@ -39,45 +52,119 @@ public class SaveSelectionsServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		int currentIndex = (Integer) session.getAttribute("currentIndex");
 		
-		String nextExample = request.getParameter("btnSubmit");
-		int nextIndex;
+		String submitValue = request.getParameter("btnSubmit");
+		int nextIndex = -999;
 		ArrayList<String> approvalList = (ArrayList<String>) session.getAttribute("approvalList");
 		ArrayList<List<String>> wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
 		ArrayList<Integer> difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
 		ArrayList<HashMap<String, ArrayList<String>>> hintsMapList = (ArrayList<HashMap<String, ArrayList<String>>>)session.getAttribute("hintsMapList");
 		ArrayList<Tutorial> tutorialList = (ArrayList<Tutorial>) session.getAttribute("tutorialList");
-		if (nextExample.equals("Next Snippet >>")) {
+		
+		if (submitValue.equals("Next Snippet >>")) {
 			nextIndex = currentIndex + 1;
 		}
-		else {
+		else if(submitValue.equals("<< Previous Snippet")) {
 			nextIndex = currentIndex - 1;
 		}
+		else if (submitValue.equals("Verify & Save")){
+			HashSet<Boolean> wordFoundSet = new HashSet<Boolean>();
+			String[] newWords = request.getParameter("txtNewWord").split(",");
+			Tutorial currentTutorial = tutorialList.get(currentIndex);
+			CompilationUnitFacade facade = currentTutorial.getFacade();
+			Set<Integer> lineNumbersUsed = currentTutorial.getLineNumbersUsed();
+			ArrayList<WordInfo> wordInfoList = currentTutorial.getWordInfoList();
+			LinkedHashSet<String> selectedWordInfoIndices = new LinkedHashSet<String>();
+			int newPosition = -999;
+			
+			for(String newWord: newWords) {
+				if ( currentTutorial.contains(newWord) ) continue; //TODO :Check current wordsList
+				else {
+					WordInfo newWordInfo = null;
+					try {
+						ASTNode astNode = CompilationUnitStore.findWordType(currentTutorial.getFacade(), newWord.trim());
+						if (astNode != null) {
+							switch (astNode.getNodeType()) {
+							case ASTNode.SIMPLE_NAME :
+								System.out.println("Method inv found");
+								newWordInfo = WordInfoStore.createWordInfo(facade.getLinesOfCode(), (SimpleName) astNode, lineNumbersUsed, false);
+								break;
+								
+							case ASTNode.IMPORT_DECLARATION : 
+								System.out.println("import decl found");
+								newWordInfo = WordInfoStore.createWordInfo(facade.getLinesOfCode(), (ImportDeclaration) astNode, lineNumbersUsed, false);
+								break;
+								
+							case ASTNode.SIMPLE_TYPE :
+								System.out.println("classinstance found");
+								newWordInfo = WordInfoStore.createWordInfo(facade.getLinesOfCode(), (SimpleType) astNode, lineNumbersUsed, false);
+								break;
+								
+							default:
+								System.out.println("Incorrect ASTNode type returned");
+								break;
+									
+							}
+							newPosition = WordInfoStore.addWordInfoToList(wordInfoList, newWordInfo);
+						}
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					if (request.getParameterValues("cbxWordInfo") != null) {
+						selectedWordInfoIndices.addAll((Arrays.asList(request.getParameterValues("cbxWordInfo"))));
+					}
+					
+					approvalList.set(currentIndex, "Quiz");
+					
+					if (request.getParameter("difficultyLevel") != null) {
+						int difficultyLevel = Integer.parseInt(request.getParameter("difficultyLevel"));
+						difficultyList.set(currentIndex, difficultyLevel);
+					}
+					
+					if (newPosition != -999) {
+						selectedWordInfoIndices.add(Integer.toString(newPosition));
+						wordFoundSet.add(true);
+					}
+					else {
+						wordFoundSet.add(false);
+					}
+					
+				}
+				
+			}
+			ArrayList<String> listOfSelectedIndices = new ArrayList<String>(selectedWordInfoIndices);
+			wordsList.set(currentIndex, listOfSelectedIndices);
+			
+			ProcessHints(request, currentIndex, hintsMapList, tutorialList,
+					listOfSelectedIndices);
+			
+
+			currentTutorial.setWordInfoList(wordInfoList);
+			tutorialList.remove(currentIndex);
+			tutorialList.add(currentIndex, currentTutorial);
+			session.setAttribute("tutorialList", tutorialList);
+			session.setAttribute("approvalList", approvalList);
+			session.setAttribute("difficultyList", difficultyList);
+			session.setAttribute("wordsList", wordsList);
+			session.setAttribute("hintsMapList", hintsMapList);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("tutorialSelection.jsp?index=" + currentIndex + "&wordFound=" + wordFoundSet.contains(true));
+			dispatcher.forward(request, response);
+		}
 		
+		if (nextIndex != -999) { // If Next or Previous is pressed
 		String approved = request.getParameter("radioApproval");
 		if (approved.equals("Quiz")) {
-			List<String> selectedWordInfoIndices = Arrays.asList(request.getParameterValues("cbxWordInfo"));
+			ArrayList<String> selectedWordInfoIndices = new ArrayList<String>(Arrays.asList(request.getParameterValues("cbxWordInfo")));
 			int difficultyLevel = Integer.parseInt(request.getParameter("difficultyLevel"));
 			
 			approvalList.set(currentIndex, "Quiz");
 			wordsList.set(currentIndex, selectedWordInfoIndices);
 			difficultyList.set(currentIndex, difficultyLevel);
-			HashMap<String, ArrayList<String>> currHintsMaps = new HashMap<String, ArrayList<String>>();
-			for (String selectedWordIndex : selectedWordInfoIndices) {
-				ArrayList<String> hintsList = new ArrayList<String>();
-				for (int hintNum = 1; hintNum <= 2; hintNum++) {
-					String hint = request.getParameter("txtHint_" + selectedWordIndex + "_" + hintNum);
-					if (hint != null) {
-						hintsList.add(hint);
-					}
-				}
-				//TODO : Find the actual value of the blank
-				int currentWordIndex = Integer.parseInt(selectedWordIndex);
-				ArrayList<WordInfo> currentWordInfo = tutorialList.get(currentIndex).getWordInfoList();
-				String currentWord = currentWordInfo.get(currentWordIndex).wordToBeBlanked;
-				hintsList.add(currentWord);
-				currHintsMaps.put(selectedWordIndex, hintsList);
-			}
-			hintsMapList.set(currentIndex, currHintsMaps);
+			
+			ProcessHints(request, currentIndex, hintsMapList, tutorialList,
+					selectedWordInfoIndices);
 			
 			session.setAttribute("hintsMapList", hintsMapList);
 			session.setAttribute("wordsList", wordsList);
@@ -103,6 +190,44 @@ public class SaveSelectionsServlet extends HttpServlet {
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);
+		}
+	}
+
+	/**
+	 * @param request
+	 * @param currentIndex
+	 * @param hintsMapList
+	 * @param tutorialList
+	 * @param selectedWordInfoIndices
+	 * @throws NumberFormatException
+	 */
+	private void ProcessHints(HttpServletRequest request, int currentIndex,
+			ArrayList<HashMap<String, ArrayList<String>>> hintsMapList,
+			ArrayList<Tutorial> tutorialList,
+			ArrayList<String> selectedWordInfoIndices)
+			throws NumberFormatException {
+		
+		HashMap<String, ArrayList<String>> currHintsMaps = new HashMap<String, ArrayList<String>>();
+		for (String selectedWordIndex : selectedWordInfoIndices) {
+			ArrayList<String> hintsList = new ArrayList<String>();
+			
+			int currentWordIndex = Integer.parseInt(selectedWordIndex);
+			ArrayList<WordInfo> currentWordInfo = tutorialList.get(currentIndex).getWordInfoList();
+			String currentWord = currentWordInfo.get(currentWordIndex).wordToBeBlanked;
+			
+			for (int hintNum = 1; hintNum <= 2; hintNum++) {
+				String hint = request.getParameter("txtHint_" + selectedWordIndex + "_" + hintNum);
+				if (hint != null ) {
+					if (!hint.trim().equals("") && !hint.equalsIgnoreCase(currentWord)){
+						hintsList.add(hint);
+					}
+				}
+			}
+			
+			hintsList.add(currentWord);
+			currHintsMaps.put(selectedWordIndex, hintsList);
+		}
+		hintsMapList.set(currentIndex, currHintsMaps);
 	}
 
 	/**

@@ -4,7 +4,6 @@ import itjava.data.NodeToCompare;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
@@ -20,6 +19,7 @@ public class CompilationUnitFacade {
 	private List<MethodDeclaration> _methodDeclarations;
 	private List<FieldDeclaration> _fieldDeclarations;
 	private ArrayList<String> _linesOfCode;
+	private String _unformattedSource;
 	private List<Statement> _statements;
 	private List<Expression> _expressions;
 	private List<Statement> _variableDeclarationStatements;
@@ -31,13 +31,15 @@ public class CompilationUnitFacade {
 	private List<SingleVariableDeclaration> _caughtExceptions;
 	private List<Type> _classInstances;
 	private List<QualifiedName> _qualifiedNames;
+	private Message[] _messages;
+	private String interpretedCode;
 
 	private TFIDFVector _tfVector;
 	private String _url;
 	
 	@Override
 	public String toString() {
-		return getLinesOfCode().toString();
+		return getUnformattedSource();
 	}
 	
 	@Override
@@ -47,6 +49,11 @@ public class CompilationUnitFacade {
 
 	public void setLinesOfCode(String linesOfCode) throws IOException   {
 		_linesOfCode = Convertor.StringToArrayListOfStrings(linesOfCode);
+		setUnformattedSource(linesOfCode);
+	}
+
+	public void setLinesOfCode(ArrayList<String> linesOfCode) {
+		_linesOfCode = linesOfCode;
 	}
 
 	/**
@@ -243,6 +250,8 @@ public class CompilationUnitFacade {
 				break;
 			
 //		    ThisExpression
+			case (Expression.THIS_EXPRESSION) :
+				break;
 //		    SuperFieldAccess
 //		    FieldAccess
 				
@@ -252,6 +261,9 @@ public class CompilationUnitFacade {
 				break;
 				
 //		    ParenthesizedExpression
+			case (Expression.PARENTHESIZED_EXPRESSION) :
+				addExpression(((ParenthesizedExpression) expression).getExpression());
+				break;
 //		    ClassInstanceCreation
 			case (Expression.CLASS_INSTANCE_CREATION):
 				ClassInstanceCreation classInstanceCreation = (ClassInstanceCreation) expression;
@@ -259,6 +271,9 @@ public class CompilationUnitFacade {
 				break;
 //		    ArrayCreation
 //		    ArrayInitializer
+			case (Expression.ARRAY_INITIALIZER) :
+//				ArrayInitializer arrayInit = (ArrayInitializer) expression;
+				break;
 //		    MethodInvocation
 			case (Expression.METHOD_INVOCATION) :
 				MethodInvocation methodInvocation = (MethodInvocation) expression;
@@ -269,6 +284,9 @@ public class CompilationUnitFacade {
 				
 				break;
 //		    SuperMethodInvocation
+			case (Expression.SUPER_METHOD_INVOCATION) :
+				addMethodInvocation(((SuperMethodInvocation) expression).getName());
+				break;
 //		    ArrayAccess
 //		    InfixExpression
 			case (Expression.INFIX_EXPRESSION) :
@@ -283,8 +301,20 @@ public class CompilationUnitFacade {
 				break;
 //		    InstanceofExpression
 //		    ConditionalExpression
+			case (Expression.CONDITIONAL_EXPRESSION) :
+				ConditionalExpression conditional = (ConditionalExpression) expression;
+				addExpression(conditional.getExpression());
+				addExpression(conditional.getThenExpression());
+				addExpression(conditional.getElseExpression());
+				break;
 //		    PostfixExpression
+			case (Expression.POSTFIX_EXPRESSION) :
+				addExpression(((PostfixExpression) expression).getOperand());
+				break;
 //		    PrefixExpression
+			case (Expression.PREFIX_EXPRESSION) :
+				addExpression(((PrefixExpression) expression).getOperand());
+				break;
 //		    CastExpression
 			case(Expression.CAST_EXPRESSION) :
 				CastExpression cast = (CastExpression) expression;
@@ -364,6 +394,10 @@ public class CompilationUnitFacade {
 				List<CatchClause> catchClauses = tryStatement.catchClauses();
 				for(CatchClause catchClause : catchClauses) {
 					addCaughtExceptions(catchClause.getException());
+					List<Statement> catchBlockStatements = catchClause.getBody().statements();
+					for (Statement childStatement: catchBlockStatements) {
+						addStatement(childStatement);
+					}
 				}
 				break;
 				
@@ -584,5 +618,48 @@ public class CompilationUnitFacade {
 		}
 		return false;
 	}
+
+	/**
+	 * @param unformattedSource the unformattedSource to set
+	 */
+	public void setUnformattedSource(String unformattedSource) {
+		_unformattedSource = unformattedSource;
+	}
+
+	/**
+	 * @return the unformattedSource
+	 */
+	public String getUnformattedSource() {
+		return _unformattedSource;
+	}
+
+	/**
+	 * @param messages the messages to set
+	 */
+	public void setMessages(Message[] messages) {
+		_messages = messages;
+	}
+
+	/**
+	 * @return the messages
+	 */
+	public Message[] getMessages() {
+		return _messages;
+	}
+
+	/**
+	 * @param interpretedCode the interpretedCode to set
+	 */
+	public void setInterpretedCode(String interpretedCode) {
+		this.interpretedCode = interpretedCode;
+	}
+
+	/**
+	 * @return the interpretedCode
+	 */
+	public String getInterpretedCode() {
+		return interpretedCode;
+	}
+
 
 }

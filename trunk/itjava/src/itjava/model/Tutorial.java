@@ -1,8 +1,10 @@
 package itjava.model;
 
-
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Tutorial {
 	private String _tutorialName;
@@ -11,11 +13,11 @@ public class Tutorial {
 	public String tutorialCode = "";
 	private ArrayList<WordInfo> wordInfoList;
 	private ArrayList<WordInfo> originalWordInfoList;
-	private ArrayList<String> linesOfCode;
+	private CompilationUnitFacade _facade;
+	private ArrayList<String> _linesOfCode;
 	
 	public File tutorialClassFile;
 	public int difficultyLevel;
-	public String sourceUrl = "";
 	private String path = "";
 	private ArrayList<EdgeData> _edgeDataList;
 	private ArrayList<LabelData> _labelDataList;
@@ -24,13 +26,17 @@ public class Tutorial {
 		
 	}
 	public Tutorial(String tutorialName, String readableName, ArrayList<WordInfo> wordInfoListIn,
-			ArrayList<String> linesOfCodeIn, String sourceUrlIn, ArrayList<WordInfo> originalWordInfoList) {
+			CompilationUnitFacade facade, ArrayList<WordInfo> originalWordInfoList) {
 		_tutorialName = tutorialName;
 		_readableName = readableName.trim().replaceAll("\\s", "");
 		this.wordInfoList = wordInfoListIn;
-		this.linesOfCode = linesOfCodeIn;
-		this.sourceUrl = sourceUrlIn;
 		this.originalWordInfoList = originalWordInfoList;
+		try {
+			this.setFacade(facade);
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 
 	public void AppendCode(String currLineOfCode) {
@@ -79,13 +85,14 @@ public class Tutorial {
 	 * @return the linesOfCode
 	 */
 	public ArrayList<String> getLinesOfCode() {
-		return linesOfCode;
+		return this.getFacade().getLinesOfCode();
 	}
 	/**
 	 * @param linesOfCode the linesOfCode to set
+	 * @throws IOException 
 	 */
-	public void setLinesOfCode(ArrayList<String> linesOfCode) {
-		this.linesOfCode = linesOfCode;
+	public void setLinesOfCode(String unformattedSource) throws IOException {
+		_linesOfCode = Convertor.StringToArrayListOfStrings(unformattedSource);
 	}
 	public void setPath(String path) {
 		this.path = path;
@@ -116,6 +123,42 @@ public class Tutorial {
 	}
 	public ArrayList<WordInfo> getOriginalWordInfoList() {
 		return originalWordInfoList;
+	}
+	/**
+	 * @param facade the facade to set
+	 * @throws IOException 
+	 */
+	public void setFacade(CompilationUnitFacade facade) throws IOException {
+		_facade = facade;
+		this.setLinesOfCode(_facade.getUnformattedSource());
+	}
+	/**
+	 * @return the facade
+	 */
+	public CompilationUnitFacade getFacade() {
+		return _facade;
+	}
+	
+	public String getUrl() {
+		return _facade.getUrl();
+	}
+	
+	
+	/**
+	 * TODO: Verifies whether the wordlist of this tutorial has a wordInfo whose string value equals to newWord
+	 * @param newWord Word to find in the wordlist
+	 * @return
+	 */
+	public boolean contains(String newWord) {
+		return false;
+	}
+	
+	public Set<Integer> getLineNumbersUsed() {
+		HashSet<Integer> lineNumbersUsed = new HashSet<Integer>();
+		for (WordInfo wordInfo: this.getWordInfoList()) {
+			lineNumbersUsed.add(wordInfo.lineNumber);
+		}
+		return lineNumbersUsed;
 	}
 
 }

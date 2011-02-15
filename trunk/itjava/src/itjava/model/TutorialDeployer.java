@@ -60,7 +60,9 @@ public class TutorialDeployer {
 		File classFile = new File(LocalMachine.home + "generated/" + _tutorial.getTutorialName() + ".class");
 		File batFile = new File(LocalMachine.home + "generated/compiler.bat");
 		if (batFile.exists()) {
-			batFile.delete();
+			if(!batFile.delete()){
+				System.err.println("File compiler.bat was not deleted..");
+			}
 		}
 		batFile.createNewFile();
 		FileWriter compilerBat = new FileWriter(batFile);

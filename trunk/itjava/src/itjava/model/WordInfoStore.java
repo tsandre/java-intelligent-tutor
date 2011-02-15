@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -29,41 +30,44 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 public class WordInfoStore {
 	private List<String> _linesOfCode;
 	private WordInfo _wordInfo;
+	private boolean restrictDuplicates;
 	
-	private WordInfoStore(List<String> linesOfCode) {
+	private WordInfoStore(List<String> linesOfCode, boolean dup) {
 		_linesOfCode = linesOfCode;
 		_wordInfo = new WordInfo();
+		restrictDuplicates = dup;
 	}
 
 	private void createWordInfo(ASTNode node, Set<Integer> lineNumbersUsed) throws Exception {
 		int index = 0;
 		int lineNumber = 0;
 		for (String currLine : _linesOfCode) {
-//			index += currLine.length();
+			index += currLine.length();
 			// Replace lines from here to next comment with the single line that is 
 			// commented above if too many exceptions related to "word not accessible"
 			// are thrown.
-			int currLengthWithXtraSpace = currLine.length();
+		/*	int currLengthWithXtraSpace = currLine.length();
 			int numOfIndentSpaces = 0;
 			Pattern pattern = Pattern.compile("\\S");
 			Matcher matcher = pattern.matcher(currLine);
 			if (matcher.find()) {
 				numOfIndentSpaces = matcher.start();
 			}
-			index += currLengthWithXtraSpace - (numOfIndentSpaces / 2);
+			index += currLengthWithXtraSpace - (numOfIndentSpaces / 2);*/
 			//End of change. 
 			if (index > node.getStartPosition()) {
 				//TODO Bug: when the wordToBeBlanked was "close", for the function .close();
 				//It was found that in line closeable.close(), the first 4 letters of closeable were blanked out since that was the indexOf("close").
 				_wordInfo.lineNumber = lineNumber + 1;
-				if (lineNumbersUsed.contains(_wordInfo.lineNumber)) {
+				if (lineNumbersUsed.contains(_wordInfo.lineNumber) && this.restrictDuplicates) {
 					throw new Exception("Line number repeated..");
 				}
 				else {
 					lineNumbersUsed.add(_wordInfo.lineNumber);
 				}
 				_wordInfo.blankType = BlankType.Text;
-				_wordInfo.columnNumber = currLine.trim().indexOf(_wordInfo.wordToBeBlanked);
+//				_wordInfo.columnNumber = currLine.trim().indexOf(_wordInfo.wordToBeBlanked);
+				_wordInfo.columnNumber = (node.getStartPosition()) - (index - currLine.length());
 				break;
 			}
 			lineNumber++;
@@ -73,52 +77,37 @@ public class WordInfoStore {
 		}
 	}
 	
-	public static WordInfo createWordInfo(List<String> linesOfCode, Statement statement) throws Exception {
-		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
+	public static WordInfo createWordInfo(List<String> linesOfCode, Statement statement, boolean restrictDup) throws Exception {
+		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode, restrictDup);
 		wordInfoStore._wordInfo.wordToBeBlanked = ((VariableDeclarationStatement)statement).getType().toString();
 		wordInfoStore.createWordInfo(statement, null);
 		return wordInfoStore._wordInfo;
 	}
 
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			ImportDeclaration importDeclaration, Set<Integer> lineNumbersUsed) throws Exception {
-		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
+			ImportDeclaration importDeclaration, Set<Integer> lineNumbersUsed, boolean restrictDup) throws Exception {
+		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode, restrictDup);
 		wordInfoStore._wordInfo.wordToBeBlanked = importDeclaration.getName().getFullyQualifiedName();
 		wordInfoStore.createWordInfo(importDeclaration, lineNumbersUsed);
 		return wordInfoStore._wordInfo;
 	}
 	
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			Type classInstanceType, Set<Integer> lineNumbersUsed) throws Exception {
-		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
+			Type classInstanceType, Set<Integer> lineNumbersUsed, boolean restrictDup) throws Exception {
+		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode, restrictDup);
 		wordInfoStore._wordInfo.wordToBeBlanked = classInstanceType.toString();
 		wordInfoStore.createWordInfo(classInstanceType, lineNumbersUsed);
 		return wordInfoStore._wordInfo;
 	}
 	
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			SimpleName methodInvocation, Set<Integer> lineNumbersUsed) throws Exception {
-		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
+			SimpleName methodInvocation, Set<Integer> lineNumbersUsed, boolean restrictDup) throws Exception {
+		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode, restrictDup);
 		wordInfoStore._wordInfo.wordToBeBlanked = methodInvocation.getFullyQualifiedName();
 		wordInfoStore.createWordInfo(methodInvocation, lineNumbersUsed);
 		return wordInfoStore._wordInfo;
 	}
 
-	public static WordInfo createWordInfo(ArrayList<String> linesOfCode,
-			FieldDeclaration fieldDeclaration) throws Exception {
-		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
-		wordInfoStore._wordInfo.wordToBeBlanked = ((FieldDeclaration)fieldDeclaration).getType().toString();
-		wordInfoStore.createWordInfo(fieldDeclaration, null);
-		return wordInfoStore._wordInfo;
-	}
-
-	public static WordInfo createWordInfo(ArrayList<String> linesOfCode,
-			QualifiedName currPropertyAssignment) throws Exception {
-		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode);
-		wordInfoStore._wordInfo.wordToBeBlanked = currPropertyAssignment.getName().toString();
-		wordInfoStore.createWordInfo(currPropertyAssignment, null);
-		return wordInfoStore._wordInfo;
-	}
 
 	public static Concordance<String> SelectWordInfo(HashMap<String, Integer> whereClause){
 		Connection conn = null;
@@ -152,5 +141,29 @@ public class WordInfoStore {
 		}
 		
 		return retVal;
+	}
+
+	public static int addWordInfoToList(ArrayList<WordInfo> wordInfoList,
+			WordInfo newWordInfo) {
+		int index = 0;
+		boolean found = false;
+		Iterator<WordInfo> itWIList = wordInfoList.iterator();
+		int newLineNumber = newWordInfo.lineNumber;
+		while (itWIList.hasNext()) {
+			WordInfo currWordInfo = itWIList.next();
+			if (currWordInfo.lineNumber == newLineNumber) {
+				itWIList.remove();
+				found = true;
+				break;
+			}
+			index++;
+		}
+		if (found) {
+			wordInfoList.add(index, newWordInfo);
+		}
+		else {
+			wordInfoList.add(newWordInfo);
+		}
+		return index;
 	}
 }
