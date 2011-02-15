@@ -126,6 +126,7 @@ tr .passive:hover {
 
 #tdHintCell {
 	font-family: segoe ui, verdana;
+	vertical-align:top;
 }
 
 .divInvisibleHint {

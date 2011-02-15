@@ -168,7 +168,8 @@ $(function () {
     		allVals.push(this.value);
     	}); 
 		if (allVals.length > 0) {
-			$('#divHint').show('fast');
+			$('#divHint').show();
+			$('#divHint .step').show();
 		}
 		for (var i =0 ; i < allVals.length; i++ ) {
 			var divHintId = "divHint" + allVals[i];
@@ -417,8 +418,8 @@ for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 </div>
 </td>
 <td id="tdHintCell">
-<div class="step">STEP 4</div>
-<div id="divHint"> Hints Corresponding to : 
+<div id="divHint">
+<div class="step">STEP 4</div> Hints Corresponding to : 
 <% 
 HashMap<String, ArrayList<String>> hintsMap = hintsMapList.get(currentIndex);
 int currWordInfoIndex = 0;
