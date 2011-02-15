@@ -54,12 +54,10 @@ public class TutorialStore {
 	}
 	
 	public Tutorial GenerateTutorial(Tutorial tutorial) throws Exception {
-		if (tutorial.getLinesOfCode() == null) {
-		if (tutorial.getLinesOfCode().size() == 0) {
-			System.err.println("Input param for GenerateTutorial are NULL");
-			return null;
+		if (tutorial.getLinesOfCode() == null || tutorial.getLinesOfCode().size() == 0) {
+			throw new Exception("Lines of code for tutorial are NULL");
 		}
-		}
+		
 		_tutorial = tutorial;
 		_linesOfCode = tutorial.getLinesOfCode();
 		_oriWordInfoList = tutorial.getOriginalWordInfoList();

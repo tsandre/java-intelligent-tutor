@@ -5,6 +5,7 @@ package itjava.model;
 
 import itjava.data.LocalMachine;
 import itjava.data.NodeToCompare;
+import itjava.db.DBConnection;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,11 +33,19 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
  */
 public class RepositoryStore {
 
-	private static Repository _repository;
-	private static ArrayList<String> _tempVariableDeclarations;
-	private static ArrayList<String> _tempMethodInvocations;
-	private static ArrayList<String> _tempClassInstances;
-	private static Connection _conn;
+	private Repository _repository;
+	private ArrayList<String> _tempVariableDeclarations;
+	private ArrayList<String> _tempMethodInvocations;
+	private ArrayList<String> _tempClassInstances;
+	private Connection _conn;
+	
+	private RepositoryStore() {
+		_repository = new Repository();
+		_tempVariableDeclarations = new ArrayList<String>();
+		_tempMethodInvocations = new ArrayList<String>();
+		_tempClassInstances = new ArrayList<String>();
+		_conn = null;
+	}
 
 	/**
 	 * Seeks original {@link Repository} by performing necessary I/O and updates
@@ -51,31 +60,32 @@ public class RepositoryStore {
 	public static Repository UpdateRepository(
 			ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
 
+		RepositoryStore _rStore = new RepositoryStore();
 		boolean repositoryUpdated = false;
-		_repository = ReadRepository();
-		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
-			if (!_repository.Contains(facade.getUrl())) {
-				repositoryUpdated = true;
-				SaveFile(facade);
-				InitRepositoryStore();
-				UpdateImportTerms(facade.getImportDeclarations());
-				// TODO UpdateSuperTypeTerms(facade.getSuperTypes());
-				UpdateVariableDeclarationTerms(facade
-						.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT));
-				UpdateClassInstanceTerms(facade.getClassInstances());
-				UpdateMethodInvocationTerms(facade.getMethodInvocations());
-				// TODO UpdatePropertyAssignmentTerms(null);
-				_repository.allDocuments.add(facade);
-				_repository.allUrls.add(facade.getUrl());
+		_rStore._repository = _rStore.ReadRepository();
+		if (compilationUnitFacadeList != null) {
+			for (CompilationUnitFacade facade : compilationUnitFacadeList) {
+				if (!_rStore._repository.Contains(facade.getUrl())) {
+					repositoryUpdated = true;
+					_rStore.SaveFile(facade);
+					_rStore.InitRepositoryStore();
+					_rStore.UpdateImportTerms(facade.getImportDeclarations());
+					_rStore.UpdateVariableDeclarationTerms(facade
+							.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT));
+					_rStore.UpdateClassInstanceTerms(facade.getClassInstances());
+					_rStore.UpdateMethodInvocationTerms(facade.getMethodInvocations());
+					_rStore._repository.allDocuments.add(facade);
+					_rStore._repository.allUrls.add(facade.getUrl());
+				}
+			}
+			if (repositoryUpdated) {
+				_rStore.WriteRepository();
 			}
 		}
-		if (repositoryUpdated) {
-			WriteRepository(_repository);
-		}
-		return _repository;
+		return _rStore._repository;
 	}
 
-	private static void SaveFile(CompilationUnitFacade facade) {
+	private void SaveFile(CompilationUnitFacade facade) {
 		int fileName = 0;
 		/*Writing file name & URL to DB*/
 		try {
@@ -97,7 +107,7 @@ public class RepositoryStore {
 		}
 		finally {
 			try {
-				CloseConnection();
+				DBConnection.CloseConnection(_conn);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -107,9 +117,10 @@ public class RepositoryStore {
 		FileWriter writer = null;
 		try{ 
 			writer = new FileWriter(LocalMachine.home + "samples/" + fileName + ".sample");
-			for (String line : facade.getLinesOfCode()) {
+/*			for (String line : facade.getLinesOfCode()) {
 				writer.append(line + "\n");
-			}
+			}*/
+			writer.write(facade.getUnformattedSource());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -128,7 +139,7 @@ public class RepositoryStore {
 	 * <p>
 	 * {@code TODO Implement File IO or Database IO}
 	 */
-	public static Repository ReadRepository() {
+	public Repository ReadRepository() {
 		Repository repository = new Repository();
 		try {
 			GetConnection();
@@ -154,7 +165,7 @@ public class RepositoryStore {
 			}
 			ArrayList<ResultEntry> resultEntryList = ResultEntryStore.createResultEntryList(fileContentsToUrlMap);
 			System.out.println("Now creating compilation units of snippets saved in the repository..");
-			repository.allDocuments = cuStore.createCompilationUnitFacadeList(null, resultEntryList);
+			repository.allDocuments = cuStore.createCompilationUnitFacadeList(resultEntryList);
 			repository.allUrls = allUrls;
 		}
 		catch (Exception e) {
@@ -162,7 +173,7 @@ public class RepositoryStore {
 		}
 		finally {
 			try {
-				CloseConnection();
+				DBConnection.CloseConnection(this._conn);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -171,12 +182,7 @@ public class RepositoryStore {
 		return repository;
 	}
 
-
-	private static void CloseConnection() throws SQLException {
-		_conn.close();
-	}
-
-	private static TreeMap<String, Integer> GetTermFromDB(String termType) {
+	private TreeMap<String, Integer> GetTermFromDB(String termType) {
 		TreeMap<String, Integer> allTuples = new TreeMap<String, Integer>();
 		try {
 			java.sql.Statement sqlStatement = _conn.createStatement();
@@ -191,7 +197,7 @@ public class RepositoryStore {
 		return allTuples;
 	}
 
-	private static void WriteTermsToDB(String tableName) {
+	private void WriteTermsToDB(String tableName) {
 		Set<Entry<String, Integer>> entrySet = null;
 		if (tableName.equals("ImportTerms")) {
 			entrySet = _repository.importTerms.entrySet();
@@ -221,7 +227,7 @@ public class RepositoryStore {
 		}
 	}
 
-	private static HashMap<String, String> GetDocumentsFromDB() {
+	private HashMap<String, String> GetDocumentsFromDB() {
 		HashMap<String, String> allTuples = new HashMap<String, String>();
 		try {
 			java.sql.Statement sqlStatement = _conn.createStatement();
@@ -243,7 +249,7 @@ public class RepositoryStore {
 	 * 
 	 * @param repository
 	 */
-	public static void WriteRepository(Repository repository) {
+	public void WriteRepository() {
 		try {
 			GetConnection();
 			WriteTermsToDB("ImportTerms");
@@ -258,20 +264,20 @@ public class RepositoryStore {
 		}
 		finally {
 			try {
-				CloseConnection();
+				DBConnection.CloseConnection(_conn);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private static void InitRepositoryStore() {
+	private void InitRepositoryStore() {
 		_tempVariableDeclarations = new ArrayList<String>();
 		_tempMethodInvocations = new ArrayList<String>();
 		_tempClassInstances = new ArrayList<String>();
 	}
 
-	private static void UpdateImportTerms(
+	private void UpdateImportTerms(
 			List<ImportDeclaration> importDeclarations) {
 		for (ImportDeclaration importDeclaration : importDeclarations) {
 			String importTerm = importDeclaration.getName()
@@ -285,11 +291,7 @@ public class RepositoryStore {
 		}
 	}
 
-	private static void UpdateSuperTypeTerms(List<Type> superTypes) {
-		// TODO Implement this method
-	}
-
-	private static void UpdateVariableDeclarationTerms(
+	private void UpdateVariableDeclarationTerms(
 			List<Statement> statements) {
 		for (Statement statement : statements) {
 			VariableDeclarationStatement variableDeclarationStatement = (VariableDeclarationStatement) statement;
@@ -309,7 +311,7 @@ public class RepositoryStore {
 		}
 	}
 
-	private static void UpdateMethodInvocationTerms(
+	private void UpdateMethodInvocationTerms(
 			List<SimpleName> methodInvocations) {
 		for (SimpleName methodInvocation : methodInvocations) {
 			String methodInvocationTerm = methodInvocation.toString();
@@ -327,7 +329,7 @@ public class RepositoryStore {
 		}
 	}
 
-	private static void UpdateClassInstanceTerms(List<Type> classInstances) {
+	private void UpdateClassInstanceTerms(List<Type> classInstances) {
 		for (Type classInstance : classInstances) {
 			String classInstanceTerm = classInstance.toString();
 			if (!_tempClassInstances.contains(classInstanceTerm)) {
@@ -344,13 +346,7 @@ public class RepositoryStore {
 		}
 	}
 
-	private static void UpdatePropertyAssignmentTerms(
-			List<Object> propertyAssignment) {
-		// TODO Implement this method
-	}
-
-	private static void GetConnection() throws Exception {
-			Class.forName("org.sqlite.JDBC");
-			_conn = DriverManager.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
+	private void GetConnection() throws Exception {
+			_conn = DBConnection.GetConnection();
 	}
 }

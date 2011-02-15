@@ -10,12 +10,14 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.Message;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
@@ -39,12 +41,11 @@ public class CompilationUnitStore {
 	 * as an entire atomic unit.</li>
 	 * <li>This step gets executed only if the last one failed. AST parser is initialized in form of a group of STATEMENTS.</li>
 	 * </ol>
-	 * @param query
 	 * @param resultEntryList
 	 * @return ArrayList<{@link CompilationUnitFacade}> 
 	 */
 	public ArrayList<CompilationUnitFacade> createCompilationUnitFacadeList(
-			String query, ArrayList<ResultEntry> resultEntryList) {
+			ArrayList<ResultEntry> resultEntryList) {
 		ArrayList<CompilationUnitFacade> compilationUnitFacadeList = new ArrayList<CompilationUnitFacade>();
 		int badCode = 0;
 		int rejectedByCU = 0;
@@ -58,11 +59,14 @@ public class CompilationUnitStore {
 			do {
 				_astParser = InitParser(ASTParser.K_COMPILATION_UNIT, resultEntry.text.toCharArray());
 				CompilationUnit cUnit = (CompilationUnit)_astParser.createAST(null);
+				Message[] compilerMessages = cUnit.getMessages();
 				if (cUnit.toString() != null && cUnit.toString().length() > 0 && cUnit.types().size() > 0) {
 					try {
-					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(cUnit, cUnit.toString());
-//					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(cUnit, resultEntry.text);
+//					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(cUnit, cUnit.toString());
+					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(cUnit, resultEntry.text);
+					compilationUnitFacade.setMessages(compilerMessages);
 					compilationUnitFacade.setUrl(resultEntry.url);
+					compilationUnitFacade.setInterpretedCode(cUnit.toString());
 					compilationUnitFacadeList.add(compilationUnitFacade);
 					}
 					catch(IOException e) {
@@ -82,9 +86,11 @@ public class CompilationUnitStore {
 						&& block.toString().trim().length() > 0
 						&& block.statements().size() > 1) {
 					try {
-//					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(block, resultEntry.text);
-					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(block, block.toString());
+					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(block, resultEntry.text);
+//					CompilationUnitFacade compilationUnitFacade = createCompilationUnitFacade(block, block.toString());
 					compilationUnitFacade.setUrl(resultEntry.url);
+					compilationUnitFacade.setMessages(compilerMessages);
+					compilationUnitFacade.setInterpretedCode(block.toString());
 					compilationUnitFacadeList.add(compilationUnitFacade);
 					}
 					catch(IOException e) {
@@ -179,7 +185,7 @@ public class CompilationUnitStore {
 			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);
 			System.out.println("---------------");
 		}
-		RemoveDuplicateSnippets(compilationUnitFacadeList);
+		//RemoveDuplicateSnippets(compilationUnitFacadeList);
 		Matrix matrix = new Matrix(compilationUnitFacadeList);
 		for (CompilationUnitFacade x : compilationUnitFacadeList) {
 			for (CompilationUnitFacade y : compilationUnitFacadeList) {
@@ -189,8 +195,6 @@ public class CompilationUnitStore {
 			}	
 		}
 		LinkedHashSet<CompilationUnitFacade> tutorialReadyList = matrix.GetTopSimilar(numOfResults);
-//		//TODO : Delete the next line: tutorialReadyList.add(comp.....
-//		tutorialReadyList.add(compilationUnitFacadeList.get(0));
 		return tutorialReadyList;
 	}
 
@@ -216,183 +220,45 @@ public class CompilationUnitStore {
 		System.err.println("Done removing duplicates..");
 	}
 
-	/*public HashMap<ArrayList<String>,ArrayList<WordInfo>> FindCommonDeclaration(ArrayList<CompilationUnitFacade> compilationUnitFacadeList){
-		_facadeList = compilationUnitFacadeList;
-		HashMap<ArrayList<String>, ArrayList<WordInfo>> codeToWordInfoMap = new HashMap<ArrayList<String>, ArrayList<WordInfo>>();
-		HashSet<String> commonImports = new HashSet<String> ();
-		HashSet<String> commonVariableDeclarationStatements = new HashSet<String> ();
-		HashSet<String> commonClassInstances = new HashSet<String>();
-		HashSet<String> commonMethodInvocations = new HashSet<String>();
-		HashSet<String> commonPropertyAssignments = new HashSet<String>();
-		
-		boolean commonFound = false;
-		HashMap<CompilationUnitFacade, ArrayList<WordInfo>> totalHashMap = new HashMap<CompilationUnitFacade, ArrayList<WordInfo>>();
-		// TODO	Combine all the common stuff into 2 for loops
-		//Find common imports
-		HashSet<String> allImports = new HashSet<String>();
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (ImportDeclaration currImport : currFacade.getImportDeclarations()) {
-				if (allImports.contains(currImport.getName().getFullyQualifiedName())) {
-					commonImports.add(currImport.getName().getFullyQualifiedName());
-					commonFound = true;
-				}
-				allImports.add(currImport.getName().getFullyQualifiedName());
-			}
-		}
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (ImportDeclaration currImport : currFacade.getImportDeclarations()) {
-				if (commonImports.contains(currImport.getName().getFullyQualifiedName())) {
-					ArrayList<WordInfo> previouslyFoundCommonImportWords = totalHashMap.get(currFacade);
-					if(previouslyFoundCommonImportWords == null){
-						previouslyFoundCommonImportWords = new ArrayList<WordInfo>();
-					}
-					previouslyFoundCommonImportWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(),currImport));
-					totalHashMap.put(currFacade, previouslyFoundCommonImportWords);
-				}
-			}
-		}
-		
-		//imports section END
-		
-		//Find common Variable Declaration Types
-		HashSet<String> allVariableDeclarations = new HashSet<String>();
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (Statement currVariableDeclarationStatement : currFacade.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT)) {
-				if (allVariableDeclarations.contains(((VariableDeclarationStatement)currVariableDeclarationStatement).getType().toString())) {
-					commonVariableDeclarationStatements.add(((VariableDeclarationStatement)currVariableDeclarationStatement).getType().toString());
-					commonFound = true;
-				}
-				allVariableDeclarations.add(((VariableDeclarationStatement)currVariableDeclarationStatement).getType().toString());
-			}
-			for (FieldDeclaration currFieldDeclaration : currFacade.getFieldDeclarations()) {
-				if (allVariableDeclarations.contains(((FieldDeclaration)currFieldDeclaration).getType().toString())) {
-					commonVariableDeclarationStatements.add(((FieldDeclaration)currFieldDeclaration).getType().toString());
-					commonFound = true;
-				}
-				allVariableDeclarations.add(((FieldDeclaration)currFieldDeclaration).getType().toString());
-			}
-			
-		}
-		
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (Statement currVariableDeclarationStatement : currFacade.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT)) {
-				if (commonVariableDeclarationStatements.contains(((VariableDeclarationStatement)currVariableDeclarationStatement).getType().toString())) {
-					ArrayList<WordInfo> previouslyFoundCommonVariableDeclarationStatementWords = totalHashMap.get(currFacade);
-					if(previouslyFoundCommonVariableDeclarationStatementWords == null){
-						previouslyFoundCommonVariableDeclarationStatementWords = new ArrayList<WordInfo>();
-					}
-					previouslyFoundCommonVariableDeclarationStatementWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(),currVariableDeclarationStatement));
-					totalHashMap.put(currFacade, previouslyFoundCommonVariableDeclarationStatementWords);
-				}
-			}
-			for (FieldDeclaration currFieldDeclaration : currFacade.getFieldDeclarations()) {
-				if (commonVariableDeclarationStatements.contains(((FieldDeclaration)currFieldDeclaration).getType().toString())) {
-					ArrayList<WordInfo> previouslyFoundCommonVariableDeclarationStatementWords = totalHashMap.get(currFacade);
-					if(previouslyFoundCommonVariableDeclarationStatementWords == null){
-						previouslyFoundCommonVariableDeclarationStatementWords = new ArrayList<WordInfo>();
-					}
-					previouslyFoundCommonVariableDeclarationStatementWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(),currFieldDeclaration));
-					totalHashMap.put(currFacade, previouslyFoundCommonVariableDeclarationStatementWords);
-				}
-			}
-		}
-		
-		// Variable decl END
-		
-		//Find class instance creations
-		HashSet<String> allClassInstances = new HashSet<String>();
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (Type currClassInstance : currFacade.getClassInstances()) {
-				if (allClassInstances.contains(currClassInstance.toString())) {
-					commonClassInstances.add(currClassInstance.toString());
-					commonFound = true;
-				}
-				allClassInstances.add(currClassInstance.toString());
-			}
-		}
-		
-		
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (Type currClassInstance : currFacade.getClassInstances()) {
-				if (commonClassInstances.contains(currClassInstance.toString())) {
-					ArrayList<WordInfo> previouslyFoundCommonClassInstanceWords = totalHashMap.get(currFacade);
-					if(previouslyFoundCommonClassInstanceWords == null){
-						previouslyFoundCommonClassInstanceWords = new ArrayList<WordInfo>();
-					}
-					previouslyFoundCommonClassInstanceWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(),currClassInstance));
-					totalHashMap.put(currFacade, previouslyFoundCommonClassInstanceWords);
-				}
-			}
-		}
-		//class instance creations END
-		
-		//Find common method invocations
-		HashSet<String> allMethodInvocations = new HashSet<String>();
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (SimpleName currMethodInvocation : currFacade.getMethodInvocations()) {
-				if (allMethodInvocations.contains(currMethodInvocation.toString())) {
-					commonMethodInvocations.add(currMethodInvocation.toString());
-					commonFound = true;
-				}
-				allMethodInvocations.add(currMethodInvocation.toString());
-			}
-		}
-		
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (SimpleName currMethodInvocation : currFacade.getMethodInvocations()) {
-				if (commonMethodInvocations.contains(currMethodInvocation.toString())) {
-					ArrayList<WordInfo> previouslyFoundCommonMethodInvocationWords = totalHashMap.get(currFacade);
-					if(previouslyFoundCommonMethodInvocationWords == null){
-						previouslyFoundCommonMethodInvocationWords = new ArrayList<WordInfo>();
-					}
-					previouslyFoundCommonMethodInvocationWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(), currMethodInvocation));
-					totalHashMap.put(currFacade, previouslyFoundCommonMethodInvocationWords);
-				}
-			}
-		}
-		//Method Invocation END
-		
-		
-		 * Find common qualified Names : eg. char arr[] abc; abc.length;
-		 * Here length is the one you are looking for.
-		
-		HashSet<String> allPropertyAssignments = new HashSet<String>();
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (QualifiedName currPropertyAssignment : currFacade.getQualifiedNames()) {
-				if (allPropertyAssignments.contains(currPropertyAssignment.getName().toString())) {
-					commonPropertyAssignments.add(currPropertyAssignment.getName().toString());
-					commonFound = true;
-				}
-				allPropertyAssignments.add(currPropertyAssignment.getName().toString());
-			}
-		}
-		
-		for (CompilationUnitFacade currFacade : _facadeList) {
-			for (QualifiedName currPropertyAssignment : currFacade.getQualifiedNames()) {
-				if (commonPropertyAssignments.contains(currPropertyAssignment.toString())) {
-					ArrayList<WordInfo> previouslyFoundCommonPropertyAssignmentWords = totalHashMap.get(currFacade);
-					if(previouslyFoundCommonPropertyAssignmentWords == null){
-						previouslyFoundCommonPropertyAssignmentWords = new ArrayList<WordInfo>();
-					}
-					previouslyFoundCommonPropertyAssignmentWords.add(WordInfoStore.createWordInfo(currFacade.getLinesOfCode(), currPropertyAssignment));
-					totalHashMap.put(currFacade, previouslyFoundCommonPropertyAssignmentWords);
-				}
-			}
-		}
-		//qualified Names END
-		
-		
-		for (Entry<CompilationUnitFacade, ArrayList<WordInfo>> entrySet :  totalHashMap.entrySet()) {
-			codeToWordInfoMap.put(entrySet.getKey().getLinesOfCode(), entrySet.getValue());
-		}
-		
-		return codeToWordInfoMap;
-	}*/
 
 	private static ASTParser InitParser(int kind, char[] source) {
 		ASTParser astParser = ASTParser.newParser(AST.JLS3);
 		astParser.setSource(source);
 		astParser.setKind(kind);
 		return astParser;
+	}
+
+	/**
+	 * Finds the word in importDeclarations OR methodInvocations OR classInstanceCreations
+	 * for the current facade. If exists then returns the respective node. Else returns null. 
+	 * @param facade
+	 * @param newWord
+	 * @return
+	 */
+	public static ASTNode findWordType(CompilationUnitFacade facade,
+			String newWord) {
+
+		List<SimpleName> methodInvocations = facade.getMethodInvocations();
+		for (SimpleName methodInvocation: methodInvocations) {
+			if (methodInvocation.getFullyQualifiedName().equals(newWord)){
+				return methodInvocation;
+			}
+		}
+		
+		List<Type> classInstances = facade.getClassInstances();
+		for (Type classInstance : classInstances) {
+			if (classInstance.toString().equals(newWord)) {
+				return classInstance;
+			}
+		}
+		
+		List<ImportDeclaration> imports = facade.getImportDeclarations();
+		for (ImportDeclaration importDeclaration : imports) {
+			if (importDeclaration.getName().getFullyQualifiedName().equals(newWord)) {
+				return importDeclaration;
+			}
+		}
+				
+		return null;
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.*, itjava.model.*"%>
+<%@ page import="java.util.*, itjava.model.*, org.eclipse.jdt.core.dom.Message;"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -77,22 +77,59 @@
 	font-size:12px;
 }
 #spanChange:hover {
+	text-decoration:underline;
 	background-color: orange;
 	cursor: pointer;
 }
 #cancelChange {
 	color: #f26818;
 	background-color:pink;
-	cursor: pointer;	
+	cursor: pointer;
+	border:solid;
+	border-style:outset;
+	border-width:1px;
+	border-color:#f26818;
+}
+#cancelChange:hover {
+	color: red;
+	border-color:red;
+}
+
+#divNewWordNote {
+	font-size: .8em;
 }
 
 .tdSmall {
 	width: 1em;
 }
 
+#divMessages {
+	font-size: 0.9em;
+	width: 60%;
+	margin-left: 10px;
+}
+
+#toggleMessage:hover {
+	text-decoration:underline;
+	background-color: orange;
+	cursor: pointer;
+}
+
+#compilerMessages {
+	border:solid;
+	border-width:1px;
+	border-color:#CCC;
+	display:none;
+	font-family:Consolas;
+}
+
+pre {
+	font-family:Consolas;
+}
 </style>
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
 <script type="text/javascript">
+var submitType;
 $(function () {
     toggleHints();
     
@@ -119,6 +156,10 @@ $(function () {
 		$('#divNewWord').toggle('slow');
 	});
 	
+	$('#toggleMessage').click(function () {
+		$('#compilerMessages').toggle('fast');
+	});
+	
     function toggleHints(){
     	$('#divHint').hide();
     	$('#divHint div').hide();
@@ -136,8 +177,15 @@ $(function () {
     }
 });   
 
-function isReady(form) {
-	if (document.tutorialSelectionForm.radioApproval[1].checked || 
+function setSubmit(str) {
+	submitType = str;
+}
+
+function isReady(eventSource) {
+	if (submitType == "newWord") {
+		return true;
+	}
+	else if (document.tutorialSelectionForm.radioApproval[1].checked || 
 			document.tutorialSelectionForm.radioApproval[2].checked) {
 		return true;
 	}
@@ -287,11 +335,24 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 }
 %>
 <label>Looking for a different word?</label> <span class="lineNumber" id="spanChange">Click to add more</span></br>
-<div class="divInvisibleNewWord" id="divNewWord" style="display: none; "> 
+<%
+String wordFound = request.getParameter("wordFound");
+String display = "none";
+if (wordFound != null) {
+	if (wordFound.equalsIgnoreCase("false")) {
+		display = "block";
+	}
+}
+%>
+<span id="wordFound" style="display:<%= display%>; color:red;">*Word not found..</span>
+<div class="divInvisibleNewWord" id="divNewWord" style="display: none; ">
 <input type="text" name="txtNewWord" placeholder="Word 1, Word 2, ...(comma separated)" value="" size="50">
 <br/>
-<input type="submit" name="btnSubmit" id="btnSaveNewWord" value="Verify & Save" disabled="disabled"/>
+<input type="submit" name="btnSubmit" id="btnSaveNewWord" value="Verify & Save" onclick="setSubmit('newWord')"/>
 <span id="cancelChange">&nbsp;&nbsp;<b>X</b> Cancel&nbsp;&nbsp;</span>
+<div id="divNewWordNote">
+Note: You can have only 1 word per line in the quiz. If you want to blank a word that exists on the line that contains a suggested word, then the suggested word will be lost.
+</div>
 </div>
 
 <label for="cbxWordInfo" class="error">Required Field. If none are useful mark "NO" in STEP 1.</label>
@@ -318,7 +379,7 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 </div>
 
 <div id="divSubmit">
-<input type="submit" name="btnSubmit" id="btnSubmitPrev"
+<input type="submit" name="btnSubmit" id="btnSubmitPrev" onclick="setSubmit('Prev')" 
 <%
 if (currentIndex == 0) {
 	out.print(" disabled=\"disabled\" ");
@@ -326,7 +387,7 @@ if (currentIndex == 0) {
 %>
 	value="<< Previous Snippet" />
 
-<input type="submit" name="btnSubmit" id="btnSubmitNext"
+<input type="submit" name="btnSubmit" id="btnSubmitNext" onclick="setSubmit('Next')"
 	value="Next Snippet >>" />
 </div>
 
@@ -338,7 +399,7 @@ if (currentIndex == 0) {
 <tbody>
 <tr><td class="tdSmall"></td><td class="copyright">To read more about this snippet visit: 
 <a href="
-<% out.println(currentTutorial.sourceUrl.replaceFirst("^\\d*", "")); %>
+<% out.println(currentTutorial.getUrl().replaceFirst("^\\d*", "")); %>
 " target="_blank" >^ link.</a>
 </td></tr>
 <%
@@ -366,13 +427,18 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 	ArrayList<String> currHintsList = null;
 	String hintValue = "";
 	if (hintsMap != null) {
-		currHintsList = hintsMap.get(wordToBeBlanked);
+		currHintsList = hintsMap.get(Integer.toString(currWordInfoIndex));
 	}
 	out.println("<div class=\"divInvisibleHint\" id=\"divHint" + currWordInfoIndex + "\"> ");
 	out.println(wordToBeBlanked);
+	boolean lastHintPassed = false;
 	for (int hintIndex = 1; hintIndex <= 2; hintIndex++) {
-		if (currHintsList != null) {
-			hintValue = currHintsList.get(hintIndex);
+		if (currHintsList != null ) {
+			if (currHintsList.size() > 0) {
+				hintValue = currHintsList.get(0);
+				currHintsList.remove(0);
+				if (hintValue.equalsIgnoreCase(wordToBeBlanked)) hintValue = "";
+			}
 		}
 		out.println("<br /><input type=\"text\" " +
 				"name=\"txtHint_" + currWordInfoIndex + "_" + hintIndex + "\" " + 
@@ -391,6 +457,26 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 </table>
 </div>
 
+<div id="divMessages">
+Any doubts about this snippet? Problems in adding new words even though the word is visible in the snippet? Check out what Java compiler has to say about this code by clicking here: <span class="lineNumber" id="toggleMessage">Toggle compiler messages</span>
+<div id="compilerMessages">
+<%
+if (currentTutorial.getFacade().getMessages().length > 0) {
+	for (Message currMessage : currentTutorial.getFacade().getMessages() ) {
+		out.println("At char: " + currMessage.getStartPosition() + "::" + currMessage.getMessage() + "<br />");
+	}
+}
+else {
+	out.println("<span class=\"lineNumber\">No compiler messages..</span>");
+}
+%>
+<hr />
+<span class="lineNumber">Compiler modifies the snippet as follows:</span>
+<pre>
+<%= currentTutorial.getFacade().getInterpretedCode() %>
+</pre>
+</div>
+</div>
 
 </div>
 </form>
