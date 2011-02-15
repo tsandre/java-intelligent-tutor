@@ -138,6 +138,7 @@ $(function () {
     $('#divApproveSample input:radio').click(function () {
         var step2 = $('#divWordInfo');  
         var step3 = $('#divRating');
+		var step4 = $('#divHint');
         if (this.value == 'Quiz')  {
             step2.show('slow');  
         	step3.show('slow');
@@ -145,6 +146,7 @@ $(function () {
         else {  
             step2.hide('slow');  
             step3.hide('slow'); 
+			step4.hide('slow');
         }  
     });
     
