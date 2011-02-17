@@ -49,11 +49,12 @@ public class TutorSearchServlet extends HttpServlet {
 		
 		HashMap<String, String> filter = new HashMap<String, String>();
 		filter.put("tutorialDescription", " LIKE \"%" + (String) session.getAttribute("query") + "%\"");
-		            
-		ArrayList<TutorialInfo> tutorialInfoList = TutorialInfoStore.SearchTutorials(filter);
+		filter.put("tutorialName", " LIKE \"%" + (String) session.getAttribute("query") + "%\"");
+		
+		ArrayList<TutorialInfo> tutorialInfoList = TutorialInfoStore.SearchTutorialsOr(filter);
 		session.setAttribute("tutorialInfoList", tutorialInfoList);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("tutorSearchResults.jsp?index=0");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("tutorsearch.jsp?index=0");
 		
 		
 		dispatcher.forward(request, response);

@@ -64,7 +64,6 @@ public class LoginStudentServlet extends HttpServlet {
 		   rs = ucpst.executeQuery();
 		   HttpSession session = request.getSession(true);
 		   String tempuserid = (String) session.getAttribute("userName");
-		   
 		   if(rs.next()){
 			    session.setAttribute("userName", rs.getString("username"));
 				session.setAttribute("userID", rs.getInt("studentID"));
@@ -74,7 +73,7 @@ public class LoginStudentServlet extends HttpServlet {
 				ucpst2.setString(1, (String) session.getAttribute("userName"));
 				ucpst2.setString(2, tempuserid);
 				ucpst2.executeUpdate();
-				String redirectURL1 = "index.jsp"; 
+				String redirectURL1 = "students.jsp";
 				response.sendRedirect(redirectURL1);
 		   }else{
 			   String redirectURL2 = "students.jsp?error=4"; 
