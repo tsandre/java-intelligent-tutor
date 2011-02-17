@@ -8,7 +8,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Select tutorials here..</title>
 <link type="text/css" rel="stylesheet" href="css/tutorialSelection.css"/>
-<link href="css/maincss.css" rel="stylesheet" type="text/css" /><style type="text/css">
+<link href="css/maincss.css" rel="stylesheet" type="text/css" />
+<link href="css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="js/ratingsys.js"></script> 
+<script type="text/javascript" language="javascript" src="js/main.js"></script> 
+<style type="text/css">
 <style>
 .navmain a {
 	font-family: segoe ui, verdana;
@@ -214,37 +218,17 @@ function isReady(eventSource) {
 	alert("Please finish all the required steps..");
 	return false;
 }
+
+function changebg(imgid, imgsrc){
+	document.getElementById(imgid).src = "images/"+imgsrc;
+}
 </script>
 
 </head>
 <body>
 <table width="1024" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td>
-    <table width="1024" border="0" cellspacing="0" cellpadding="0" bgcolor="#122222">
-      <tr>
-        <td height="1" colspan="3" bgcolor="#1222222"></td>
-        </tr>
-      <tr>
-        <td width="1" bgcolor="#122222"></td>
-        <td height="77" background="images/bannerbg.jpg"><img src="images/logo1.jpg" width="200" height="60" border="0" /></td>
-        <td width="1" bgcolor="#122222"></td>
-      </tr>
-      <tr>
-        <td height="2" colspan="3" bgcolor="#1222222"></td>
-        </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td height="25" bgcolor="#122222"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td width="110" align="center"><a href="search.jsp" title="Tutor Search" class="navmain">Tutor Search</a></td>
-        <td width="110" align="center"><a href="index.jsp" title="Create Tutor" class="navmain">Create Tutor</a></td>
-        <td width="135" align="center"><a href="teachers.jsp" title="Teacher Account" class="navmain">Teacher Account</a></td>
-        <td width="135" align="center"><a href="students.jsp" title="Student Account" class="navmain">Student Account</a></td>
-        <td>&nbsp;</td>
-      </tr>
-    </table></td>
+    <td><%@ include file="/modules/headers/header4.jsp" %></td>
   </tr>
   <tr>
     <td>

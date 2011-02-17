@@ -11,8 +11,7 @@
 	String redirectURL1 = "";
 	redirectURL1 = "index.jsp";
 	session.setAttribute("userName", null);
-	session.setAttribute("userID", null);
-	session.setAttribute("userLevel", null);
+	session.setAttribute("userID", "0");
 	response.sendRedirect(redirectURL1);
 %>
 </body>
