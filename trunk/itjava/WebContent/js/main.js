@@ -120,8 +120,12 @@ function checkForm5(){
 	}
 }
 
-function checkAvailability(){
-	window.open('checkAvailability2.jsp?username='+document.getElementById("username").value,'mywindow','width=400,height=200')
+function checkAvailability1(){
+	window.open('modules/checkAvailability.jsp?username='+document.getElementById("username").value,'mywindow','width=400,height=200')
+}
+
+function checkAvailability2(){
+	window.open('modules/checkAvailability2.jsp?username='+document.getElementById("username").value,'mywindow','width=400,height=200')
 }
 
 function changebg(imgid, imgsrc){

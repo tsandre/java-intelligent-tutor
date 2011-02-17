@@ -79,7 +79,7 @@
                   <td align="right">Username:</td>
                   <td>&nbsp;</td>
                   <td align="left"><input name="username" type="text" class="inputFieldText" id="username" style="width:140px" /> <label>
-                    <input type="button" name="button2" class="basicbutton" id="button2" value="Check Availability" onmousedown="Javascript: checkAvailability();" />
+                    <input type="button" name="button2" class="basicbutton" id="button2" value="Check Availability" onmousedown="Javascript: checkAvailability2();" />
                   </label></td>
                   </tr>
                 <tr>
