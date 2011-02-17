@@ -140,6 +140,64 @@ public class TutorialInfoStore {
 		return tutorialInfoList;
 	}
 	
+	public static ArrayList<TutorialInfo> SelectInfoOr(HashMap<String, String> whereClause) {
+		Connection _conn = null;
+		ArrayList<TutorialInfo> tutorialInfoList = new ArrayList<TutorialInfo>();
+		try {
+			_conn = GetConnection();
+			String selectSql = "select * from TutorialInfo ";
+			if (whereClause != null) {
+				if (!whereClause.isEmpty()) {
+					selectSql += "where ";
+					Iterator<Entry<String, String>> it = whereClause.entrySet().iterator();
+					while (it.hasNext()) {
+						Entry<String, String> entry = it.next();
+						selectSql += entry.getKey() + "=\"" + entry.getValue() + "\"";
+						if (it.hasNext()) {
+							selectSql += " or ";
+						}
+						else {
+							selectSql += ";";
+						}
+					}
+				}
+			}
+			PreparedStatement selectStmt = _conn.prepareStatement(selectSql);
+			ResultSet result = selectStmt.executeQuery();
+			System.out.println("Where clause size for TutorialInfo:" + ((whereClause == null)? 0 : whereClause.size()));
+			int numOfRowsReturned = 0;
+			while (result.next()) {
+				numOfRowsReturned++;
+				int tutorialInfoId = result.getInt("tutorialInfoId");
+				String folderName = result.getString("folderName");
+				String tutorialName = result.getString("tutorialName");
+				String tutorialDescription = result.getString("tutorialDescription");
+				int numExamples = result.getInt("numExamples");
+				int numQuizes = result.getInt("numQuizes");
+				String creationDate = result.getString("creationDate");
+				String createdBy = result.getString("createdBy");
+				String userLevel = result.getString("userLevel");
+				int timesAccessed = result.getInt("timesAccessed");
+				tutorialInfoList.add(new TutorialInfo(tutorialInfoId, folderName, tutorialName, 
+						tutorialDescription, numExamples, numQuizes, creationDate, 
+						createdBy, timesAccessed, userLevel));
+			}
+			System.out.println("Corresponding # of rows:" + numOfRowsReturned);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				CloseConnection(_conn);
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return tutorialInfoList;
+	}
+	
 	/**
 	 * Reads TutorialInfo from the storage and returns an {@link ArrayList} of 
 	 * {@link TutorialInfo} according to the parameter <i>whereClause</i>.
@@ -162,6 +220,64 @@ public class TutorialInfoStore {
 						selectSql += entry.getKey() + entry.getValue();
 						if (it.hasNext()) {
 							selectSql += " and ";
+						}
+						else {
+							selectSql += ";";
+						}
+					}
+				}
+			}
+			PreparedStatement selectStmt = _conn.prepareStatement(selectSql);
+			ResultSet result = selectStmt.executeQuery();
+			System.out.println("Where clause size for TutorialInfo:" + ((whereClause == null)? 0 : whereClause.size()));
+			int numOfRowsReturned = 0;
+			while (result.next()) {
+				numOfRowsReturned++;
+				int tutorialInfoId = result.getInt("tutorialInfoId");
+				String folderName = result.getString("folderName");
+				String tutorialName = result.getString("tutorialName");
+				String tutorialDescription = result.getString("tutorialDescription");
+				int numExamples = result.getInt("numExamples");
+				int numQuizes = result.getInt("numQuizes");
+				String creationDate = result.getString("creationDate");
+				String createdBy = result.getString("createdBy");
+				String userLevel = result.getString("userLevel");
+				int timesAccessed = result.getInt("timesAccessed");
+				tutorialInfoList.add(new TutorialInfo(tutorialInfoId, folderName, tutorialName, 
+						tutorialDescription, numExamples, numQuizes, creationDate, 
+						createdBy, timesAccessed, userLevel));
+			}
+			System.out.println("Corresponding # of rows:" + numOfRowsReturned);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				CloseConnection(_conn);
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return tutorialInfoList;
+	}
+	
+	public static ArrayList<TutorialInfo> SearchTutorialsOr(HashMap<String, String> whereClause) {
+		Connection _conn = null;
+		ArrayList<TutorialInfo> tutorialInfoList = new ArrayList<TutorialInfo>();
+		try {
+			_conn = GetConnection();
+			String selectSql = "select * from TutorialInfo ";
+			if (whereClause != null) {
+				if (!whereClause.isEmpty()) {
+					selectSql += "where ";
+					Iterator<Entry<String, String>> it = whereClause.entrySet().iterator();
+					while (it.hasNext()) {
+						Entry<String, String> entry = it.next();
+						selectSql += entry.getKey() + entry.getValue();
+						if (it.hasNext()) {
+							selectSql += " or ";
 						}
 						else {
 							selectSql += ";";
