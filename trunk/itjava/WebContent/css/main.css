@@ -1,0 +1,289 @@
+.mostpopular:link {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #333;
+	text-decoration: none;
+}
+
+.mostpopular:active {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #333;
+	text-decoration: none;
+}
+
+.mostpopular:visited {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #333;
+	text-decoration: none;
+}
+
+.mostpopular:hover {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #ff8a00;
+	text-decoration: none;
+}
+
+.navmain a {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFF;
+	text-decoration: none;
+	background-color: #333333;
+}
+
+.navmain:link {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #CCC;
+	text-decoration: none;
+}
+
+.navmain:hover {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFF;
+	text-decoration: none;
+}
+
+.asdf {
+	color: #000;
+	font-weight: bold;
+}
+.basic {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	color: #333;
+	text-align: center;
+}
+.inputFieldText {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	color: #333;
+	text-align: left;
+}
+.studentText {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	color: #333;
+	text-align: left;
+}
+.basicbutton {
+	font-family: segoe ui, verdana;
+	font-size: 12px;
+	color: #333;
+	text-align: center;
+}
+.titles {
+	font-family: segoe ui, verdana;
+	font-weight: bold;
+	font-size: 16px;
+	color: #3E4854;
+}
+.studentTitle {
+	font-family: segoe ui, verdana;
+	font-weight: bold;
+	font-size: 16px;
+	color: #122222;
+}
+#form1 table tr td p {
+	color: #900;
+}
+.basic1 {	font-family: segoe ui, verdana;
+	font-size: 12px;
+	color: #333;
+	text-align: left;
+}
+#form2 table tr td table tr .basic {
+	text-align: right;
+}
+#divProgress {
+	/*make visible*/
+    display:none;
+
+    /*position it at the very top-left corner*/
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    text-align:center;
+
+    /*in supporting browsers, make it
+      a little transparent*/
+    background:#fff;
+    _background:none; /*this line removes the background in IE*/
+    opacity:.75;
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+    
+    color: #333;
+
+    /*set the padding, so that the content
+      of the div is centered vertically*/
+    padding-top:15%;
+}
+
+div.loading-visible{
+    
+}
+  
+#query {
+	width:450px;
+	border-color:#333;
+	border-style:inset;
+	border-width:1px;
+	margin: 5px 0 0 0;
+	font-family: segoe ui, verdana;
+	font-size:12px;
+}
+#btnSearch {
+	background-color:#EEE;
+	border:solid;
+	border-style:outset;
+	border-width:1px;
+	border-color:#CCC;
+	margin: 3px 0 0 0;
+	font-family: segoe ui, verdana;
+	font-size:12px;
+}
+#noResult {
+	display: block;
+	color: red;
+}
+
+#hideResult {
+	display: none;
+}
+
+.cursorover:link {
+	cursor:normal;
+}
+
+.cursorover:active {
+	cursor:normal;
+}
+
+.cursorover:visited {
+	cursor:normal;
+}
+
+.cursorhover:hover{
+	cursor:pointer;
+}
+
+#tableMain {
+	width:600px;
+	border:0;
+	padding:0;
+	border-spacing:0;
+}
+
+.tdBold {
+	font-weight:bold;
+	font-size:12px;
+}
+
+.tdRegular {
+	font-size:12px;
+}
+
+#tableMain tr{
+	height:1;
+	background-color:#333333;
+}
+.myClass:hover td {background-color: orange; color: black; cursor:pointer; }
+
+#alternateLaunch {
+	display: none;
+}
+
+#divNavigate {
+	width: 600x;
+	text-align:left;
+}
+#divContainer {
+	width: 600px;
+	text-align: center;
+}
+#divMessage {
+	text-align: center;
+}
+#subTable {
+	width:100%;
+	border:0;
+	padding:0;
+	border-spacing:0;
+}
+
+
+.tdDescription {
+	width: 45%;
+	vertical-align:top;
+	background-color: beige;
+}
+
+.tdMeta {
+	width: 25%;
+	color: gray;
+	font-size: 0.9em;
+	background-color: beige;
+	border-collapse:collapse;
+}
+
+.tdTutorialName {
+	width: 30%;
+	vertical-align:top;
+	background-color: beige;
+	padding-left:10px;
+	border-right:1px;
+	border-right-color:#F4F4F4;
+}
+
+.divHelpMessage {
+	text-align:left;
+	padding: 5px 0 5px 25px; 
+}
+
+.rateStatus{float:left; clear:both; width:100%; height:20px;}
+.rateMe{float:left; clear:both; width:100%; height:auto; padding:0px; margin:0px;}
+.rateMe li{float:left;list-style:none;}
+.rateMe li a:hover,
+.rateMe .on{background:url(images/star_on.gif) no-repeat; cursor:pointer; width:12px; height:12px;}
+.rateMe a{float:left;background:url(images/star_off.gif) no-repeat; width:12px; height:12px;}
+.ratingSaved{display:none;}
+.saved{color:red; }
+
+#tabletitle {
+	font-family: segoe ui, verdana;
+	font-weight: bold;
+	font-size: 12px;
+	text-align: center;
+	color: #FFF;
+}
+#txtTutorialName {
+	font-family: segoe ui, verdana;
+	font-weight: normal;
+	font-size: 12px;
+	text-align: left;
+	color: #000;
+	width: 400px;
+}
+#txtTutorialDescription {
+	font-family: segoe ui, verdana;
+	font-weight: normal;
+	font-size: 12px;
+	text-align: left;
+	color: #000;
+	width: 400px;
+	height: 200px;
+}
