@@ -7,138 +7,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Students Page</title>
-<link href="css/maincss.css" rel="stylesheet" type="text/css" /><style type="text/css">
-<!--
-.navmain a {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	color: #FFF;
-	text-decoration: none;
-}
-.asdf {
-	color: #000;
-	font-weight: bold;
-}
-.basic {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #333;
-	text-align: left;
-}
-.basicbutton {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #333;
-	text-align: center;
-}
-.titles {
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	font-size: 16px;
-	color: #3E4854;
-}
-#form1 table tr td p {
-	color: #900;
-}
-.basic1 {	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #333;
-	text-align: left;
-}
-#form2 table tr td table tr .basic {
-	text-align: right;
-}
--->
-</style>
-<script language="javascript" type="text/javascript">
-function isValidEmail(str){
-	return(str.indexOf(".")>2)&&(str.indexOf("@")>0);
-}
-function checkForm(){
-	var firstName = document.getElementById("firstName").value;
-	var lastName = document.getElementById("lastName").value;
-	var school = document.getElementById("school").value;
-	var email = document.getElementById("email").value;
-	var username = document.getElementById("username").value;
-	var password1 = document.getElementById("password").value;
-	var password2 = document.getElementById("passwordConfirm").value;
-	
-	if(firstName.length < 1){
-		alert("Please enter your first name.");
-		document.form1.firstName.focus();
-	}else if(lastName.length < 1){
-		alert("Please enter your last name.");
-		document.form1.lastName.focus();
-	}else if(school.length < 1){
-		alert("Please enter your school.");
-		document.form1.school.focus();
-	}else if(!isValidEmail(email)){
-		alert("Please enter a valid email.");
-		document.form1.email.focus();
-	}else if(username.length < 1){
-		alert("Please enter your username.");
-		document.form1.username.focus();
-	}else if(password1.length < 6 || password1.length > 12){
-		alert("Please enter a valid password. Passwords must be 6-12 characters.");
-		document.form1.password.focus();
-	}else if(password1 != password2){
-		alert("The passwords do not match! Please re-enter your password to ensure they are correct.");
-		document.form1.password.focus();
-	}else{
-		document.forms["form1"].submit();
-	}
-}
-
-function checkForm2(){
-	var username = document.getElementById("username3").value;
-	var password = document.getElementById("password3").value;
-	
-	if(username.length < 1){
-		alert("Please enter your username to login.");
-		document.form1.username2.focus();
-	}else if(password.length < 1){
-		alert("Please enter your password");
-		document.form1.password2.focus();
-	}else{
-		document.forms["form3"].submit();
-	}
-}
-
-function checkAvailability(){
-	window.open('checkAvailability2.jsp?username='+document.getElementById("username").value,'mywindow','width=400,height=200')
-}
-</script>
+<link href="css/maincss.css" rel="stylesheet" type="text/css" />
+<link href="css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="js/ratingsys.js"></script> 
+<script type="text/javascript" language="javascript" src="js/main.js"></script> 
 </head>
 
 <body>
 <table width="1024" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td>
-    <table width="1024" border="0" cellspacing="0" cellpadding="0" bgcolor="#122222">
-      <tr>
-        <td height="1" colspan="3" bgcolor="#1222222"></td>
-        </tr>
-      <tr>
-        <td width="1" bgcolor="#122222"></td>
-        <td height="77" background="images/bannerbg.jpg"><img src="images/logo1.jpg" width="200" height="60" border="0" /></td>
-        <td width="1" bgcolor="#122222"></td>
-      </tr>
-      <tr>
-        <td height="2" colspan="3" bgcolor="#1222222"></td>
-        </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td height="25" bgcolor="#122222"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td width="110" align="center"><a href="search.jsp" title="Tutor Search" class="navmain">Tutor Search</a></td>
-        <td width="110" align="center"><a href="index.jsp" title="Create Tutor" class="navmain">Create Tutor</a></td>
-        <td width="135" align="center"><a href="teachers.jsp" title="Teacher Account" class="navmain">Teacher Account</a></td>
-        <td width="135" align="center"><a href="students.jsp" title="Student Account" class="navmain">Student Account</a></td>
-        <td>&nbsp;</td>
-      </tr>
-    </table></td>
+    <td><%@ include file="/modules/headers/header3.jsp" %></td>
   </tr>
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -148,283 +26,34 @@ function checkAvailability(){
           <tr>
             <td height="10"></td>
           </tr>
-          <% if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel").equals("student")){ %>
-            <tr><td align="center">Content here for a logged in user.<br />
-            </td></tr>
-            <% }else{%>
-          <tr>
-            <td class="titles">Welcome Students!</td>
-          </tr>
-          <tr>
-            <td class="basic">This website will help you view intelligent tutors created by your teacher. You will be able to learn the Java API material more quickly and easily than you can with the traditional example based methods. Please take time to register with us before viewing tutors. This will help you keep track of your favorite tutors and make it possible to join online classrooms. This will make the distribution of material to you quick and easy. Lets get started, please fill out the form below to begin.</td>
-          </tr>
-          <tr>
-            <td class="basic">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="center">
-            
-            <form action="CreateStudentServlet" method="post" name="form1" id="form1">
-              <table width="450" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
-                  <td colspan="3" align="center" bgcolor="#122222" class="titles"><span style="color:white; font:Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold;">Sign Up Now!</span></td>
-                  <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
-                  </tr>
-                <tr>
-                  <td height="4" align="right"></td>
-                  <td height="4" align="right"></td>
-                  <td align="right"></td>
-                  </tr>
-                
-                  <% if(request.getParameter("error") != null){%><tr>
-                 <td align="left" colspan="3" style="padding:5px 5px 5px 5px"><% if(request.getParameter("error").equals("3") || request.getParameter("error").equals("1")){ %><p>*The username you have selected all ready exists. Please be sure to check the availability before submitting.</p>
-                    <% } 
-						if(request.getParameter("error").equals("3") || request.getParameter("error").equals("2")){%>
-                    <p>*The email you have used is already connected to another account. To recover your password <a href="studentPasswordRecover.jsp" title="click here" target="_self">click here</a>.</p><% } %></td></tr><% } %>
-                
-                <tr>
-                  <td align="right">&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td align="left">&nbsp;</td>
-                </tr>
-                <tr>
-                  <td width="140" align="right">First Name:</td>
-                  <td width="5">&nbsp;</td>
-                  <td align="left"><input name="firstName" type="text" class="basic" id="firstName" style="width:140px" /></td>
-                  </tr>
-                <tr>
-                  <td height="4" align="right"></td>
-                  <td height="4" align="right"></td>
-                  <td align="right"></td>
-                  </tr>
-                <tr>
-                  <td align="right">Last Name:</td>
-                  <td>&nbsp;</td>
-                  <td align="left"><input name="lastName" type="text" class="basic" id="lastName" style="width:140px" /></td>
-                  </tr>
-                <tr>
-                  <td height="4" align="right"></td>
-                  <td height="4" align="right"></td>
-                  <td align="right"></td>
-                  </tr>
-                <tr>
-                  <td align="right">Your School:</td>
-                  <td>&nbsp;</td>
-                  <td align="left"><input name="school" type="text" class="basic" id="school" style="width:200px" /></td>
-                  </tr>
-                <tr>
-                  <td height="4" align="right"></td>
-                  <td height="4" align="right"></td>
-                  <td align="right"></td>
-                  </tr>
-                <tr>
-                  <td align="right">Email Address:</td>
-                  <td>&nbsp;</td>
-                  <td align="left"><input name="email" type="text" class="basic" id="email" style="width:200px" /></td>
-                  </tr>
-                <tr>
-                  <td height="4" align="right"></td>
-                  <td height="4" align="right"></td>
-                  <td align="right"></td>
-                  </tr>
-                <tr>
-                  <td align="right">Username:</td>
-                  <td>&nbsp;</td>
-                  <td align="left"><input name="username" type="text" class="basic" id="username" style="width:140px" /> <label>
-                    <input type="button" name="button2" class="basicbutton" id="button2" value="Check Availability" onmousedown="Javascript: checkAvailability();" />
-                  </label></td>
-                  </tr>
-                <tr>
-                  <td height="4" align="right"></td>
-                  <td height="4" align="right"></td>
-                  <td align="right"></td>
-                  </tr>
-                <tr>
-                  <td align="right">Password:</td>
-                  <td>&nbsp;</td>
-                  <td align="left"><input name="password" type="password" class="basic" id="password" style="width:140px" /></td>
-                  </tr>
-                <tr>
-                  <td height="4" align="right"></td>
-                  <td height="4" align="right"></td>
-                  <td align="right"></td>
-                  </tr>
-                <tr>
-                  <td align="right">Confirm Password:</td>
-                  <td>&nbsp;</td>
-                  <td align="left"><input name="passwordConfirm" type="password" class="basic" id="passwordConfirm" style="width:140px" /></td>
-                  </tr>
-                <tr>
-                  <td height="4" align="right"></td>
-                  <td height="4" align="right"></td>
-                  <td align="right"></td>
-                  </tr>
-                <tr>
-                  <td align="right">&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td align="left">
-                    <input name="subbutton" type="button" class="basicbutton" id="button" value="Join" style="width:125px;" onmousedown="Javascript: checkForm();" />
-                  </td>
-                  </tr>
-                <tr>
-                  <td colspan="3" align="right">&nbsp;</td>
-                </tr>
-                <tr>
-                  <td height="1" colspan="3" align="right" bgcolor="#122222"></td>
-                  </tr>
-              </table>
-            </form></td>
-          </tr><% } %>
+          <tr><td>
+          <%
+          	if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("student") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("accountinfo")){ 
+          		%><jsp:include page="/modules/students/studentaccountinfo.jsp" /><%
+          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("student") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("savedtutors")){ 
+          		%><jsp:include page="/modules/savedtutorpanel.jsp" /><%
+          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("student") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("classes")){ 
+          		%><jsp:include page="/modules/myclasses.jsp" /><%
+          	}else if(request.getParameter("page") != null && request.getParameter("page").equals("tutordetails")){ 
+          		%><jsp:include page="/modules/tutordetails.jsp" /><%
+          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && session.getAttribute("userLevel").equals("student") && !session.getAttribute("userID").equals("0")){ 
+          		%><jsp:include page="/modules/createtutorbox.jsp" /><jsp:include page="/modules/commonterms.jsp" /><%
+          	}else{
+          		%><jsp:include page="/modules/students/studentscontent.jsp" /><%
+          	}%>
+          </td></tr>
         </table></td>
-        <td width="350">
-        <table width="351" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td height="10" colspan="3"></td>
-            </tr>
-          <tr>
-            <td bgcolor="#122222"></td>
-            <td width="348"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td width="140" height="20" align="center" bgcolor="#122222"><a href="students.jsp" title="Student Login" class="navmain">Student Login</a></td>
-                <td width="5">&nbsp;</td>
-                <td width="140" bgcolor="#3e4854" align="center"><a href="teachers.jsp" title="Teacher Login" class="navmain">Teacher Login</a></td>
-                <td>&nbsp;</td>
-                </tr>
-              </table></td>
-            <td width="2"></td>
-            </tr>
-          <tr>
-            <td width="1" rowspan="3" bgcolor="#122222"></td>
-            <td height="5" bgcolor="#122222"></td>
-            <td width="2" rowspan="3" bgcolor="#122222"></td>
-            </tr>
-          <tr>
-            <td height="100" style="padding: 5px 5px 5px 5px; vertical-align:top; text-align: right; font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 12px;">
-           <% if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel").equals("student")){ 
-            %>
-              <table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td align="left"><span class="basic">Welcome back <% Connection conn = null;
-			PreparedStatement pst = null;
-			PreparedStatement ucpst = null;
-			ResultSet rs = null;
-			try{
-				conn = DBConnection.GetConnection();
-				String usercheck = "SELECT firstName, lastName, school, username, email FROM students WHERE username = ? AND studentID = ?";
-				ucpst = conn.prepareStatement(usercheck);
-				ucpst.setString(1, (String) session.getAttribute("userName"));
-				ucpst.setInt(2, (Integer) session.getAttribute("userID"));
-				rs = ucpst.executeQuery();
-				rs.next();
-				out.print(rs.getString("firstName"));
-			}catch(Exception e) {
-       	     e.printStackTrace();
-     	   }
-     	   finally {
-     	     conn.close();
-     	   }
-			%>!</span></td>
-                </tr>
-              <tr>
-                <td>&nbsp;</td>
-                </tr>
-              <tr>
-                <td align="left"><a href="accountStudent.jsp" target="_self" class="rightmenunav">Account Information</a></td>
-                </tr>
-              <tr>
-                <td align="left"><a href="savedTutors.jsp" class="rightmenunav">My Tutors</a></td>
-              </tr>
-              <tr>
-                <td align="left"><a href="classLists.jsp" class="rightmenunav">Class Lists</a></td>
-              </tr>
-              <tr>
-                <td align="left"><a href="logout.jsp" target="_self" class="rightmenunav">Click to logout</a></td>
-              </tr>
-              </table>
-            <% }else{ %>
-            <form id="form3" name="form3" method="post" action="LoginStudentServlet">
-              <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <% if(request.getParameter("error") != null && request.getParameter("error").equals("4")){ %><tr>
-                  <td align="center">*Login failed. Please try again.</td>
-                </tr><br />
-				<% } %>
-                <tr>
-                  <td align="center"><span class="basic" style="font-weight:bold">Student Login</span></td>
-                </tr>
-                <tr>
-                  <td height="5" align="center"></td>
-                </tr>
-                <tr>
-                  <td align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td width="110" align="right" class="basic">Username:</td>
-                      <td width="5">&nbsp;</td>
-                      <td align="left"><input name="username3" type="text" class="basic1" id="username3" style="width:140px" /></td>
-                    </tr>
-                    <tr>
-                      <td align="right" class="basic">Password:</td>
-                      <td>&nbsp;</td>
-                      <td align="left"><input name="password3" type="password" class="basic1" id="password3" style="width:140px" /></td>
-                    </tr>
-                    <tr>
-                      <td height="5" colspan="3" align="right"></td>
-                      </tr>
-                    <tr>
-                      <td align="right">&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td align="left"><input name="button3" type="button" class="basicbutton" id="button3" value="Login" style="width:125px;" onmousedown="Javascript: checkForm2();" /></td>
-                    </tr>
-                    <tr>
-                      <td align="right">&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td align="left">&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td align="right">&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td align="left">Forgot Your Password?</td>
-                    </tr>
-                  </table></td>
-                </tr>
-              </table>
-            </form><% } %>
-            </td>
-            </tr>
-          <tr>
-            <td height="1" bgcolor="#122222"></td>
-            </tr>
-          </table></td>
+        <td width="350" valign="top">
+        	<%
+        		if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && session.getAttribute("userLevel").equals("student") && !session.getAttribute("userID").equals("0")){ 
+        			%><%@ include file="/modules/students/studentinfobox.jsp" %><%
+        		}else{
+        			%><%@ include file="/modules/students/studentloginbox.jsp" %><%
+        		}%>
+        	<%@ include file="/modules/mostpopular.jsp" %>
+        </td>
         <td width="5"></td>
         <td width="1" rowspan="3" bgcolor="#122222"></td>
-      </tr>
-      <tr>
-        <td><table width="350" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td height="10" colspan="3"></td>
-            </tr>
-          <tr>
-            <td bgcolor="#122222"></td>
-            <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td height="20" align="left" bgcolor="#122222" style="padding-left:5px; color: #FFF; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Most Popular</td>
-                </tr>
-              </table></td>
-            <td width="1" bgcolor="#122222"></td>
-            </tr>
-          <tr>
-            <td width="1" rowspan="3" bgcolor="#122222"></td>
-            <td height="5" bgcolor="#122222"></td>
-            <td width="1" rowspan="3" bgcolor="#122222"></td>
-            </tr>
-          <tr>
-            <td height="300">&nbsp;</td>
-            </tr>
-          <tr>
-            <td height="1" bgcolor="#122222"></td>
-            </tr>
-          </table></td>
-        <td>&nbsp;</td>
       </tr>
       <tr>
         <td height="10" colspan="2"></td>
@@ -435,6 +64,37 @@ function checkAvailability(){
   <tr>
     <td height="1" bgcolor="#122222"></td>
   </tr>
-</table> 
+</table>
+<% 
+if(session.getAttribute("userName") == null){
+	String timestamp =  new Double(System.currentTimeMillis()/1000).toString();
+	byte[] defaultBytes = timestamp.getBytes();
+	MessageDigest algorithm = MessageDigest.getInstance("MD5");
+	algorithm.reset();
+	algorithm.update(defaultBytes);
+	byte messageDigest[] = algorithm.digest();
+			
+	StringBuffer hexString = new StringBuffer();
+	for (int i=0;i<messageDigest.length;i++) {
+		hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+	}
+	messageDigest.toString();
+	String tempuser=hexString+"";
+	session.setAttribute("userID", "0");
+	session.setAttribute("userName", tempuser);
+	session.setAttribute("userLevel", "unknown");
+} 
+%>
+<%
+HashMap<String, String> studentfilter = new HashMap<String, String>();
+studentfilter.put("createdBy", (String) session.getAttribute("userName"));
+studentfilter.put("userLevel", (String) session.getAttribute("userLevel"));
+            
+ArrayList<TutorialInfo> studenttutorialInfoList = TutorialInfoStore.SelectInfo(studentfilter);
+session.setAttribute("tutorialInfoList", studenttutorialInfoList);
+session.setAttribute("studentId", session.getAttribute("userID"));
+DeliverableLauncher studentlauncher = new DeliverableLauncher();
+session.setAttribute("deliverableLauncher", studentlauncher);
+%> 
 </body>
 </html>
