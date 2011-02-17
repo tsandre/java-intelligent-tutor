@@ -40,7 +40,7 @@ public class UpdateStudentServlet extends HttpServlet {
 		String firstName = null;
 		String lastName = null;
 		String school = null;
-		String studentID = null;
+		int studentID;
 		String sql = null;
 		String redirectURL1 = null;
 		HttpSession session = request.getSession(true);
@@ -50,7 +50,7 @@ public class UpdateStudentServlet extends HttpServlet {
 		    firstName = request.getParameter("firstName3");
 		    lastName = request.getParameter("lastName3");
 		    school = request.getParameter("school3");
-		    studentID = (String) session.getAttribute("userID");
+		    studentID = (Integer) session.getAttribute("userID");
 	   		password = request.getParameter("password3");
 	   		byte[] defaultBytes = password.getBytes();
 			MessageDigest algorithm = MessageDigest.getInstance("MD5");
@@ -73,18 +73,18 @@ public class UpdateStudentServlet extends HttpServlet {
 				pst.setString(2, firstName);
 				pst.setString(3, lastName);
 				pst.setString(4, school);
-				pst.setString(5, studentID);
+				pst.setInt(5, studentID);
 			}else{
 				sql = "UPDATE students SET firstName=?, lastName=?, school=? WHERE studentID=?";
 				pst = conn.prepareStatement(sql);
 				pst.setString(1, firstName);
 				pst.setString(2, lastName);
 				pst.setString(3, school);
-				pst.setString(4, studentID);
+				pst.setInt(4, studentID);
 			}
 			pst.executeUpdate();
 			conn.close();
-			redirectURL1 = "accountStudent.jsp?success=1"; 
+			redirectURL1 = "students.jsp?page=accountinfo&success=1"; 
 			response.sendRedirect(redirectURL1);
 	   }
 	   catch(Exception e) {

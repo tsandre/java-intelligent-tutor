@@ -66,14 +66,14 @@ public class TutorialDeliveryServlet extends HttpServlet {
 		ArrayList<Tutorial> finalTutorialList = tutorialPresenter.GetFinalTutorialList(approvedTutorialList);
 		SaveChoicesToDisk(tutorialInfo, finalTutorialList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp?myaction=5");;
-		if(session.getAttribute("userLevel") == "unknown"){
+		if(session.getAttribute("userLevel").equals("unknown")){
 			dispatcher = request.getRequestDispatcher("index.jsp?myaction=5");
 			dispatcher.forward(request, response);
-		}else if(session.getAttribute("userLevel") == "student"){
-			dispatcher = request.getRequestDispatcher("savedTutors.jsp");
+		}else if(session.getAttribute("userLevel").equals("student")){
+			dispatcher = request.getRequestDispatcher("students.jsp?page=savedtutors");
 			dispatcher.forward(request, response);
 		}else{
-			dispatcher = request.getRequestDispatcher("teachers.jsp");
+			dispatcher = request.getRequestDispatcher("teachers.jsp?page=savedtutors");
 			dispatcher.forward(request, response);
 		}
 	}

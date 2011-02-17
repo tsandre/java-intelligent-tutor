@@ -37,6 +37,7 @@ public class CreateStudentServlet extends HttpServlet {
 		Connection conn = null;
 		PreparedStatement pst = null;
 		PreparedStatement ucpst = null;
+		PreparedStatement ucpst2 = null;
 		ResultSet rs = null;
 
 	   try	
@@ -82,14 +83,23 @@ public class CreateStudentServlet extends HttpServlet {
 				pst = conn.prepareStatement(sql);
 				pst.setString(1, username);
 				rs = pst.executeQuery();
-				rs.next();
 				HttpSession session = request.getSession(true);
-				session.setAttribute("userName", rs.getString("username"));
-				session.setAttribute("userID", rs.getString("studentID"));
-				session.setAttribute("userLevel", "student");
-				conn.close();
-				String redirectURL1 = "students.jsp"; 
-				response.sendRedirect(redirectURL1);
+				String tempuserid = (String) session.getAttribute("userName");
+				if(rs.next()){
+				    session.setAttribute("userName", rs.getString("username"));
+					session.setAttribute("userID", rs.getInt("studentID"));
+					session.setAttribute("userLevel", "student");
+					String updatequery = "UPDATE TutorialInfo SET createdBy = ?, userLevel=\"student\" WHERE createdBy = ?";
+					ucpst2 = conn.prepareStatement(updatequery);
+					ucpst2.setString(1, (String) session.getAttribute("userName"));
+					ucpst2.setString(2, tempuserid);
+					ucpst2.executeUpdate();
+					String redirectURL1 = "students.jsp";
+					response.sendRedirect(redirectURL1);
+			   }else{
+				   String redirectURL2 = "students.jsp?error=4"; 
+				   response.sendRedirect(redirectURL2);
+			   }
 		   }else{
 			   if(rs.getString("email").equals(email) && rs.getString("username").equals(username)){
 				   conn.close();
