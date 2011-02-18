@@ -36,7 +36,7 @@ public class LogDataStore {
 	private final static int HINT_WEIGHT = 90;
 	private final static int INCORRECT_WEIGHT = 10;
 
-	public static LogData CreateLogData(int numOfBlanks, Concordance<String> hintsAvailable) throws IOException, ParserConfigurationException, SAXException {
+	public static LogData CreateLogData(int numOfBlanks, Concordance<String> hintsAvailable, int studentId) throws IOException, ParserConfigurationException, SAXException {
 		LogData logData = new LogData(numOfBlanks);		
 	/*	if (logData.getTotalActions() == 0)
 		{
@@ -48,7 +48,7 @@ public class LogDataStore {
 			if (!VerifyLogFileAndRename(System.getProperty("user.name"))) throw new IOException("Problem locating raw log file");
 			// Add code to handle terminate and next error here
 			ConvertToXml();
-			ProcessXmlToLogData(logData);
+			ProcessXmlToLogData(logData, studentId);
 			CalculateScore(numOfBlanks, logData);
 		}
 		else
@@ -57,7 +57,6 @@ public class LogDataStore {
 		}
 		return logData;
 	}
-
 
 	/**
 	 * Calculate the score for the current quiz
@@ -98,14 +97,17 @@ public class LogDataStore {
 	/**
 	 * Process fields of XML to populate {@link LogData}
 	 * @param logData
+	 * @param studentId 
 	 * @throws ParserConfigurationException 
 	 * @throws IOException 
 	 * @throws SAXException 
 	 */
-	private static void ProcessXmlToLogData(LogData logData) throws ParserConfigurationException, SAXException, IOException {
+	private static void ProcessXmlToLogData(LogData logData, int studentId) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-		Document doc = docBuilder.parse (new File(LocalMachine.home + "logs/finalLog.xml"));
+		File logFolder = new File(LocalMachine.home + "logs");
+		File finalXML = new File(logFolder, "finalLog.xml");
+		Document doc = docBuilder.parse (finalXML);
 
 		// normalize text representation
 		doc.getDocumentElement ().normalize ();
@@ -158,6 +160,7 @@ public class LogDataStore {
 				}
 			}
 		}
+		Convertor.copyFile(finalXML, new File(logFolder, studentId + "_final.xml"));
 	}
 
 	/**
