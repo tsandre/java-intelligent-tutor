@@ -74,7 +74,7 @@ public class LogDataStoreTest {
 		Concordance<String> hintsAvailable = new Concordance<String>();
 		hintsAvailable.put("txtLine3Col7Action");
 		hintsAvailable.put("txtLine2Col7Action");
-		LogDataStore.CreateLogData(2, hintsAvailable);
+		LogDataStore.CreateLogData(2, hintsAvailable, 0);
 		File xml = new File(LocalMachine.home + "/logs/finalLog.xml");
 		assertTrue(xml.exists());
 	}
@@ -87,7 +87,7 @@ public class LogDataStoreTest {
 		Concordance<String> hintsAvailable = new Concordance<String>();
 		hintsAvailable.put("txtLine3Col7Action");
 		hintsAvailable.put("txtLine2Col7Action");
-		LogData logData = LogDataStore.CreateLogData(2, hintsAvailable);
+		LogData logData = LogDataStore.CreateLogData(2, hintsAvailable, 0);
 		assertEquals(50, logData.getScore());
 	}
 	
