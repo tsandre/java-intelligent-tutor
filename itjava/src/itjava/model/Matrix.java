@@ -86,7 +86,7 @@ public class Matrix {
 		Collections.sort(sortedSimilarity, new SimilarityComparator());
 		Collections.reverse(sortedSimilarity);
 		Iterator<Similarity> it = sortedSimilarity.iterator();
-		/*try {*/
+
 		while (topSimilar.size() <= numOfSimilarUnits) {
 			try {
 			Similarity currSimilarity = it.next();
@@ -102,17 +102,15 @@ public class Matrix {
 				System.err.println("Less than " + numOfSimilarUnits + " found..");
 				break;
 			}
-		}/*
 		}
-		catch (Exception e) {
-			System.err.println("Less than " + numOfSimilarUnits + "found..");
-		}*/
 		return topSimilar;
 	}
 	
 	private float CalculateSimilarity(TFIDF[] a, TFIDF[] b) throws Exception{
 		float dotProduct = 0;
 		float magProduct;
+		float magA = 0;
+		float magB = 0;
 		for (int i = 0; i < a.length; i ++) {
 			try {
 				dotProduct += a[i].getValue()*b[i].getValue();
@@ -123,13 +121,10 @@ public class Matrix {
 				e.printStackTrace();
 				dotProduct += a[i].getValue()*b[i].getValue();
 			}
+			magA += a[i].getValue() * a[i].getValue();
+			magB += b[i].getValue() * b[i].getValue();
 		}
-		float magA = 0;
-		float magB = 0;
-		for (int j = 0; j < a.length; j++){
-			magA += a[j].getValue() * a[j].getValue();
-			magB += b[j].getValue() * b[j].getValue();
-		}
+		
 		magProduct = (float) ((Math.sqrt(magA)) * (Math.sqrt(magB)));
 		return dotProduct / (magProduct + Float.MIN_VALUE);
 	}

@@ -5,6 +5,7 @@ package itjava.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.List;
@@ -16,6 +17,8 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import itjava.data.NodeToCompare;
+import itjava.data.TermsDictionary;
+import itjava.util.Concordance;
 
 /**
  * @author Aniket
@@ -23,6 +26,18 @@ import itjava.data.NodeToCompare;
  */
 public class TFIDFStore {
 	
+	public static TFIDFVector GetTF(CompilationUnitFacade facade, 
+			Repository repository,
+			TermsDictionary newtermsDict) {
+		
+		TFIDFVector _tfVector = new TFIDFVector();
+
+		_tfVector.importDeclarationsTF = GetTF(facade, NodeToCompare.ImportDeclaration, repository, newtermsDict);
+		_tfVector.variableDeclarationsTF = GetTF(facade, NodeToCompare.VariableDeclaration, repository, newtermsDict);
+		_tfVector.classInstancesTF = GetTF(facade, NodeToCompare.ClassInstanceCreator, repository, newtermsDict);
+		_tfVector.methodInvoationsTF = GetTF(facade, NodeToCompare.MethodInvocation, repository, newtermsDict);
+		return _tfVector;
+	}
 
 	/**
 	 * Accepts a facade and repository object. Calls an internal method GetTF() for each type of Node.
@@ -40,6 +55,58 @@ public class TFIDFStore {
 		_tfVector.methodInvoationsTF = GetTF(facade, NodeToCompare.MethodInvocation, repository);
 		_tfVector.propertyAssignmentsTF = GetTF(facade, NodeToCompare.PropertyAssignment, repository);
 		return _tfVector;
+	}
+	
+	private static TreeMap<String, TFIDF> GetTF(CompilationUnitFacade facade,
+			NodeToCompare nodeToCompare, Repository repository,
+			TermsDictionary newtermsDict) {
+		
+		TreeMap<String, TFIDF> tfMap = new TreeMap<String, TFIDF>();
+		int totDocs = repository.allDocuments.size();
+		TreeMap<String, Integer> terms = null;
+		Concordance<String> dict = null;
+		HashSet<String> facadeTerms = new HashSet<String>();
+		switch (nodeToCompare) {
+		case ImportDeclaration :
+			terms = repository.importTerms;
+			dict = newtermsDict.getImportDict();
+			for (ImportDeclaration importTerm : facade.getImportDeclarations()) {
+				facadeTerms.add(importTerm.getName().getFullyQualifiedName());
+			}
+			break;
+		case MethodInvocation : 
+			terms = repository.methodInvocationTerms;
+			dict = newtermsDict.getMethodsDict();
+			for (SimpleName methodInvocation : facade.getMethodInvocations()) {
+				facadeTerms.add(methodInvocation.toString());
+			}
+			break;
+		case VariableDeclaration : 
+			terms = repository.variableDeclarationTerms;
+			dict = newtermsDict.getVariablesDict();
+			for (Statement statement : facade.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT)) {
+				facadeTerms.add(statement.toString());
+			}
+			break;
+		case ClassInstanceCreator :
+			terms = repository.classInstanceTerms;
+			dict = newtermsDict.getInstancesDict();
+			for (Type classInstance: facade.getClassInstances()) {
+				facadeTerms.add(classInstance.toString());
+			}
+		}
+
+		int totTermsInSearch = 0;
+		for (int val : dict.values()) totTermsInSearch += val;
+		
+		for(Entry<String, Integer> repositoryEntry: terms.entrySet()) {
+			String term = repositoryEntry.getKey();
+			int numOfDocsWithTerm = repositoryEntry.getValue();
+			int numOfOccurrences = (facadeTerms.contains(term)) ? dict.get(term) : 0;
+			tfMap.put(term, new  TFIDF( numOfOccurrences, totTermsInSearch, totDocs, numOfDocsWithTerm));
+		}
+		
+		return tfMap;
 	}
 
 	/**
@@ -123,5 +190,33 @@ public class TFIDFStore {
 		}
 		return tfMap;
 	}
+	
+/*	public static TermsDictionary CreateDictionaries(ArrayList<CompilationUnitFacade> facadeList){
+		TermsDictionary dict = new TermsDictionary();
+		for (CompilationUnitFacade facade: facadeList) {
+			if (facade.getMethodInvocations() != null || facade.getMethodInvocations().size() > 0) {
+				for (SimpleName method : facade.getMethodInvocations()) {
+					dict.putMethods(method.toString());
+				}
+			}
+			if (facade.getClassInstances() != null || facade.getClassInstances().size() > 0) {
+				for (Type classInstance : facade.getClassInstances()) {
+					dict.putInstances(classInstance.toString());					
+				}
+			}
+			if (facade.getImportDeclarations() != null || facade.getImportDeclarations().size() > 0) {
+				for (ImportDeclaration importDeclaration : facade.getImportDeclarations()) {
+					dict.putImports(importDeclaration.getName().getFullyQualifiedName());
+				}
+			}
+			List<Statement> stmts = facade.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT);
+			if (stmts != null || stmts.size() > 0) {				
+				for (Statement statement : stmts) {
+					dict.putVariables(((VariableDeclarationStatement) statement).getType().toString());
+				}
+			}
+		}
+		return dict;
+	}*/
 	
 }

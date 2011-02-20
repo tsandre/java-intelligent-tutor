@@ -1,6 +1,7 @@
 package itjava.model;
 
 import itjava.data.NodeToCompare;
+import itjava.data.TermsDictionary;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -591,6 +592,10 @@ public class CompilationUnitFacade {
 	public void setTFVector(Repository repository) {
 		_tfVector = TFIDFStore.GetTF(this, repository);
 	}
+	
+	public void setTFVector(Repository repository, TermsDictionary newtermsDict) {
+		_tfVector = TFIDFStore.GetTF(this, repository, newtermsDict);
+	}
 
 	public TFIDFVector getTFVector() {
 		return _tfVector;
@@ -612,7 +617,10 @@ public class CompilationUnitFacade {
 	public boolean IsSimilarToOthersInList(ArrayList<String> cleanFacadeStrings) {
 		Levenshtein metric = new Levenshtein();
 		for (String codeSample : cleanFacadeStrings) {
-			if (metric.getSimilarity(this.toString(), codeSample) > 0.85) {
+			if (Math.abs(codeSample.length() - this.toString().length()) > 50) {
+				return false;
+			}
+			else if (metric.getSimilarity(this.toString(), codeSample) > 0.85) {
 				return true;
 			}
 		}

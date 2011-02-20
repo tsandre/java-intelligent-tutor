@@ -76,10 +76,13 @@ public class TFIDFVector {
 			System.err.println("topElements contains less than topX(" + topX + ") elements");
 		}
 			Iterator<Entry<String, TFIDF>> mapIterator = entryMap.entrySet().iterator();
-			while (sortedTerms.size() < topX) {
+			while (topX > 0 && mapIterator.hasNext()) {
 				try {
 					Entry<String, TFIDF> currentEntry = mapIterator.next();
 					if (currentEntry.getValue().getValue() > (float) 0 && topElements.contains(currentEntry.getValue())) {
+							if (!sortedTerms.contains(currentEntry.getKey())) {
+								topX--;
+							}
 							sortedTerms.add(currentEntry.getKey());
 					}
 					else {
