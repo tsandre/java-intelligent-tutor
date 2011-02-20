@@ -15,11 +15,11 @@ import static org.junit.Assert.*;
  */
 public class RepositoryStoreTest {
 
-	private Repository _repository;
+	private Repository _repository = new Repository();
 
 	@Test
 	public void TestReadRepository() {
-		_repository = RepositoryStore.UpdateRepository(null);
+		_repository = RepositoryStore.UpdateRepository(null, null);
 		ThenRepositoryHasImportTerms();
 	}
 
