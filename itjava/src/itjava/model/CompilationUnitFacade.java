@@ -617,8 +617,8 @@ public class CompilationUnitFacade {
 	public boolean IsSimilarToOthersInList(ArrayList<String> cleanFacadeStrings) {
 		Levenshtein metric = new Levenshtein();
 		for (String codeSample : cleanFacadeStrings) {
-			if (Math.abs(codeSample.length() - this.toString().length()) > 50) {
-				return false;
+			if (Math.abs(codeSample.length() - this.toString().length()) > 20) {
+				continue;
 			}
 			else if (metric.getSimilarity(this.toString(), codeSample) > 0.85) {
 				return true;
