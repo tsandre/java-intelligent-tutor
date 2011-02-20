@@ -1,5 +1,7 @@
 package itjava.model;
 
+import itjava.data.TermsDictionary;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,12 +172,13 @@ public class CompilationUnitStore {
 	 * This method eliminates duplicate code snippets that are found in different URLs.
 	 * @param compilationUnitFacadeList
 	 * @param repository
+	 * @param termsDictionary 
 	 * @param numOfResults
 	 * @return
 	 */
-	public LinkedHashSet<CompilationUnitFacade> FindSimilarCompilationUnits(ArrayList<CompilationUnitFacade> compilationUnitFacadeList, Repository repository, int numOfResults) {
+	public LinkedHashSet<CompilationUnitFacade> FindSimilarCompilationUnits(ArrayList<CompilationUnitFacade> compilationUnitFacadeList, Repository repository, TermsDictionary termsDictionary, int numOfResults) {
 
-		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
+/*		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
 			facade.setTFVector(repository);
 			System.out.println("Source Example: " + facade.getUrl());
 			System.out.println(facade.getLinesOfCode());
@@ -184,8 +187,11 @@ public class CompilationUnitStore {
 			System.out.println("Method Invocations: " + facade.getTFVector().methodInvoationsTF);
 			System.out.println("Variable Declarations: " + facade.getTFVector().variableDeclarationsTF);
 			System.out.println("---------------");
+		}*/
+		for (CompilationUnitFacade facade : compilationUnitFacadeList) {
+			facade.setTFVector(repository, termsDictionary);
 		}
-		//RemoveDuplicateSnippets(compilationUnitFacadeList);
+		RemoveDuplicateSnippets(compilationUnitFacadeList);
 		Matrix matrix = new Matrix(compilationUnitFacadeList);
 		for (CompilationUnitFacade x : compilationUnitFacadeList) {
 			for (CompilationUnitFacade y : compilationUnitFacadeList) {

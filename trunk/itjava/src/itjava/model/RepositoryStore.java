@@ -5,6 +5,7 @@ package itjava.model;
 
 import itjava.data.LocalMachine;
 import itjava.data.NodeToCompare;
+import itjava.data.TermsDictionary;
 import itjava.db.DBConnection;
 
 import java.io.FileWriter;
@@ -33,14 +34,12 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
  */
 public class RepositoryStore {
 
-	private Repository _repository;
 	private ArrayList<String> _tempVariableDeclarations;
 	private ArrayList<String> _tempMethodInvocations;
 	private ArrayList<String> _tempClassInstances;
 	private Connection _conn;
 	
 	private RepositoryStore() {
-		_repository = new Repository();
 		_tempVariableDeclarations = new ArrayList<String>();
 		_tempMethodInvocations = new ArrayList<String>();
 		_tempClassInstances = new ArrayList<String>();
@@ -53,36 +52,81 @@ public class RepositoryStore {
 	 * {@link CompilationUnitFacade}>. This method will also update the
 	 * {@link Repository} object with count of terms present in the
 	 * {@link ArrayList}
+	 * @param termsDict 
+	 * @param repository 
 	 * 
 	 * @param compilationUnitFacadeList
 	 * @return updated {@link Repository}
 	 */
-	public static Repository UpdateRepository(
-			ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
+	public static Repository UpdateRepository(TermsDictionary termsDict, ArrayList<CompilationUnitFacade> compilationUnitFacadeList) {
 
 		RepositoryStore _rStore = new RepositoryStore();
 		boolean repositoryUpdated = false;
-		_rStore._repository = _rStore.ReadRepository();
+		Repository repository = _rStore.ReadRepository();
 		if (compilationUnitFacadeList != null) {
 			for (CompilationUnitFacade facade : compilationUnitFacadeList) {
-				if (!_rStore._repository.Contains(facade.getUrl())) {
-					repositoryUpdated = true;
-					_rStore.SaveFile(facade);
-					_rStore.InitRepositoryStore();
-					_rStore.UpdateImportTerms(facade.getImportDeclarations());
-					_rStore.UpdateVariableDeclarationTerms(facade
-							.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT));
-					_rStore.UpdateClassInstanceTerms(facade.getClassInstances());
-					_rStore.UpdateMethodInvocationTerms(facade.getMethodInvocations());
-					_rStore._repository.allDocuments.add(facade);
-					_rStore._repository.allUrls.add(facade.getUrl());
+				if (!repository.Contains(facade.getUrl())) {
+					repositoryUpdated = _updateRepository(_rStore, facade, repository);
 				}
+				
+				_createTermsDict(termsDict, facade);
+				
 			}
 			if (repositoryUpdated) {
-				_rStore.WriteRepository();
+				_rStore.WriteRepository(repository);
 			}
 		}
-		return _rStore._repository;
+		return repository;
+	}
+
+	/**
+	 * @param termsDict
+	 * @param facade
+	 */
+	private static void _createTermsDict(TermsDictionary termsDict,
+			CompilationUnitFacade facade) {
+		if (facade.getMethodInvocations() != null || facade.getMethodInvocations().size() > 0) {
+			for (SimpleName method : facade.getMethodInvocations()) {
+				termsDict.putMethods(method.toString());
+			}
+		}
+		if (facade.getClassInstances() != null || facade.getClassInstances().size() > 0) {
+			for (Type classInstance : facade.getClassInstances()) {
+				termsDict.putInstances(classInstance.toString());					
+			}
+		}
+		if (facade.getImportDeclarations() != null || facade.getImportDeclarations().size() > 0) {
+			for (ImportDeclaration importDeclaration : facade.getImportDeclarations()) {
+				termsDict.putImports(importDeclaration.getName().getFullyQualifiedName());
+			}
+		}
+		List<Statement> stmts = facade.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT);
+		if (stmts != null || stmts.size() > 0) {				
+			for (Statement statement : stmts) {
+				termsDict.putVariables(((VariableDeclarationStatement) statement).getType().toString());
+			}
+		}
+	}
+
+	/**
+	 * @param _rStore
+	 * @param facade
+	 * @return
+	 */
+	private static boolean _updateRepository(RepositoryStore _rStore,
+			CompilationUnitFacade facade, Repository repository) {
+		boolean repositoryUpdated;
+		repositoryUpdated = true;
+		_rStore.SaveFile(facade);
+		_rStore.InitRepositoryStore();
+		_rStore.UpdateImportTerms(facade.getImportDeclarations(), repository);
+		_rStore.UpdateVariableDeclarationTerms(facade
+				.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT), repository);
+		_rStore.UpdateClassInstanceTerms(facade.getClassInstances(), repository);
+		_rStore.UpdateMethodInvocationTerms(facade.getMethodInvocations(), repository);
+		repository.allDocuments.add(facade);
+		repository.allUrls.add(facade.getUrl());
+		return repositoryUpdated;
 	}
 
 	private void SaveFile(CompilationUnitFacade facade) {
@@ -139,7 +183,7 @@ public class RepositoryStore {
 	 * <p>
 	 * {@code TODO Implement File IO or Database IO}
 	 */
-	public Repository ReadRepository() {
+	private Repository ReadRepository() {
 		Repository repository = new Repository();
 		try {
 			GetConnection();
@@ -197,20 +241,20 @@ public class RepositoryStore {
 		return allTuples;
 	}
 
-	private void WriteTermsToDB(String tableName) {
+	private void WriteTermsToDB(String tableName, Repository repository) {
 		Set<Entry<String, Integer>> entrySet = null;
 		if (tableName.equals("ImportTerms")) {
-			entrySet = _repository.importTerms.entrySet();
+			entrySet = repository.importTerms.entrySet();
 		} else if (tableName.equals("SuperTypeTerms")) {
-			entrySet = _repository.superTypeTerms.entrySet();
+			entrySet = repository.superTypeTerms.entrySet();
 		} else if (tableName.equals("VariableDeclarationTerms")) {
-			entrySet = _repository.variableDeclarationTerms.entrySet();
+			entrySet = repository.variableDeclarationTerms.entrySet();
 		} else if (tableName.equals("ClassInstanceTerms")) {
-			entrySet = _repository.classInstanceTerms.entrySet();
+			entrySet = repository.classInstanceTerms.entrySet();
 		} else if (tableName.equals("MethodInvocationTerms")) {
-			entrySet = _repository.methodInvocationTerms.entrySet();
+			entrySet = repository.methodInvocationTerms.entrySet();
 		} else if (tableName.equals("PropertyAssignmentTerms")) {
-			entrySet = _repository.propertyAssignmentTerms.entrySet();
+			entrySet = repository.propertyAssignmentTerms.entrySet();
 		}
 		try {
 			PreparedStatement prep = _conn.prepareStatement("replace into "
@@ -249,15 +293,15 @@ public class RepositoryStore {
 	 * 
 	 * @param repository
 	 */
-	public void WriteRepository() {
+	private void WriteRepository(Repository repository) {
 		try {
 			GetConnection();
-			WriteTermsToDB("ImportTerms");
-			WriteTermsToDB("SuperTypeTerms");
-			WriteTermsToDB("VariableDeclarationTerms");
-			WriteTermsToDB("ClassInstanceTerms");
-			WriteTermsToDB("MethodInvocationTerms");
-			WriteTermsToDB("PropertyAssignmentTerms");
+			WriteTermsToDB("ImportTerms", repository);
+			WriteTermsToDB("SuperTypeTerms", repository);
+			WriteTermsToDB("VariableDeclarationTerms", repository);
+			WriteTermsToDB("ClassInstanceTerms", repository);
+			WriteTermsToDB("MethodInvocationTerms", repository);
+			WriteTermsToDB("PropertyAssignmentTerms", repository);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -278,21 +322,21 @@ public class RepositoryStore {
 	}
 
 	private void UpdateImportTerms(
-			List<ImportDeclaration> importDeclarations) {
+			List<ImportDeclaration> importDeclarations, Repository repository) {
 		for (ImportDeclaration importDeclaration : importDeclarations) {
 			String importTerm = importDeclaration.getName()
 					.getFullyQualifiedName();
 			int numOfDocsContainingTerm = 1;
-			if (_repository.importTerms.containsKey(importTerm)) {
-				numOfDocsContainingTerm += _repository.importTerms
+			if (repository.importTerms.containsKey(importTerm)) {
+				numOfDocsContainingTerm += repository.importTerms
 						.get(importTerm);
 			}
-			_repository.importTerms.put(importTerm, numOfDocsContainingTerm);
+			repository.importTerms.put(importTerm, numOfDocsContainingTerm);
 		}
 	}
 
 	private void UpdateVariableDeclarationTerms(
-			List<Statement> statements) {
+			List<Statement> statements, Repository repository) {
 		for (Statement statement : statements) {
 			VariableDeclarationStatement variableDeclarationStatement = (VariableDeclarationStatement) statement;
 			String variableTerm = variableDeclarationStatement.getType()
@@ -300,47 +344,47 @@ public class RepositoryStore {
 			if (!_tempVariableDeclarations.contains(variableTerm)) {
 				_tempVariableDeclarations.add(variableTerm);
 				int numOfDocsContainingTerm = 1;
-				if (_repository.variableDeclarationTerms
+				if (repository.variableDeclarationTerms
 						.containsKey(variableTerm)) {
-					numOfDocsContainingTerm += _repository.variableDeclarationTerms
+					numOfDocsContainingTerm += repository.variableDeclarationTerms
 							.get(variableTerm);
 				}
-				_repository.variableDeclarationTerms.put(variableTerm,
+				repository.variableDeclarationTerms.put(variableTerm,
 						numOfDocsContainingTerm);
 			}
 		}
 	}
 
 	private void UpdateMethodInvocationTerms(
-			List<SimpleName> methodInvocations) {
+			List<SimpleName> methodInvocations, Repository repository) {
 		for (SimpleName methodInvocation : methodInvocations) {
 			String methodInvocationTerm = methodInvocation.toString();
 			if (!_tempMethodInvocations.contains(methodInvocationTerm)) {
 				_tempMethodInvocations.add(methodInvocationTerm);
 				int numOfDocsContainingTerm = 1;
-				if (_repository.methodInvocationTerms
+				if (repository.methodInvocationTerms
 						.containsKey(methodInvocationTerm)) {
-					numOfDocsContainingTerm += _repository.methodInvocationTerms
+					numOfDocsContainingTerm += repository.methodInvocationTerms
 							.get(methodInvocationTerm);
 				}
-				_repository.methodInvocationTerms.put(methodInvocationTerm,
+				repository.methodInvocationTerms.put(methodInvocationTerm,
 						numOfDocsContainingTerm);
 			}
 		}
 	}
 
-	private void UpdateClassInstanceTerms(List<Type> classInstances) {
+	private void UpdateClassInstanceTerms(List<Type> classInstances, Repository repository) {
 		for (Type classInstance : classInstances) {
 			String classInstanceTerm = classInstance.toString();
 			if (!_tempClassInstances.contains(classInstanceTerm)) {
 				_tempClassInstances.add(classInstanceTerm);
 				int numOfDocsContainingTerm = 1;
-				if (_repository.classInstanceTerms
+				if (repository.classInstanceTerms
 						.containsKey(classInstanceTerm)) {
-					numOfDocsContainingTerm += _repository.classInstanceTerms
+					numOfDocsContainingTerm += repository.classInstanceTerms
 							.get(classInstanceTerm);
 				}
-				_repository.classInstanceTerms.put(classInstanceTerm,
+				repository.classInstanceTerms.put(classInstanceTerm,
 						numOfDocsContainingTerm);
 			}
 		}
