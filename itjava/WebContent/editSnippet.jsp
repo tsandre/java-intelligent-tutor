@@ -38,6 +38,9 @@ textarea {
 	font-family: Consolas;
 	font-size:0.8em;
 }
+.highlight {
+	background-color: #e0e9f2;
+}
 </style>
 </head>
 
@@ -76,7 +79,7 @@ for (String currLine : facade.getLinesOfCode()) {
 <input type="submit" id="btnCompile" name="btnSubmit" value="Compile" />
 </td>
 <td width="100%">
-<span style="background-color: #e0e9f2;"> Compiler messages..</span>
+<span class="highlight" > Compiler messages..</span>
 <div id="divMessages">
 <hr />
 <%
@@ -87,6 +90,11 @@ if (facade.getMessages().length == 0) {
 	out.println("All is well!!");
 }
 %>
+<hr />
+<span class="highlight">Compiler interprets the code as:</span>
+<pre>
+<%= facade.getInterpretedCode() %>
+</pre>
 </div>
 </td>
 </tr>
