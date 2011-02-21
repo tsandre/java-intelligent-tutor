@@ -58,19 +58,19 @@ public class ScoresStore {
 
 	public static ArrayList<Object> Select(String attribute, HashMap<String, String> whereClause) {
 		Connection conn = null;
-		ArrayList<Object> retValue = null;
+		ArrayList<Object> retValue = new ArrayList<Object>();
 		try {
 			conn = DBConnection.GetConnection();
-			String selectSql = "select ? from Scores";
+			StringBuilder selectSql = new StringBuilder("select ? from Scores");
 			if (whereClause != null) {
 				if (!whereClause.isEmpty()) {
-					selectSql += " where ";
+					selectSql.append(" where ");
 					for (Entry<String, String> entry : whereClause.entrySet()) {
-						selectSql += entry.getKey() + "=" + entry.getValue();
+						selectSql.append(entry.getKey() + "=" + entry.getValue());
 					}
 				}
 			}
-			PreparedStatement selectStmt = conn.prepareStatement(selectSql);
+			PreparedStatement selectStmt = conn.prepareStatement(selectSql.toString());
 			selectStmt.setString(1, attribute);
 			ResultSet rs = selectStmt.executeQuery();
 			while (rs.next()) {
