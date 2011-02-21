@@ -175,7 +175,7 @@ public class CompilationUnitFacade {
 	}
 
 	public void addAllMethods(MethodDeclaration[] methods) {
-		if (!methods.equals(null) && methods.length > 0) {
+		if (methods != null && methods.length > 0) {
 			for (MethodDeclaration method : methods) {
 				_methodDeclarations.add(method);
 			}
