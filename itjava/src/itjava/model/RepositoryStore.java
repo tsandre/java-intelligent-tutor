@@ -85,23 +85,23 @@ public class RepositoryStore {
 	 */
 	private static void _createTermsDict(TermsDictionary termsDict,
 			CompilationUnitFacade facade) {
-		if (facade.getMethodInvocations() != null || facade.getMethodInvocations().size() > 0) {
+		if (facade.getMethodInvocations() != null && facade.getMethodInvocations().size() > 0) {
 			for (SimpleName method : facade.getMethodInvocations()) {
 				termsDict.putMethods(method.toString());
 			}
 		}
-		if (facade.getClassInstances() != null || facade.getClassInstances().size() > 0) {
+		if (facade.getClassInstances() != null && facade.getClassInstances().size() > 0) {
 			for (Type classInstance : facade.getClassInstances()) {
 				termsDict.putInstances(classInstance.toString());					
 			}
 		}
-		if (facade.getImportDeclarations() != null || facade.getImportDeclarations().size() > 0) {
+		if (facade.getImportDeclarations() != null && facade.getImportDeclarations().size() > 0) {
 			for (ImportDeclaration importDeclaration : facade.getImportDeclarations()) {
 				termsDict.putImports(importDeclaration.getName().getFullyQualifiedName());
 			}
 		}
 		List<Statement> stmts = facade.getStatements(Statement.VARIABLE_DECLARATION_STATEMENT);
-		if (stmts != null || stmts.size() > 0) {				
+		if (stmts != null && stmts.size() > 0) {				
 			for (Statement statement : stmts) {
 				termsDict.putVariables(((VariableDeclarationStatement) statement).getType().toString());
 			}
