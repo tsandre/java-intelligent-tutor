@@ -66,6 +66,11 @@ public class SaveSelectionsServlet extends HttpServlet {
 		else if(submitValue.equals("<< Previous Snippet")) {
 			nextIndex = currentIndex - 1;
 		}
+		else if (submitValue.equals("Edit the snippet")) {
+			session.setAttribute("facade", tutorialList.get(currentIndex).getFacade());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("editSnippet.jsp");
+			dispatcher.forward(request, response);
+		}
 		else if (submitValue.equals("Verify & Save")){
 			HashSet<Boolean> wordFoundSet = new HashSet<Boolean>();
 			String[] newWords = request.getParameter("txtNewWord").split(",");
