@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*, itjava.model.*, org.eclipse.jdt.core.dom.Message;"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -130,6 +130,9 @@
 pre {
 	font-family:Consolas;
 }
+#divEditButton {
+	display: none;
+}
 </style>
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
 <script type="text/javascript">
@@ -146,11 +149,22 @@ $(function () {
         if (this.value == 'Quiz')  {
             step2.show('slow');  
         	step3.show('slow');
+			$('#divEditButton').hide();
+			$('#divSubmit').show();
         }
+		else if(this.value == 'Edit') {
+			$('#divEditButton').show();
+			step2.hide('slow');  
+            step3.hide('slow'); 
+			step4.hide('slow');
+			$('#divSubmit').hide();
+		}
         else {  
             step2.hide('slow');  
             step3.hide('slow'); 
 			step4.hide('slow');
+			$('#divEditButton').hide();
+			$('#divSubmit').show();
         }  
     });
     
@@ -193,7 +207,8 @@ function isReady(eventSource) {
 		return true;
 	}
 	else if (document.tutorialSelectionForm.radioApproval[1].checked || 
-			document.tutorialSelectionForm.radioApproval[2].checked) {
+			document.tutorialSelectionForm.radioApproval[2].checked  || 
+			document.tutorialSelectionForm.radioApproval[3].checked) {
 		return true;
 	}
 	else if (document.tutorialSelectionForm.radioApproval[0].checked) {
@@ -283,8 +298,8 @@ for (int i = 0; i < tutorialList.size(); i++) {
 
 <%
 String approvalSelected = approvalList.get(currentIndex);
-String[] approvalOptions = {"Quiz", "Example", "Discard"};
-for (int approvalIndex = 0; approvalIndex < 3; approvalIndex++) {
+String[] approvalOptions = {"Quiz", "Example", "Discard", "Edit"};
+for (int approvalIndex = 0; approvalIndex <= 3; approvalIndex++) {
 	out.print("<input type=\"radio\" name=\"radioApproval\" value=\""); 
 	out.print(approvalOptions[approvalIndex]);
 	out.print("\"");
@@ -297,6 +312,11 @@ for (int approvalIndex = 0; approvalIndex < 3; approvalIndex++) {
 	out.println(approvalOptions[approvalIndex]);
 }
 %>
+
+<div id="divEditButton">
+<input id="btnEdit" value="Edit the snippet" name="btnSubmit" type="submit" onclick="setSubmit('Edit')" />
+</div>
+
 </fieldset>
 </div>
 
