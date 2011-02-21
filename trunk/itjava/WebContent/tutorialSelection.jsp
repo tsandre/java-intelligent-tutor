@@ -214,12 +214,23 @@ function isReady(eventSource) {
 	else if (document.tutorialSelectionForm.radioApproval[0].checked) {
 		var wordInfoFlag = false;
 		var difficultyFlag = false;
-		for (var i = 0; i < document.tutorialSelectionForm.cbxWordInfo.length; i++) {
-			if (document.tutorialSelectionForm.cbxWordInfo[i].checked) {
-				wordInfoFlag = true;
-				break;
+		var numOfWords = 1;
+		if (document.tutorialSelectionForm.cbxWordInfo == null) {
+			alert("Please add words before creating quiz. Otherwise, you can treat the snippet as example or discard it.");
+			return false;
+		}
+		else if(document.tutorialSelectionForm.cbxWordInfo.length == null && document.tutorialSelectionForm.cbxWordInfo.checked == true) {
+			wordInfoFlag = true;
+		}
+		else if (document.tutorialSelectionForm.cbxWordInfo.length >= 0) {
+			for (var i = 0; i < document.tutorialSelectionForm.cbxWordInfo.length; i++) {
+				if (document.tutorialSelectionForm.cbxWordInfo[i].checked) {
+					wordInfoFlag = true;
+					break;
+				}
 			}
 		}
+		
 		for (i =0; i < 5; i++) {
 			if (document.tutorialSelectionForm.difficultyLevel[i].checked) {
 				difficultyFlag = true;
