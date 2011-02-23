@@ -35,7 +35,7 @@ public class LinkStore {
 		ArrayList<String> bingSearchResults = new ArrayList<String>();
 		try {
 			String request = "http://api.bing.net/xml.aspx?AppId=731DD1E61BE6DE4601A3008DC7A0EB379149EC29" +
-					"&Version=2.2&Market=en-US&Query=" + URLEncoder.encode(query, "UTF-8") +
+					"&Version=2.2&Market=en-US&Query=" + URLEncoder.encode("Java example for " + query, "UTF-8") +
 					"&Sources=web+spell&Web.Count=30";
 			
 			URL url = new URL(request);
@@ -64,7 +64,7 @@ public class LinkStore {
 		ArrayList<String> yahooSearchResults = new ArrayList<String>();
 		try {
 			String request = "http://boss.yahooapis.com/ysearch/web/v1/"
-				+ URLEncoder.encode(query, "UTF-8")
+				+ URLEncoder.encode("Java example for " + query, "UTF-8")
 				+ "?appid=zfau5aPV34ETbq9mWU0ui5e04y0rIewg1zwvzHb1tGoBFK2nSCU1SKS2D4zphh2rd3Wf"
 				+ "&format=xml&count=30&type=-msoffice,-pdf";
 		
