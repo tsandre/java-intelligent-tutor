@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!-- JNLP File for SwingSet2 Demo Application --> 
+<jnlp spec="1.0+" codebase="http://localhost:8080/itjava/delivery/awtevents/" href="Example2.jnlp"> 
+	<information> 
+		<title>Example2</title> 
+		<vendor>CMU</vendor> 
+		<homepage href="Example2.html"/> 
+		<description>Example2</description> 	
+		<offline-allowed/> 
+	</information> 
+	<security> 
+		<all-permissions/> 
+	</security> 
+	<resources> 
+		<j2se version="1.4+" href="http://java.sun.com/products/autodl/j2se"/> 
+		<jar href="Example2.jar"/> 
+		<jar href="../lib/DorminWidgets.jar"/> 
+		<jar href="../lib/aima.jar"/>
+		<jar href="../lib/idw.jar"/> 
+		<jar href="../lib/jdom.jar"/> 
+		<jar href="../lib/jess.jar"/> 
+		<jar href="../lib/jgraphlayout.jar"/> 
+		<jar href="../lib/jnlp.jar"/>
+		<jar href="../lib/junit.jar"/> 
+		<jar href="../lib/logclient.jar"/> 
+		<jar href="../lib/logging.jar"/>
+		<jar href="../lib/mylib.jar"/>
+		<jar href="../lib/runcc.jar"/>
+		<jar href="../lib/xalan.jar"/>
+		<jar href="../lib/xml-writer.jar"/>
+		<jar href="../lib/cl/ui.jar"/>
+		<jar href="../lib/cl/communication.jar"/>
+		<jar href="../lib/cl/LMS.jar"/>
+		<jar href="../lib/cl/LMSfiledata.jar"/>
+		<jar href="../lib/cl/TT.jar"/>
+		<jar href="../lib/cl/XPlauncher.jar"/>
+		<jar href="../lib/cl/cl_common.jar"/>
+		<jar href="../lib/cl/grant.jar"/> 
+		<jar href="../lib/cl/jzlib.jar"/>
+		<jar href="../lib/cl/thirdparty/TableLayout.jar"/> 
+		<jar href="../lib/cl/thirdparty/webeq35.jar"/> 
+		<jar href="../lib/cl/utilities.jar"/>
+		<property name="noCtatWindow" value="true"/>
+	</resources> 
+	<application-desc main-class="generated.Example2">
+		<argument>-Dschool_name=OSU</argument>
+		<argument>-Dcourse_name=Example2</argument>
+		<argument>-Dunit_name=Example2</argument>
+		<argument>-Dsection_name=Example2</argument>
+		<argument>-DBehaviorRecorderVisible=false</argument>
+		<argument>-DProblemFileLocation=generated/Example2.brd</argument>
+		<argument>-DBehaviorRecorderMode=Example-tracing Tutor</argument>
+	</application-desc> 
+</jnlp> 
