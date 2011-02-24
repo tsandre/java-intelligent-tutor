@@ -322,9 +322,16 @@ public class CompilationUnitFacade {
 				addExpression(cast.getExpression());
 				break;
 //		    VariableDeclarationExpression
+			case (Expression.VARIABLE_DECLARATION_EXPRESSION) : 
+				VariableDeclarationExpression varDecExp = (VariableDeclarationExpression) expression;
+				List<VariableDeclarationFragment> fragments = varDecExp.fragments();
+				for (VariableDeclarationFragment fragment : fragments) {
+					addExpression(fragment.getInitializer());
+				}
+				break;
 			default: 
-				System.err.println("Expression type not defined: " + expression.getClass());
-				System.err.println("Expression: " + expression.toString());
+				/*System.err.println("Expression type not defined: " + expression.getClass());
+				System.err.println("Expression: " + expression.toString());*/
 				break;
 			}
 		}
