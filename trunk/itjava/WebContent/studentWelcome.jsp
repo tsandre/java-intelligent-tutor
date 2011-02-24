@@ -110,7 +110,13 @@ body {
 <%
 ArrayList<TutorialInfo> tutorialInfoList = TutorialInfoStore.SelectInfo(null);
 session.setAttribute("tutorialInfoList", tutorialInfoList);
-int STUDENT_ID = 99;
+int STUDENT_ID;
+if (session.getAttribute("studentId") == null || session.getAttribute("studentId").toString().equals("")) {
+	STUDENT_ID = Integer.parseInt(request.getParameter("studentId"));	
+}
+else{
+	STUDENT_ID = Integer.parseInt(session.getAttribute("studentId").toString());
+}
 session.setAttribute("studentId", STUDENT_ID);
 DeliverableLauncher launcher = new DeliverableLauncher();
 session.setAttribute("deliverableLauncher", launcher);
