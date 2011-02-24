@@ -51,7 +51,9 @@ public class LinkStore {
 			Document doc = Jsoup.parse(finalContents);
 			Elements eles = doc.getElementsByTag("web:Url");
 			for (Element ele : eles) {
-				if ( !ele.text().endsWith(".pdf") || !ele.text().endsWith(".doc") || !ele.text().endsWith(".ppt"))
+				String urlText = ele.text();
+				if ( !urlText.endsWith(".pdf") && !urlText.endsWith(".doc") && !urlText.endsWith(".ppt")
+					 && !urlText.endsWith(".PDF") && !urlText.endsWith(".DOC") && !urlText.endsWith(".PPT"))
 				bingSearchResults.add(ele.text());	
 			}
 		} catch (Exception e) {

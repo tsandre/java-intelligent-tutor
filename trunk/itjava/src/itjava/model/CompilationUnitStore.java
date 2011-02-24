@@ -146,8 +146,8 @@ public class CompilationUnitStore {
 					}
 				}
 				catch (Exception e) {
-					System.err.println("Error fetching block/statement from : " + methodDeclaration.toString());
-					System.err.println(methodDeclaration.getParent().toString());
+					/*System.err.println("Error fetching block/statement from : " + methodDeclaration.toString());
+					System.err.println(methodDeclaration.getParent().toString());*/
 				}
 			}
 		}
@@ -215,7 +215,10 @@ public class CompilationUnitStore {
 		Iterator<CompilationUnitFacade> itFacades = compilationUnitFacadeList.iterator();
 		while (itFacades.hasNext()) {
 			CompilationUnitFacade facade = itFacades.next();
-			if (!facade.IsSimilarToOthersInList(cleanFacades)) {
+			if (facade.getLinesOfCode().size() < 4) {
+				itFacades.remove();
+			}
+			else if (!facade.IsSimilarToOthersInList(cleanFacades)) {
 				cleanFacades.add(facade.toString());
 			}
 			else {

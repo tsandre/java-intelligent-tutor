@@ -142,13 +142,21 @@ public class DeliverableLauncher {
 				 selectStmt.setString(2, "Example");
 				 selectStmt.setInt(3, deliverableId);
 				 ResultSet rs = selectStmt.executeQuery();
+				 ArrayList<KeyValue<Integer, String>> doneExamples = new ArrayList<KeyValue<Integer,String>>();
 				 while (rs.next()) {
 					 deliverableName = rs.getString(1);
 					 deliverableId = rs.getInt(2);
+					 KeyValue<Integer, String> tempKeyVal = new KeyValue<Integer, String>(deliverableId, deliverableName);
 					 if (!_deliveredHistory.containsKey(deliverableId)) {
-						 keyVal = new KeyValue<Integer, String>(deliverableId, deliverableName);
+						 keyVal = tempKeyVal;
 						 break;
 					 }
+					 doneExamples.add(tempKeyVal);					 
+				 }
+				 if (keyVal == null) {
+					 double rand = Math.random();
+					 int goTo = (int) (doneExamples.size() * rand) % doneExamples.size();
+					 keyVal = doneExamples.get(goTo);
 				 }
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
