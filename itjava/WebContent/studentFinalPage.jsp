@@ -48,6 +48,9 @@ body {
 </style>
 </head>
 <body>
+<%
+String welcomepage = "studentWelcome.jsp?studentId=" + session.getAttribute("studentId");
+%>
 <h3>&nbsp;</h3>
 <p>&nbsp;</p>
   <table id="tableMain" border="0" align="center" cellpadding="0"  cellspacing="0">
@@ -75,10 +78,13 @@ body {
                 <td height="10" colspan="3" bgcolor="#F4F4F4" class="tdBold" style="padding-left:10px;"></td>
               </tr>
               <tr>
-               <td colspan="3" bgcolor="#F4F4F4" class="tdBold" style="padding-left:10px;">Congratulations</td>
+               <td colspan="3" bgcolor="#F4F4F4" class="tdBold" style="padding-left:10px;">Congratulations!!</td>
               </tr>
               <tr>
-                <td bgcolor="#F4F4F4" class="tdRegular" style="padding-left:10px;" >You have complete all the tutorials!!!</td>
+                <td bgcolor="#F4F4F4" class="tdRegular" style="padding-left:10px;" >Now, proceed with the programming task.<br />
+                <br />
+                Click here to go back to the list of tutorials : 
+                <a href="<%= welcomepage %>">link</a></td>
                 <td bgcolor="#F4F4F4" class="tdRegular">&nbsp;</td>
                 <td bgcolor="#F4F4F4" class="tdRegular">&nbsp;</td>
               </tr>
