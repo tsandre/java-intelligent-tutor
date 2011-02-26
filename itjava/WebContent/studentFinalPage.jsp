@@ -81,10 +81,10 @@ String welcomepage = "studentWelcome.jsp?studentId=" + session.getAttribute("stu
                <td colspan="3" bgcolor="#F4F4F4" class="tdBold" style="padding-left:10px;">Congratulations!!</td>
               </tr>
               <tr>
-                <td bgcolor="#F4F4F4" class="tdRegular" style="padding-left:10px;" >Now, proceed with the programming task.<br />
-                <br />
-                Click here to go back to the list of tutorials : 
-                <a href="<%= welcomepage %>">link</a></td>
+                <td bgcolor="#F4F4F4" class="tdRegular" style="padding-left:10px;" >
+                Notify the researcher that you are done with this topic.<br />
+                Now, you will be provided with a programming task.<br /> 
+                <a href="<%= welcomepage %>">Home</a></td>
                 <td bgcolor="#F4F4F4" class="tdRegular">&nbsp;</td>
                 <td bgcolor="#F4F4F4" class="tdRegular">&nbsp;</td>
               </tr>
