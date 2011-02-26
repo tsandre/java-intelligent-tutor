@@ -117,14 +117,14 @@ String br = "<br />";
 String star = br + "&nbsp;*&nbsp;&nbsp;";
 StringBuilder instr = new StringBuilder("<b><i>Instructions:</i></b>");
 String divColor = "#F4F4F4";
-if (deliverableName.contains("1Example")) {
+if (deliverableName.contains("Example")) {
 	instr.append(br).append("The description below explains the topic in brief. You can access this description any time.");
 	instr.append(star).append("On clicking launch button at the bottom, you will be provided with an <b><i>example</i></b> in a pop-up.");
 	instr.append(star).append("Please read the code snippet in the pop-up carefully. Pay special attention to the <b><i>italicized</i></b> terms.");
 	instr.append(star).append("<b><i>IMPORTANT:</i></b> Click Done button on the pop-up. Then click the close button. This is necessary for our experiment.");
 	divColor = "honeydew";
 }
-else if (deliverableName.contains("Example")) {
+else if (deliverableName.contains("Quiz")) {
 	instr.append(star).append("On clicking launch button at the bottom, you will be provided with a <b><i>Quiz</i></b> in a pop-up.");
 	instr.append(star).append("Fill in the blanks.");
 	instr.append(star).append("You can access hints corresponding to any blank by selecting that blank and clicking Help.");
