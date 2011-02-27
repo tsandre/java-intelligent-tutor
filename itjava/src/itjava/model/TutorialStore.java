@@ -234,7 +234,7 @@ public class TutorialStore {
 		DorminComponent hintButton = new DorminComponent();
 		hintButton.Button("Help", "hint", 90, y + 20, 20, 60);*/
 		DorminComponent doneButton = new DorminComponent();
-		doneButton.Button("Done", "doneButton", 20, y + 20, 20, 60);
+		doneButton.Button("Done", "doneButton", 20, y + 20, 20, 90);
 	
 		
 		/*labelDataList.add(new LabelData("hint","Help"));*/
