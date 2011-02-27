@@ -232,7 +232,7 @@ String instructionText = instr.toString();
 	else {
 		session.setAttribute("deliveryKeyValue", deliveryKeyValue);
 		session.setAttribute("tutorialInfoId", tutorialInfoId);
-		session.setAttribute("studentId", 99);
+		session.setAttribute("studentId", deliverableLauncher.getStudentId());
 		session.setAttribute("deliverableLauncher", deliverableLauncher);
 	}
 	%>
