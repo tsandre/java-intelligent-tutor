@@ -21,6 +21,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
@@ -85,9 +86,9 @@ public class WordInfoStore {
 	}
 
 	public static WordInfo createWordInfo(List<String> linesOfCode,
-			ImportDeclaration importDeclaration, Set<Integer> lineNumbersUsed, boolean restrictDup) throws Exception {
+			Name importDeclaration, Set<Integer> lineNumbersUsed, boolean restrictDup) throws Exception {
 		WordInfoStore wordInfoStore = new WordInfoStore(linesOfCode, restrictDup);
-		wordInfoStore._wordInfo.wordToBeBlanked = importDeclaration.getName().getFullyQualifiedName();
+		wordInfoStore._wordInfo.wordToBeBlanked = importDeclaration.getFullyQualifiedName();
 		wordInfoStore.createWordInfo(importDeclaration, lineNumbersUsed);
 		return wordInfoStore._wordInfo;
 	}

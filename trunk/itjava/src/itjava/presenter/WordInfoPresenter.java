@@ -94,7 +94,7 @@ public class WordInfoPresenter {
 			for (ImportDeclaration importDeclaration : facade.getImportDeclarations()) {
 				if(_importsToBeAdded > 0 && topImports.contains(importDeclaration.getName().getFullyQualifiedName())) {
 					try {
-						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), importDeclaration, lineNumbersUsed, true));
+						wordInfoList.add(WordInfoStore.createWordInfo(facade.getLinesOfCode(), importDeclaration.getName(), lineNumbersUsed, true));
 						_importsToBeAdded--;
 					}
 					catch (Exception e) {
