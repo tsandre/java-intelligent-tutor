@@ -96,7 +96,7 @@ public class SaveSelectionsServlet extends HttpServlet {
 								
 							case ASTNode.IMPORT_DECLARATION : 
 								System.out.println("import decl found");
-								newWordInfo = WordInfoStore.createWordInfo(facade.getLinesOfCode(), (ImportDeclaration) astNode, lineNumbersUsed, false);
+								newWordInfo = WordInfoStore.createWordInfo(facade.getLinesOfCode(), ((ImportDeclaration) astNode).getName(), lineNumbersUsed, false);
 								break;
 								
 							case ASTNode.SIMPLE_TYPE :
