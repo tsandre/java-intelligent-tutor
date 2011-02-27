@@ -63,6 +63,7 @@ public class RepositoryStore {
 		RepositoryStore _rStore = new RepositoryStore();
 		boolean repositoryUpdated = false;
 		Repository repository = _rStore.ReadRepository();
+		System.out.println("Begin Updating terms in the repository..");
 		if (compilationUnitFacadeList != null) {
 			for (CompilationUnitFacade facade : compilationUnitFacadeList) {
 				if (!repository.Contains(facade.getUrl())) {
@@ -72,6 +73,7 @@ public class RepositoryStore {
 				_createTermsDict(termsDict, facade);
 				
 			}
+			System.out.println("Done Updating terms in the repository..");
 			if (repositoryUpdated) {
 				_rStore.WriteRepository(repository);
 			}
@@ -294,6 +296,7 @@ public class RepositoryStore {
 	 * @param repository
 	 */
 	private void WriteRepository(Repository repository) {
+		System.out.println("Begin Write to repository..");
 		try {
 			GetConnection();
 			WriteTermsToDB("ImportTerms", repository);
@@ -308,6 +311,7 @@ public class RepositoryStore {
 		}
 		finally {
 			try {
+				System.out.println("End Write to repository..");
 				DBConnection.CloseConnection(_conn);
 			} catch (SQLException e) {
 				e.printStackTrace();
