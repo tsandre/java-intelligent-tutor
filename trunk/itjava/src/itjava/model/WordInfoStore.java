@@ -3,14 +3,17 @@ package itjava.model;
 import itjava.data.BlankType;
 import itjava.db.DBConnection;
 import itjava.util.Concordance;
+import itjava.util.WordInfoComparator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -145,26 +148,47 @@ public class WordInfoStore {
 	}
 
 	public static int addWordInfoToList(ArrayList<WordInfo> wordInfoList,
-			WordInfo newWordInfo) {
+			WordInfo newWordInfo, LinkedHashSet<String> selectedWordInfoIndices) {
 		int index = 0;
 		boolean found = false;
 		Iterator<WordInfo> itWIList = wordInfoList.iterator();
 		int newLineNumber = newWordInfo.lineNumber;
 		while (itWIList.hasNext()) {
 			WordInfo currWordInfo = itWIList.next();
-			if (currWordInfo.lineNumber == newLineNumber) {
+			if (currWordInfo.lineNumber < newLineNumber) {
+				//do nothing
+			}
+			else if (currWordInfo.lineNumber == newLineNumber) {
 				itWIList.remove();
+				found = true;
+				break;
+			}
+			else if (currWordInfo.lineNumber > newLineNumber) {
 				found = true;
 				break;
 			}
 			index++;
 		}
 		if (found) {
+			Iterator<String> itSelectedWords = selectedWordInfoIndices.iterator();
+			ArrayList<String> incrIndices = new ArrayList<String>();
+			int selectedWordCount = 0;
+			while (itSelectedWords.hasNext()) {
+				int currIndex = Integer.parseInt(itSelectedWords.next());
+				if(currIndex >= index) {
+					incrIndices.add(Integer.toString(currIndex + 1));
+					itSelectedWords.remove();
+				}
+				selectedWordCount++;
+			}
+			selectedWordInfoIndices.add(Integer.toString(index));
+			selectedWordInfoIndices.addAll(incrIndices);
 			wordInfoList.add(index, newWordInfo);
 		}
 		else {
 			wordInfoList.add(newWordInfo);
-		}
+			selectedWordInfoIndices.add(Integer.toString(index));
+		}		
 		return index;
 	}
 }

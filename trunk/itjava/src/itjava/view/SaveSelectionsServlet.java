@@ -80,6 +80,9 @@ public class SaveSelectionsServlet extends HttpServlet {
 			ArrayList<WordInfo> wordInfoList = currentTutorial.getWordInfoList();
 			LinkedHashSet<String> selectedWordInfoIndices = new LinkedHashSet<String>();
 			int newPosition = -999;
+			if (request.getParameterValues("cbxWordInfo") != null) {
+				selectedWordInfoIndices.addAll((Arrays.asList(request.getParameterValues("cbxWordInfo"))));
+			}
 			
 			for(String newWord: newWords) {
 				if ( currentTutorial.contains(newWord) ) continue; //TODO :Check current wordsList
@@ -109,15 +112,11 @@ public class SaveSelectionsServlet extends HttpServlet {
 								break;
 									
 							}
-							newPosition = WordInfoStore.addWordInfoToList(wordInfoList, newWordInfo);
+							newPosition = WordInfoStore.addWordInfoToList(wordInfoList, newWordInfo, selectedWordInfoIndices);
 						}
 					}
 					catch (Exception e) {
 						e.printStackTrace();
-					}
-					
-					if (request.getParameterValues("cbxWordInfo") != null) {
-						selectedWordInfoIndices.addAll((Arrays.asList(request.getParameterValues("cbxWordInfo"))));
 					}
 					
 					approvalList.set(currentIndex, "Quiz");
@@ -128,7 +127,6 @@ public class SaveSelectionsServlet extends HttpServlet {
 					}
 					
 					if (newPosition != -999) {
-						selectedWordInfoIndices.add(Integer.toString(newPosition));
 						wordFoundSet.add(true);
 					}
 					else {
