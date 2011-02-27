@@ -155,8 +155,8 @@ public class BRDStore {
 				out.write("      <value>UpdateText</value>\r\n");          		
 				out.write("   </Action>\r\n");
 				oldstring[i] = dorminName[notepropertysetCount];
-				tempstring[i] = oldstring[i].replace(">", "&gt;");
 				tempstring1[i] = tempstring[i].replace("&", "&amp;");
+				tempstring[i] = oldstring[i].replace(">", "&gt;");
 				tempstring2[i] = tempstring1[i].replace("<", "&lt;");
 				tempstring3[i] = tempstring2[i].replace("\"", "&quot;");
 				newstring[i] = tempstring3[i].replace("'", "&apos;");
