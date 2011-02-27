@@ -60,7 +60,7 @@ public class DeliverableSelectionServlet extends HttpServlet {
 		try {
 			Concordance<String> hintsAvailable = new Concordance<String>();
 			hintsAvailable = WordInfoStore.SelectWordInfo(whereClause);
-			logData = LogDataStore.CreateLogData(numOfBlanks, hintsAvailable, 0);
+			logData = LogDataStore.CreateLogData(numOfBlanks, hintsAvailable, studentId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Problem creating log data");
