@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -113,6 +114,7 @@ public class LogDataStore {
 		doc.getDocumentElement ().normalize ();
 		NodeList listOfLogActions = doc.getElementsByTagName("log_action");
 		int totalLogActions = listOfLogActions.getLength();
+		Calendar todayTime = Calendar.getInstance();
 		String prevNodeText = null;
 		String firstNodeText = null;
 		for (int logActionIndex = 0; logActionIndex < totalLogActions; logActionIndex++) {
@@ -160,7 +162,7 @@ public class LogDataStore {
 				}
 			}
 		}
-		Convertor.copyFile(finalXML, new File(logFolder, studentId + "_final.xml"));
+		Convertor.copyFile(finalXML, new File(logFolder+"/SavedLogs", studentId +"_" +todayTime.getTimeInMillis()+"_final.xml"));
 	}
 
 	/**
