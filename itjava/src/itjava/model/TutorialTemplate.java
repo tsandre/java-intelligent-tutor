@@ -68,13 +68,10 @@ public class TutorialTemplate {
 		String componentDeclaration = component.componentName + ".setBounds(" +
 				component.x + "," + component.y + "," + component.width + "," + component.height
 			+ "); \n" +
-			component.componentName + ".setFont(new java.awt.Font(\"Courier New\", " + fontStyle + ", 12));\n";
+			component.componentName + ".setFont(new java.awt.Font(\"Courier New\", " + fontStyle + ", 13));\n";
 		
 		if(component.componentText != null) {
 			componentDeclaration += component.componentName + ".setText(\"" + cleanseText(component.componentText) + "\"); \n";
-		}			
-		if (highlight){
-			componentDeclaration += component.componentName + ".setForeground(Color.BLUE); \n";
 		}
 		
 		componentDeclaration += "add(" + component.componentName + "); \n";
