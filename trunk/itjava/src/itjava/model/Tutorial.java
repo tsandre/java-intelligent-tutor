@@ -10,6 +10,7 @@ public class Tutorial {
 	private String _tutorialName;
 	private String _readableName;
 	private String _type;
+	private String _tutorialHTMLCode = "";
 	public String tutorialCode = "";
 	private ArrayList<WordInfo> wordInfoList;
 	private ArrayList<WordInfo> originalWordInfoList;
@@ -67,6 +68,12 @@ public class Tutorial {
 	}
 	public String getTutorialName() {
 		return _tutorialName;
+	}
+	public void setTutorialHTMLCode(String tutorialHTMLCode) {
+		this._tutorialHTMLCode = tutorialHTMLCode;
+	}
+	public String getTutorialHTMLCode() {
+		return this._tutorialHTMLCode;
 	}
 	/**
 	 * @return the wordInfoList

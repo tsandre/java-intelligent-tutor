@@ -6,6 +6,7 @@ package itjava.model;
 import itjava.data.LocalMachine;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,11 +16,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
  * @author Aniket, Vasanth
@@ -41,12 +50,118 @@ public class TutorialDeployer {
 	 * @throws Exception
 	 */
 	public void Deploy(Runtime rt) throws Exception {
-		CompileTutorial(rt);
-		BRDStore.GenerateBRD(_tutorial);
-		ResetBuildXMLFile();
-		CreateBuildPropertiesFile();
-		BuildXMLCreate.GenerateBuildXML(_tutorial);
-		ExecuteBatchScript(rt);
+		System.out.println("in Deploy");
+		String htmlTutorialCode = CompileHTMLTutorial(rt);
+		//SaveTutorialCode();
+		//CompileTutorial(rt);
+		//BRDStore.GenerateBRD(_tutorial);
+		//ResetBuildXMLFile();
+		//CreateBuildPropertiesFile();
+		//BuildXMLCreate.GenerateBuildXML(_tutorial);
+		//ExecuteBatchScript(rt);
+	}
+	
+	public void SaveTutorialCode() {
+		//unknown!? _tutorial.getWordInfoList().get(1)
+	}
+	
+	public String CompileHTMLTutorial(Runtime rt) throws Exception {
+		String myTutorialOutput = "";
+		System.out.println("In CompileHTMLTutorial");
+		//String sourcepath = LocalMachine.home + "WebContent/htmlDelivery/" + _tutorial.getReadableName() + "/";
+		//new File(sourcepath).mkdir(); // If the directory already exists, this method does nothing.
+		//File htmlFile = new File(sourcepath + _tutorial.getTutorialName() + ".html");
+		//if (htmlFile.exists()) {
+		//	htmlFile.delete();
+		//}
+		//OutputStream fout= new FileOutputStream(htmlFile);
+		//OutputStream bout= new BufferedOutputStream(fout);
+		//OutputStreamWriter out = new OutputStreamWriter(bout, "8859_1");
+		Pattern CRLF = Pattern.compile("(\r\n|\r|\n|\n\r)");
+		String myString = _tutorial.getFacade().getInterpretedCode();
+		//myString = itjava.model.Convertor.FormatCode(myString);
+		Matcher m = CRLF.matcher(myString);
+		
+		if(_tutorial.getType().equals("Example")){
+			ArrayList<String> myLines = Convertor.StringToArrayListOfStrings(_tutorial.getFacade().getUnformattedSource());
+			if (m.find()) {
+				myString = m.replaceAll("<br>");
+			}
+			String newString = "";
+			int spacecounter = 0;
+			for(int i=0; i<myLines.size(); i++){
+				if(myLines.get(i).contains("{")){
+					spacecounter++;
+				}
+				if(myLines.get(i).contains("}")){
+					spacecounter--;
+				}
+				for(int j=0; j<spacecounter; j++){
+					newString += "&nbsp;&nbsp;";
+				}
+				newString += myLines.get(i) + "<br>";
+			}
+			System.out.println("newstring: <br>" + newString);
+			myString = itjava.model.Convertor.FormatCode(newString);
+			
+			if (m.find()) {
+				myString = m.replaceAll("<br>");
+			}
+			myString.replace("  ", "&nbsp;&nbsp;");
+			myTutorialOutput += "<pre class=\"prettyprint\">" + myString + "</pre>";
+		}else{
+			ArrayList<String> myLines = Convertor.StringToArrayListOfStrings(_tutorial.getFacade().getUnformattedSource());
+			if (m.find()) {
+				myString = m.replaceAll("<br>");
+			}
+			int Linenum;
+			myTutorialOutput += "<script type=\"text/javascript\" language=\"javascript\">";
+			myTutorialOutput += "var Edges = new Array();\n";
+			myTutorialOutput += "var Hints = new Array();\n";
+			myTutorialOutput += "var currhint = new Array();\n";
+			myTutorialOutput += "var totalhintsleft = new Array();\n";
+			myTutorialOutput += "var questionscore = new Array();\n";
+			int totalhints = 0;
+			int tempcurrtotalhints = 0;
+			for(int i=0; i<_tutorial.getWordInfoList().size(); i++){
+				myTutorialOutput += "Edges[" + i + "] = \"" + _tutorial.getWordInfoList().get(i).wordToBeBlanked.toString() + "\";\n";
+				Linenum = _tutorial.getWordInfoList().get(i).lineNumber-1;
+				myLines.set(Linenum, myLines.get(Linenum).replaceFirst(_tutorial.getWordInfoList().get(i).wordToBeBlanked.toString(), "<input type=\"text\" name=\"answer_" + i + "\" id=\"answer_" + i + "\" onChange=\"checkanswer('" + i + "');\" onfocus=\"setcurrenthint('" + i + "');\" style=\"border-width:2px; border:solid; border-color:#999; padding: 2px 0 2px 0;\" />"));
+				for(int j=0; j<_tutorial.getWordInfoList().get(i).hintsAvailable.size(); j++){
+					myTutorialOutput += "Hints[" + totalhints + "] = \"" + _tutorial.getWordInfoList().get(i).hintsAvailable.get(j) + "\";\n";
+					totalhints++;
+					tempcurrtotalhints = j;
+				}
+				tempcurrtotalhints++;
+				myTutorialOutput += "currhint[" + i + "] = \"0\"\n";
+				myTutorialOutput += "totalhintsleft[" + i + "] = \"" + tempcurrtotalhints + "\"\n";
+				myTutorialOutput += "questionscore[" + i + "] = \"100\"\n";
+			}
+			myTutorialOutput += "</script>";
+			String newString = "";
+			int spacecounter = 0;
+			for(int i=0; i<myLines.size(); i++){
+				if(myLines.get(i).contains("}")){
+					spacecounter--;
+				}
+				for(int j=0; j<spacecounter; j++){
+					newString += "&nbsp;&nbsp;";
+				}
+				if(myLines.get(i).contains("{")){
+					spacecounter++;
+				}
+				newString += myLines.get(i) + "<br>";
+			}
+			System.out.println("newstring: <br>" + newString);
+			myString = itjava.model.Convertor.FormatCode(newString);
+		
+			if (m.find()) {
+				myString = m.replaceAll("<br>");
+			}
+			myString.replace("  ", "&nbsp;&nbsp;");
+			myTutorialOutput += "<pre class=\"prettyprint\">" + myString + "</pre>";
+		}
+		return myTutorialOutput;
 	}
 	
 	/**

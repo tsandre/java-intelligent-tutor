@@ -1,25 +1,19 @@
-<table width="350" border="0" cellspacing="0" cellpadding="0">
-	<tr>
+<table width="250" border="0" cellspacing="0" cellpadding="0">	
+    <tr>
 		<td height="10" colspan="3"></td>
 	</tr>
  	<tr>
- 		<td bgcolor="#122222"></td>
+ 		<td bgcolor="#122222" width="1"></td>
 		<td>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<table width="248" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td height="20" align="left" bgcolor="#122222" style="padding-left:5px; color: #FFF; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Most Popular</td>
+					<td height="20" align="left" bgcolor="#122222" style="padding-left:5px; color: #FFF; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Most Popular Tutors</td>
                 </tr>
 			</table>
 		</td>
         <td width="1" bgcolor="#122222"></td>
 	</tr>
 		<%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*, itjava.view.*, java.util.Enumeration, java.security.*"%>
-		<%
-            ArrayList<TutorialInfo> tutorialInfoList = (ArrayList<TutorialInfo>) session.getAttribute("tutorialInfoList");
-            session.setAttribute("studentId", session.getAttribute("userID"));
-            DeliverableLauncher launcher = new DeliverableLauncher();
-            session.setAttribute("deliverableLauncher", launcher);
-		%>
 		<%
         Connection mpconn = null;
   		PreparedStatement mpucpst = null;

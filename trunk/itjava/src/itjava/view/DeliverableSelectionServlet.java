@@ -1,6 +1,5 @@
 package itjava.view;
 
-import itjava.data.LocalMachine;
 import itjava.data.LogData;
 import itjava.model.DeliverableInfoStore;
 import itjava.model.DeliverableLauncher;
@@ -9,8 +8,6 @@ import itjava.model.WordInfoStore;
 import itjava.util.Concordance;
 import itjava.util.KeyValue;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Arrays;
@@ -51,11 +48,11 @@ public class DeliverableSelectionServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		KeyValue<Integer, String> deliveryKeyValue = (KeyValue<Integer, String>) session.getAttribute("deliveryKeyValue");
 		DeliverableLauncher deliverableLauncher = (DeliverableLauncher) session.getAttribute("deliverableLauncher");
-		int studentId = (Integer) session.getAttribute("studentId");
 		int tutorialInfoId = (Integer) session.getAttribute("tutorialInfoId");
 		HashMap<String, Integer> whereClause = new HashMap<String, Integer>();
 		whereClause.put("deliverableId", deliveryKeyValue.getKey());
 		int numOfBlanks = DeliverableInfoStore.SelectNumOfBlanks(whereClause).get(0);
+                int studentId = (Integer) session.getAttribute("studentId");
 		LogData logData = null;
 		try {
 			Concordance<String> hintsAvailable = new Concordance<String>();
@@ -75,29 +72,8 @@ public class DeliverableSelectionServlet extends HttpServlet {
 		}
 		else
 		{
-		nextPage = "studentMainTest.jsp?id=" + tutorialInfoId;
+		nextPage = "savedTutorsDetails.jsp?id=" + tutorialInfoId;
 		}
-		// New code to delete all log files
-		File logFolder = new File(LocalMachine.home + "/logs");
-		final String logFileUserName = System.getProperty("user.name");
-		if(logFolder.exists()) {
-			String[] fileList = logFolder.list(new FilenameFilter() {
-
-				@Override
-				public boolean accept(File dir, String name) {
-					return (name.endsWith(".log") && name.startsWith(logFileUserName)) ? true : false;
-				}
-			});
-			if (fileList.length != 0){
-				for (int i=0; i < fileList.length; i++){
-				String newFileName = fileList[i];
-				File logFile = new File(logFolder, newFileName);
-				logFile.delete();
-				}
-			}
-		}
-		// End of code - To delete all log files
-		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);
 	}
