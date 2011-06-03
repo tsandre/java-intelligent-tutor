@@ -1,25 +1,25 @@
-<table width="351" border="0" cellspacing="0" cellpadding="0">
+<table width="250" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td height="10" colspan="3"></td>
 		</tr>
 		<tr>
-			<td bgcolor="#122222"></td>
-            <td width="348">
+			<td style="width:1px; background-color:#122222"></td>
+            <td width="248">
             	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-                		<td width="140" height="20" align="center" bgcolor="#122222"><a href="#" title="Student Login" class="navmain" onclick="showStudentLogin()">Student Login</a></td>
+                		<td width="140" height="20" align="center" bgcolor="#122222"><a href="#" title="Login" class="navmain" onclick="showStudentLogin()">Login</a></td>
                 		<td width="5">&nbsp;</td>
                 		<td></td>
                 		<td>&nbsp;</td>
                 	</tr>
             	</table>
             </td>
-            <td width="2"></td>
+            <td style="width:1px; background-color:#FFFFFF"></td>
 		</tr>
 		<tr>
-			<td width="1" rowspan="3" bgcolor="#122222"></td>
+			<td rowspan="3" style="width:1px; background-color:#122222"></td>
             <td height="5" bgcolor="#122222"></td>
-            <td width="2" rowspan="3" bgcolor="#122222"></td>
+            <td width="1" rowspan="3" bgcolor="#122222"></td>
 		</tr>
 		<tr>
             <td height="100" style="padding: 5px 5px 5px 5px; vertical-align:top; text-align: right; font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 12px;">
@@ -31,16 +31,18 @@
 						</tr>
 						<% } %>
                 		<tr>
-							<td align="center"><span class="basic" style="font-weight:bold">Student Login</span></td>
-                		</tr>
-                		<tr>
                   			<td height="5" align="center"></td>
                 		</tr>
                 		<tr>
-                  			<td align="center">
-                  				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  			<td align="left">
+                  				<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left">
+                  					<tr>
+                      					<td width="80" align="right" class="basic" style="text-align:right;">I am a:</td>
+                      					<td width="5">&nbsp;</td>
+                      					<td align="left" width="163"><%@ include file="/modules/headers/userlevelselect.jsp" %></td>
+                    				</tr>
                    	 				<tr>
-                      					<td width="110" align="right" class="basic" style="text-align:right;">Username:</td>
+                      					<td align="right" class="basic" style="text-align:right;">Username:</td>
                       					<td width="5">&nbsp;</td>
                       					<td align="left"><input name="username3" type="text" class="basic1" id="username3" style="width:140px" /></td>
                     				</tr>
@@ -66,7 +68,7 @@
                       					<td align="center" colspan="3"></td>
                     				</tr>
                     				<tr>
-                      					<td align="center" colspan="3"><a href="students.jsp" class="mostpopular">Create Account</a></td>
+                      					<td align="center" colspan="3">Need an Account?<br><a href="students.jsp" class="mostpopular">Students</a> | <a href="teachers.jsp" class="mostpopular">Teachers</a></td>
                     				</tr>
                   				</table>
                   			</td>

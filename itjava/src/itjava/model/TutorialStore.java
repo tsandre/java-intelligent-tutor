@@ -323,14 +323,15 @@ public class TutorialStore {
 			conn = DBConnection.GetConnection();
 			for (Tutorial tutorial : tutorialList) {
 				String insertSql = "insert into DeliverableInfo" +
-						"(deliverableName, tutorialInfoId, deliverableType, difficultyLevel, numOfBlanks)" +
-						" values (?,?,?,?,?)";
+						"(deliverableName, tutorialInfoId, deliverableType, difficultyLevel, numOfBlanks, tutorialHTMLCode)" +
+						" values (?,?,?,?,?,?)";
 				PreparedStatement insertStmt = conn.prepareStatement(insertSql);
 				insertStmt.setString(1, tutorial.getTutorialName());
 				insertStmt.setInt(2, tutorialInfoId);
 				insertStmt.setString(3, tutorial.getType());
 				insertStmt.setInt(4, tutorial.getDifficulty());
 				insertStmt.setInt(5, (tutorial.getWordInfoList() == null) ? 0 : tutorial.getWordInfoList().size());
+				insertStmt.setString(6, tutorial.getTutorialHTMLCode());
 				rowsInserted += insertStmt.executeUpdate();
 				ResultSet rs = insertStmt.getGeneratedKeys();
 				while (rs.next() && tutorial.getType().equals("Quiz")) {

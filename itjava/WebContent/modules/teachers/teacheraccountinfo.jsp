@@ -3,9 +3,9 @@
             <form id="form3" name="form3" method="post" action="UpdateTeacherServlet">
               <table width="450" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td width="1" rowspan="21" align="center" bgcolor="#3E4854" class="titles"></td>
-                  <td colspan="3" align="center" bgcolor="#3E4854" class="titles"><span style="color:white; font:Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold;; font-family: Arial, Helvetica, sans-serif">Update Account Information</span></td>
-                  <td width="1" rowspan="21" align="center" bgcolor="#3E4854" class="titles"></td>
+                  <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
+                  <td colspan="3" align="center" bgcolor="#122222" class="titles"><span style="color:white; font: Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold; font-family: Arial, Helvetica, sans-serif">Update Account Information</span></td>
+                  <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
                   </tr>
                 <tr>
                   <td height="4" align="right"></td>
@@ -127,7 +127,7 @@
                   <td colspan="3" align="right">&nbsp;</td>
                 </tr>
                 <tr>
-                  <td height="1" colspan="3" align="right" bgcolor="#3E4854"></td>
+                  <td height="1" colspan="3" align="right" bgcolor="#122222"></td>
                   </tr>
               </table>
             </form>

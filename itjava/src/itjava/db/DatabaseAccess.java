@@ -16,8 +16,7 @@ public class DatabaseAccess {
 		Connection conn = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager
-					.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
+			conn = DriverManager.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
 			java.sql.Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery("select * from "+ args[0] +";");
 			int numOfRows = 0;

@@ -9,9 +9,6 @@
   				<tr>
   					<td><a href="index.jsp"><img src="images/logo1.jpg" width="200" height="60" border="0" /></a></td>
   					<td align="right" valign="bottom">
-  					<% if(session.getAttribute("userID") != null && session.getAttribute("userID").equals("0")){ %>
-  						<%@ include file="userlevelselect.jsp" %>
-  					<% } %>
   					<%@ include file="searchbox.jsp" %></td>
   				</tr>
   			</table>

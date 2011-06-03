@@ -1,5 +1,5 @@
 <%@ page import="itjava.model.*, itjava.data.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*, itjava.view.*, java.util.Enumeration, java.security.*"%>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="250" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td height="10"></td>
           </tr>
@@ -49,7 +49,7 @@
         	     sars = saucpst.executeQuery();
         	     sars.next();
 				 out.println("<tr>");
-                  out.println("<td width=\"140\" align=\"right\">First Name:</td>");
+                  out.println("<td width=\"140\" class=\"basic\" style=\"text-align:right\">First Name:</td>");
                   out.println("<td width=\"5\">&nbsp;</td>");
                   out.println("<td align=\"left\"><input name=\"firstName3\" type=\"text\" class=\"inputFieldText\" id=\"firstName3\" style=\"width:140px\" value=\"" + sars.getString("firstName") + "\" /></td>");
                   out.println("</tr>");
@@ -59,7 +59,7 @@
                   out.println("<td align=\"right\"></td>");
                   out.println("</tr>");
                 out.println("<tr>");
-                  out.println("<td align=\"right\">Last Name:</td>");
+                  out.println("<td class=\"basic\" style=\"text-align:right\">Last Name:</td>");
                   out.println("<td>&nbsp;</td>");
                   out.println("<td align=\"left\"><input name=\"lastName3\" type=\"text\" class=\"inputFieldText\" id=\"lastName3\" style=\"width:140px\" value=\"" + sars.getString("lastName") + "\" /></td>");
                   out.println("</tr>");
@@ -69,7 +69,7 @@
                   out.println("<td align=\"right\"></td>");
                   out.println("</tr>");
                 out.println("<tr>");
-                  out.println("<td align=\"right\">Your School:</td>");
+                  out.println("<td class=\"basic\" style=\"text-align:right\">Your School:</td>");
                   out.println("<td>&nbsp;</td>");
                   out.println("<td align=\"left\"><input name=\"school3\" type=\"text\" class=\"inputFieldText\" id=\"school3\" style=\"width:200px\" value=\"" + sars.getString("school") + "\" onKeyPress=\"if(submitformbutton(this, event)){ checkForm4(); }\" /></td>");
                   out.println("</tr>");
@@ -95,7 +95,7 @@
                   <td align="right"></td>
                   </tr>
                 <tr>
-                  <td align="right">&nbsp;</td>
+                  <td class="basic" style="text-align:right">&nbsp;</td>
                   <td>&nbsp;</td>
                   <td align="left">Change Password: (Optional)</td>
                   </tr>
@@ -105,7 +105,7 @@
                   <td align="right"></td>
                   </tr>
                 <tr>
-                  <td align="right">Password:</td>
+                  <td class="basic" style="text-align:right">Password:</td>
                   <td>&nbsp;</td>
                   <td align="left"><input name="password3" type="password" class="inputFieldText" id="password3" style="width:140px" /></td>
                   </tr>

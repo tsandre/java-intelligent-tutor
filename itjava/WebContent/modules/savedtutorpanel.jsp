@@ -105,8 +105,12 @@ session.setAttribute("deliverableLauncher", launcher);
 	                        	out.println("</td><td style=\"text-align:right; color:#FFF; font-size:11px;\">");
 	                        	out.println(avgrating);
 	                        	out.println("</td></tr>");
-	                            out.println("<tr class=\"myClass\" onclick=\"gotoURL('?page=tutordetails&start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
-	                            out.println("<td class=\"tdTutorialName\">");
+	                        	if(userLevel.equals("student")){
+		                            out.println("<tr class=\"myClass\" onclick=\"gotoURL('students.jsp?page=tutordetails&start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
+	                        	}else{
+	                        		out.println("<tr class=\"myClass\" onclick=\"gotoURL('teachers.jsp?page=tutordetails&start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
+	                        	}
+		                        out.println("<td class=\"tdTutorialName\">");
 	                            out.println("<br />");
 	                            out.println(tutorialInfo.getTutorialName());
 	                            out.println("</td>");

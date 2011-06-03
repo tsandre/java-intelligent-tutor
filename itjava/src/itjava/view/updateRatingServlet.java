@@ -76,7 +76,7 @@ public class updateRatingServlet extends HttpServlet {
 			   ucpst.setString(4, userLevel);
 			   ucpst.executeUpdate();
 		   }
-		   RequestDispatcher dispatcher = request.getRequestDispatcher("ratingupdated.jsp");
+		   RequestDispatcher dispatcher = request.getRequestDispatcher("modules/ratingupdated.jsp");
 		   dispatcher.forward(request, response);
 	   }
 	   catch(Exception e) {

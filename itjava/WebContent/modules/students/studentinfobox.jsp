@@ -1,10 +1,10 @@
-<table width="351" border="0" cellspacing="0" cellpadding="0">
+<table width="250" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td height="10" colspan="3"></td>
             </tr>
           <tr>
             <td bgcolor="#122222"></td>
-            <td width="348"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <td width="248"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="140" height="20" align="center" bgcolor="#122222"><a href="#" title="Student Login" class="navmain" onclick="showStudentLogin()">Students</a></td>
                 <td width="5">&nbsp;</td>
@@ -12,12 +12,12 @@
                 <td>&nbsp;</td>
                 </tr>
               </table></td>
-            <td width="2"></td>
+            <td width="1"></td>
             </tr>
           <tr>
             <td width="1" rowspan="3" bgcolor="#122222"></td>
             <td height="5" bgcolor="#122222"></td>
-            <td width="2" rowspan="3" bgcolor="#122222"></td>
+            <td width="1" rowspan="3" bgcolor="#122222"></td>
             </tr>
           <tr>
             <td height="100" style="padding: 5px 5px 5px 5px; vertical-align:top; text-align: right; font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 12px;">
@@ -56,7 +56,7 @@
                 <td align="left"><a href="students.jsp?page=savedtutors" class="rightmenunav">My Tutors</a></td>
               </tr>
               <tr>
-                <td align="left"><a href="students.jsp?page=classes" class="rightmenunav">Class Lists</a></td>
+                <td align="left"><a href="students.jsp?page=favoritetutors" class="rightmenunav">My Favorite Tutors</a></td>
               </tr>
               <tr>
                 <td align="left"><a href="logout.jsp" target="_self" class="rightmenunav">Click to logout</a></td>

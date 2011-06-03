@@ -1,22 +1,27 @@
-<table>
-<tr>
-            <td class="titles">Welcome Teachers!</td>
-          </tr>
-          <tr>
-            <td class="basic">This website will help you create intelligent tutors which can be distributed to your students. They will be able to learn the Java API material more quickly and easily than they can with the traditional example based methods. Please take time to register with us before creating your first tutor. This will help you keep track of your tutors and make it possible to set up online classrooms. This will make the distribution of material to your students quick and easy. Lets get started, please fill out the form below to begin.</td>
-          </tr>
-          <tr>
-            <td class="basic">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="center">
-            
-            <form id="form1" name="form1" method="post" action="CreateTeacherServlet">
+
+                    
+                    
+<table width="490">
+	<tr height="5">
+		<td></td>
+	</tr>
+	<tr>
+    	<td class="studentTitle">Welcome Teachers!</td>
+	</tr>
+    <tr>
+    	<td class="studentText">This web site will help you create intelligent tutors which can be distributed to your students. They will be able to learn the Java API material more quickly and easily than they can with the traditional example based methods. Please take time to register with us before creating your first tutor. This will help you keep track of your tutors and make it possible to set up online classrooms. This will make the distribution of material to your students quick and easy. Lets get started, please fill out the form below to begin.</td>
+    </tr>
+    <tr>
+    	<td class="basic">&nbsp;</td>
+	</tr>
+    <tr>
+    	<td align="center">
+			<form id="form1" name="form1" method="post" action="CreateTeacherServlet">
               <table width="450" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td width="1" rowspan="21" align="center" bgcolor="#3E4854" class="titles"></td>
-                  <td colspan="3" align="center" bgcolor="#3E4854" class="titles"><span style="color:white; font:Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold;">Sign Up Now!</span></td>
-                  <td width="1" rowspan="21" align="center" bgcolor="#3E4854" class="titles"></td>
+                  <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
+                  <td colspan="3" align="center" bgcolor="#122222" class="titles"><span style="color:white; font: Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold;">Sign Up Now!</span></td>
+                  <td width="1" rowspan="21" align="center" bgcolor="#122222" class="titles"></td>
                   </tr>
                 <tr>
                   <td height="4" align="right"></td>
@@ -118,7 +123,7 @@
                   <td colspan="3" align="right">&nbsp;</td>
                 </tr>
                 <tr>
-                  <td height="1" colspan="3" align="right" bgcolor="#3E4854"></td>
+                  <td height="1" colspan="3" align="right" bgcolor="#122222"></td>
                   </tr>
               </table>
             </form></td>

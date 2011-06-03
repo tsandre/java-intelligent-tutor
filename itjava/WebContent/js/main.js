@@ -128,6 +128,12 @@ function checkAvailability2(){
 	window.open('modules/checkAvailability2.jsp?username='+document.getElementById("username").value,'mywindow','width=400,height=200')
 }
 
+function addtofavorites(){
+	window.open('modules/addtofavorites.jsp?username='+document.getElementById("userid").value+'&id='+document.getElementById("tutorid").value+'&userLevel='+document.getElementById("userLevel").value,'mywindow','width=400,height=200')
+	document.getElementById('addtofavoritesgroup').style.display = 'none';
+	document.getElementById('favoritedgroup').style.display = 'block';
+}
+
 function changebg(imgid, imgsrc){
 	document.getElementById(imgid).src = "images/"+imgsrc;
 }

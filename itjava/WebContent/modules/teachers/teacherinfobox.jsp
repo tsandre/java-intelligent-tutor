@@ -1,12 +1,12 @@
-        <table width="351" border="0" cellspacing="0" cellpadding="0">
+        <table width="250" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td height="10" colspan="3"></td>
             </tr>
           <tr>
             <td bgcolor="#122222"></td>
-            <td width="348"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <td width="248"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="140" bgcolor="#3e4854" align="center"><a href="#" title="Teacher Login" class="navmain" onclick="showTeacherLogin()">Teacher Login</a></td>
+                <td width="140" bgcolor="#122222" align="center"><a href="#" title="Teacher Login" class="navmain" onclick="showTeacherLogin()">Teacher Login</a></td>
                 <td width="5">&nbsp;</td>
                 <td height="20" align="center" bgcolor="#122222"></td>
                 <td>&nbsp;</td>
@@ -15,19 +15,20 @@
             <td width="2"></td>
             </tr>
           <tr>
-            <td width="1" rowspan="3" bgcolor="#3E4854"></td>
-            <td height="5" bgcolor="#3E4854"></td>
-            <td width="2" rowspan="3" bgcolor="#3E4854"></td>
+            <td width="1" rowspan="3" bgcolor="#122222"></td>
+            <td height="5" bgcolor="#122222"></td>
+            <td width="2" rowspan="3" bgcolor="#122222"></td>
             </tr>
           <tr>
             <td height="100" style="padding: 5px 5px 5px 5px; vertical-align:top; text-align: right; font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 12px;">
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td align="left"><span class="basic">
+                <%@ page import="itjava.model.*, itjava.db.*, java.util.HashMap, java.util.ArrayList, itjava.util.*, java.sql.*, itjava.view.*, itjava.data.*"%>
                 <%  
-                Connection conn = null;
+                    Connection conn = null;
         	    PreparedStatement pst = null;
-			    PreparedStatement ucpst = null;
+                    PreparedStatement ucpst = null;
     		    ResultSet rs = null;
         	    try{
         	     conn = DBConnection.GetConnection();
@@ -56,9 +57,6 @@
                 <td align="left"><a href="teachers.jsp?page=savedtutors" class="rightmenunav">My Tutors</a></td>
               </tr>
               <tr>
-                <td align="left"><a href="teachers.jsp?page=classes" class="rightmenunav">Class Lists</a></td>
-              </tr>
-              <tr>
                 <td align="left"><a href="logout.jsp" target="_self" class="rightmenunav">Click to logout</a></td>
               </tr>
               </table>
@@ -66,6 +64,6 @@
             </td>
             </tr>
           <tr>
-            <td height="1" bgcolor="#3E4854"></td>
+            <td height="1" bgcolor="#122222"></td>
             </tr>
           </table>
