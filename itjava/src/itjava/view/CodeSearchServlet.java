@@ -49,6 +49,7 @@ public class CodeSearchServlet extends HttpServlet {
 		wordInfoPresenter.SetCompilationUnitListAndAccessRepository( query.replaceAll("\\s+", ""), codeSearchPresenter.SearchNext());
 
 		ArrayList<Tutorial> tutorialList = wordInfoPresenter.GenerateWordInfoMap();
+                //ArrayList<String> tutorialDescriptionList = new ArrayList<String>();
 		session.setAttribute("tutorialList", tutorialList);
 		
 		ArrayList<String> approvalList = new ArrayList<String>();
@@ -68,6 +69,8 @@ public class CodeSearchServlet extends HttpServlet {
 		session.setAttribute("difficultyList", difficultyList);
 		session.setAttribute("hintsMapList", hintsMapList);
 		session.setAttribute("tutorialListSize", tutorialList.size());
+                //session.setAttribute("tutorialDescriptionList", tutorialDescriptionList);
+                //session.setAttribute("tutorialDescriptionListSize", 0);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("tutorialSelection.jsp?index=0");
 		
 		

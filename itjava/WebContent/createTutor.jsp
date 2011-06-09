@@ -6,7 +6,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Find a Tutor</title>
+<link rel="shortcut icon" href="http://experiments.eecs.oregonstate.edu:8080/favicon.ico" type="image/x-icon" />
+<title>Create a jTutor</title>
 <link href="css/maincss.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
@@ -15,42 +16,22 @@
 <script src="MD5.js"></script>
 </head>
 <body>
-<% 
-if(session.getAttribute("userName") == null){
-	String timestamp =  new Double(System.currentTimeMillis()/1000).toString();
-	byte[] defaultBytes = timestamp.getBytes();
-	MessageDigest algorithm = MessageDigest.getInstance("MD5");
-	algorithm.reset();
-	algorithm.update(defaultBytes);
-	byte messageDigest[] = algorithm.digest();
-			
-	StringBuffer hexString = new StringBuffer();
-	for (int i=0;i<messageDigest.length;i++) {
-		hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-	}
-	messageDigest.toString();
-	String tempuser=hexString+"";
-	session.setAttribute("userID", "0");
-	session.setAttribute("userName", tempuser);
-	session.setAttribute("userLevel", "unknown");
-} 
-%> 
 <table width="1024" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td><%@ include file="/modules/headers/header6.jsp" %></td>
+    <td colspan="3"><%@ include file="/modules/headers/header.jsp" %></td>
   </tr>
   <tr>
-    <td>
+  	<td width="1" bgcolor="#122222"></td>
+    <td width="1022">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="1" rowspan="3" bgcolor="#122222"></td>
-        <td width="5"></td>
-        <td valign="top" style="color: #333; font-size: 12px; font-family: Arial, Helvetica, sans-serif; width:762px;" align="center">
-        	<br><% if(request.getParameter("page") != null && request.getParameter("page").equals("tutordetails")){ 
-					%><jsp:include page="/modules/tutordetails.jsp" /><% 
-					}else{ 
-					%><%@ include file="/modules/headers/searchbox3.jsp" %><br><jsp:include page="/modules/mostpopularlist.jsp" /><% 
-					} %>
+      	<td width="5"></td>
+        <td valign="top" style="width:250px;">
+        	<%@ include file="/modules/commonterms.jsp" %>
+        </td>
+        <td valign="top" style="width: 522px;">
+        	<%@ include file="/modules/createtutorbox.jsp" %>
+        	<%@ include file="/modules/howtouse.jsp" %>
         </td>
         <td width="250" valign="top">
         	<%
@@ -64,19 +45,19 @@ if(session.getAttribute("userName") == null){
         			%><%@ include file="/modules/students/studentloginbox.jsp" %><%
         		}
         	%>
-        	<%@ include file="/modules/commonterms2.jsp" %>
+        	<%@ include file="/modules/mostpopular.jsp" %>
         </td>
         <td width="5"></td>
-        <td width="1" rowspan="3" bgcolor="#122222"></td>
       </tr>
       <tr>
-        <td height="10" colspan="6"></td>
+        <td height="10" colspan="2"></td>
         <td></td>
-      </tr>
+        </tr>
     </table></td>
+    <td width="1" bgcolor="#122222"></td>
   </tr>
   <tr>
-    <td height="1" bgcolor="#122222"></td>
+    <td height="1" bgcolor="#122222" colspan="3"></td>
   </tr>
 </table> 
 <% 

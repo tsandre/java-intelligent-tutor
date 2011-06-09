@@ -59,12 +59,18 @@ public class SaveSelectionsServlet extends HttpServlet {
 		ArrayList<Integer> difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
 		ArrayList<HashMap<String, ArrayList<String>>> hintsMapList = (ArrayList<HashMap<String, ArrayList<String>>>)session.getAttribute("hintsMapList");
 		ArrayList<Tutorial> tutorialList = (ArrayList<Tutorial>) session.getAttribute("tutorialList");
-		
+                //ArrayList<String> tutorialDescriptionList = (ArrayList<String>) session.getAttribute("tutorialDescriptionList");
+		Tutorial currentTutorial = tutorialList.get(currentIndex);
+                
 		if (submitValue.equals("Next Snippet >>")) {
-			nextIndex = currentIndex + 1;
+                    String lastdesc = (String) request.getParameter("exDescription");
+                    currentTutorial.setTutorialDescription((String) request.getParameter("exDescription"));
+                    nextIndex = currentIndex + 1;
 		}
 		else if(submitValue.equals("<< Previous Snippet")) {
+                        currentTutorial.setTutorialDescription((String) request.getParameter("exDescription"));
 			nextIndex = currentIndex - 1;
+                    
 		}
 		else if (submitValue.equals("Edit the snippet")) {
 			session.setAttribute("facade", tutorialList.get(currentIndex).getFacade());
@@ -72,9 +78,9 @@ public class SaveSelectionsServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 		else if (submitValue.equals("Verify & Save")){
-			HashSet<Boolean> wordFoundSet = new HashSet<Boolean>();
+                        HashSet<Boolean> wordFoundSet = new HashSet<Boolean>();
 			String[] newWords = request.getParameter("txtNewWord").split(",");
-			Tutorial currentTutorial = tutorialList.get(currentIndex);
+			
 			CompilationUnitFacade facade = currentTutorial.getFacade();
 			Set<Integer> lineNumbersUsed = currentTutorial.getLineNumbersUsed();
 			ArrayList<WordInfo> wordInfoList = currentTutorial.getWordInfoList();
@@ -144,13 +150,15 @@ public class SaveSelectionsServlet extends HttpServlet {
 			
 
 			currentTutorial.setWordInfoList(wordInfoList);
-			tutorialList.remove(currentIndex);
+                        tutorialList.remove(currentIndex);
 			tutorialList.add(currentIndex, currentTutorial);
+                        //tutorialDescriptionList.add(currentIndex, request.getParameter("exDescription"));
 			session.setAttribute("tutorialList", tutorialList);
 			session.setAttribute("approvalList", approvalList);
 			session.setAttribute("difficultyList", difficultyList);
 			session.setAttribute("wordsList", wordsList);
 			session.setAttribute("hintsMapList", hintsMapList);
+                       // session.setAttribute("tutorialDescriptionList", tutorialDescriptionList);
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("tutorialSelection.jsp?index=" + currentIndex + "&wordFound=" + wordFoundSet.contains(true));
 			dispatcher.forward(request, response);
@@ -189,7 +197,7 @@ public class SaveSelectionsServlet extends HttpServlet {
 			}
 		}
 		else {
-			nextPage = "tutorialSelection.jsp?index=" + nextIndex;
+			nextPage = "tutorialSelection.jsp?nothing=123&index=" + nextIndex;
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);

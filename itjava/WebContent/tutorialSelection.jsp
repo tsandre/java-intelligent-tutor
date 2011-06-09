@@ -274,6 +274,7 @@ ArrayList<String> approvalList = (ArrayList<String>) session.getAttribute("appro
 ArrayList<List<String>> wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
 ArrayList<Integer> difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
 ArrayList<Tutorial> tutorialList = (ArrayList<Tutorial>)session.getAttribute("tutorialList");
+//ArrayList<String> tutorialDescriptionList = (ArrayList<String>)session.getAttribute("tutorialDescriptionList");
 ArrayList<HashMap<String, ArrayList<String>>> hintsMapList = (ArrayList<HashMap<String, ArrayList<String>>>)session.getAttribute("hintsMapList");
 
 Tutorial currentTutorial = tutorialList.get(currentIndex);
@@ -329,6 +330,10 @@ for (int approvalIndex = 0; approvalIndex <= 3; approvalIndex++) {
 </div>
 
 </fieldset>
+<fieldset>
+    <label>Enter a Description for this Quiz/Tutor</label>
+    <textarea name="exDescription" id="exDescription" style="height:75px; width:100%" ><% if(currentTutorial.getTutorialDescription() != null){ out.print(currentTutorial.getTutorialDescription()); } %></textarea>
+</fieldset>
 </div>
 
 <div id="divWordInfo" class="stepBox">
@@ -382,15 +387,17 @@ Note: You can have only 1 word per line in the quiz. If you want to blank a word
 	<label>Rate the difficulty level of this snippet:</label><br />
 	<%
 	Integer difficultySelected = difficultyList.get(currentIndex);
+                out.print("<table align=\"center\"><tr>");
 		for (int difficultyIndex = 1; difficultyIndex <=5; difficultyIndex++) {
-			out.print("<input name=\"difficultyLevel\" type=\"radio\" value=\"" + difficultyIndex + "\" class=\"star\"");
+			out.print("<td><table><tr><td><input name=\"difficultyLevel\" type=\"radio\" value=\"" + difficultyIndex + "\" class=\"star\"");
 			if (difficultySelected != null) {
 				if (difficultySelected == difficultyIndex) {
 					out.print(" checked=\"checked\"");
 				}
 			}
-			out.println("/>");
+			out.println("/></td></tr><tr><td>" + difficultyIndex + "</td></tr></table></td>");
 		}
+                out.print("</tr><tr><td align=\"center\" colspan=\"5\"><-easiest -------- hardest-></td></tr></table>");
 	%>
 </fieldset>
 </div>
@@ -443,7 +450,20 @@ int currWordInfoIndex = 0;
 for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 	String wordToBeBlanked = currentWordInfo.wordToBeBlanked;
 	ArrayList<String> currHintsList = null;
-	String hintValue = "";
+	String hintValue1 = "";
+        String hintValue2 = "";
+        /*int DoneNow = 0;
+        for(int m=0; m<hintsMapList.size() && DoneNow==0; m++){
+            if(hintsMapList.get(m) != null){
+                if(hintsMapList.get(m).get(wordToBeBlanked) != null){
+                    hintValue1 = hintsMapList.get(m).get(wordToBeBlanked).get(0);
+                    hintValue2 = hintsMapList.get(m).get(wordToBeBlanked).get(1);
+                    out.println(hintValue1 + ", " + hintValue2);
+                    DoneNow = 1;
+                }
+            }
+        }*/
+       
 	if (hintsMap != null) {
 		currHintsList = hintsMap.get(Integer.toString(currWordInfoIndex));
 	}
@@ -453,17 +473,29 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 	for (int hintIndex = 1; hintIndex <= 2; hintIndex++) {
 		if (currHintsList != null ) {
 			if (currHintsList.size() > 0) {
-				hintValue = currHintsList.get(0);
-				currHintsList.remove(0);
-				if (hintValue.equalsIgnoreCase(wordToBeBlanked)) hintValue = "";
-			}
+                            hintValue1 = currHintsList.get(0);
+                            hintValue2 = currHintsList.get(1);
+                            //currHintsList.remove(0);
+                            //if (hintValue1.equalsIgnoreCase(wordToBeBlanked)) hintValue1 = "";
+                            //if (hintValue2.equalsIgnoreCase(wordToBeBlanked)) hintValue2 = "";		
+                        }
 		}
-		out.println("<br /><input type=\"text\" " +
+                if(hintIndex == 1){
+                out.println("<br /><input type=\"text\" " +
 				"name=\"txtHint_" + currWordInfoIndex + "_" + hintIndex + "\" " + 
 				"placeholder=\"Hint " + hintIndex + "\" " + 
-				"value=\"" + hintValue + "\" " +
+				"value=\"" + hintValue1 + "\" " +
 				"size=\"30\" " +
-				" />");		
+				" />");	
+                }else{
+                    out.println("<br /><input type=\"text\" " +
+				"name=\"txtHint_" + currWordInfoIndex + "_" + hintIndex + "\" " + 
+				"placeholder=\"Hint " + hintIndex + "\" " + 
+				"value=\"" + hintValue2 + "\" " +
+				"size=\"30\" " +
+				" />");	
+                }
+                
 	}
 	out.println("</div>");
 	currWordInfoIndex++;

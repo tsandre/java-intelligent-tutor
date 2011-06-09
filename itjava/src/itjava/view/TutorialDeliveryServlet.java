@@ -34,6 +34,7 @@ public class TutorialDeliveryServlet extends HttpServlet {
 	private ArrayList<HashMap<String, ArrayList<String>>> hintsMapList;
 	private ArrayList<Integer> difficultyList;
 	private ArrayList<Tutorial> tutorialList;
+        //private ArrayList<String> tutorialDescriptionList;
 	private ArrayList<Tutorial> approvedTutorialList;
 	private HttpSession session;
 	private PrintWriter display;
@@ -58,6 +59,7 @@ public class TutorialDeliveryServlet extends HttpServlet {
 		wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
 		difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
 		tutorialList = (ArrayList<Tutorial>)session.getAttribute("tutorialList");
+                //tutorialDescriptionList = (ArrayList<String>)session.getAttribute("tutorialDescriptionList");
 		hintsMapList = (ArrayList<HashMap<String, ArrayList<String>>>) session.getAttribute("hintsMapList");
 		
 		approvedTutorialList = AbsorbUserApprovalsInTutorialList(tutorialInfo);
@@ -140,6 +142,7 @@ public class TutorialDeliveryServlet extends HttpServlet {
 				currentTutorial.setDifficulty(difficulty);
 				currentTutorial.setTutorialName("Quiz" + approvedIndex);
 				currentTutorial.setType("Quiz");
+                                //currentTutorial.setTutorialDescription(tutorialInfo.getTutorialDescription());
 				approvedTutorialList.add(currentTutorial);
 				approvedIndex++;
 			}
@@ -148,6 +151,7 @@ public class TutorialDeliveryServlet extends HttpServlet {
 				currentTutorial.setWordInfoList(null);
 				currentTutorial.setTutorialName("Example" + approvedIndex);
 				currentTutorial.setType("Example");
+                                //currentTutorial.setTutorialDescription(tutorialInfo.getTutorialDescription());
 				approvedTutorialList.add(tutorialList.get(tutorialIndex));
 				approvedIndex++;
 			}
