@@ -11,6 +11,7 @@ public class Tutorial {
 	private String _readableName;
 	private String _type;
 	private String _tutorialHTMLCode = "";
+        public String tutorialDescription = "";
 	public String tutorialCode = "";
 	private ArrayList<WordInfo> wordInfoList;
 	private ArrayList<WordInfo> originalWordInfoList;
@@ -39,6 +40,14 @@ public class Tutorial {
 			ioe.printStackTrace();
 		}
 	}
+        
+        public void setTutorialDescription(String exDesc){
+            this.tutorialDescription = exDesc;
+        }
+        
+        public String getTutorialDescription() {
+            return this.tutorialDescription;
+        }
 
 	public void AppendCode(String currLineOfCode) {
 		this.tutorialCode += currLineOfCode + "\n";

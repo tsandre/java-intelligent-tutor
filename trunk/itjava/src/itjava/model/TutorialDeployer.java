@@ -126,8 +126,15 @@ public class TutorialDeployer {
 			for(int i=0; i<_tutorial.getWordInfoList().size(); i++){
 				myTutorialOutput += "Edges[" + i + "] = \"" + _tutorial.getWordInfoList().get(i).wordToBeBlanked.toString() + "\";\n";
 				Linenum = _tutorial.getWordInfoList().get(i).lineNumber-1;
+                                String s = myLines.get(Linenum);
+                                int charCount = s.replaceAll(_tutorial.getWordInfoList().get(i).wordToBeBlanked.toString(), "").length();
 				myLines.set(Linenum, myLines.get(Linenum).replaceFirst(_tutorial.getWordInfoList().get(i).wordToBeBlanked.toString(), "<input type=\"text\" name=\"answer_" + i + "\" id=\"answer_" + i + "\" onChange=\"checkanswer('" + i + "');\" onfocus=\"setcurrenthint('" + i + "');\" style=\"border-width:2px; border:solid; border-color:#999; padding: 2px 0 2px 0;\" />"));
-				for(int j=0; j<_tutorial.getWordInfoList().get(i).hintsAvailable.size(); j++){
+				if(charCount > 1){
+                                    for(int k=1; k<charCount;k++){
+                                        myLines.set(Linenum, myLines.get(Linenum).replaceFirst(_tutorial.getWordInfoList().get(i).wordToBeBlanked.toString(), "___________"));    
+                                    }
+                                }
+                                for(int j=0; j<_tutorial.getWordInfoList().get(i).hintsAvailable.size(); j++){
 					myTutorialOutput += "Hints[" + totalhints + "] = \"" + _tutorial.getWordInfoList().get(i).hintsAvailable.get(j) + "\";\n";
 					totalhints++;
 					tempcurrtotalhints = j;

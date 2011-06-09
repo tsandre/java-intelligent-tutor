@@ -6,6 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="http://experiments.eecs.oregonstate.edu:8080/favicon.ico" type="image/x-icon" />
 <title>Teacher Page</title>
 <link href="css/maincss.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
@@ -16,55 +17,71 @@
 <body>
 <table width="1024" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td><%@ include file="/modules/headers/header2.jsp" %></td>
+    <td colspan="3"><%@ include file="/modules/headers/header2.jsp" %></td>
   </tr>
   <tr>
-    <td>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td width="1" rowspan="3" bgcolor="#122222"></td>
-        <td rowspan="2" valign="top" style="padding:0px 5px 5px 5px; color: #333; font-size: 12px; font-family: Arial, Helvetica, sans-serif;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td height="10"></td>
-          </tr>
-          <tr><td>
-          <%
-          	if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("accountinfo")){ 
-          		%><jsp:include page="/modules/teachers/teacheraccountinfo.jsp" /><%
-          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("savedtutors")){ 
-          		%><jsp:include page="/modules/savedtutorpanel.jsp" /><%
-          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("classes")){ 
-          		%><jsp:include page="/modules/teachers/teacherclasses.jsp" /><%
-          	}else if(request.getParameter("page") != null && request.getParameter("page").equals("tutordetails")){ 
-          		%><jsp:include page="/modules/tutordetails.jsp" /><%
-          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0")){ 
-          		%><jsp:include page="/modules/createtutorbox.jsp" /><jsp:include page="/modules/commonterms.jsp" /><%
-          	}else{
-          		%><jsp:include page="/modules/teachers/teachercontent.jsp" /><%
-          	}%>
-          </td></tr>
-        </table></td>
-        <td width="350" valign="top">
-        	<%
-        		if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0")){ 
-        			%><%@ include file="/modules/teachers/teacherinfobox.jsp" %><%
-        		}else{
-        			%><%@ include file="/modules/teachers/teacherloginbox.jsp" %><%
-        		}
-        	%>
-        	<%@ include file="/modules/mostpopular2.jsp" %>
-        </td>
-        <td width="5"></td>
-        <td width="1" rowspan="3" bgcolor="#122222"></td>
-      </tr>
-      <tr>
-        <td height="10" colspan="2"></td>
-        <td></td>
-        </tr>
-    </table></td>
+  	<td width="1" bgcolor="#122222"></td>
+    <td width="1022">
+       	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          	<tr>
+            	<td height="10" colspan="5"></td>
+          	</tr>
+          	<tr>
+          		<td width="5"></td>
+          		<%
+	          	if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("accountinfo")){ 
+	          		%><td width="250" valign="top"><jsp:include page="/modules/commonterms.jsp" /></td><%
+	          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("savedtutors")){ 
+	          		%><td width="1"></td><%
+	          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("classes")){ 
+	          		%><td width="250" valign="top"><jsp:include page="/modules/commonterms.jsp" /></td><%
+	          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("favoritetutors")){
+	          		%><td width="1"></td><%
+	          	}else if(request.getParameter("page") != null && request.getParameter("page").equals("tutordetails")){ 
+	          		%><td width="1"></td><%
+	          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0")){ 
+	          		%><td width="250" valign="top"><jsp:include page="/modules/commonterms.jsp" /></td><%
+	          	}else{
+	          		%><td width="250" valign="top"><jsp:include page="/modules/commonterms.jsp" /></td><%
+	          	}%>
+	          	
+		          <%
+		          	if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("accountinfo")){ 
+		          		%><td valign="top" align="center" width="510"><jsp:include page="/modules/teachers/teacheraccountinfo.jsp" /></td><%
+		          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("savedtutors")){ 
+		          		%><td valign="top" align="center" width="759"><jsp:include page="/modules/savedtutorpanel.jsp" /></td><%
+		          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("classes")){ 
+		          		%><td valign="top" align="center" width="510"><jsp:include page="/modules/myclasses.jsp" /></td><%
+		          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && request.getParameter("page") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0") && request.getParameter("page").equals("favoritetutors")){
+		          		%><td valign="top" align="center" width="759"><jsp:include page="/modules/favoritetutors.jsp" /></td><%
+		          	}else if(request.getParameter("page") != null && request.getParameter("page").equals("tutordetails")){ 
+		          		%><td valign="top" align="center" width="759"><jsp:include page="/modules/tutordetails.jsp" /></td><%
+		          	}else if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0")){ 
+		          		%><td valign="top" align="center" width="510"><jsp:include page="/modules/teachers/teacherhowto.jsp" /></td><%
+		          	}else{
+		          		%><td valign="top" align="center" width="510"><jsp:include page="/modules/teachers/teachercontent.jsp" /></td><%
+		          	}%>
+	          	
+		        <td width="250" valign="top">
+		        	<%
+		        		if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && session.getAttribute("userLevel").equals("teacher") && !session.getAttribute("userID").equals("0")){ 
+		        			%><%@ include file="/modules/teachers/teacherinfobox.jsp" %><%
+		        		}else{
+		        			%><%@ include file="/modules/teachers/teacherloginbox.jsp" %><%
+		        		}%>
+		        	<%@ include file="/modules/mostpopular2.jsp" %>
+		        </td>
+		        <td width="5"></td>
+      		</tr>
+      		<tr>
+        		<td height="10" colspan="5"></td>
+        	</tr>
+    	</table>
+    </td>
+    <td width="1" bgcolor="#122222"></td>
   </tr>
   <tr>
-    <td height="1" bgcolor="#122222"></td>
+  	<td colspan="3" height="1" bgcolor="#122222"></td>
   </tr>
 </table>
 <% 

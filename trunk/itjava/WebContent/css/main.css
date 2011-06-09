@@ -282,7 +282,7 @@
       a little transparent*/
     background:#fff;
     _background:none; /*this line removes the background in IE*/
-    opacity:.75;
+    opacity:.90;
     border-top:1px solid #ddd;
     border-bottom:1px solid #ddd;
     

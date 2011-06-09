@@ -38,6 +38,7 @@ public class TutorialSelectionServlet extends HttpServlet {
 		String approved = request.getParameter("radioApproval");
 		HttpSession session = request.getSession(true);
 		ArrayList<Tutorial> tutorialList = (ArrayList<Tutorial>) session.getAttribute("tutorialList");
+                //ArrayList<String> tutorialDescriptionList = (ArrayList<String>) session.getAttribute("tutorialDescriptionList");
 		int currentIndex = (Integer) session.getAttribute("currentIndex");
 		
 		ArrayList<Tutorial> approvedTutorialList;

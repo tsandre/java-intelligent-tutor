@@ -6,6 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="http://experiments.eecs.oregonstate.edu:8080/favicon.ico" type="image/x-icon" />
 <title>Create a jTutor</title>
 <link href="css/maincss.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
@@ -17,17 +18,22 @@
 <body>
 <table width="1024" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td><%@ include file="/modules/headers/header.jsp" %></td>
+    <td colspan="3"><%@ include file="/modules/headers/header5.jsp" %></td>
   </tr>
   <tr>
-    <td>
+  	<td width="1" bgcolor="#122222"></td>
+    <td width="1022">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="1" rowspan="3" bgcolor="#122222"></td>
-        <td rowspan="2" valign="top" style="padding:0px 5px 5px 5px; color: #333; font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
-        	<%@ include file="/modules/createtutorbox.jsp" %><%@ include file="/modules/commonterms.jsp" %>
+      	<td width="5"></td>
+        <td valign="top" style="width:250px;">
+        	<%@ include file="/modules/commonterms2.jsp" %>
         </td>
-        <td width="350" valign="top">
+        <td valign="top" style="width: 522px;" align="center">
+        	<%@ include file="/modules/headers/searchbox3.jsp" %>
+        	<%@ include file="/modules/howtouse.jsp" %>
+        </td>
+        <td width="250" valign="top">
         	<%
         		if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && session.getAttribute("userLevel").equals("student") && !session.getAttribute("userID").equals("0")){ 
         			%><%@ include file="/modules/students/studentinfobox.jsp" %><%
@@ -42,16 +48,16 @@
         	<%@ include file="/modules/mostpopular.jsp" %>
         </td>
         <td width="5"></td>
-        <td width="1" rowspan="3" bgcolor="#122222"></td>
       </tr>
       <tr>
         <td height="10" colspan="2"></td>
         <td></td>
         </tr>
     </table></td>
+    <td width="1" bgcolor="#122222"></td>
   </tr>
   <tr>
-    <td height="1" bgcolor="#122222"></td>
+    <td height="1" bgcolor="#122222" colspan="3"></td>
   </tr>
 </table> 
 <% 

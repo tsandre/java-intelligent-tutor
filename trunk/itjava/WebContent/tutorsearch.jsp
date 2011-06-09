@@ -183,6 +183,9 @@ if(session.getAttribute("userName") == null){
 	                            out.println("<tr><td colspan=\"3\"></td></tr>");
 	        
 	                        }
+                                if(i==0){
+                                    out.println("<tr><td colspan=\"3\" style=\"color:#FFF\">Your search had no results, please try again.</td></tr>");
+                                }
                		   }catch(Exception e) {
                	  	     e.printStackTrace();
                	  	   }
@@ -207,7 +210,7 @@ if(session.getAttribute("userName") == null){
             </td></tr>
            
         </table></td>
-        <td width="350" valign="top">
+        <td width="250" valign="top">
         	<%
         		if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && session.getAttribute("userLevel").equals("student") && !session.getAttribute("userID").equals("0")){ 
         			%><%@ include file="/modules/students/studentinfobox.jsp" %><%

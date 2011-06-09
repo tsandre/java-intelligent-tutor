@@ -59,6 +59,7 @@ private TutorialStore _tutorialStore;
 				CreateDeliveryFolder(approvedTutorial.getReadableName());
 				deployer.Deploy(rt);
 				finalTutorial.setTutorialHTMLCode(deployer.CompileHTMLTutorial(rt));
+                                finalTutorial.setTutorialDescription(approvedTutorial.getTutorialDescription());
 				finalTutorialList.add(finalTutorial);
 			} catch (Exception e) {
 				e.printStackTrace();
