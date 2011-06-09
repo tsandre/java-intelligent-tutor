@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="http://experiments.eecs.oregonstate.edu:8080/favicon.ico" type="image/x-icon" />
-<title>Create a jTutor</title>
+<title>Find a jTutor</title>
 <link href="css/maincss.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
