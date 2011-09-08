@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences>
+  <preference>
+    <name>frame0 Width</name>
+    <class>java.lang.Integer</class>
+    <value>800</value>
+  </preference>
+  <preference>
+    <name>frame0 Height</name>
+    <class>java.lang.Integer</class>
+    <value>784</value>
+  </preference>
+  <preference>
+    <name>frame0 Location X</name>
+    <class>java.lang.Integer</class>
+    <value>283</value>
+  </preference>
+  <preference>
+    <name>frame0 Location Y</name>
+    <class>java.lang.Integer</class>
+    <value>-36</value>
+  </preference>
+  <preference>
+    <name>Show Action Labels</name>
+    <class>java.lang.Boolean</class>
+    <value>true</value>
+  </preference>
+  <preference>
+    <name>Show Rule Labels</name>
+    <class>java.lang.Boolean</class>
+    <value>false</value>
+  </preference>
+  <preference>
+    <name>Allow Tool-Performed Actions</name>
+    <class>java.lang.Boolean</class>
+    <value>true</value>
+  </preference>
+  <preference>
+    <name>Maximum Number of Student Actors</name>
+    <class>java.lang.Integer</class>
+    <value>1</value>
+  </preference>
+  <preference>
+    <name>Docked Window Location X</name>
+    <class>java.lang.Integer</class>
+    <value>-8</value>
+  </preference>
+  <preference>
+    <name>Docked Window Location Y</name>
+    <class>java.lang.Integer</class>
+    <value>-8</value>
+  </preference>
+  <preference>
+    <name>Docked Window Width</name>
+    <class>java.lang.Integer</class>
+    <value>1382</value>
+  </preference>
+  <preference>
+    <name>Docked Window Height</name>
+    <class>java.lang.Integer</class>
+    <value>744</value>
+  </preference>
+  <preference>
+    <name>Preferences Window Location X</name>
+    <class>java.lang.Integer</class>
+    <value>125</value>
+  </preference>
+  <preference>
+    <name>Preferences Window Location Y</name>
+    <class>java.lang.Integer</class>
+    <value>125</value>
+  </preference>
+  <preference>
+    <name>Preferences Window Width</name>
+    <class>java.lang.Integer</class>
+    <value>580</value>
+  </preference>
+  <preference>
+    <name>Preferences Window Height</name>
+    <class>java.lang.Integer</class>
+    <value>480</value>
+  </preference>
+  <preference>
+    <name>Use Disk Logging</name>
+    <class>java.lang.Boolean</class>
+    <value>true</value>
+  </preference>
+  <preference>
+    <name>Disk Logging Directory</name>
+    <class>edu.cmu.pact.Preferences.FileBrowser</class>
+    <value>C:\Project\myworkspace\itjava\logs</value>
+  </preference>
+  <preference>
+    <name>Use OLI Logging</name>
+    <class>java.lang.Boolean</class>
+    <value>false</value>
+  </preference>
+  <preference>
+    <name>OLI Logging URL</name>
+    <class>java.lang.String</class>
+    <value />
+  </preference>
+  <preference>
+    <name>Interface Directory</name>
+    <class>java.lang.String</class>
+    <value>C:\Project\Cognitive Tutor Authoring Tools\Projects\FractionAdditionTutor</value>
+  </preference>
+  <preference>
+    <name>Problem Directory</name>
+    <class>java.lang.String</class>
+    <value>C:\Project\Cognitive Tutor Authoring Tools\Projects\FractionAdditionTutor</value>
+  </preference>
+  <preference>
+    <name>BRD File other location</name>
+    <class>java.lang.String</class>
+    <value>C:\Project\Cognitive Tutor Authoring Tools\Projects\FractionAdditionTutor</value>
+  </preference>
+  <preference>
+    <name>Student Interface Width</name>
+    <class>java.lang.Integer</class>
+    <value>400</value>
+  </preference>
+  <preference>
+    <name>Student Interface Height</name>
+    <class>java.lang.Integer</class>
+    <value>490</value>
+  </preference>
+  <preference>
+    <name>Student Interface Location X</name>
+    <class>java.lang.Integer</class>
+    <value>100</value>
+  </preference>
+  <preference>
+    <name>Student Interface Location Y</name>
+    <class>java.lang.Integer</class>
+    <value>100</value>
+  </preference>
+</preferences>
+
