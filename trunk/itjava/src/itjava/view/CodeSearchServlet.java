@@ -39,7 +39,8 @@ public class CodeSearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String query = (String) request.getParameter("query");
-		query = query.replaceAll("\\W", " ").replaceAll("\\s+", " ").trim();
+		query = query.replaceAll("\\W", " ").replaceAll("\\s+", " ").trim(); 
+		// \W 	A non-word character: [^\w] and \s 	A whitespace character: [ \t\n\x0B\f\r]
 		HttpSession session = request.getSession(true);
 		
 		session.setAttribute("query", query);
