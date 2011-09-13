@@ -76,7 +76,7 @@ public class WordInfoPresenter {
 		
 		LinkedHashSet<CompilationUnitFacade> similarFacades = 
 			compilationUnitStore.FindSimilarCompilationUnits
-				(compilationUnitFacadeList, this.getRepository(), this.getTermsDict(), 15);
+				(compilationUnitFacadeList, this.getRepository(), this.getTermsDict(), 4);
 		System.out.println("Done finding similar compilation units..");
 		
 		System.out.println("Begin creating wordInfo for top words..");
