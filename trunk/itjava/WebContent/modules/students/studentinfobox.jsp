@@ -26,9 +26,9 @@
               
                 <td align="left">
                 <span class="basic">Welcome back <% Connection siconn = null;
-			PreparedStatement sipst = null;
-			PreparedStatement siucpst = null;
-			ResultSet sirs = null;
+				PreparedStatement sipst = null;
+				PreparedStatement siucpst = null;
+				ResultSet sirs = null;
 			try{
 				siconn = DBConnection.GetConnection();
 				String usercheck = "SELECT firstName, lastName, school, username, email FROM students WHERE username = ? AND studentID = ?";
