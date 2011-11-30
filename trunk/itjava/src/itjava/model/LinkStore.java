@@ -1,20 +1,32 @@
 /**
  * 
  */
+
+/**
+  * Version Changes
+ * V1.1 - Bharat - Adding google search option - 10/28/2011
+ */
 package itjava.model;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import com.luxmedien.googlecustomsearch.GoogleCustomSearch;
+import com.luxmedien.googlecustomsearch.json.GoogleResponse;
+import com.luxmedien.googlecustomsearch.json.Item;
+
 
 /**
  * @author Aniket, Matt
@@ -25,12 +37,63 @@ public class LinkStore {
 	public static LinkedHashSet<String> CreateLinks(String query) {
 		LinkedHashSet<String> _setOfLinks;
 		_setOfLinks = new LinkedHashSet<String>();
-		//_setOfLinks.addAll(GoogleSearch());
+		//V1.1 Start
+		_setOfLinks.addAll(GoogleSearch(query));
+		//V1.1 End
 		_setOfLinks.addAll(BingSearch(query));
 		_setOfLinks.addAll(YahooSearch(query));
 		return _setOfLinks;
 	}
+	
+	//Start Edit V1.1 Google Search Addition
+	private static ArrayList<String> GoogleSearch(String query) {
+		ArrayList<String> googleSearchResults = new ArrayList<String>();
+		String googleSearchContext = "011045704107476092050:liivikkqg0k&start=";
+		String googleSearchAPIKey = "AIzaSyCdECK7u3Erfb23uPqCEl2lESCDw4cwOXA";
+		try {
+			//This loop is to  retrieve the second page of results
+			//the custom search api only provides 10 results in each response
+			//so we use the start parameter to get items having specific index, i.e. the first loop get 1-10 and second loop gets 11-20
+			for(int i=1;i<20;i+=10) {
+			GoogleCustomSearch customSearchInstance = new GoogleCustomSearch(googleSearchAPIKey, googleSearchContext+Integer.toString(i));
+			
+			//This code to get around SOP located in a library called by Google Custom Search Class
+			//Cleans up output, removes SOP of library.
+			PrintStream printStreamOriginal = System.out;
+			System.setOut(new PrintStream(new OutputStream() {
+				@Override
+				public void write(int b) throws IOException {
+					// NO OPERATION
+				}
+			}));
 
+			//Call Block
+			
+			//TODO: Multi-T 
+			
+			GoogleResponse gResponse = customSearchInstance
+					.getSearchResults("Java example for " +query);
+			//Call Restoration
+
+			//Restoring SOP to actual stream
+			System.setOut(printStreamOriginal);
+			
+			for (Item item : gResponse.getItems()) {
+				String urlText = item.getLink().getHref();
+				String urlEnding = urlText.toUpperCase();
+				if (!urlEnding.endsWith(".PDF") && !urlEnding.endsWith(".DOC") && !urlEnding.endsWith(".PPT")) {
+				googleSearchResults.add(urlText);
+				}
+				System.out.println("GoogleResult: "+urlText);
+			}
+			}
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
+		return googleSearchResults;
+	}
+	//End Edit V1.1
+	
 	private static ArrayList<String> BingSearch(String query) {
 		ArrayList<String> bingSearchResults = new ArrayList<String>();
 		try {
