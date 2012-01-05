@@ -5,10 +5,14 @@ import itjava.model.ResultEntry;
 import itjava.model.Tutorial;
 import itjava.presenter.CodeSearchPresenter;
 import itjava.presenter.WordInfoPresenter;
+import itjava.scraper.InfoScrape;
+import itjava.scraper.ScrapeData;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -57,7 +61,13 @@ public class CodeSearchServlet extends HttpServlet {
 		ArrayList<ArrayList<String>> wordsList = new ArrayList<ArrayList<String>>();
 		ArrayList<Integer> difficultyList = new ArrayList<Integer>(); 
 		ArrayList<HashMap<String, ArrayList<String>>> hintsMapList = new ArrayList<HashMap<String,ArrayList<String>>>();
+		/* Vasanth - Api Info Code Starts here - Commented temporarily */
 		
+
+//		LinkedHashSet <ScrapeData> scrapeDataObj = new LinkedHashSet <ScrapeData>();
+//		scrapeDataObj = InfoScrape.ScrapeSites(query);
+			
+		/* New Api Info Code Ends here */
 		for (int initializer = 0; initializer < tutorialList.size(); initializer++) {
 			approvalList.add(null);
 			wordsList.add(null);
@@ -70,6 +80,11 @@ public class CodeSearchServlet extends HttpServlet {
 		session.setAttribute("difficultyList", difficultyList);
 		session.setAttribute("hintsMapList", hintsMapList);
 		session.setAttribute("tutorialListSize", tutorialList.size());
+		/* Vasanth - Sets the API info object to session - Commented temporarily */
+		// session.setAttribute("scrapedFAQ", scrapeDataObj);
+		/* End of Api info code */
+		
+		
                 //session.setAttribute("tutorialDescriptionList", tutorialDescriptionList);
                 //session.setAttribute("tutorialDescriptionListSize", 0);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("tutorialSelection.jsp?index=0");
