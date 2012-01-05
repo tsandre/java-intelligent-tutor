@@ -219,7 +219,7 @@ function focusdonebutton(){
 	}
 	out.print("</td><td valign=\"top\" style=\"padding-top:35px;\"><div style=\"border:solid; border-width:1px; border-color:#333; width:250px; padding: 4px 4px 4px 4px;\" id=\"hintspanel\">");
 	if(tutorialComplete==1){
-		out.println("<p align=\"center\">You have successfully completed this Intelligent Tutor!</p></div></td></tr></table>");
+		out.println("<p align=\"center\">You have successfully completed this Intelligent Tutor! <br/><br/><a href=\"http://localhost:8080/itjava/\" title=\"Tutor Search\" class=\"navmain\">Return Home</a></p></div></td></tr></table>");
 	}else{
            if(pageDescription.length() > 0){
                out.println(pageDescription + "<br /><br />");
