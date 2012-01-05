@@ -11,7 +11,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 
 /**
  * @author Vasanth Krishnamoorthy
- * Fires an empty search query in 'sourceforge.net' and retrieve the link to the next page.
+ * 
  */
 
 public class JavaBlogsScrape {
