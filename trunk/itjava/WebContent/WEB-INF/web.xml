@@ -17,6 +17,16 @@
     <servlet-name>CodeSearchServlet</servlet-name>
     <url-pattern>/CodeSearchServlet</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>FAQSearchServlet</servlet-name>
+    <servlet-class>itjava.view.FAQSearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FAQSearchServlet</servlet-name>
+    <url-pattern>/FAQSearchServlet</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>TutorialSelectionServlet</servlet-name>
     <servlet-class>itjava.view.TutorialSelectionServlet</servlet-class>
