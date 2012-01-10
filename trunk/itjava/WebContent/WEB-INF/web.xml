@@ -41,7 +41,15 @@
     <servlet-name>SaveSelectionsServlet</servlet-name>
     <url-pattern>/SaveSelectionsServlet</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
+    <servlet-name>FAQSelectionForm</servlet-name>
+    <servlet-class>itjava.view.FAQSelectionForm</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FAQSelectionForm</servlet-name>
+    <url-pattern>/FAQSelectionForm</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>DeliverableSelectionServlet</servlet-name>
     <servlet-class>itjava.view.DeliverableSelectionServlet</servlet-class>
   </servlet>
@@ -49,4 +57,9 @@
     <servlet-name>DeliverableSelectionServlet</servlet-name>
     <url-pattern>/DeliverableSelectionServlet</url-pattern>
   </servlet-mapping>
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+    <param-value>resources.application</param-value>
+  </context-param>
+  
 </web-app>
