@@ -14,13 +14,13 @@ import java.util.LinkedHashSet;
  */
 public class ScrapeFaqStore {
 	private Connection _conn;
-	public void ScrapeFaqRepoUpdate(int searchQueryId, LinkedHashSet<ScrapeData> scrapeResultsObj) {
+	public LinkedHashSet<ScrapeData> ScrapeFaqRepoUpdate(int searchQueryId, LinkedHashSet<ScrapeData> scrapeResultsObj) {
 		/*Writing file name & URL to DB*/
 	//	int faqCount = scrapeResultsObj.size();
 		try {
 			GetConnection();
 			String tempTopicHeading, tempLinkPreview, tempTopicURL, tempScrapeSource, tempWebsite;
-			int tempSearchResultOrder, rowsInserted = 0;
+			int tempSearchResultOrder, rowsInserted = 0, currentScrapeid = 0;
 			Iterator <ScrapeData> scrapeObj = scrapeResultsObj.iterator();
 			while(scrapeObj.hasNext()) {
 				ScrapeData temp = (ScrapeData) scrapeObj.next();
@@ -30,13 +30,6 @@ public class ScrapeFaqStore {
 				tempScrapeSource = temp.getInfoScrapeSource();
 				tempWebsite = temp.getInfoScrapeSite();
 				tempSearchResultOrder = temp.getInfoTopicResultindex();
-				
-				
-//				tempTopicURL = scrapeResultsObj.getTempTopicURL().get(i).toString()
-//				tempShortURL = scrapeResultsObj.getTempShortURL().get(i);
-//				tempAnswerCount = scrapeResultsObj.getTempAnswerCount().get(i);
-//				tempSearchResultOrder = i + 1;
-//				tempLinkPreview = scrapeResultsObj.getTempLinkPreview().get(i);
 				
 			String insertSql = "insert into ScrapeFAQ" +
 			"(searchQueryId, topicHeading, topicURL, searchResultOrder, linkPreview, scrapeSource, websiteName)" +
@@ -51,6 +44,16 @@ public class ScrapeFaqStore {
 			insertScrapeFAQ.setString(7, tempWebsite);
 			int inserted = insertScrapeFAQ.executeUpdate();
 			rowsInserted = rowsInserted + inserted;
+			
+			String scrapeIdQuery = "select scrapeId from ScrapeFAQ where searchQueryId = ? and searchResultOrder = ?";
+			PreparedStatement returnscrapeId = _conn.prepareStatement(scrapeIdQuery);
+			returnscrapeId.setInt(1, searchQueryId);
+			returnscrapeId.setInt(2, tempSearchResultOrder);
+			ResultSet scrapeIdResult = returnscrapeId.executeQuery();
+			while (scrapeIdResult.next()){
+				currentScrapeid = scrapeIdResult.getInt("scrapeId");
+			}
+			temp.setScrapeId(currentScrapeid);
 			}
 			System.out.println("Num of rows inserted in table ScrapeQuery: " + rowsInserted);
 			PreparedStatement fileNameSql = _conn.prepareStatement("select scrapeId, topicHeading, topicURL  from ScrapeFAQ where searchQueryId = ?");
@@ -61,10 +64,6 @@ public class ScrapeFaqStore {
 				System.out.println("Topic Heading : " + rs.getString("topicHeading"));
 				System.out.println("Topic URL : " + rs.getString("topicURL"));
 			}
-//			ResultSet rsKey = fileNameSql.getGeneratedKeys();
-//			while (rsKey.next()) {
-//				DeliverableInfoStore.InsertBlankWordsInfo(rs.getInt(1), tutorial.getWordInfoList());
-//			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -77,6 +76,7 @@ public class ScrapeFaqStore {
 				e.printStackTrace();
 			}
 		}
+		return scrapeResultsObj;
 	}
 		private void GetConnection() throws Exception {
 			_conn = DBConnection.GetConnection();
