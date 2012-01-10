@@ -14,7 +14,7 @@ import com.gargoylesoftware.htmlunit.html.*;
  */
 
 public class InfoScrape{
-	public static ScrapeResult ScrapeSites(String query){
+	public static LinkedHashSet<ScrapeData> ScrapeSites(String query){
 		LinkedHashSet <ScrapeData> scrapeResultsObj = new LinkedHashSet <ScrapeData> ();
 		LinkedHashSet <ScrapeData> scrapeResultsFinalObj = new LinkedHashSet <ScrapeData> ();
 		ScrapeResult scrapeFinalResult = new ScrapeResult();
@@ -38,7 +38,7 @@ public class InfoScrape{
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-			return scrapeFinalResult;
+			return scrapeResultsFinalObj;
 	}
 
 	private static LinkedHashSet <ScrapeData> StackOverflow(String query) {
