@@ -17,6 +17,7 @@ public class ScrapeData {
 	private String infoTopicLinkPreview;
 	private String infoScrapeSite;
 	private String infoScrapeSource;
+	private int scrapeId;
 	
 	public void setInfoQuery(String infoQuery) {
 		this.infoQuery = infoQuery;
@@ -65,6 +66,12 @@ public class ScrapeData {
 	}
 	public String getInfoScrapeSource() {
 		return infoScrapeSource;
+	}
+	public void setScrapeId(int scrapeId) {
+		this.scrapeId = scrapeId;
+	}
+	public int getScrapeId() {
+		return scrapeId;
 	}	
 	
 	
