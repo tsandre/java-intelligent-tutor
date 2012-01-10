@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
 public class ScrapeQueryStore {
 	private Connection _conn;
 	ScrapeFaqStore faqStore = new ScrapeFaqStore();
-	public int ScrapeQueryRepoUpdate(LinkedHashSet <ScrapeData> scrapeResultsObj, String scrapeQuery) {
+	public ScrapeResult ScrapeQueryRepoUpdate(LinkedHashSet <ScrapeData> scrapeResultsObj, String scrapeQuery) {
 		/*Writing file name & URL to DB*/
 		int searchQueryId = 0;
 		try {
@@ -34,7 +34,7 @@ public class ScrapeQueryStore {
 			ResultSet rsKey = fileNameSql.getGeneratedKeys();
 			searchQueryId = rsKey.getInt(1);
 			while (rsKey.next()) {
-				faqStore.ScrapeFaqRepoUpdate(rsKey.getInt(1), scrapeResultsObj);
+				scrapeResultsObj = faqStore.ScrapeFaqRepoUpdate(rsKey.getInt(1), scrapeResultsObj);
 			}
 		}
 		catch(Exception e) {
@@ -47,7 +47,10 @@ public class ScrapeQueryStore {
 				e.printStackTrace();
 			}
 		}
-		return searchQueryId;
+		ScrapeResult scrapeResult = new ScrapeResult();
+	    scrapeResult.setScrapeResultsObj(scrapeResultsObj);
+	    scrapeResult.setSearchQueryId(searchQueryId);
+		return scrapeResult;
 	}
 		private void GetConnection() throws Exception {
 			_conn = DBConnection.GetConnection();
