@@ -16,6 +16,8 @@ import com.gargoylesoftware.htmlunit.html.*;
 public class InfoScrape{
 	public static ScrapeResult ScrapeSites(String query){
 		LinkedHashSet <ScrapeData> scrapeResultsObj = new LinkedHashSet <ScrapeData> ();
+		LinkedHashSet <ScrapeData> scrapeResultsFinalObj = new LinkedHashSet <ScrapeData> ();
+		ScrapeResult scrapeFinalResult = new ScrapeResult();
 		int searchQueryId = 0;
 		try {
 			scrapeResultsObj.addAll(StackOverflow(query));
@@ -26,17 +28,17 @@ public class InfoScrape{
 			
 			testObj.Test(scrapeResultsObj);
 			ScrapeQueryStore dbstore = new ScrapeQueryStore();
-			searchQueryId = dbstore.ScrapeQueryRepoUpdate(scrapeResultsObj, query);
+			scrapeFinalResult = dbstore.ScrapeQueryRepoUpdate(scrapeResultsObj, query);
+			scrapeResultsFinalObj = scrapeFinalResult.getScrapeResultsObj();
+			searchQueryId = scrapeFinalResult.getSearchQueryId();
+			testScrapeId.printScrapeId(scrapeResultsFinalObj);
 			System.out.println("Ta da... All iz Well in Repo");
 			System.out.println("Search Query Id :"+searchQueryId);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		    ScrapeResult scrapeResult = new ScrapeResult();
-		    scrapeResult.setScrapeResultsObj(scrapeResultsObj);
-		    scrapeResult.setSearchQueryId(searchQueryId);
-			return scrapeResult;
+			return scrapeFinalResult;
 	}
 
 	private static LinkedHashSet <ScrapeData> StackOverflow(String query) {
