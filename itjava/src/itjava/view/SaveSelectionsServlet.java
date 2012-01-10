@@ -191,6 +191,7 @@ public class SaveSelectionsServlet extends HttpServlet {
 			int firstSkipped = FirstSkippedExample(approvalList);
 			if ( firstSkipped == -1) { //If no snippets are skipped
 				nextPage = "tutorialMetaData.jsp";
+				//Hook for FAQ_Screen
 			}
 			else {
 				nextPage = "tutorialSelection.jsp?index=" + firstSkipped;

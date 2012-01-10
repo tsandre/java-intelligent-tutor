@@ -55,8 +55,9 @@ public class FAQSearchServlet extends HttpServlet {
 		LinkedHashSet <ScrapeData> scrapeDataObj = new LinkedHashSet <ScrapeData>();
 		scrapeDataObj = InfoScrape.ScrapeSites(query);
 		
-		session.setAttribute("scrapedFAQ", scrapeDataObj);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("scrapeConfirmation.jsp");
+		request.setAttribute("scrapedFAQ", scrapeDataObj);
+		
+        RequestDispatcher dispatcher = request.getRequestDispatcher("FAQSelection.jsp");
         dispatcher.forward(request, response);
 		
 		
