@@ -2,6 +2,7 @@ package itjava.scraper;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -13,9 +14,9 @@ import com.gargoylesoftware.htmlunit.html.*;
  */
 
 public class InfoScrape{
-	public static LinkedHashSet <ScrapeData> ScrapeSites(String query){
+	public static ScrapeResult ScrapeSites(String query){
 		LinkedHashSet <ScrapeData> scrapeResultsObj = new LinkedHashSet <ScrapeData> ();
-		int searchQueryId;
+		int searchQueryId = 0;
 		try {
 			scrapeResultsObj.addAll(StackOverflow(query));
 			scrapeResultsObj.addAll(Dzone(query));
@@ -32,7 +33,10 @@ public class InfoScrape{
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-			return scrapeResultsObj;
+		    ScrapeResult scrapeResult = new ScrapeResult();
+		    scrapeResult.setScrapeResultsObj(scrapeResultsObj);
+		    scrapeResult.setSearchQueryId(searchQueryId);
+			return scrapeResult;
 	}
 
 	private static LinkedHashSet <ScrapeData> StackOverflow(String query) {
