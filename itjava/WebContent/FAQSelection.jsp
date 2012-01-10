@@ -59,15 +59,7 @@
 
 
 						<%
-							ArrayList<FAQItem> FAQList = new ArrayList<FAQItem>();
-							FAQList.add(new FAQItem("FAQ 1", "DESC 1",
-									"http://www.google.com/", 1, 1));
-							FAQList.add(new FAQItem("FAQ 2", "DESC 2",
-									"http://www.microsoft.com/", 2, 1));
-							FAQList.add(new FAQItem("FAQ 3", "DESC 3",
-									"http://www.amazon.com/", 3, 1));
-							FAQList.add(new FAQItem("FAQ 4", "DESC 4",
-									"http://www.netflix.com/", 4, 1));
+							
 							String query = "Reading a file using Java";
 							LinkedHashSet<ScrapeData> scrapeFinalObj = InfoScrape
 									.ScrapeSites(query);
