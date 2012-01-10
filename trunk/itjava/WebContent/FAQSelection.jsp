@@ -59,7 +59,6 @@
 
 
 						<%
-							
 							//String query = "Reading a file using Java";
 							//LinkedHashSet<ScrapeData> scrapeFinalObj = InfoScrape
 									//.ScrapeSites(query);
