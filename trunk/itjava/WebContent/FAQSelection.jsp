@@ -60,20 +60,23 @@
 
 						<%
 							
-							String query = "Reading a file using Java";
-							LinkedHashSet<ScrapeData> scrapeFinalObj = InfoScrape
-									.ScrapeSites(query);
+							//String query = "Reading a file using Java";
+							//LinkedHashSet<ScrapeData> scrapeFinalObj = InfoScrape
+									//.ScrapeSites(query);
+							
+							
+							LinkedHashSet<ScrapeData> scrapeFinalObj = (LinkedHashSet<ScrapeData>) request.getAttribute("scrapedFAQ");
 							session.setAttribute("scrapeFinalObj", scrapeFinalObj);
-
+							
 							for (ScrapeData item : scrapeFinalObj) {
 						%>
 						<tr>
 							<td style="padding: 10px 5px 10px 5px;">
 								<table border="1" align="center" cellpadding="0" cellspacing="0"
 									width="95%">
-									<tr bgcolor="#797A7E">
+									<tr bgcolor="#8E8D88">
 
-										<td width="100%" id="faqTitleTD">
+										<td width="100%" id="faqTitleTD" style="font-weight:bold;">
 											<%
 												out.print(item.getInfoTopic());
 											%>
