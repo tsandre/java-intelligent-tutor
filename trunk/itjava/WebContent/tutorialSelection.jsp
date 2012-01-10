@@ -268,8 +268,9 @@ function changebg(imgid, imgsrc){
 <div id="divMain">
 <%
 int currentIndex = Integer.parseInt(request.getParameter("index"));
+System.out.println("curr_ind: " + currentIndex);
 session.setAttribute("currentIndex", currentIndex);
-
+System.out.println("TUTSEL: 1");
 ArrayList<String> approvalList = (ArrayList<String>) session.getAttribute("approvalList");
 ArrayList<List<String>> wordsList = (ArrayList<List<String>>) session.getAttribute("wordsList");
 ArrayList<Integer> difficultyList = (ArrayList<Integer>) session.getAttribute("difficultyList");
@@ -282,6 +283,7 @@ Tutorial currentTutorial = tutorialList.get(currentIndex);
 
 <table><tbody><tr>
 <%
+System.out.println("TUTSEL: 2");
 for (int i = 0; i < tutorialList.size(); i++) {
 	String tutorialSelectionClass = (i==currentIndex) ? "active" : "passive";
 	out.print("<td class=" + tutorialSelectionClass);
@@ -309,6 +311,7 @@ for (int i = 0; i < tutorialList.size(); i++) {
 <label>What would you like to do with the following Snippet?</label><br />
 
 <%
+System.out.println("TUTSEL: 3");
 String approvalSelected = approvalList.get(currentIndex);
 String[] approvalOptions = {"Quiz", "Example", "Discard", "Edit"};
 for (int approvalIndex = 0; approvalIndex <= 3; approvalIndex++) {
@@ -342,6 +345,7 @@ for (int approvalIndex = 0; approvalIndex <= 3; approvalIndex++) {
 <label>Select the words to blank:</label><br />
 <%
 int index = 0;
+System.out.println("TUTSEL: 4");
 List<String> selectedWords = wordsList.get(currentIndex);
 for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 	out.print("<input type=\"checkbox\" name=\"cbxWordInfo\" value=\"" + index + "\" id=\"cb_" + index + "\"");
@@ -386,6 +390,7 @@ Note: You can have only 1 word per line in the quiz. If you want to blank a word
 <fieldset>
 	<label>Rate the difficulty level of this snippet:</label><br />
 	<%
+	System.out.println("TUTSEL: 5");
 	Integer difficultySelected = difficultyList.get(currentIndex);
                 out.print("<table align=\"center\"><tr>");
 		for (int difficultyIndex = 1; difficultyIndex <=5; difficultyIndex++) {
@@ -428,6 +433,7 @@ if (currentIndex == 0) {
 " target="_blank" >^ link.</a>
 </td></tr>
 <%
+System.out.println("TUTSEL: 6");
 for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 	String className = (index%2==0) ? "even" : "odd";
 	out.println("<tr><td>");
@@ -447,6 +453,7 @@ for (index = 1; index <= currentTutorial.getLinesOfCode().size(); index++) {
 <% 
 HashMap<String, ArrayList<String>> hintsMap = hintsMapList.get(currentIndex);
 int currWordInfoIndex = 0;
+System.out.println("TUTSEL: 7");
 for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 	String wordToBeBlanked = currentWordInfo.wordToBeBlanked;
 	ArrayList<String> currHintsList = null;
