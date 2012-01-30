@@ -14,7 +14,7 @@ import com.gargoylesoftware.htmlunit.html.*;
  */
 
 public class InfoScrape{
-	public static LinkedHashSet<ScrapeData> ScrapeSites(String query){
+	public static LinkedHashSet<ScrapeData> ScrapeSites(String query, int tutorialInfoId){
 		LinkedHashSet <ScrapeData> scrapeResultsObj = new LinkedHashSet <ScrapeData> ();
 		LinkedHashSet <ScrapeData> scrapeResultsFinalObj = new LinkedHashSet <ScrapeData> ();
 		ScrapeResult scrapeFinalResult = new ScrapeResult();
@@ -28,7 +28,7 @@ public class InfoScrape{
 			
 			testObj.Test(scrapeResultsObj);
 			ScrapeQueryStore dbstore = new ScrapeQueryStore();
-			scrapeFinalResult = dbstore.ScrapeQueryRepoUpdate(scrapeResultsObj, query);
+			scrapeFinalResult = dbstore.ScrapeQueryRepoUpdate(scrapeResultsObj, query, tutorialInfoId);
 			scrapeResultsFinalObj = scrapeFinalResult.getScrapeResultsObj();
 			searchQueryId = scrapeFinalResult.getSearchQueryId();
 			testScrapeId.printScrapeId(scrapeResultsFinalObj);
