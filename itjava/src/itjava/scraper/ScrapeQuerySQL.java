@@ -23,13 +23,15 @@ public class ScrapeQuerySQL {
 			stat.executeUpdate("drop table if exists ScrapeQuery;");
 			stat.executeUpdate("create table ScrapeQuery (" +
 					" searchQueryId integer primary key autoincrement," +
-					" searchQueryText varchar(200)" +
+					" searchQueryText varchar(200)," +
+					" tutorialInfoId integer" +
 					" );");
 			conn.setAutoCommit(true);
 			ResultSet rs = stat.executeQuery("select * from ScrapeQuery;");
 			while (rs.next()) {
 				System.out.println("Query Id : " + rs.getString("searchQueryId"));
 				System.out.println("Search Query : " + rs.getString("searchQueryText"));
+				System.out.println("Tutorial Info Id : " + rs.getInt("tutorialInfoId"));
 			}
 			rs.close();
 		} catch (Exception e) {
