@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -79,6 +80,17 @@ public class FAQSelectionForm extends HttpServlet {
 			try {
 				response.getWriter().println("Values inserted in DB successfully.");
 				_conn.close();
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp?myaction=5");;
+				if(session.getAttribute("userLevel").equals("unknown")){
+					dispatcher = request.getRequestDispatcher("index.jsp?myaction=5");
+					dispatcher.forward(request, response);
+				}else if(session.getAttribute("userLevel").equals("student")){
+					dispatcher = request.getRequestDispatcher("students.jsp?page=savedtutors");
+					dispatcher.forward(request, response);
+				}else{
+					dispatcher = request.getRequestDispatcher("teachers.jsp?page=savedtutors");
+					dispatcher.forward(request, response);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
