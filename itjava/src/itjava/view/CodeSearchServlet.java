@@ -63,7 +63,8 @@ public class CodeSearchServlet extends HttpServlet {
 		ArrayList<HashMap<String, ArrayList<String>>> hintsMapList = new ArrayList<HashMap<String,ArrayList<String>>>();
 		/* Vasanth - Api Info Code Starts here - Commented temporarily */
 		
-
+	//	LinkedHashSet<ScrapeData> scrapeFinalObj = InfoScrape.ScrapeSites(query);
+		
 //		LinkedHashSet <ScrapeData> scrapeDataObj = new LinkedHashSet <ScrapeData>();
 //		scrapeDataObj = InfoScrape.ScrapeSites(query);
 			
@@ -74,7 +75,9 @@ public class CodeSearchServlet extends HttpServlet {
 			difficultyList.add(null);
 			hintsMapList.add(null);
 		}
-		
+// Vasanth - FAQ code 		
+//		session.setAttribute("scrapeFinalObj", scrapeFinalObj);
+// Vasanth - FAQ code ends		
 		session.setAttribute("approvalList", approvalList);
 		session.setAttribute("wordsList", wordsList);
 		session.setAttribute("difficultyList", difficultyList);
