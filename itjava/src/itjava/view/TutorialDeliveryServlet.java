@@ -7,12 +7,15 @@ import itjava.model.TutorialInfoStore;
 import itjava.model.TutorialStore;
 import itjava.model.WordInfo;
 import itjava.presenter.TutorialPresenter;
+import itjava.scraper.InfoScrape;
+import itjava.scraper.ScrapeData;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -38,6 +41,8 @@ public class TutorialDeliveryServlet extends HttpServlet {
 	private ArrayList<Tutorial> approvedTutorialList;
 	private HttpSession session;
 	private PrintWriter display;
+	
+	private String query;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -62,22 +67,23 @@ public class TutorialDeliveryServlet extends HttpServlet {
                 //tutorialDescriptionList = (ArrayList<String>)session.getAttribute("tutorialDescriptionList");
 		hintsMapList = (ArrayList<HashMap<String, ArrayList<String>>>) session.getAttribute("hintsMapList");
 		
+		
 		approvedTutorialList = AbsorbUserApprovalsInTutorialList(tutorialInfo);
 		ProcessMetaData(request, tutorialInfo);
 		TutorialPresenter tutorialPresenter = new TutorialPresenter();
 		ArrayList<Tutorial> finalTutorialList = tutorialPresenter.GetFinalTutorialList(approvedTutorialList);
-		SaveChoicesToDisk(tutorialInfo, finalTutorialList);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp?myaction=5");;
-		if(session.getAttribute("userLevel").equals("unknown")){
-			dispatcher = request.getRequestDispatcher("index.jsp?myaction=5");
-			dispatcher.forward(request, response);
-		}else if(session.getAttribute("userLevel").equals("student")){
-			dispatcher = request.getRequestDispatcher("students.jsp?page=savedtutors");
-			dispatcher.forward(request, response);
-		}else{
-			dispatcher = request.getRequestDispatcher("teachers.jsp?page=savedtutors");
-			dispatcher.forward(request, response);
-		}
+		int tutorialInfoId = SaveChoicesToDisk(tutorialInfo, finalTutorialList);
+		
+		query = (String) session.getAttribute("query");
+		LinkedHashSet<ScrapeData> scrapeFinalObj = InfoScrape.ScrapeSites(query, tutorialInfoId);
+		request.setAttribute("scrapedFAQ", scrapeFinalObj);
+		
+        RequestDispatcher dispatcher = request.getRequestDispatcher("FAQSelection.jsp");
+        dispatcher.forward(request, response);
+		
+		
+		
+		
 	}
 
 	/**
@@ -103,11 +109,12 @@ public class TutorialDeliveryServlet extends HttpServlet {
 	 * to a table called "TutorialInfo" in the database.
 	 * @param finalTutorialList 
 	 */
-	private void SaveChoicesToDisk(TutorialInfo tutorialInfo, ArrayList<Tutorial> finalTutorialList) {
+	private int SaveChoicesToDisk(TutorialInfo tutorialInfo, ArrayList<Tutorial> finalTutorialList) {
 		System.out.println("Username: " + tutorialInfo.getCreatedBy());
 		int tutorialInfoId = TutorialInfoStore.InsertInfo(tutorialInfo);
 		tutorialInfo.setTutorialId(tutorialInfoId);
 		int rowsInsertedInDeliverableInfo = TutorialStore.InsertDeliverableInfo(finalTutorialList, tutorialInfoId);
+		return tutorialInfoId;
 	}
 
 	/**
