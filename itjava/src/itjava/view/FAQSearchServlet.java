@@ -45,28 +45,17 @@ public class FAQSearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String query = (String) request.getParameter("query");
-		query = query.replaceAll("\\W", " ").replaceAll("\\s+", " ").trim();
-		HttpSession session = request.getSession(true);
+//		String query = (String) request.getParameter("query");
+//		query = query.replaceAll("\\W", " ").replaceAll("\\s+", " ").trim();
+//		HttpSession session = request.getSession(true);
+//		session.setAttribute("query", query);
+//		String faqSearchQuery = (String) session.getAttribute("query");
+//		LinkedHashSet <ScrapeData> scrapeDataObj = new LinkedHashSet <ScrapeData>();
+//		scrapeDataObj = InfoScrape.ScrapeSites(query, 0);
+//		request.setAttribute("scrapedFAQ", scrapeDataObj);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("FAQSelection.jsp");
+//        dispatcher.forward(request, response);
 		
-		session.setAttribute("query", query);
-		String faqSearchQuery = (String) session.getAttribute("query");
-		
-		LinkedHashSet <ScrapeData> scrapeDataObj = new LinkedHashSet <ScrapeData>();
-		scrapeDataObj = InfoScrape.ScrapeSites(query);
-		
-		request.setAttribute("scrapedFAQ", scrapeDataObj);
-		
-        RequestDispatcher dispatcher = request.getRequestDispatcher("FAQSelection.jsp");
-        dispatcher.forward(request, response);
-		
-		
-//		session.setAttribute("tutorialInfoList", tutorialInfoList);
-		
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("tutorsearch.jsp?index=0");
-		
-		
-//		dispatcher.forward(request, response);
 	}
 
 }
