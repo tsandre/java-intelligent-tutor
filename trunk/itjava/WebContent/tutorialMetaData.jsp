@@ -58,7 +58,7 @@
 			</table>
 		    <div id="divProgress">
 				<img src="images/loopLoader.gif" /><br />
-				Creating Deliverables....<br />Please Wait
+				Creating Deliverables and API related topics....<br />Please Wait
 			</div>
         </td>
         <td width="1" bgcolor="#122222"></td>
