@@ -1,0 +1,39 @@
+/* CSS only needed for the demo */
+
+
+
+#mainContainer{
+	width:630px;
+	border-left:1px solid #317082;	
+	border-right:1px solid #317082;	
+	margin:0 auto;	/* Center align content, equivalent to margin-left:auto;margin-right:auto; */
+	text-align:left;	/* Override inherited text-align:center from the body tag */
+	background-color:#FFF;
+	height:100%;
+}
+
+#menuColumn{
+	width:160px;
+	float:left;
+	padding:5px;
+	font-size:0.9em;
+}
+#mainContent{
+	width:440px;
+	float:left;	
+}
+
+.oddRow{
+	background-color:#FFF;
+}
+.evenRow{
+	background-color:#EEE;
+}
+
+.productTable{
+	border:3px double #000;
+}
+
+
+
+/* End css for the demo */
