@@ -17,7 +17,6 @@
     <servlet-name>CodeSearchServlet</servlet-name>
     <url-pattern>/CodeSearchServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>FAQSearchServlet</servlet-name>
     <servlet-class>itjava.view.FAQSearchServlet</servlet-class>
@@ -26,7 +25,6 @@
     <servlet-name>FAQSearchServlet</servlet-name>
     <url-pattern>/FAQSearchServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>TutorialSelectionServlet</servlet-name>
     <servlet-class>itjava.view.TutorialSelectionServlet</servlet-class>
@@ -67,9 +65,17 @@
     <servlet-name>DeliverableSelectionServlet</servlet-name>
     <url-pattern>/DeliverableSelectionServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>FaqViewerLinkClickServlet</servlet-name>
+    <servlet-class>itjava.view.FaqViewerLinkClickServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FaqViewerLinkClickServlet</servlet-name>
+    <url-pattern>/FaqViewerLinkClickServlet</url-pattern>
+  </servlet-mapping>
   <context-param>
     <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
     <param-value>resources.application</param-value>
   </context-param>
-  
+ 
 </web-app>
