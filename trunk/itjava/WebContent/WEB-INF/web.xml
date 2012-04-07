@@ -73,6 +73,14 @@
     <servlet-name>FaqViewerLinkClickServlet</servlet-name>
     <url-pattern>/FaqViewerLinkClickServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>CodeUploadServlet</servlet-name>
+    <servlet-class>itjava.view.CodeUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CodeUploadServlet</servlet-name>
+    <url-pattern>/CodeUploadServlet</url-pattern>
+  </servlet-mapping>
   <context-param>
     <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
     <param-value>resources.application</param-value>
