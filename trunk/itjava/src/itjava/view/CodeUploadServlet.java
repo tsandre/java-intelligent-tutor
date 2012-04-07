@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -50,43 +51,67 @@ public class CodeUploadServlet extends HttpServlet {
 
 		// to get the content type information from JSP Request Header
 		String contentType = request.getContentType();
-		
-		
+		File fileDir = new File(getServletContext().getRealPath("/") + "files");
+		if (!fileDir.exists()) {
+			System.out.println("Dir Made: " + fileDir.mkdir());
+		} else {
+			System.out.println("DirPresent: " + fileDir.isDirectory());
+		}
+
+		ArrayList<String> filesList = new ArrayList<String>();
+
+		String fileSavePath = getServletContext().getRealPath("/") + "files\\";
 		if ((contentType != null)
 				&& (contentType.indexOf("multipart/form-data") >= 0)) {
-			
-				FileItemFactory factory = new DiskFileItemFactory();
-	           ServletFileUpload upload = new ServletFileUpload(factory);
-	           List items = null;
-	           try {
-	                   items = upload.parseRequest(request);
-	           } catch (FileUploadException e) {
-	                   e.printStackTrace();
-	           }
-	           Iterator itr = items.iterator();
-	           while (itr.hasNext()) {
-	           FileItem item = (FileItem) itr.next();
-	           if (item.isFormField()) {
-	           } else {
-	                   try {
-	                           String itemName = item.getName();
-	                           System.out.println("item: "+itemName);
-	                           File file = new File(itemName);
-	                           item.write(file);
-	                           FileInputStream fis = new FileInputStream(file);
-	                           BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(fis)));
-	                           String strLine;
-	                           while((strLine=br.readLine())!=null) {
-	                        	   System.out.println(strLine);
-	                           }
-	                           br.close();
-	                   } catch (Exception e) {
-	                           e.printStackTrace();
-	                   }
-	           }
-	           }
-			
 
+			FileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			List items = null;
+			try {
+				items = upload.parseRequest(request);
+			} catch (FileUploadException e) {
+				e.printStackTrace();
+			}
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if (item.isFormField()) {
+				} else {
+					try {
+						String itemName = item.getName();
+						System.out.println("item: " + itemName);
+						File file = new File(fileSavePath + itemName);
+
+						int i = 1;
+						while (file.exists() == true) {
+							file = new File(fileSavePath
+									+ itemName.substring(0,
+											itemName.indexOf(".java")) + "_"
+									+ i + ".java");
+							System.out.println("File Exists. Now trying : "
+									+ itemName.substring(0,
+											itemName.indexOf(".java")) + "_"
+									+ i + ".java");
+							i++;
+						}
+						item.write(file);
+						System.out.println("fileWritten to: "
+								+ file.getAbsolutePath());
+						filesList.add(file.getAbsolutePath());
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+
+			System.out.println(getServletContext().getRealPath("/"));
+			System.out.println(filesList);
+
+			// At this point, filesList should be populated with absolute file
+			// paths. You may use this to call you method. Also, this servlet
+			// has to be redirected to an output page. Now it is just blank.
 		}
 
 	}
