@@ -3,6 +3,8 @@
  */
 package itjava.view;
 
+import itjava.data.LocalMachine;
+import itjava.industry.JavaSourceCodeIndexer;
 import itjava.scraper.DBConnection;
 import itjava.scraper.ScrapeData;
 
@@ -39,7 +41,7 @@ import org.eclipse.jdt.core.dom.EnumDeclaration;
  * @author Bharat
  * 
  */
-@WebServlet("/FAQSelectionForm")
+@WebServlet("/codeSearchForm")
 public class CodeUploadServlet extends HttpServlet {
 
 	private Connection _conn;
@@ -47,11 +49,11 @@ public class CodeUploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 
 		// to get the content type information from JSP Request Header
 		String contentType = request.getContentType();
-		File fileDir = new File(getServletContext().getRealPath("/") + "files");
+		File fileDir = new File(LocalMachine.home + "files/");
 		if (!fileDir.exists()) {
 			System.out.println("Dir Made: " + fileDir.mkdir());
 		} else {
@@ -60,7 +62,7 @@ public class CodeUploadServlet extends HttpServlet {
 
 		ArrayList<String> filesList = new ArrayList<String>();
 
-		String fileSavePath = getServletContext().getRealPath("/") + "files\\";
+		String fileSavePath = LocalMachine.home + "files/";
 		if ((contentType != null)
 				&& (contentType.indexOf("multipart/form-data") >= 0)) {
 
@@ -106,12 +108,16 @@ public class CodeUploadServlet extends HttpServlet {
 				}
 			}
 
-			System.out.println(getServletContext().getRealPath("/"));
+			System.out.println(LocalMachine.home + "files/");
 			System.out.println(filesList);
-
+			JavaSourceCodeIndexer codeIndexer = new JavaSourceCodeIndexer();
+			codeIndexer.Indexer();
+			
 			// At this point, filesList should be populated with absolute file
 			// paths. You may use this to call you method. Also, this servlet
 			// has to be redirected to an output page. Now it is just blank.
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("searchIndustry.jsp");
+	        dispatcher.forward(request, response);
 		}
 
 	}
