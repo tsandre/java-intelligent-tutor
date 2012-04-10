@@ -18,6 +18,15 @@
     <url-pattern>/CodeSearchServlet</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>IndustrySearchServlet</servlet-name>
+    <servlet-class>itjava.view.IndustrySearchServlet</servlet-class>
+  </servlet>  
+  <servlet-mapping>
+    <servlet-name>IndustrySearchServlet</servlet-name>
+    <url-pattern>/IndustrySearchServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>FAQSearchServlet</servlet-name>
     <servlet-class>itjava.view.FAQSearchServlet</servlet-class>
   </servlet>
