@@ -59,40 +59,52 @@
 		}
 	}
 	function open_win(linkText, scrapeId) {
-		
+
 		ajaxFunction(scrapeId);
 		window.open(linkText);
 	}
 
 	function open_pop() {
-		
+
 		if (document.getElementById('showimage').style.display == 'none')
 			document.getElementById('showimage').style.display = 'block';
 		else
 			document.getElementById('showimage').style.display = 'none';
-		
-	}	
+
+	}
 	function formSubmit() {
 
 	}
+	function rate_mouse_over(scrapeId) {
+
+		ajax_showTooltip(window.event, 'modules/FaqRatingPopUp.jsp?scrapeId='
+				+ scrapeId, this);
+		return false
+	}
 </script>
 <script type="text/javascript" src="js/ajax-dynamic-content.js"></script>
-	<script type="text/javascript" src="js/ajax.js"></script>
-	<script type="text/javascript" src="js/ajax-tooltip.js"></script>
-	<link rel="stylesheet" href="css/ajax-tooltip.css" media="screen" type="text/css" />
-	<link rel="stylesheet" href="css/ajax-tooltip-demo.css" media="screen" type="text/css" />
+<script type="text/javascript" src="js/ajax.js"></script>
+<script type="text/javascript" src="js/ajax-tooltip.js"></script>
+<link rel="stylesheet" href="css/ajax-tooltip.css" media="screen"
+	type="text/css" />
+<link rel="stylesheet" href="css/ajax-tooltip-demo.css" media="screen"
+	type="text/css" />
 </head>
 
 <body>
 	<%
+		System.out.println("userName: "+session.getAttribute("userName"));
+		String userName = session.getAttribute("userName").toString();
+		Integer tutorID = Integer.parseInt(request.getParameter("tutorID").toString());
 		HashMap<Integer, ArrayList<ScrapeData>> faqItemMap = (new FAQRetriever())
-				.getFAQforTutorial(154);
+				.getFAQforTutorial(tutorID);
 		ArrayList<ScrapeData> faqItemList = faqItemMap.get(new Integer(1));
 		ArrayList<ScrapeData> tutorialItemList = faqItemMap
 				.get(new Integer(2));
 		ArrayList<ScrapeData> articleItemList = faqItemMap.get(new Integer(
 				3));
 		ArrayList<ScrapeData> rlItemList = faqItemMap.get(new Integer(4));
+		
 	%>
 	<form action="FaqViewerLinkClickServlet" method="post" name="linkClick">
 		<table width="1024" border="0" align="center" cellpadding="0"
@@ -111,10 +123,10 @@
 				<td colspan="2" bgcolor="#122222" height="1"></td>
 			</tr>
 
-<!-- 			<div id="divT"  -->
-<!-- 				style="position: absolute; left: 362px; bottom: 51px; top: auto; height: 118px; width: 278px; display: none;"> -->
-<%-- 				<jsp:include page="/modules/FaqRatingPopUp.jsp" /> --%>
-<!-- 				</div> -->
+			<!-- 			<div id="divT"  -->
+			<!-- 				style="position: absolute; left: 362px; bottom: 51px; top: auto; height: 118px; width: 278px; display: none;"> -->
+			<%-- 				<jsp:include page="/modules/FaqRatingPopUp.jsp" /> --%>
+			<!-- 				</div> -->
 
 
 			<tr>
@@ -129,20 +141,20 @@
 							for (ScrapeData item : faqItemList) {
 						%>
 						<tr>
-							
+
 							<td>
-							<table width="100%">
-							<tr width="100%">
-							<td align="left" width="100%">
-							<a name="viewFaqLink" 
-								href="javascript:open_win('<%=item.getInfoTopicURL()%>','<%=item.getScrapeId()%>')">
-									<%=item.getInfoTopic()%>
-							</a>
-							</td>
-							<td align="right" onmouseover="ajax_showTooltip(window.event,'modules/FaqRatingPopUp.jsp',this);return false" >Rate</td> 
-							</tr>
-							</table>
-							<br /><%=item.getInfoTopicLinkPreview()%></td>
+								<table width="100%">
+									<tr width="100%">
+										<td align="left" width="100%"><a name="viewFaqLink"
+											href="javascript:open_win('<%=item.getInfoTopicURL()%>','<%=item.getScrapeId()%>')">
+												<%=item.getInfoTopic()%>
+										</a></td>
+										<td align="right"><div
+												onclick="ajax_showTooltip(window.event,'modules/FaqRatingPopUp.jsp?scrapeId=<%=item.getScrapeId()%>',this);return false">
+												<span class="test" title="Click to Rate"><a href='#'>Rate</a></span>
+											</div></td>
+									</tr>
+								</table> <br /><%=item.getInfoTopicLinkPreview()%></td>
 						</tr>
 						<%
 							}
@@ -161,16 +173,28 @@
 						<%
 							for (ScrapeData item : tutorialItemList) {
 						%>
+
 						<tr>
-							<td><a name="viewFaqLink"
-								href="javascript:open_win('<%=item.getInfoTopicURL()%>','<%=item.getScrapeId()%>')">
-									<%=item.getInfoTopic()%>
-							</a> <br /><%=item.getInfoTopicLinkPreview()%></td>
+
+							<td>
+								<table width="100%">
+									<tr width="100%">
+										<td align="left" width="100%"><a name="viewFaqLink"
+											href="javascript:open_win('<%=item.getInfoTopicURL()%>','<%=item.getScrapeId()%>')">
+												<%=item.getInfoTopic()%>
+										</a></td>
+										<td align="right"><div
+												onclick="ajax_showTooltip(window.event,'modules/FaqRatingPopUp.jsp?scrapeId=<%=item.getScrapeId()%>',this);return false">
+												<span class="test" title="Click to Rate"><a href='#'>Rate</a></span>
+											</div></td>
+									</tr>
+								</table> <br /><%=item.getInfoTopicLinkPreview()%></td>
 						</tr>
 						<%
 							}
 						%>
-					</table></td>
+					</table>
+			</td>
 			</tr>
 
 			<tr>
@@ -187,11 +211,22 @@
 						<%
 							for (ScrapeData item : articleItemList) {
 						%>
+
 						<tr>
-							<td><a name="viewFaqLink"
-								href="javascript:open_win('<%=item.getInfoTopicURL()%>','<%=item.getScrapeId()%>')">
-									<%=item.getInfoTopic()%>
-							</a> <br /><%=item.getInfoTopicLinkPreview()%></td>
+
+							<td>
+								<table width="100%">
+									<tr width="100%">
+										<td align="left" width="100%"><a name="viewFaqLink"
+											href="javascript:open_win('<%=item.getInfoTopicURL()%>','<%=item.getScrapeId()%>')">
+												<%=item.getInfoTopic()%>
+										</a></td>
+										<td align="right"><div
+												onclick="ajax_showTooltip(window.event,'modules/FaqRatingPopUp.jsp?scrapeId=<%=item.getScrapeId()%>',this);return false">
+												<span class="test" title="Click to Rate"><a href='#'>Rate</a></span>
+											</div></td>
+									</tr>
+								</table> <br /><%=item.getInfoTopicLinkPreview()%></td>
 						</tr>
 						<%
 							}
@@ -207,11 +242,22 @@
 						<%
 							for (ScrapeData item : rlItemList) {
 						%>
+
 						<tr>
-							<td><a name="viewFaqLink"
-								href="javascript:open_win('<%=item.getInfoTopicURL()%>','<%=item.getScrapeId()%>')">
-									<%=item.getInfoTopic()%>
-							</a> <br /><%=item.getInfoTopicLinkPreview()%></td>
+
+							<td>
+								<table width="100%">
+									<tr width="100%">
+										<td align="left" width="100%"><a name="viewFaqLink"
+											href="javascript:open_win('<%=item.getInfoTopicURL()%>','<%=item.getScrapeId()%>')">
+												<%=item.getInfoTopic()%>
+										</a></td>
+										<td align="right"><div
+												onclick="ajax_showTooltip(window.event,'modules/FaqRatingPopUp.jsp?scrapeId=<%=item.getScrapeId()%>',this);return false">
+												<span class="test" title="Click to Rate"><a href='#'>Rate</a></span>
+											</div></td>
+									</tr>
+								</table> <br /><%=item.getInfoTopicLinkPreview()%></td>
 						</tr>
 						<%
 							}

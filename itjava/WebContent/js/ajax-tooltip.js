@@ -30,7 +30,8 @@ var x_offset_tooltip = 5;
 var y_offset_tooltip = 0;
 
 /* Don't change anything below here */
-
+var left_pos_global=0;
+var top_pos_global=0;
 
 var ajax_tooltipObj = false;
 var ajax_tooltipObj_iframe = false;
@@ -71,15 +72,14 @@ function ajax_showTooltip(e,externalFile,inputObj)
 		ajax_tooltipObj.appendChild(contentDiv);
 		contentDiv.id = 'ajax_tooltip_content';
 		contentDiv.style.marginBottom = '15px';
-		contentDiv.onmouseout  = function() {
-			ajax_tooltipObj.style.display='none';
-		};
+		
+		
 		
 		// Creating button div
-//		var buttonDiv = document.createElement('DIV');
-//		buttonDiv.style.cssText = 'position:absolute;left:50%;bottom:20px;text-align:center;background-color:#FFF;font-size:0.8em;height:15px;z-index:10000000';
-//		buttonDiv.innerHTML = '<a href="#" onclick="ajax_hideTooltip();return false">Close</a>';
-//		ajax_tooltipObj.appendChild(buttonDiv);
+		//var buttonDiv = document.createElement('DIV');
+		//buttonDiv.style.cssText = 'position:absolute;left:50%;bottom:20px;text-align:center;background-color:#FFF;font-size:0.8em;height:15px;z-index:10000000';
+		//buttonDiv.innerHTML = '<a href="#" onclick="ajax_hideTooltip();return false">Close</a>';
+		//ajax_tooltipObj.appendChild(buttonDiv);
 
 		if(ajax_tooltip_MSIE){	/* Create iframe object for MSIE in order to make the tooltip cover select boxes */
 			ajax_tooltipObj.style.cursor = 'move';
@@ -103,7 +103,11 @@ function ajax_showTooltip(e,externalFile,inputObj)
 	}
 
 	
-	ajax_positionTooltip(e,inputObj); 
+	ajax_positionTooltip(e,inputObj);
+//	contentDiv.onmouseout  = function() {
+//		if(e.clientX < left_pos_global - 50 || e.clientY < top_pos_global - 50)
+//		ajax_tooltipObj.style.display='none';
+//	};
 }
 
 function ajax_positionTooltip(e,inputObj)
@@ -117,18 +121,21 @@ function ajax_positionTooltip(e,inputObj)
 	   var topPos = e.clientY;
 	}
    var tooltipWidth = document.getElementById('ajax_tooltip_content').offsetWidth +  document.getElementById('ajax_tooltip_arrow').offsetWidth;
+   left_pos_global=leftPos;
+   top_pos_global = topPos;
    ajax_tooltipObj.style.left = leftPos + 'px';
    ajax_tooltipObj.style.top = topPos + 'px';   
 } 
 
 function ajax_hideTooltip()
 {
+	
 	ajax_tooltipObj.style.display='none';
 }
 
-function ajax_bindHideTooltip()
+function ajax_bindHideTooltip(e)
 {
-	ajax_tooltipObj.attachEvent('onmouseout', ajax_hideTooltip());
+	//ajax_tooltipObj.attachEvent('onmouseout', ajax_hideTooltip());
 	
 }
 
