@@ -8,17 +8,17 @@
   <preference>
     <name>frame0 Height</name>
     <class>java.lang.Integer</class>
-    <value>800</value>
+    <value>784</value>
   </preference>
   <preference>
     <name>frame0 Location X</name>
     <class>java.lang.Integer</class>
-    <value>240</value>
+    <value>283</value>
   </preference>
   <preference>
     <name>frame0 Location Y</name>
     <class>java.lang.Integer</class>
-    <value>20</value>
+    <value>-36</value>
   </preference>
   <preference>
     <name>Show Action Labels</name>
@@ -43,72 +43,97 @@
   <preference>
     <name>Docked Window Location X</name>
     <class>java.lang.Integer</class>
-    <value>627</value>
+    <value>-8</value>
   </preference>
   <preference>
     <name>Docked Window Location Y</name>
     <class>java.lang.Integer</class>
-    <value>40</value>
+    <value>-8</value>
   </preference>
   <preference>
     <name>Docked Window Width</name>
     <class>java.lang.Integer</class>
-    <value>653</value>
+    <value>1382</value>
   </preference>
   <preference>
     <name>Docked Window Height</name>
     <class>java.lang.Integer</class>
-    <value>760</value>
+    <value>744</value>
   </preference>
   <preference>
-    <name>Student Interface Location X</name>
+    <name>Preferences Window Location X</name>
     <class>java.lang.Integer</class>
-    <value>-8</value>
+    <value>125</value>
   </preference>
   <preference>
-    <name>Student Interface Location Y</name>
+    <name>Preferences Window Location Y</name>
     <class>java.lang.Integer</class>
-    <value>32</value>
+    <value>125</value>
   </preference>
   <preference>
-    <name>Student Interface Width</name>
+    <name>Preferences Window Width</name>
     <class>java.lang.Integer</class>
-    <value>1296</value>
+    <value>580</value>
   </preference>
   <preference>
-    <name>Student Interface Height</name>
+    <name>Preferences Window Height</name>
     <class>java.lang.Integer</class>
-    <value>776</value>
+    <value>480</value>
   </preference>
   <preference>
-    <name>Problem Directory</name>
+    <name>Use Disk Logging</name>
+    <class>java.lang.Boolean</class>
+    <value>true</value>
+  </preference>
+  <preference>
+    <name>Disk Logging Directory</name>
+    <class>edu.cmu.pact.Preferences.FileBrowser</class>
+    <value>C:\Project\myworkspace\itjava\logs</value>
+  </preference>
+  <preference>
+    <name>Use OLI Logging</name>
+    <class>java.lang.Boolean</class>
+    <value>false</value>
+  </preference>
+  <preference>
+    <name>OLI Logging URL</name>
     <class>java.lang.String</class>
-    <value>generated/</value>
-  </preference>
-  <preference>
-    <name>BRD File other location</name>
-    <class>java.lang.String</class>
-    <value>generated/</value>
-  </preference>
-  <preference>
-    <name>Tutor Wrapper Vertical Divider Location</name>
-    <class>java.lang.Integer</class>
-    <value>520</value>
-  </preference>
-  <preference>
-    <name>Tutor Wrapper Horizontal Divider Location</name>
-    <class>java.lang.Integer</class>
-    <value>934</value>
+    <value />
   </preference>
   <preference>
     <name>Interface Directory</name>
     <class>java.lang.String</class>
-    <value>C:\Program Files\Cognitive Tutor Authoring Tools\${src.dir}\classes\Projects\prog2</value>
+    <value>C:\Project\Cognitive Tutor Authoring Tools\Projects\FractionAdditionTutor</value>
   </preference>
   <preference>
-    <name>Restore workspace</name>
-    <class>java.lang.Boolean</class>
-    <value>false</value>
+    <name>Problem Directory</name>
+    <class>java.lang.String</class>
+    <value>C:\Project\Cognitive Tutor Authoring Tools\Projects\FractionAdditionTutor</value>
+  </preference>
+  <preference>
+    <name>BRD File other location</name>
+    <class>java.lang.String</class>
+    <value>C:\Project\Cognitive Tutor Authoring Tools\Projects\FractionAdditionTutor</value>
+  </preference>
+  <preference>
+    <name>Student Interface Width</name>
+    <class>java.lang.Integer</class>
+    <value>400</value>
+  </preference>
+  <preference>
+    <name>Student Interface Height</name>
+    <class>java.lang.Integer</class>
+    <value>490</value>
+  </preference>
+  <preference>
+    <name>Student Interface Location X</name>
+    <class>java.lang.Integer</class>
+    <value>100</value>
+  </preference>
+  <preference>
+    <name>Student Interface Location Y</name>
+    <class>java.lang.Integer</class>
+    <value>100</value>
   </preference>
 </preferences>
 

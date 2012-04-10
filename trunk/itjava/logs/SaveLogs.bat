@@ -1,0 +1,1 @@
+COPY "C:/Project/myworkspace/itjava/logs/finalLog.xml" "C:/Project/myworkspace/itjava/logs/SavedLogs/finalLog.xml"
