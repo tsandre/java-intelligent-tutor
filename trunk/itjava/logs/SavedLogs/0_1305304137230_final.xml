@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+<log_action user_guid="Vasanth+K" action_id="tutor_message" source_id="PACT_CTAT" date_time="2011/05/13 09:28:36.159" time_elapsed="00:00:00.000">
+  <action />
+  <argument />
+  <result />
+  <cycle />
+  <skills>unnamed</skills>
+</log_action>
+<log_action user_guid="Vasanth+K" action_id="tutor_message" source_id="PACT_CTAT" date_time="2011/05/13 09:28:39.266" time_elapsed="00:00:03.107">
+  <action>Selection: txtLine7Col4Action: UpdateTextField</action>
+  <argument>Input: write</argument>
+  <result>Correct</result>
+  <cycle />
+  <skills>unnamed</skills>
+</log_action>
+<log_action user_guid="Vasanth+K" action_id="tutor_message" source_id="PACT_CTAT" date_time="2011/05/13 09:28:43.784" time_elapsed="00:00:04.518">
+  <action>Selection: txtLine8Col4Action: UpdateTextField</action>
+  <argument>Input: close</argument>
+  <result>Correct</result>
+  <cycle />
+  <skills>unnamed</skills>
+</log_action>
+<log_action user_guid="Vasanth+K" action_id="tutor_message" source_id="PACT_CTAT" date_time="2011/05/13 09:28:53.236" time_elapsed="00:00:09.452">
+  <action>Selection: doneButtonAction: ButtonPressed</action>
+  <argument>Input: Done</argument>
+  <result>InCorrect</result>
+  <cycle />
+  <skills>unnamed</skills>
+</log_action>
+</root>
