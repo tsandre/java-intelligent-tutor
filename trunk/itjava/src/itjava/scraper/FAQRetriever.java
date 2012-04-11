@@ -20,7 +20,7 @@ public class FAQRetriever {
 		HashMap<Integer, ArrayList<ScrapeData>> faqItemMap = null;
 		try {
 			_conn = DBConnection.GetConnection();
-			// Should change to tutorialInfoId
+			
 			String faqItemsQuery = "select scrapefaq.*, ScrapeFAQSelection.faqType as faqType from ScrapeFAQSelection, ScrapeFAQ, ScrapeQuery where ScrapeFAQSelection.scrapeId=ScrapeFAQ.scrapeId and ScrapeFaq.searchQueryId=ScrapeQuery.searchQueryId and ScrapeQuery.tutorialInfoId=? and ScrapeFAQSelection.faqType<>5;";
 			PreparedStatement returnFaqItems = _conn
 					.prepareStatement(faqItemsQuery);
