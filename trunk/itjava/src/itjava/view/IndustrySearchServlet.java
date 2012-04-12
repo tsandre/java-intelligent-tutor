@@ -57,6 +57,7 @@ public class IndustrySearchServlet extends HttpServlet {
 		ArrayList <String> fileResults = new ArrayList <String>();
 		fileResults = JavaCodeSearch.industrySearch(faqSearchQuery);
 		request.setAttribute("fileLocation", fileResults);
+		request.setAttribute("query", query);
 		for(String path: fileResults){
 			System.out.println(path);
 		}
