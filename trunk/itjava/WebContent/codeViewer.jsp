@@ -22,10 +22,9 @@
 <!-- Include jQuery Syntax Highlighter -->
 <script type="text/javascript"
 	src="http://balupton.github.com/jquery-syntaxhighlighter/scripts/jquery.syntaxhighlighter.min.js"></script>
-<!-- Initialise jQuery Syntax Highlighter -->
+<!-- Initialize jQuery Syntax Highlighter -->
 <script type="text/javascript">
 	$.SyntaxHighlighter.init();
-	
 </script>
 </head>
 
@@ -61,37 +60,23 @@
 
 								
 						<%
-							ArrayList<String> industryCodePaths = (ArrayList<String>) request.getAttribute("fileLocation");
-							session.setAttribute("fileLocation", industryCodePaths);
-							System.out.println(request.getAttribute("query"));
-							String searchQuery = request.getAttribute("query").toString();
+							ArrayList<String> industryCodePaths = (ArrayList<String>) session.getAttribute("fileLocation");
 							
-							for (String codePath : industryCodePaths) {
-								String fileName = codePath.substring(codePath.lastIndexOf('/')+1);
-								
+							
+							String codePath = industryCodePaths.get(Integer.parseInt(request.getParameter("linkIndex").toString()));
 						%>
-								<br/>
-								<a id="link_<%=fileName.substring(0,fileName.indexOf('.'))%>" href="javascript: window.open('/itjava/codeViewer.jsp?linkIndex=<%=industryCodePaths.indexOf(codePath)%>')">File: <%=fileName %></a>
-								<br/>	
+								
 								<pre class="language-java">					
 							    <%
 								BufferedReader input = new BufferedReader(new FileReader(codePath));
 								String line = "";
-								int previewLineCount = 0;
-								while ((line = input.readLine()) != null && previewLineCount<3 ) {
-									if(line.contains(searchQuery)) {
-										out.println(line);
-										previewLineCount++;
-										}
-									
+								while ((line = input.readLine()) != null) {
+								out.println(line);
 								}
 								input.close();
 								%> 
 								</pre>
-								<br/>
-								<%
-							}
-						%>
+								
 								</td>
 							</tr>
 						</table>

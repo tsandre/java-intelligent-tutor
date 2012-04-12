@@ -14,8 +14,7 @@
 <script type="text/javascript" language="javascript"
 	src="js/ratingsys.js"></script>
 <script type="text/javascript" language="javascript" src="js/main.js"></script>
-<script src="http://js.nicedit.com/nicEdit-latest.js"
-	type="text/javascript"></script>
+<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
 <script type="text/javascript">
 	bkLib.onDomLoaded(nicEditors.allTextAreas);
 	function getXMLObject() //XML OBJECT
