@@ -53,7 +53,7 @@ public class CodeUploadServlet extends HttpServlet {
 
 		// to get the content type information from JSP Request Header
 		String contentType = request.getContentType();
-		File fileDir = new File(LocalMachine.home + "files/");
+		File fileDir = new File(LocalMachine.home + "IndustryFiles/");
 		if (!fileDir.exists()) {
 			System.out.println("Dir Made: " + fileDir.mkdir());
 		} else {
@@ -62,7 +62,7 @@ public class CodeUploadServlet extends HttpServlet {
 
 		ArrayList<String> filesList = new ArrayList<String>();
 
-		String fileSavePath = LocalMachine.home + "files/";
+		String fileSavePath = LocalMachine.home + "IndustryFiles/";
 		if ((contentType != null)
 				&& (contentType.indexOf("multipart/form-data") >= 0)) {
 
@@ -108,7 +108,7 @@ public class CodeUploadServlet extends HttpServlet {
 				}
 			}
 
-			System.out.println(LocalMachine.home + "files/");
+			System.out.println(LocalMachine.home + "IndustryFiles/");
 			System.out.println(filesList);
 			JavaSourceCodeIndexer codeIndexer = new JavaSourceCodeIndexer();
 			codeIndexer.Indexer();
