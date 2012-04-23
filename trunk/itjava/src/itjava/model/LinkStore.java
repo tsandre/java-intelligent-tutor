@@ -56,9 +56,6 @@ public class LinkStore {
 	
 	//Start Edit V1.1 Google Search Addition
 	private static ArrayList<String> GoogleSearch(String query) {
-		
-		
-		
 		ArrayList<String> googleSearchResults = new ArrayList<String>();
 		String googleSearchContext = "011045704107476092050:liivikkqg0k";
 		String googleSearchAPIKey = "AIzaSyCdECK7u3Erfb23uPqCEl2lESCDw4cwOXA";
