@@ -47,7 +47,7 @@ public class JavaCodeSearch  {
 			for (int i = 0; i < hits.length(); i++) {
 				Document doc = hits.doc(i);
 				System.out.println(doc.get("filename") + " with a score of " + hits.score(i));
-				resultLocations.add(LocalMachine.home+"/files/"+doc.get("filename"));
+				resultLocations.add(LocalMachine.home+"/IndustryFiles/"+doc.get("filename"));
 			}
 			is.close();
 
