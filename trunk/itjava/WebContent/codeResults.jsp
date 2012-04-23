@@ -25,7 +25,6 @@
 <!-- Initialise jQuery Syntax Highlighter -->
 <script type="text/javascript">
 	$.SyntaxHighlighter.init();
-	
 </script>
 </head>
 
@@ -71,7 +70,7 @@
 								
 						%>
 								<br/>
-								<a id="link_<%=fileName.substring(0,fileName.indexOf('.'))%>" href="javascript: window.open('/itjava/codeViewer.jsp?linkIndex=<%=industryCodePaths.indexOf(codePath)%>')">File: <%=fileName %></a>
+								<a id="link_<%=fileName.substring(0,fileName.indexOf('.'))%>" href="javascript: void(window.open('/itjava/codeViewer.jsp?linkIndex=<%=industryCodePaths.indexOf(codePath)%>','_newtab'));">File: <%=fileName %></a>
 								<br/>	
 								<pre class="language-java">					
 							    <%
