@@ -1,13 +1,14 @@
 package itjava.scraper;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import com.luxmedien.googlecustomsearch.GoogleCustomSearch;
-import com.luxmedien.googlecustomsearch.json.GoogleResponse;
-import com.luxmedien.googlecustomsearch.json.Item;
+import java.util.List;
+
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.services.customsearch.Customsearch;
+import com.google.api.services.customsearch.model.Result;
+import com.google.api.services.customsearch.model.Search;
 import org.jsoup.*;
 
 /**
@@ -16,61 +17,62 @@ import org.jsoup.*;
  */
 
 public class Java2sScrape {
-		public static LinkedHashSet <ScrapeData> ScrapeQuery(String queryText){
-			String websiteName = "java2s.com";
-			String scrapeSource = "Java2s";
-			LinkedHashSet <ScrapeData> Java2sScrapeObj = new LinkedHashSet <ScrapeData> ();
-			ArrayList<String> googleSearchResults = new ArrayList<String>();
-			String googleSearchContext = "011045704107476092050:liivikkqg0k&start=";
-			String googleSearchAPIKey = "AIzaSyCdECK7u3Erfb23uPqCEl2lESCDw4cwOXA";
-			try {
-				for(int i=1;i<10;i+=10) {
-				GoogleCustomSearch customSearchInstance = new GoogleCustomSearch(googleSearchAPIKey, googleSearchContext+Integer.toString(i));
-				PrintStream printStreamOriginal = System.out;
-				System.setOut(new PrintStream(new OutputStream() {
-					@Override
-					public void write(int b) throws IOException {
-						// NO OPERATION
-					}
-				}));
+	public static LinkedHashSet <ScrapeData> ScrapeQuery(String queryText){
+		String websiteName = "java2s.com";
+		String scrapeSource = "Java2s";
+		LinkedHashSet <ScrapeData> Java2sScrapeObj = new LinkedHashSet <ScrapeData> ();
+		ArrayList<String> googleSearchResults = new ArrayList<String>();
+		String googleSearchContext = "011045704107476092050:liivikkqg0k";
+		String googleSearchAPIKey = "AIzaSyCdECK7u3Erfb23uPqCEl2lESCDw4cwOXA";
+		try {
+			NetHttpTransport nht = new NetHttpTransport();
+			JacksonFactory jf = new JacksonFactory();
+			Customsearch customsearch = new Customsearch(nht, jf);
+			Customsearch.Cse.List request = customsearch.cse().list(queryText+" site:java2s.com");
+			request.setKey(googleSearchAPIKey);
+			request.setCx(googleSearchContext);
 
-				GoogleResponse gResponse = customSearchInstance.getSearchResults(queryText+" site:java2s.com");
-				//Call Restoration
-				//Restoring SOP to actual stream
-				System.setOut(printStreamOriginal);
-				int resultIndex = 0;
-				for (Item item : gResponse.getItems()) {
-					String urlText = item.getLink().getHref();
+			for(long iResultIndex=1; iResultIndex<20; iResultIndex+=10) {
+				request.setStart(iResultIndex);
+				Search results = request.execute();
+				List<Result> searchResults = results.getItems();
+				int count = 0;
+				for(Result item:searchResults) {
+					String urlText = item.getLink();
+					String urlEnding = urlText.toUpperCase();
+					System.out.println("Java2S: "+urlText);
 					urlText = Jsoup.parse(urlText).text();
 					String title = item.getTitle();
 					title = Jsoup.parse(title).text();
-					String summary = item.getSummary().trim();
+					//		System.out.println("Title: "+title);
+					String summary = item.getSnippet().trim();
 					summary = Jsoup.parse(summary).text();
-					String urlEnding = urlText.toUpperCase();
+					//		System.out.println("Summary: "+summary);
 					if (!urlEnding.endsWith(".PDF") && !urlEnding.endsWith(".DOC") && !urlEnding.endsWith(".PPT")) {
-					googleSearchResults.add(urlText);
+						googleSearchResults.add(urlText);
 					}
+					count++;
 					System.out.println("Topic: "+title);
 					System.out.println("Link: "+urlText);
 					System.out.println("Preview: "+summary +"\n");
-					resultIndex++;
-					if (resultIndex < 6){
-					ScrapeData scrapeDataObj = new ScrapeData();
-					scrapeDataObj.setInfoQuery(queryText);
-			  		scrapeDataObj.setInfoTopic(title);
-			  		scrapeDataObj.setInfoTopicURL(urlText);
-			  		scrapeDataObj.setInfoTopicLinkPreview(summary);
-			  		scrapeDataObj.setInfoScrapeSite(websiteName);
-			  		scrapeDataObj.setInfoScrapeSource(scrapeSource);
-			  		scrapeDataObj.setInfoTopicResultindex(resultIndex);
-			  		Java2sScrapeObj.add(scrapeDataObj);
+					iResultIndex++;
+					if (count < 6){
+						ScrapeData scrapeDataObj = new ScrapeData();
+						scrapeDataObj.setInfoQuery(queryText);
+						scrapeDataObj.setInfoTopic(title);
+						scrapeDataObj.setInfoTopicURL(urlText);
+						scrapeDataObj.setInfoTopicLinkPreview(summary);
+						scrapeDataObj.setInfoScrapeSite(websiteName);
+						scrapeDataObj.setInfoScrapeSource(scrapeSource);
+						scrapeDataObj.setInfoTopicResultindex(count);
+						Java2sScrapeObj.add(scrapeDataObj);
 					}
 				}
-				}
-			} catch (Exception e) {			
-				e.printStackTrace();
 			}
-			System.out.println("Result count of jGuru :"+Java2sScrapeObj.size());
-			return Java2sScrapeObj;
+		} catch (Exception e) {			
+			e.printStackTrace();
 		}
+		System.out.println("Result count of Java2s :"+Java2sScrapeObj.size());
+		return Java2sScrapeObj;
+	}
 } 
