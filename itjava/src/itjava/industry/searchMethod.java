@@ -10,7 +10,7 @@ import org.apache.commons.io.FileUtils.*;
 
 public class searchMethod {
 public static void main(String args[]){
-	final File folder = new File(LocalMachine.home+"files/");
+	final File folder = new File(LocalMachine.home+"IndustryFiles/");
 	Iterator iter =  FileUtils.iterateFiles(folder, new String[]{"java"}, true);
 	while(iter.hasNext()) {
 	    File file = (File) iter.next();
