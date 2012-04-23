@@ -28,8 +28,8 @@ public class JavaCodeSearch  {
     public static ArrayList<String> industrySearch(String methodName) {
     	ArrayList<String> resultLocations = new ArrayList<String>();
 		try {
-			File indexDir = new File(LocalMachine.home + "index/");
-			String q = "code:"+methodName;
+			File indexDir = new File(LocalMachine.home + "IndexFiles/");
+			String q = "code:"+methodName+" OR method:"+methodName;
 			PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(
 					new JavaSourceCodeAnalyzer());
 			analyzer.addAnalyzer("import", new KeywordAnalyzer());
