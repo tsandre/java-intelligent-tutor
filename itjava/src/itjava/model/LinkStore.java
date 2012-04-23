@@ -9,10 +9,7 @@
 package itjava.model;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -24,17 +21,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-
-import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.api.services.customsearch.Customsearch;
 import com.google.api.services.customsearch.model.Result;
 import com.google.api.services.customsearch.model.Search;
-import com.luxmedien.googlecustomsearch.GoogleCustomSearch;
-import com.luxmedien.googlecustomsearch.json.GoogleResponse;
-import com.luxmedien.googlecustomsearch.json.Item;
+
 
 
 /**
@@ -46,11 +38,10 @@ public class LinkStore {
 	public static LinkedHashSet<String> CreateLinks(String query) {
 		LinkedHashSet<String> _setOfLinks;
 		_setOfLinks = new LinkedHashSet<String>();
-		//V1.1 Start
 		_setOfLinks.addAll(GoogleSearch(query));
-		//V1.1 End
 		_setOfLinks.addAll(BingSearch(query));
-		_setOfLinks.addAll(YahooSearch(query));
+//TODO: Yahoo Boss search currently not working. Needs to be updated.		
+//		_setOfLinks.addAll(YahooSearch(query));
 		return _setOfLinks;
 	}
 	
@@ -113,6 +104,7 @@ public class LinkStore {
 				if ( !urlText.endsWith(".pdf") && !urlText.endsWith(".doc") && !urlText.endsWith(".ppt")
 					 && !urlText.endsWith(".PDF") && !urlText.endsWith(".DOC") && !urlText.endsWith(".PPT"))
 				bingSearchResults.add(ele.text());	
+				System.out.println("BingResult: "+ele.text());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,6 +134,7 @@ public class LinkStore {
 			Elements eles = doc.getElementsByTag("url");
 			for (Element ele : eles) {
 				yahooSearchResults.add(ele.text());	
+				System.out.println("YahooResult: "+ele.text());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
