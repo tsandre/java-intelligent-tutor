@@ -10,7 +10,7 @@
 <title>Code select..</title>
 <link href="css/maincss.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
-<script src="http://code.jquery.com/jquery-1.4.4.js"></script>
+<script src="js/jquery-1.7.2.js"></script>
 <script type="text/javascript" language="javascript" src="js/ratingsys.js"></script> 
 <script type="text/javascript" language="javascript" src="js/main.js"></script> 
 <script src="MD5.js"></script>
@@ -41,7 +41,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="file" name="file" size="50" multiple/>
+                            <input type="file" name="file" size="50" accept="java" multiple/>
                         </td>
                         <td width="1"></td>
                         <td><input type="submit" name="Searchbtn" id="Searchbtn" onclick="return showProgress();" value="Upload" /></td>
