@@ -35,6 +35,8 @@ public class DeliverableInfoSQL {
 					" deliverableType char(7)," + 
 					" difficultyLevel integer default 0," +
 					" numOfBlanks integer default 0, " +
+					" tutorialDescription varchar, " +
+					" tutorialHTMLCode varchar, " +
 					" constraint uniqDeliverableInfo unique(deliverableName, tutorialInfoId) " +
 					" );");
 			conn.setAutoCommit(true);
