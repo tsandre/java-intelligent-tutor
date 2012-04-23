@@ -56,7 +56,7 @@ private TutorialStore _tutorialStore;
 				_tutorialStore = new TutorialStore();
 				Tutorial finalTutorial = _tutorialStore.GenerateTutorial(approvedTutorial);
 				deployer = new TutorialDeployer(finalTutorial);
-				CreateDeliveryFolder(approvedTutorial.getReadableName());
+			//	CreateDeliveryFolder(approvedTutorial.getReadableName());
 				deployer.Deploy(rt);
 				finalTutorial.setTutorialHTMLCode(deployer.CompileHTMLTutorial(rt));
                                 finalTutorial.setTutorialDescription(approvedTutorial.getTutorialDescription());
