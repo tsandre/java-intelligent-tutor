@@ -17,12 +17,21 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.services.customsearch.Customsearch;
+import com.google.api.services.customsearch.model.Result;
+import com.google.api.services.customsearch.model.Search;
 import com.luxmedien.googlecustomsearch.GoogleCustomSearch;
 import com.luxmedien.googlecustomsearch.json.GoogleResponse;
 import com.luxmedien.googlecustomsearch.json.Item;
@@ -47,49 +56,38 @@ public class LinkStore {
 	
 	//Start Edit V1.1 Google Search Addition
 	private static ArrayList<String> GoogleSearch(String query) {
+		
+		
+		
 		ArrayList<String> googleSearchResults = new ArrayList<String>();
-		String googleSearchContext = "011045704107476092050:liivikkqg0k&start=";
+		String googleSearchContext = "011045704107476092050:liivikkqg0k";
 		String googleSearchAPIKey = "AIzaSyCdECK7u3Erfb23uPqCEl2lESCDw4cwOXA";
 		try {
-			//This loop is to  retrieve the second page of results
-			//the custom search api only provides 10 results in each response
-			//so we use the start parameter to get items having specific index, i.e. the first loop get 1-10 and second loop gets 11-20
-			for(int i=1;i<20;i+=10) {
-			GoogleCustomSearch customSearchInstance = new GoogleCustomSearch(googleSearchAPIKey, googleSearchContext+Integer.toString(i));
-			
-			//This code to get around SOP located in a library called by Google Custom Search Class
-			//Cleans up output, removes SOP of library.
-			PrintStream printStreamOriginal = System.out;
-			System.setOut(new PrintStream(new OutputStream() {
-				@Override
-				public void write(int b) throws IOException {
-					// NO OPERATION
-				}
-			}));
 
-			//Call Block
+			NetHttpTransport nht = new NetHttpTransport();
+			JacksonFactory jf = new JacksonFactory();
+			Customsearch customsearch = new Customsearch(nht, jf);
+			Customsearch.Cse.List request = customsearch.cse().list("Java Examples for "+query);
+			request.setKey(googleSearchAPIKey);
+			request.setCx(googleSearchContext);
 			
-			//TODO: Multi-T 
-			
-			GoogleResponse gResponse = customSearchInstance
-					.getSearchResults("Java example for " +query);
-			//Call Restoration
+			for(long iResultIndex=1; iResultIndex<50;iResultIndex+=10) {
+				request.setStart(iResultIndex);
+				Search results = request.execute();
+				List<Result> searchResults = results.getItems();
+				for(Result item:searchResults) {
+					String urlText = item.getLink();
+					String urlEnding = urlText.toUpperCase();
+					if (!urlEnding.endsWith(".PDF") && !urlEnding.endsWith(".DOC") && !urlEnding.endsWith(".PPT")) {
+					googleSearchResults.add(urlText);
+					}
+					System.out.println("GoogleResult: "+urlText);
+				}	
+			}		
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-			//Restoring SOP to actual stream
-			System.setOut(printStreamOriginal);
-			
-			for (Item item : gResponse.getItems()) {
-				String urlText = item.getLink().getHref();
-				String urlEnding = urlText.toUpperCase();
-				if (!urlEnding.endsWith(".PDF") && !urlEnding.endsWith(".DOC") && !urlEnding.endsWith(".PPT")) {
-				googleSearchResults.add(urlText);
-				}
-				System.out.println("GoogleResult: "+urlText);
-			}
-			}
-		} catch (Exception e) {			
-			e.printStackTrace();
-		}
 		return googleSearchResults;
 	}
 	//End Edit V1.1
