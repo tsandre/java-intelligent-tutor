@@ -33,8 +33,8 @@ public class JavaSourceCodeIndexer {
 	public static void Indexer() {
 
 		try {
-			File indexDir = new File(LocalMachine.home + "index/");
-			File dataDir = new File(LocalMachine.home + "files/");
+			File indexDir = new File(LocalMachine.home + "IndexFiles/");
+			File dataDir = new File(LocalMachine.home + "IndustryFiles/");
 			IndexWriter writer = new IndexWriter(indexDir,
 					new JavaSourceCodeAnalyzer(), true);
 			indexDirectory(writer, dataDir);
@@ -105,6 +105,7 @@ public class JavaSourceCodeIndexer {
 	}
 
 	private static void addClass(Document doc, JClass cls) {
+		if (cls != null) {
 		doc.add(Field.Text(CLASS, cls.className));
 		String superCls = cls.superClass;
 		if (superCls != null)
@@ -120,8 +121,8 @@ public class JavaSourceCodeIndexer {
 		for (int i = 0; i < innerCls.size(); i++) {
 			addClass(doc, (JClass) innerCls.get(i));
 		}
-
 	}
+}
 
 	private static void addMethods(JClass cls, Document doc) {
 		ArrayList methods = cls.methodDeclarations;
