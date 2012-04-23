@@ -46,7 +46,7 @@ public class TutorialInfoSQL {
 			ResultSet rs = stat.executeQuery("select * from TutorialInfo;");
 			while (rs.next()) {
 				System.out.println("TutorialInfoId = " + rs.getString("tutorialInfoId"));
-				System.out.println("folderName = " + rs.getString("folderName"));
+			//	System.out.println("folderName = " + rs.getString("folderName"));
 			}
 			rs.close();
 		} catch (Exception e) {
