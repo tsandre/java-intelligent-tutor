@@ -457,20 +457,7 @@ System.out.println("TUTSEL: 7");
 for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 	String wordToBeBlanked = currentWordInfo.wordToBeBlanked;
 	ArrayList<String> currHintsList = null;
-	String hintValue1 = "";
-        String hintValue2 = "";
-        /*int DoneNow = 0;
-        for(int m=0; m<hintsMapList.size() && DoneNow==0; m++){
-            if(hintsMapList.get(m) != null){
-                if(hintsMapList.get(m).get(wordToBeBlanked) != null){
-                    hintValue1 = hintsMapList.get(m).get(wordToBeBlanked).get(0);
-                    hintValue2 = hintsMapList.get(m).get(wordToBeBlanked).get(1);
-                    out.println(hintValue1 + ", " + hintValue2);
-                    DoneNow = 1;
-                }
-            }
-        }*/
-       
+	String hintValue = "";
 	if (hintsMap != null) {
 		currHintsList = hintsMap.get(Integer.toString(currWordInfoIndex));
 	}
@@ -480,29 +467,17 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 	for (int hintIndex = 1; hintIndex <= 2; hintIndex++) {
 		if (currHintsList != null ) {
 			if (currHintsList.size() > 0) {
-                            hintValue1 = currHintsList.get(0);
-                            hintValue2 = currHintsList.get(1);
-                            //currHintsList.remove(0);
-                            //if (hintValue1.equalsIgnoreCase(wordToBeBlanked)) hintValue1 = "";
-                            //if (hintValue2.equalsIgnoreCase(wordToBeBlanked)) hintValue2 = "";		
-                        }
+				hintValue = currHintsList.get(0);
+				currHintsList.remove(0);
+				if (hintValue.equalsIgnoreCase(wordToBeBlanked)) hintValue = "";
+			}
 		}
-                if(hintIndex == 1){
-                out.println("<br /><input type=\"text\" " +
+		out.println("<br /><input type=\"text\" " +
 				"name=\"txtHint_" + currWordInfoIndex + "_" + hintIndex + "\" " + 
 				"placeholder=\"Hint " + hintIndex + "\" " + 
-				"value=\"" + hintValue1 + "\" " +
+				"value=\"" + hintValue + "\" " +
 				"size=\"30\" " +
-				" />");	
-                }else{
-                    out.println("<br /><input type=\"text\" " +
-				"name=\"txtHint_" + currWordInfoIndex + "_" + hintIndex + "\" " + 
-				"placeholder=\"Hint " + hintIndex + "\" " + 
-				"value=\"" + hintValue2 + "\" " +
-				"size=\"30\" " +
-				" />");	
-                }
-                
+				" />");		
 	}
 	out.println("</div>");
 	currWordInfoIndex++;
