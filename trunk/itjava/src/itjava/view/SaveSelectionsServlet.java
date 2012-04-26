@@ -198,7 +198,7 @@ public class SaveSelectionsServlet extends HttpServlet {
 			}
 		}
 		else {
-			nextPage = "tutorialSelection.jsp?nothing=123&index=" + nextIndex;
+			nextPage = "tutorialSelection.jsp?index=" + nextIndex;
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);
