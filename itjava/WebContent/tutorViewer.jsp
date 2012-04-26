@@ -191,7 +191,8 @@ function focusdonebutton(){
 			}
 		}
 	}
-	out.println("<table><tr><td><span style=\"font-size:18px; font-weight:bold;\">" + TutorName + "</span></td></tr><tr><td>" + TutorDesc + "</td></tr><tr><td>API: " + APIType + "</td></tr><tr height=\"15\"><td></td></tr><tr><td>");
+	out.println("<table><tr><td><span style=\"font-size:18px; font-weight:bold;\">" + TutorName + "</span></td></tr><tr><td>API: " + APIType + "</td></tr><tr height=\"15\"><td></td></tr><tr><td>");
+//	out.println("<table><tr><td><span style=\"font-size:18px; font-weight:bold;\">" + TutorName + "</span></td></tr><tr><td>" + TutorDesc + "</td></tr><tr><td>API: " + APIType + "</td></tr><tr height=\"15\"><td></td></tr><tr><td>");
 	String pagetype = "";
 	int examplecount = 0;
 	int quizcount = 0;
