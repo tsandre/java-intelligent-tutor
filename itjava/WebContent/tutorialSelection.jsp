@@ -515,7 +515,7 @@ for (WordInfo currentWordInfo : currentTutorial.getWordInfoList()) {
 </div>
 
 <div id="divMessages">
-Any doubts about this snippet? Problems in adding new words even though the word is visible in the snippet? Check out what Java compiler has to say about this code by clicking here: <span class="lineNumber" id="toggleMessage">Toggle compiler messages</span>
+Any questions about this snippet? Problems in adding new words even though the word is visible in the snippet? Check out what Java compiler has to say about this code by clicking here: <span class="lineNumber" id="toggleMessage">Toggle compiler messages</span>
 <div id="compilerMessages">
 <%
 if (currentTutorial.getFacade().getMessages().length > 0) {
