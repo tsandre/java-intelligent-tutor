@@ -14,15 +14,15 @@
 <title>Code Results..</title>
 <link href="css/maincss.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
-<script src="http://code.jquery.com/jquery-1.4.4.js"></script>
-<script type="text/javascript" language="javascript"
-	src="js/ratingsys.js"></script>
+<script src="js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="js/jquery.syntaxhighlighter.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/ratingsys.js"></script>
 <script type="text/javascript" language="javascript" src="js/main.js"></script>
 <script src="MD5.js"></script>
-<!-- Include jQuery Syntax Highlighter -->
+<!-- Include jQuery Syntax Highlighter 
 <script type="text/javascript"
-	src="http://balupton.github.com/jquery-syntaxhighlighter/scripts/jquery.syntaxhighlighter.min.js"></script>
-<!-- Initialize jQuery Syntax Highlighter -->
+	src="js/jquery.syntaxhighlighter.min.js"></script>
+ Initialize jQuery Syntax Highlighter -->
 <script type="text/javascript">
 	$.SyntaxHighlighter.init();
 </script>
