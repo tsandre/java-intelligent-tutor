@@ -54,7 +54,7 @@ public class FaqViewerLinkClickServlet extends HttpServlet {
 					Integer.valueOf(request.getParameter("scrapeId")));
 			
 			//TODO: user Id should go here. 
-			addFaqSelection.setString(1, "UserNameHere");
+			addFaqSelection.setString(1, userId);
 			addFaqSelection.executeUpdate();
 
 		} catch (Exception e) {
