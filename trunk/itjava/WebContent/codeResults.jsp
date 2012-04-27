@@ -19,9 +19,10 @@
 <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
 <script type="text/javascript" language="javascript"
 	src="js/ratingsys.js"></script>
+<script type="text/javascript" src="js/jquery.syntaxhighlighter.min.js"></script>
 <script type="text/javascript" language="javascript" src="js/main.js"></script>
 <script src="MD5.js"></script>
-<!-- Include jQuery Syntax Highlighter -->
+<!-- Include jQuery Syntax Highlighter 
 <script type="text/javascript"
 	src="http://balupton.github.com/jquery-syntaxhighlighter/scripts/jquery.syntaxhighlighter.min.js"></script>
 <!-- Initialise jQuery Syntax Highlighter -->
@@ -62,59 +63,59 @@
 								<td>&nbsp;</td>
 								<td>
 								<%
-															ArrayList<String> industryCodePaths = (ArrayList<String>) request
-																	.getAttribute("fileLocation");
-															if (industryCodePaths.size() == 0) {
-														%> There are no results found for specified query. <%
-															}
-															ArrayList<Pair<String, Double>> relSortedList = new ArrayList<Pair<String, Double>>();
+									ArrayList<String> industryCodePaths = (ArrayList<String>) request
+											.getAttribute("fileLocation");
+									if (industryCodePaths.size() == 0) {
+								%> There are no results found for specified query. <%
+									}
+									ArrayList<Pair<String, Double>> relSortedList = new ArrayList<Pair<String, Double>>();
 
-															System.out.println(request.getAttribute("query"));
-															String searchQuery = request.getAttribute("query").toString();
-															for (String codePath : industryCodePaths) {
-																BufferedReader input = new BufferedReader(new FileReader(
-																		codePath));
-																String line = "";
-																int occurrenceCount = 0, lineCount = 0;
-																while ((line = input.readLine()) != null) {
-																	lineCount++;
-																	if (line.toLowerCase().contains(searchQuery.toLowerCase())) {
-																		occurrenceCount++;
-																	}
+									System.out.println(request.getAttribute("query"));
+									String searchQuery = request.getAttribute("query").toString();
+									for (String codePath : industryCodePaths) {
+										BufferedReader input = new BufferedReader(new FileReader(
+												codePath));
+										String line = "";
+										int occurrenceCount = 0, lineCount = 0;
+										while ((line = input.readLine()) != null) {
+											lineCount++;
+											if (line.toLowerCase().contains(searchQuery.toLowerCase())) {
+												occurrenceCount++;
+											}
 
-																}
-																Double relScore = (double) ( lineCount/occurrenceCount);
+										}
+										Double relScore = (double) (lineCount / occurrenceCount);
 
-																Pair<String, Double> fileScore = new Pair<String, Double>(
-																		codePath, relScore);
-																relSortedList.add(fileScore);
-																input.close();
-															}
+										Pair<String, Double> fileScore = new Pair<String, Double>(
+												codePath, relScore);
+										relSortedList.add(fileScore);
+										input.close();
+									}
 
-															for (int i = 0; i < relSortedList.size(); i++) {
-																for (int j = 0; j < relSortedList.size() - 1; j++) {
-																	if (relSortedList.get(j).second > relSortedList.get(j + 1).second) {
-																		Pair<String, Double> tempPair = relSortedList.get(j);
-																		relSortedList.set(j, relSortedList.get(j + 1));
-																		relSortedList.set(j + 1, tempPair);
-																	}
-																}
-															}
-															ArrayList<String> industryCodePathsResult = new ArrayList<String>();
-															for (Pair<String, Double> item : relSortedList) {
-																System.out.println(item.first + ":" + item.second);
-																industryCodePathsResult.add(item.first);
+									for (int i = 0; i < relSortedList.size(); i++) {
+										for (int j = 0; j < relSortedList.size() - 1; j++) {
+											if (relSortedList.get(j).second > relSortedList.get(j + 1).second) {
+												Pair<String, Double> tempPair = relSortedList.get(j);
+												relSortedList.set(j, relSortedList.get(j + 1));
+												relSortedList.set(j + 1, tempPair);
+											}
+										}
+									}
+									ArrayList<String> industryCodePathsResult = new ArrayList<String>();
+									for (Pair<String, Double> item : relSortedList) {
+										System.out.println(item.first + ":" + item.second);
+										industryCodePathsResult.add(item.first);
 
-															}
-															session.setAttribute("fileLocation", industryCodePaths);
+									}
+									session.setAttribute("fileLocation", industryCodePaths);
 
-															for (String codePath : industryCodePathsResult) {
-																String fileName = codePath
-																		.substring(codePath.lastIndexOf('/') + 1);
-														%> <br />
-								<a id="link_<%=fileName.substring(0,fileName.indexOf('.'))%>"
-									href="javascript: void(window.open('/itjava/codeViewer.jsp?linkIndex=<%=industryCodePaths.indexOf(codePath)%>','_newtab'));">File:
-								<%=fileName %></a> <br />
+									for (String codePath : industryCodePathsResult) {
+										String fileName = codePath
+												.substring(codePath.lastIndexOf('/') + 1);
+								%> <br />
+								<a id="link_<%=fileName.substring(0, fileName.indexOf('.'))%>"
+									href="javascript: void(window.open('/itjava/codeViewer.jsp?linkIndex=<%=industryCodePaths.indexOf(codePath)%>','_newtab<%=industryCodePaths.indexOf(codePath)%>'));">File:
+								<%=fileName%></a> <br />
 								<pre class="language-java">					
 							    <%
 												    	BufferedReader input = new BufferedReader(new FileReader(
@@ -133,8 +134,8 @@
 												    %> 
 								</pre> <br />
 								<%
- 	}
- %>
+									}
+								%>
 								</td>
 							</tr>
 						</table>
