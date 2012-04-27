@@ -63,7 +63,7 @@
 window['PR_SHOULD_USE_CONTINUATION'] = true;
 
 /** the number of characters between tab columns */
-window['PR_TAB_WIDTH'] = 8;
+window['PR_TAB_WIDTH'] = 4;
 
 /** Walks the DOM returning a properly escaped version of innerHTML.
   * @param {Node} node
@@ -858,6 +858,7 @@ window['_pr_isIE6'] = function () {
       var tokens = sourceCode.match(tokenizer) || [];
       var styleCache = {};
 
+      // loop through
       for (var ti = 0, nTokens = tokens.length; ti < nTokens; ++ti) {
         var token = tokens[ti];
         var style = styleCache[token];
@@ -1411,7 +1412,7 @@ window['_pr_isIE6'] = function () {
           // passed to PR_registerLangHandler.
           var langExtension = cs.className.match(/\blang-(\w+)\b/);
           if (langExtension) { langExtension = langExtension[1]; }
-
+          
           // make sure this is not nested in an already prettified element
           var nested = false;
           for (var p = cs.parentNode; p; p = p.parentNode) {
@@ -1422,6 +1423,13 @@ window['_pr_isIE6'] = function () {
               break;
             }
           }
+
+          // make sure we haven't already prettified this element
+          if ( cs.className && cs.className.indexOf('prettyprint-has') >= 0 ) {
+            nested = true;
+          }
+          
+		  // handle
           if (!nested) {
             // fetch the content as a snippet of properly escaped HTML.
             // Firefox adds newlines at the end.
@@ -1436,6 +1444,7 @@ window['_pr_isIE6'] = function () {
             };
             applyDecorator(prettyPrintingJob);
             replaceWithPrettyPrintedHtml();
+			cs.className += ' prettyprint-has';
           }
         }
       }
@@ -1451,7 +1460,7 @@ window['_pr_isIE6'] = function () {
       var newContent = prettyPrintingJob.prettyPrintedHtml;
       if (!newContent) { return; }
       var cs = prettyPrintingJob.sourceNode;
-
+      
       // push the prettified html back into the tag.
       if (!isRawContent(cs)) {
         // just replace the old html with the new
