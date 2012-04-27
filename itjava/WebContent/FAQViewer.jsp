@@ -271,6 +271,6 @@
 
 		</table>
 	</form>
-
+<a href="/itjava/index.jsp">Home</a>
 </body>
 </html>
