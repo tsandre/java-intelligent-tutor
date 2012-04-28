@@ -219,9 +219,12 @@ function focusdonebutton(){
 		}
 		i++;
 	}
-	out.print("</td><td valign=\"top\" style=\"padding-top:35px;\"><div style=\"border:solid; border-width:1px; border-color:#333; width:250px; padding: 4px 4px 4px 4px;\" id=\"hintspanel\">");
+	out.print("</td><td valign=\"top\" style=\"padding-top:35px;\"><div style=\"border:solid; border-width:1px; border-color:#333;  padding: 4px 4px 4px 4px;\" id=\"hintspanel\">");
 	if(tutorialComplete==1){
-		out.println("<p align=\"center\">You have successfully completed this Intelligent Tutor! <br/><br/><a href=\"http://localhost:8080/itjava/FAQViewer.jsp?tutorID="+tutorID+"\" title=\"Tutor Search\" class=\"navmain\">Click here</a> to view FAQs and Topics related to API of current tutor.</p></div></td></tr></table>");
+		out.println("<p style=\"font-size:18px; font-weight:bold;\" align=\"center\">You have successfully completed this Intelligent Tutor! <br/><br/>");
+		out.println("<a href=\"/itjava/FAQViewer.jsp?tutorID="+tutorID+"\" title=\"FAQs and Related Articles\" class=\"navmain\"><img border=\"0\" src=\"images/faqViewer_img.jpg\" alt=\"FAQs and Related Topics\" /></a>");
+		out.println("<a href=\"/itjava/searchIndustry.jsp\" title=\"Industry Code Search\" class=\"navmain\"><img border=\"0\" src=\"images/industryCodeSearch_img.jpg\" alt=\"Industry Code Search\" /></a>");
+		out.println("</p></div></td></tr></table>");
 	}else{
            if(pageDescription.length() > 0){
                out.println(pageDescription + "<br /><br />");
