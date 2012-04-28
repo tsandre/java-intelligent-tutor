@@ -361,7 +361,7 @@ div.loading-visible{
 	height:1;
 	background-color:#333333;
 }
-.myClass:hover td {background-color: orange; color: black; cursor:pointer; }
+.myClass:hover td {background-color: orange; color: black;  }
 
 #alternateLaunch {
 	display: none;
@@ -387,13 +387,19 @@ div.loading-visible{
 
 
 .tdDescription {
-	width: 45%;
+	width: 40%;
+	vertical-align:top;
+	background-color: beige;
+}
+
+.tdFaqLink {
+	width: 75px;
 	vertical-align:top;
 	background-color: beige;
 }
 
 .tdMeta {
-	width: 25%;
+	width: 20%;
 	color: gray;
 	font-size: 0.9em;
 	background-color: beige;
@@ -413,12 +419,21 @@ div.loading-visible{
 }
 
 .tdTutorialName {
-	width: 30%;
+	width: 20%;
 	vertical-align:top;
 	background-color: beige;
 	padding-left:10px;
 	border-right:1px;
 	border-right-color:#F4F4F4;
+}
+.tdTutorialName:hover {
+	width: 20%;
+	vertical-align:top;
+	background-color: beige;
+	padding-left:10px;
+	border-right:1px;
+	border-right-color:#F4F4F4;
+	cursor: pointer;
 }
 
 .divHelpMessage {

@@ -79,7 +79,7 @@ if(session.getAttribute("userName") == null){
                 <form id="formLaunch">
                 <table cellspacing="0" id="tableMain">
                 	<tbody>
-                        <tr><td colspan="3"></td></tr>
+                        <tr><td colspan="4"></td></tr>
                         <%
                         int i=0;
                         Connection tsconn = null;
@@ -149,11 +149,11 @@ if(session.getAttribute("userName") == null){
 	                            out.println("<span class=\"ratingSaved\" id=\"ratingSaved_"+i+"\"></span>");
 	                            out.println("</td>");
 	                            out.println("</tr></table>");
-	                        	out.println("</td><td style=\"text-align:right; color:#FFF; font-size:11px;\">");
+	                        	out.println("</td><td colspan=\"2\" style=\"text-align:right; color:#FFF; font-size:11px;\">");
 	                        	out.println(avgrating);
 	                        	out.println("</td></tr>");
-	                            out.println("<tr class=\"myClass\" onclick=\"gotoURL('tutorSearchResultsDetails.jsp?start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
-	                            out.println("<td class=\"tdTutorialName\">");
+	                        	out.println("<tr class=\"myClass\" >");
+	                            out.println("<td class=\"tdTutorialName\" onclick=\"gotoURL('tutorSearchResultsDetails.jsp?start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
 	                            out.println("<br />");
 	                            out.println(tutorialInfo.getTutorialName());
 	                            out.println("</td>");
@@ -179,8 +179,11 @@ if(session.getAttribute("userName") == null){
 	                            String description = tutorialInfo.getTutorialDescription();
 	                            out.print((description.length() > 60) ? description.substring(0, 60) + "..." : description);
 	                            out.println("</td>");
+	                                                        
+	                            out.println("<td class=\"tdFaqLink\"><br /><a href=\"http://localhost:8080/itjava/FAQViewer.jsp?tutorID="+tutorialInfo.getTutorialId()+"\" title=\"Tutor Search\">View Faq</a></td>");
+	                            
 	                            out.println("</tr>");
-	                            out.println("<tr><td colspan=\"3\"></td></tr>");
+	                            out.println("<tr><td colspan=\"4\"></td></tr>");
 	        
 	                        }
                                 if(i==0){
