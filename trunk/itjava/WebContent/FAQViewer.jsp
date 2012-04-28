@@ -113,9 +113,9 @@
 			</tr>
 
 			<tr>
-				<td colspan="2" height="1" bgcolor="#122222" style="color: white"
-					align="center">Related Links and Frequently Asked Questions
-					for current tutor</td>
+				<td colspan="2" height="1" bgcolor="#122222" style="color: white; font-weight:bold;	font-size:18px;"
+					align="center" valign="middle">Related Links and Frequently Asked Questions
+					for current tutor <p style="float: right; font-size:12px;"><a href="/itjava/index.jsp" style="color:white;">Home</a></p></td>
 			</tr>
 
 			<tr>
