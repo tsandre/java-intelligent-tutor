@@ -222,8 +222,8 @@ function focusdonebutton(){
 	out.print("</td><td valign=\"top\" style=\"padding-top:35px;\"><div style=\"border:solid; border-width:1px; border-color:#333;  padding: 4px 4px 4px 4px;\" id=\"hintspanel\">");
 	if(tutorialComplete==1){
 		out.println("<p style=\"font-size:18px; font-weight:bold;\" align=\"center\">You have successfully completed this Intelligent Tutor! <br/><br/>");
-		out.println("<a href=\"/itjava/FAQViewer.jsp?tutorID="+tutorID+"\" title=\"FAQs and Related Articles\" class=\"navmain\"><img border=\"0\" src=\"images/faqViewer_img.jpg\" alt=\"FAQs and Related Topics\" /></a>");
-		out.println("<a href=\"/itjava/searchIndustry.jsp\" title=\"Industry Code Search\" class=\"navmain\"><img border=\"0\" src=\"images/industryCodeSearch_img.jpg\" alt=\"Industry Code Search\" /></a>");
+		out.println("<a href=\"javascript: void(window.open(\'/itjava/FAQViewer.jsp?tutorID="+tutorID+"\',\'_newtab1\'));\" title=\"FAQs and Related Articles\" class=\"navmain\"><img border=\"0\" src=\"images/faqViewer_img.jpg\" alt=\"FAQs and Related Topics\" /></a>");
+		out.println("<a href=\"javascript:void(window.open(\'/itjava/searchIndustry.jsp\',\'_newtab2\'))\" title=\"Industry Code Search\" class=\"navmain\"><img border=\"0\" src=\"images/industryCodeSearch_img.jpg\" alt=\"Industry Code Search\" /></a>");
 		out.println("</p></div></td></tr></table>");
 	}else{
            if(pageDescription.length() > 0){
