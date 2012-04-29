@@ -158,9 +158,9 @@ function launchNow(folderName, deliverableName) {
 					                					pst.setString(3, session.getAttribute("userLevel").toString());
 						                				rs = pst.executeQuery();
 						                				if(rs.next()){
-						                					out.println("<div id=\"addtofavoritesgroup\" style=\"display:none\"><a href=\"Javascript: addtofavorites();\"><img src=\"images/addtofavorite.png\" width=\"50\" height=\"50\" border=\"0\" /></a><br>Add To Favorites</div><div id=\"favoritedgroup\"><img src=\"images/addtofavorite.png\" width=\"50\" height=\"50\" border=\"0\" /><br>Favorited!</div>");
+						                					out.println("<div id=\"addtofavoritesgroup\" style=\"display:none\"><a href=\"Javascript: addtofavorites();\"><img src=\"images/addtofavorite.png\" width=\"35\" height=\"35\" border=\"0\" /></a><br>Add To Favorites</div><div id=\"favoritedgroup\"><img src=\"images/addtofavorite.png\" width=\"35\" height=\"35\" border=\"0\" /><br>Favorited!</div>");
 						                				}else{
-						                					out.println("<div id=\"addtofavoritesgroup\"><a href=\"Javascript: addtofavorites();\"><img src=\"images/addtofavorite.png\" width=\"50\" height=\"50\" border=\"0\" /></a><br>Add To Favorites</div><div id=\"favoritedgroup\" style=\"display:none\"><img src=\"images/addtofavorite.png\" width=\"50\" height=\"50\" border=\"0\" /><br>Favorited!</div>");
+						                					out.println("<div id=\"addtofavoritesgroup\"><a href=\"Javascript: addtofavorites();\"><img src=\"images/addtofavorite.png\" width=\"35\" height=\"35\" border=\"0\" /></a><br>Add To Favorites</div><div id=\"favoritedgroup\" style=\"display:none\"><img src=\"images/addtofavorite.png\" width=\"35\" height=\"35\" border=\"0\" /><br>Favorited!</div>");
 						                				}
 						                		   }
 						                		   catch(Exception e) {
