@@ -140,7 +140,7 @@ function launchNow(folderName, deliverableName) {
 									            out.println("<tr>");
 									            out.print("<td colspan=\"3\" bgcolor=\"#F4F4F4\" class=\"tdBold\" style=\"padding-left:10px;\">");
 												out.print(tutorialInfo.getTutorialName());
-												out.println("</td><td align=\"center\" bgcolor=\"#F4F4F4\" class=\"tdBold\" width=\"90\" rowspan=\"3\">");
+												out.println("</td><td align=\"center\" valign=\"top\" bgcolor=\"#F4F4F4\" class=\"tdBold\" width=\"90\" rowspan=\"3\">");
 												if(session.getAttribute("userName") != null && session.getAttribute("userID") != null && session.getAttribute("userLevel") != null && !session.getAttribute("userLevel").equals("unknown") && !session.getAttribute("userID").equals("0")){
 						                            
 						                            Connection conn = null;
