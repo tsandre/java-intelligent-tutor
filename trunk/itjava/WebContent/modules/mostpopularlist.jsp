@@ -37,7 +37,7 @@ session.setAttribute("deliverableLauncher", launcher);
                 <form id="formLaunch">
                 <table cellspacing="0" id="tableMain">
                 	<tbody>
-                        <tr><td colspan="3"></td></tr>
+                        <tr><td colspan="4"></td></tr>
                         <%
                         int impl=0;
                         Connection connmpl = null;
@@ -107,11 +107,11 @@ session.setAttribute("deliverableLauncher", launcher);
 	                            out.println("<span class=\"ratingSaved\" id=\"ratingSaved_"+impl+"\"></span>");
 	                            out.println("</td>");
 	                            out.println("</tr></table>");
-	                        	out.println("</td><td style=\"text-align:right; color:#FFF; font-size:11px;\">");
+	                        	out.println("</td><td colspan=\"2\" style=\"text-align:right; color:#FFF; font-size:11px;\">");
 	                        	out.println(avgrating);
 	                        	out.println("</td></tr>");
-	                            out.println("<tr class=\"myClass\" onclick=\"gotoURL('?page=tutordetails&start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
-	                            out.println("<td class=\"tdTutorialName\">");
+	                            out.println("<tr class=\"myClass\" >");
+	                            out.println("<td class=\"tdTutorialName\" onclick=\"gotoURL('?page=tutordetails&start=1&id=" + tutorialInfo.getTutorialId() + "');\">");
 	                            out.println("<br />");
 	                            out.println(tutorialInfo.getTutorialName());
 	                            out.println("</td>");
@@ -137,8 +137,9 @@ session.setAttribute("deliverableLauncher", launcher);
 	                            String description = tutorialInfo.getTutorialDescription();
 	                            out.print((description.length() > 120) ? description.substring(0, 120) + "..." : description);
 	                            out.println("</td>");
+	                            out.println("<td class=\"tdFaqLink\"><br /><a href=\"http://localhost:8080/itjava/FAQViewer.jsp?tutorID="+tutorialInfo.getTutorialId()+"\" title=\"Tutor Search\">View Faq</a></td>");
 	                            out.println("</tr>");
-	                            out.println("<tr><td colspan=\"3\"></td></tr>");
+	                            out.println("<tr><td colspan=\"4\"></td></tr>");
 	        
 	                        }
                		   }catch(Exception e) {
