@@ -47,7 +47,7 @@ public class FaqViewerLinkClickServlet extends HttpServlet {
 
 			String insertQuery = "insert into FAQViewerLinkLog"
 					+ "(user, scrapeId, timeAccessed)"
-					+ " values (?,?,datetime('now'));";
+					+ " values (?,?,datetime('now','localtime'));";
 			PreparedStatement addFaqSelection = _conn
 					.prepareStatement(insertQuery);
 			addFaqSelection.setInt(2,
