@@ -70,7 +70,7 @@ public class FaqRatingClickServlet extends HttpServlet {
 			}
 			String insertQuery = "insert into FAQUserRatingLog"
 					+ "(user, scrapeId, userRatingYes, userRatingNo, timeAccessed)"
-					+ " values (?,?,?,?,datetime('now'));";
+					+ " values (?,?,?,?,datetime('now','localtime'));";
 			PreparedStatement addFaqSelection = _conn
 					.prepareStatement(insertQuery);
 			addFaqSelection.setString(1, userId);
