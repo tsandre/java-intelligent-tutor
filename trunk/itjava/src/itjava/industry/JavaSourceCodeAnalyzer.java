@@ -4,6 +4,11 @@ import java.io.*;
 import java.util.Set;
 import org.apache.lucene.analysis.*;
 
+/**
+ * @author Vasanth
+ * 
+ */
+
 public class JavaSourceCodeAnalyzer extends Analyzer {
 
 	private Set javaStopSet; 

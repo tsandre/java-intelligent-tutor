@@ -14,6 +14,11 @@ import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
+/**
+ * @author Vasanth
+ * 
+ */
+
 public class JavaParser {
 
 	private ASTParser _parser = ASTParser.newParser(AST.JLS2);
