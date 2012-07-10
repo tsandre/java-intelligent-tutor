@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * @author Aniket
+ * @author Aniket, Vasanth
  * 
  */
 public class DeliverableInfoSQL {
