@@ -10,7 +10,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 
 
 /**
- * @author Vasanth Krishnamoorthy
+ * @author Vasanth
  * 
  */
 

@@ -12,7 +12,7 @@ import com.google.api.services.customsearch.model.Search;
 import org.jsoup.*;
 
 /**
- * @author Vasanth Krishnamoorthy
+ * @author Vasanth
  * 
  */
 public class testGoogleCustomSearch{
