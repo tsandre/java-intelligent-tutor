@@ -1,7 +1,7 @@
 package itjava.data;
 
 /**
- * @author Aniket
+ * @author Aniket, Vasanth
  *
  */
 public class LocalMachine {
