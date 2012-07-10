@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 /**
- * @author Vasanth Krishnamoorthy
+ * @author Vasanth
  * Fires an empty search query in 'sourceforge.net' and retrieve the link to the next page.
  */
 

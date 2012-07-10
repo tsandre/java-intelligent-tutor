@@ -7,7 +7,7 @@ import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 
 /**
- * @author Vasanth Krishnamoorthy
+ * @author Vasanth
  * Fires an empty search query in 'sourceforge.net' and retrieve the link to the next page.
  */
 

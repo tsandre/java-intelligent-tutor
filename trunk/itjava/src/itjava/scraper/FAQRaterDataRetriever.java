@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Bharat
+ * @author Bharat, Vasanth
  * 
  */
 public class FAQRaterDataRetriever {
