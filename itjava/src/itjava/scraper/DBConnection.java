@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * @author Aniket
+ * @author Vasanth
  *
  */
 public final class DBConnection{
