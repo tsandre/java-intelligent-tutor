@@ -17,7 +17,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
- * @author Aniket, Matt
+ * @author Vasanth
  *
  */
 public class LinkStoreScrape {
