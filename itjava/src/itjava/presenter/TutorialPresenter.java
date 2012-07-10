@@ -18,6 +18,11 @@ import itjava.model.TutorialStore;
 import itjava.model.WordInfo;
 import itjava.util.WordInfoComparator;
 
+/**
+ * @author Vasanth
+ * 
+ */
+
 public class TutorialPresenter {
 private TutorialStore _tutorialStore;
 

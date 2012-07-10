@@ -23,6 +23,11 @@ import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Type;
 
+/**
+ * @author Vasanth
+ * 
+ */
+
 public class WordInfoPresenter {
 
 	public CompilationUnitStore compilationUnitStore;
