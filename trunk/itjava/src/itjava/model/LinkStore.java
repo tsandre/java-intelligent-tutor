@@ -27,10 +27,8 @@ import com.google.api.services.customsearch.Customsearch;
 import com.google.api.services.customsearch.model.Result;
 import com.google.api.services.customsearch.model.Search;
 
-
-
 /**
- * @author Aniket, Matt
+ * @author Aniket, Vasanth, Matt
  *
  */
 public class LinkStore {
@@ -40,7 +38,7 @@ public class LinkStore {
 		_setOfLinks = new LinkedHashSet<String>();
 		_setOfLinks.addAll(GoogleSearch(query));
 		_setOfLinks.addAll(BingSearch(query));
-//TODO: Yahoo Boss search currently not working. Needs to be updated.		
+//TODO: Yahoo Boss is a paid service now.
 //		_setOfLinks.addAll(YahooSearch(query));
 		return _setOfLinks;
 	}
