@@ -31,6 +31,11 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
+/**
+ * @author Aniket, Vasanth
+ * 
+ */
+
 public class WordInfoStore {
 	private List<String> _linesOfCode;
 	private WordInfo _wordInfo;
