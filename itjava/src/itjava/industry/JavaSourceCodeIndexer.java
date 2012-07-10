@@ -13,6 +13,11 @@ import itjava.data.LocalMachine;
 import itjava.industry.JavaParser.JClass;
 import itjava.industry.JavaParser.JMethod;
 
+/**
+ * @author Vasanth
+ * 
+ */
+
 public class JavaSourceCodeIndexer {
 
 	private static final String IMPLEMENTS = "implements";

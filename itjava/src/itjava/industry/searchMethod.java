@@ -8,6 +8,11 @@ import java.util.Scanner;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FileUtils.*;
 
+/**
+ * @author Vasanth
+ * 
+ */
+
 public class searchMethod {
 public static void main(String args[]){
 	final File folder = new File(LocalMachine.home+"IndustryFiles/");
