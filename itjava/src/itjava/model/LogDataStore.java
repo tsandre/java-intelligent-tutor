@@ -29,7 +29,7 @@ import itjava.data.LogData;
 import itjava.util.Concordance;
 
 /**
- * @author Aniket, Vasanth
+ * @author Vasanth
  *
  */
 public class LogDataStore {
