@@ -23,8 +23,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * @author Vasanth
+ * 
+ */
+
+/**
  * Servlet implementation class CodeSearchServlet
  */
+
 @WebServlet(description = "Retrieves the search param from user and passes to CodeSearchPresenter", urlPatterns = { "/CodeSearchServlet" })
 public class CodeSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
