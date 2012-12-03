@@ -61,7 +61,7 @@ public class CodeSearchServlet extends HttpServlet {
 
 		ArrayList<Tutorial> tutorialList = wordInfoPresenter.GenerateWordInfoMap();
                 //ArrayList<String> tutorialDescriptionList = new ArrayList<String>();
-		session.setAttribute("tutorialList", tutorialList);
+		
 		
 		ArrayList<String> approvalList = new ArrayList<String>();
 		ArrayList<ArrayList<String>> wordsList = new ArrayList<ArrayList<String>>();
@@ -89,6 +89,7 @@ public class CodeSearchServlet extends HttpServlet {
 		session.setAttribute("difficultyList", difficultyList);
 		session.setAttribute("hintsMapList", hintsMapList);
 		session.setAttribute("tutorialListSize", tutorialList.size());
+		session.setAttribute("tutorialList", tutorialList);
 		/* Vasanth - Sets the API info object to session - Commented temporarily */
 		// session.setAttribute("scrapedFAQ", scrapeDataObj);
 		/* End of Api info code */

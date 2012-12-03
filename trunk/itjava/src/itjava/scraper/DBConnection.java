@@ -15,8 +15,10 @@ import java.sql.SQLException;
  */
 public final class DBConnection{
 	public static Connection GetConnection() throws ClassNotFoundException, SQLException {
-		Class.forName("org.sqlite.JDBC");
-		return DriverManager.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
+		//Class.forName("org.sqlite.JDBC");
+		Class.forName("com.mysql.jdbc.Driver");
+		//return DriverManager.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
+		return DriverManager.getConnection("jdbc:mysql:" + "//localhost:3306/" + "jtdb","root","mysqlroot");
 	}
 	
 	public static void CloseConnection(Connection conn) throws SQLException {
