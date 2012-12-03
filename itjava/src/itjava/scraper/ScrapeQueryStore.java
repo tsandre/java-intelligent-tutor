@@ -24,7 +24,9 @@ public class ScrapeQueryStore {
 			insertScrapeQuery.setInt(2, tutorialInfoId);
 			int rowsInserted = insertScrapeQuery.executeUpdate();
 			System.out.println("Num of rows inserted in table ScrapeQuery: " + rowsInserted);
-			PreparedStatement fileNameSql = _conn.prepareStatement("select max(searchQueryId) as searchQueryId from ScrapeQuery where searchQueryText = ?");
+			PreparedStatement fileNameSql = _conn.prepareStatement("select max(searchQueryId) as searchQueryId from ScrapeQuery where searchQueryText = ?",PreparedStatement.RETURN_GENERATED_KEYS);
+			
+			
 			fileNameSql.setString(1, scrapeQuery);
 			ResultSet rs = fileNameSql.executeQuery();
 			while (rs.next()) {

@@ -4,6 +4,7 @@
 package itjava.model;
 
 import itjava.data.LocalMachine;
+import itjava.db.DBConnection;
 import itjava.util.KeyValue;
 
 import java.sql.Connection;
@@ -456,8 +457,8 @@ public class TutorialInfoStore {
 	}
 
 	private static Connection GetConnection() throws Exception {
-		Class.forName("org.sqlite.JDBC");
-		return DriverManager.getConnection("jdbc:sqlite:" + LocalMachine.home + "samples/itjava.db");
+		
+		return DBConnection.GetConnection();
 	}
 	private static void CloseConnection(Connection conn) throws SQLException {
 		conn.close();
